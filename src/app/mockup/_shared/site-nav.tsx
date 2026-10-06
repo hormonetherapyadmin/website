@@ -3,7 +3,7 @@
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import Image from "next/image";
 import { useEffect, useId, useRef, useState } from "react";
-import styles from "./homepage.module.css";
+import styles from "./mockup.module.css";
 
 export type NavLink = {
   label: string;

@@ -273,22 +273,12 @@
 
 .navPanel[data-wide] {
   display: grid;
-  grid-template-columns: 17rem auto;
+  grid-template-columns: auto auto;
   width: max-content;
-  gap: 1.5rem;
+  gap: 2rem;
   left: auto;
   right: -6rem;
-  padding: 1.25rem;
-}
-
-.navPanel[data-wide] > div:first-child {
-  padding: 0.75rem 0.5rem;
-  border-radius: 1rem;
-  background: var(--surface);
-}
-
-.navPanel[data-wide] > div:last-child {
-  padding: 0.75rem 0.5rem 0.75rem 0;
+  padding: 1.25rem 1.5rem;
 }
 
 .navPanel[data-wide] > div:last-child ul {
@@ -480,7 +470,26 @@
 
 .buttonText,
 .buttonTextPanel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
   font-weight: 600;
+}
+
+.buttonText svg,
+.buttonTextPanel svg,
+.headLink svg,
+.disclosureLink svg,
+.reviewLink svg {
+  transition: transform 0.15s ease;
+}
+
+.buttonText:hover svg,
+.buttonTextPanel:hover svg,
+.headLink:hover svg,
+.disclosureLink:hover svg,
+.reviewLink:hover svg {
+  transform: translateX(3px);
 }
 
 .facts {
@@ -710,7 +719,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .questionCta svg {
+  .questionCta svg,
+  .buttonText svg,
+  .buttonTextPanel svg,
+  .headLink svg,
+  .disclosureLink svg,
+  .reviewLink svg {
     transition: none;
   }
 }
@@ -745,13 +759,24 @@
 }
 
 .ledgerHead > p {
+  grid-column: 1 / -1;
   max-width: 44rem;
-  margin: 0 0 1rem;
+  margin: 0 0 1.25rem;
+}
+
+.ledgerHead .buttonPrimary {
+  justify-self: start;
+  align-self: end;
+  margin-bottom: 1.75rem;
 }
 
 .disclosureLink {
+  display: inline-flex;
+  align-items: center;
+  justify-self: end;
   align-self: end;
-  margin-bottom: 1rem;
+  gap: 0.25rem;
+  margin-bottom: 1.75rem;
   font-size: 0.95rem;
   font-weight: 600;
   white-space: nowrap;
@@ -862,11 +887,18 @@ a.logoTile:hover {
 a.clinicName {
   color: inherit;
   text-decoration: none;
+  background-image: linear-gradient(var(--tint), var(--tint));
+  background-repeat: no-repeat;
+  background-position: 0 0.87em;
+  background-size: 0 0.42em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size 160ms ease;
 }
 
-a.clinicName:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+a.clinicName:hover,
+a.clinicName:focus-visible {
+  background-size: 100% 0.42em;
 }
 
 .logoTile img {
@@ -924,11 +956,28 @@ a.clinicName:hover {
   color: var(--muted);
 }
 
-.thNote {
-  display: block;
-  font-size: 0.75rem;
-  font-weight: 500;
-  opacity: 0.75;
+.priceHead {
+  position: relative;
+  z-index: 2;
+}
+
+.priceHead .tipButton {
+  display: inline;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px dotted currentColor;
+  border-radius: 0;
+  font: inherit;
+  cursor: help;
+}
+
+.priceHead .tipButton:focus-visible {
+  outline-color: var(--panel-text);
+}
+
+.priceHead .tipText {
+  top: calc(100% + 0.45rem);
+  bottom: auto;
 }
 
 .bestFor {
@@ -1101,7 +1150,9 @@ a.clinicName:hover {
 }
 
 .page .reviewLink {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
   width: fit-content;
   margin-top: 0.5rem;
   font-size: 0.9rem;
@@ -1214,6 +1265,9 @@ a.clinicName:hover {
 }
 
 .headLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
   font-weight: 600;
 }
 
@@ -1298,7 +1352,10 @@ a.clinicName:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .postImage img {
+  .postImage img,
+  a.clinicName,
+  .leadPost h3 a,
+  .post h3 a {
     transition: none;
   }
 }
@@ -1326,17 +1383,37 @@ a.clinicName:hover {
 .leadPost h3 a,
 .post h3 a {
   text-decoration: none;
+  background-image: linear-gradient(var(--tint), var(--tint));
+  background-repeat: no-repeat;
+  background-position: 0 0.87em;
+  background-size: 0 0.42em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size 160ms ease;
 }
 
-.leadPost h3 a:hover,
-.post h3 a:hover {
-  text-decoration: underline;
+.leadPost:hover h3 a,
+.post:hover h3 a,
+.leadPost h3 a:focus-visible,
+.post h3 a:focus-visible {
+  background-size: 100% 0.42em;
 }
 
 .postMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.15em;
   margin: 0;
   font-size: 0.875rem;
   color: var(--muted);
+}
+
+.postMeta time,
+.postMeta > span:last-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
 }
 
 .postKind {
