@@ -453,9 +453,10 @@
 .buttonPrimary,
 .buttonPanel {
   display: inline-block;
-  padding: 0.9rem 1.4rem;
-  border-radius: var(--radius);
+  padding: 0.6rem 1.35rem;
+  border-radius: 0.75rem;
   font-weight: 600;
+  line-height: 1.2;
   text-decoration: none;
 }
 

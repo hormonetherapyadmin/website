@@ -125,7 +125,7 @@ const COMPARE_LINKS: NavLink[] = [
   },
   {
     label: "Trusted providers",
-    href: "/copy-of-trusted-providers",
+    href: "/mockup/trusted-providers",
     icon: ShieldCheckIcon,
   },
 ];
@@ -224,7 +224,7 @@ export function MockupShell({
   ].join(" ");
 
   return (
-    <div className={pageClass}>
+    <div className={pageClass} data-palette={palette}>
       <header className={styles.header}>
         <a href="#" className={styles.wordmark}>
           Hormone Therapy Hub
