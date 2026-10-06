@@ -445,7 +445,8 @@
 }
 
 .heroDek {
-  max-width: 34rem;
+  max-width: 40rem;
+  text-wrap: pretty;
   margin: 0;
   font-size: 1.25rem;
   line-height: 1.55;
@@ -730,7 +731,14 @@
   margin-inline: auto;
 }
 
+.ledgerHead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 2rem;
+}
+
 .ledgerHead h2 {
+  grid-column: 1 / -1;
   margin-bottom: 1rem;
 }
 
@@ -740,8 +748,21 @@
 }
 
 .disclosureLink {
+  align-self: end;
+  margin-bottom: 1rem;
   font-size: 0.95rem;
   font-weight: 600;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .ledgerHead {
+    grid-template-columns: 1fr;
+  }
+
+  .disclosureLink {
+    justify-self: start;
+  }
 }
 
 .scrollHint {
@@ -1429,45 +1450,126 @@ a.clinicName:hover {
 /* Footer */
 
 .footer {
-  border-top: 1px solid var(--rule);
-  background: var(--surface);
-  padding: 3rem var(--gutter) 2.5rem;
+  background: var(--panel);
+  color: var(--panel-text);
+  padding: clamp(3.5rem, 7vw, 5.5rem) var(--gutter) 2rem;
 }
 
-.footerTop,
-.footerFine {
+.footerInner {
   max-width: var(--max);
-  margin-inline: auto;
+  margin: 0 auto;
 }
 
-.footerTop {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 1.25rem 3rem;
-  padding-bottom: 1.75rem;
-  border-bottom: 1px solid var(--rule);
+.footerMain {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 3fr);
+  gap: 3rem clamp(3rem, 8vw, 7rem);
+  padding-bottom: 3rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-text) 16%, transparent);
+}
+
+.footerBrand {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
 }
 
 .footerWordmark {
   margin: 0;
+  font-size: 1.75rem;
 }
 
-.footerLinks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem 1.5rem;
+.footerTagline {
+  max-width: 18rem;
+  margin: 0;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.page .footerEmail {
+  width: fit-content;
+  color: var(--panel-accent);
+  font-weight: 600;
+}
+
+.footerNav {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+.page .footerHeading {
+  margin: 0 0 1rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--panel-accent);
+}
+
+.footerNav ul {
+  display: grid;
+  gap: 0.7rem;
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 0.95rem;
+}
+
+.footerNav a {
+  text-decoration: none;
+  opacity: 0.9;
+}
+
+.footerNav a:hover {
+  text-decoration: underline;
+  opacity: 1;
+}
+
+.footer a:focus-visible {
+  outline: 2px solid var(--panel-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 .footerFine {
-  margin-top: 1.5rem;
+  max-width: 60rem;
+  margin: 2rem 0 0;
   font-size: 0.9rem;
-  color: var(--muted);
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+.footerBottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem 2rem;
+  margin-top: 2rem;
+  font-size: 0.85rem;
+}
+
+.footerBottom > p {
+  margin: 0;
+  opacity: 0.8;
+}
+
+.footer .explorer {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  opacity: 0.8;
+}
+
+@media (max-width: 960px) {
+  .footerMain {
+    grid-template-columns: 1fr;
+  }
+
+  .footerNav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 /* Responsive */

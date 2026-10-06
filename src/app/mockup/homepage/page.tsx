@@ -18,7 +18,7 @@ import {
   WeightScaleIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { SiteNav, type NavItem } from "./site-nav";
+import { SiteNav, type NavItem, type NavLink } from "./site-nav";
 import { Tip } from "./tip";
 
 /*
@@ -229,27 +229,73 @@ const BENEFITS = [
   { label: "Improve sleep", href: "/sleep" },
 ];
 
+const HRT_101_LINKS: NavLink[] = [
+  { label: "Is HRT for me?", href: "/ishrtforme", icon: UserQuestion01Icon },
+  { label: "Formulations", href: "/formuations", icon: Medicine02Icon },
+  {
+    label: "Cost & insurance",
+    href: "/costandinsurance",
+    icon: Wallet01Icon,
+  },
+  {
+    label: "Test kits",
+    href: "/trackersandtesting",
+    icon: TestTube01Icon,
+  },
+  { label: "Men’s HRT", href: "/men-s-hrt", icon: ManIcon },
+  { label: "FAQ", href: "/faq", icon: BubbleChatQuestionIcon },
+];
+
+const SYMPTOM_LINKS: NavLink[] = [
+  {
+    label: "Weight & HRT",
+    href: "/copy-of-weight-gain",
+    icon: WeightScaleIcon,
+  },
+  { label: "Sleep", href: "/sleep", icon: Moon02Icon },
+  { label: "Hair loss", href: "/hair-loss", icon: HairDryerIcon },
+  { label: "Rx face creams", href: "/skincare", icon: DropletIcon },
+];
+
+const COMPARE_LINKS: NavLink[] = [
+  {
+    label: "Price comparison chart",
+    href: "/hrt-price-comparison-chart",
+    icon: ChartBarBigIcon,
+  },
+  {
+    label: "Tips to find a provider",
+    href: "/tipstofindprovider",
+    icon: Idea01Icon,
+  },
+  {
+    label: "Trusted providers",
+    href: "/copy-of-trusted-providers",
+    icon: ShieldCheckIcon,
+  },
+];
+
+const FOOTER_COLUMNS = [
+  { heading: "HRT 101", links: HRT_101_LINKS },
+  { heading: "Symptoms", links: SYMPTOM_LINKS },
+  { heading: "Providers", links: COMPARE_LINKS },
+  {
+    heading: "About",
+    links: [
+      { label: "About Peggy", href: "/about" },
+      { label: "How I review", href: "#" },
+      { label: "Affiliate disclosure", href: DISCLOSURE_HREF },
+      { label: "Blog", href: "/blog" },
+    ],
+  },
+];
+
 const NAV: NavItem[] = [
   {
     label: "HRT 101",
     columns: [
       {
-        links: [
-          { label: "Is HRT for me?", href: "/ishrtforme", icon: UserQuestion01Icon },
-          { label: "Formulations", href: "/formuations", icon: Medicine02Icon },
-          {
-            label: "Cost & insurance",
-            href: "/costandinsurance",
-            icon: Wallet01Icon,
-          },
-          {
-            label: "Test kits",
-            href: "/trackersandtesting",
-            icon: TestTube01Icon,
-          },
-          { label: "Men’s HRT", href: "/men-s-hrt", icon: ManIcon },
-          { label: "FAQ", href: "/faq", icon: BubbleChatQuestionIcon },
-        ],
+        links: HRT_101_LINKS,
       },
     ],
   },
@@ -257,16 +303,7 @@ const NAV: NavItem[] = [
     label: "Symptoms",
     columns: [
       {
-        links: [
-          {
-            label: "Weight & HRT",
-            href: "/copy-of-weight-gain",
-            icon: WeightScaleIcon,
-          },
-          { label: "Sleep", href: "/sleep", icon: Moon02Icon },
-          { label: "Hair loss", href: "/hair-loss", icon: HairDryerIcon },
-          { label: "Rx face creams", href: "/skincare", icon: DropletIcon },
-        ],
+        links: SYMPTOM_LINKS,
       },
     ],
   },
@@ -275,23 +312,7 @@ const NAV: NavItem[] = [
     columns: [
       {
         heading: "Compare & choose",
-        links: [
-          {
-            label: "Price comparison chart",
-            href: "/hrt-price-comparison-chart",
-            icon: ChartBarBigIcon,
-          },
-          {
-            label: "Tips to find a provider",
-            href: "/tipstofindprovider",
-            icon: Idea01Icon,
-          },
-          {
-            label: "Trusted providers",
-            href: "/copy-of-trusted-providers",
-            icon: ShieldCheckIcon,
-          },
-        ],
+        links: COMPARE_LINKS,
       },
       {
         heading: "My reviews",
@@ -571,12 +592,7 @@ export default async function HomepageMockup(
             Search the site
           </label>
           <SearchIcon />
-          <input
-            id="site-search"
-            type="search"
-            name="q"
-            placeholder="Search"
-          />
+          <input id="site-search" type="search" name="q" placeholder="Search" />
         </form>
       </header>
 
@@ -708,7 +724,7 @@ export default async function HomepageMockup(
         aria-labelledby="compare-title"
       >
         <div className={styles.ledgerHead}>
-          <h2 id="compare-title">What eight online clinics charged me</h2>
+          <h2 id="compare-title">Eight online HRT clinics, side by side</h2>
           <p>
             I paid out of pocket with my HSA card, or through my prescription
             insurance when I could. These are my real costs, not list prices.
@@ -856,7 +872,6 @@ export default async function HomepageMockup(
             </tbody>
           </table>
         </div>
-
       </section>
 
       {/* Peggy's take on her current regimen */}
@@ -983,60 +998,71 @@ export default async function HomepageMockup(
       </section>
 
       <footer className={styles.footer}>
-        <div className={styles.footerTop}>
-          <p className={styles.footerWordmark}>Hormone Therapy Hub</p>
-          <ul className={styles.footerLinks}>
-            <li>
-              <a href="#">How I review</a>
-            </li>
-            <li>
-              <a href={DISCLOSURE_HREF}>Affiliate disclosure</a>
-            </li>
-            <li>
-              <a href="/faq">FAQ</a>
-            </li>
-            <li>
-              <a href="/about">About Peggy</a>
-            </li>
-            <li>
-              <a href="mailto:hormonetherapyhub@gmail.com">
+        <div className={styles.footerInner}>
+          <div className={styles.footerMain}>
+            <div className={styles.footerBrand}>
+              <p className={styles.footerWordmark}>Hormone Therapy Hub</p>
+              <p className={styles.footerTagline}>
+                An experienced HRT patient reviewer. Not a doctor.
+              </p>
+              <a
+                href="mailto:hormonetherapyhub@gmail.com"
+                className={styles.footerEmail}
+              >
                 hormonetherapyhub@gmail.com
               </a>
-            </li>
-          </ul>
+            </div>
+            <nav aria-label="Footer" className={styles.footerNav}>
+              {FOOTER_COLUMNS.map((column) => (
+                <div key={column.heading}>
+                  <h2 className={styles.footerHeading}>{column.heading}</h2>
+                  <ul>
+                    {column.links.map((link) => (
+                      <li key={link.href}>
+                        <a href={link.href}>{link.label}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </nav>
+          </div>
+          <p className={styles.footerFine}>
+            I am not a medical professional, and this site does not provide
+            medical advice or treatment plans. Talk with your own prescribing
+            clinician before starting, stopping, or changing any treatment. Some
+            links are affiliate links.
+          </p>
+          <div className={styles.footerBottom}>
+            <p>© 2026 Hormone Therapy Hub · Columbus, Ohio</p>
+            <nav aria-label="Mockup options" className={styles.explorer}>
+              <span className={styles.explorerGroup}>
+                <span>Palette:</span>
+                {(Object.keys(PALETTES) as PaletteKey[]).map((key) => (
+                  <a
+                    key={key}
+                    href={`?palette=${key}&serif=${serif}`}
+                    aria-current={key === palette ? "true" : undefined}
+                  >
+                    {PALETTES[key].label}
+                  </a>
+                ))}
+              </span>
+              <span className={styles.explorerGroup}>
+                <span>Headings:</span>
+                {(Object.keys(SERIFS) as SerifKey[]).map((key) => (
+                  <a
+                    key={key}
+                    href={`?palette=${palette}&serif=${key}`}
+                    aria-current={key === serif ? "true" : undefined}
+                  >
+                    {SERIFS[key].label}
+                  </a>
+                ))}
+              </span>
+            </nav>
+          </div>
         </div>
-        <p className={styles.footerFine}>
-          I am not a medical professional, and this site does not provide
-          medical advice or treatment plans. Talk with your own prescribing
-          clinician before starting, stopping, or changing any treatment. Some
-          links are affiliate links. Columbus, Ohio.
-        </p>
-        <nav aria-label="Mockup options" className={styles.explorer}>
-          <span className={styles.explorerGroup}>
-            <span>Palette:</span>
-            {(Object.keys(PALETTES) as PaletteKey[]).map((key) => (
-              <a
-                key={key}
-                href={`?palette=${key}&serif=${serif}`}
-                aria-current={key === palette ? "true" : undefined}
-              >
-                {PALETTES[key].label}
-              </a>
-            ))}
-          </span>
-          <span className={styles.explorerGroup}>
-            <span>Headings:</span>
-            {(Object.keys(SERIFS) as SerifKey[]).map((key) => (
-              <a
-                key={key}
-                href={`?palette=${palette}&serif=${key}`}
-                aria-current={key === serif ? "true" : undefined}
-              >
-                {SERIFS[key].label}
-              </a>
-            ))}
-          </span>
-        </nav>
       </footer>
     </div>
   );
