@@ -1,0 +1,28 @@
+---
+description: Never use left-border accent stripes in UI design
+globs: "**/*.{css,scss,tsx,jsx,mdc}"
+alwaysApply: false
+---
+
+# No left-border accents
+
+Never mark something as special with a colored or thick border on its left
+(or inline-start) edge. This applies to callouts, quotes, cards, table rows
+and cells, alerts, active nav items, list items, and form sections.
+
+Also avoid look-alikes: an inset left box-shadow, a `::before` bar pinned to
+the left edge, or a `border-inline-start`.
+
+```css
+/* ❌ BAD */
+.topRow th { border-left: 5px solid var(--cta); }
+.callout { border-left: 4px solid var(--accent); padding-left: 1rem; }
+
+/* ✅ GOOD: use tint, a full outline, a badge, or an icon */
+.topRow { background: var(--top-row); }
+.callout { background: var(--tint); border-radius: 1rem; }
+```
+
+A neutral 1px divider that separates two columns of a grid (it's on the left
+edge only because of layout, and it's the same color as other dividers) is a
+divider, not an accent, and is allowed.
