@@ -4,7 +4,6 @@ import Image from "next/image";
 import {
   ArrowLeftRightIcon,
   Cancel01Icon,
-  Layout01Icon,
   MedalFirstPlaceIcon,
   Medicine02Icon,
   News01Icon,
@@ -48,7 +47,6 @@ type Specialty = {
   ticket?: string;
   offer?: string;
   plainDeal?: string;
-  priceDetail?: string;
   youtube?: string;
   links: ResourceLink[];
   product?: { src: string; alt: string; position?: string };
@@ -65,7 +63,6 @@ const SPECIALTIES: Specialty[] = [
     },
     code: "PEGGY10",
     offer: "10% off your first order",
-    priceDetail: "$199 for the first six months, then $99.",
     youtube: "https://youtu.be/_OlA4wXOHdQ",
     links: [
       {
@@ -74,7 +71,7 @@ const SPECIALTIES: Specialty[] = [
         icon: Tag01Icon,
       },
       {
-        label: "HRT review",
+        label: "My review",
         href: "/post/inner-balance-hrt-review",
         icon: News01Icon,
       },
@@ -93,11 +90,15 @@ const SPECIALTIES: Specialty[] = [
     youtube: "https://youtu.be/XZD4yvTKScA",
     links: [
       {
+        label: "Products & pricing",
+        href: "/winona-review-page",
+        icon: Tag01Icon,
+      },
+      {
         label: "My review",
         href: "/post/winona-bioidentical-hormone-therapy-review",
         icon: News01Icon,
       },
-      { label: "Overview", href: "/winona-review-page", icon: Layout01Icon },
     ],
   },
   {
@@ -199,7 +200,11 @@ const SPECIALTIES: Specialty[] = [
     plainDeal: "No public coupon. I link straight to the clinic.",
     youtube: "https://youtu.be/4BBgI4gmvZE",
     links: [
-      { label: "My review", href: "/mymenopauserx", icon: News01Icon },
+      {
+        label: "Products & pricing",
+        href: "/mymenopauserx",
+        icon: Tag01Icon,
+      },
       {
         label: "MyMenopauseRx vs Midi",
         href: "/post/midi-health-vs-mymenopauserx",
@@ -229,15 +234,6 @@ function Chevron() {
       aria-hidden="true"
     >
       <path d="m9 6 6 6-6 6" />
-    </svg>
-  );
-}
-
-function Check() {
-  return (
-    <svg className={shared.check} viewBox="0 0 20 20" aria-hidden="true">
-      <circle cx="10" cy="10" r="10" />
-      <path d="M5.5 10.5l3 3 6-6.5" />
     </svg>
   );
 }
@@ -272,7 +268,36 @@ function Logo({
   );
 }
 
-function AffiliateButton({
+function DealFacts({ clinic }: { clinic: Clinic }) {
+  const facts: { icon: IconSvgElement; text: string }[] = [
+    { icon: Medicine02Icon, text: clinic.formulation },
+  ];
+  facts.push({
+    icon: clinic.insurance ? Tick02Icon : Cancel01Icon,
+    text: clinic.insurance ? "Takes insurance" : "Doesn’t take insurance",
+  });
+  if (clinic.note) {
+    facts.push({ icon: Tick02Icon, text: clinic.note });
+  }
+
+  return (
+    <ul className={styles.rowMeta}>
+      {facts.slice(0, 3).map((fact) => (
+        <li key={fact.text}>
+          <HugeiconsIcon
+            icon={fact.icon}
+            size={16}
+            strokeWidth={1.75}
+            aria-hidden="true"
+          />
+          {fact.text}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function AffiliateBrand({
   clinic,
   placement,
   className,
@@ -301,6 +326,36 @@ function AffiliateButton({
   );
 }
 
+function AffiliateButton({
+  clinic,
+  placement,
+  className,
+  children,
+}: {
+  clinic: Clinic;
+  placement: string;
+  className: string;
+  children: ReactNode;
+}) {
+  return (
+    <a
+      href="#affiliate-link"
+      target="_blank"
+      rel={AFFILIATE_REL}
+      className={className}
+      data-provider={clinic.name}
+      data-placement={placement}
+    >
+      {children}
+      <Chevron />
+      <span className={shared.srOnly}>
+        {" "}
+        (affiliate link, opens in a new tab)
+      </span>
+    </a>
+  );
+}
+
 function ResourceLinks({
   clinicName,
   links,
@@ -310,9 +365,12 @@ function ResourceLinks({
   links: ResourceLink[];
   youtube?: string;
 }) {
+  const comparisons = links.filter((link) => link.icon === ArrowLeftRightIcon);
+  const primary = links.filter((link) => link.icon !== ArrowLeftRightIcon);
+
   return (
     <ul className={styles.resourceLinks}>
-      {links.map((link) => (
+      {primary.map((link) => (
         <li key={link.href}>
           <a href={link.href}>
             {link.icon ? (
@@ -345,6 +403,20 @@ function ResourceLinks({
           </a>
         </li>
       ) : null}
+      {comparisons.map((link) => (
+        <li key={link.href}>
+          <a href={link.href}>
+            <HugeiconsIcon
+              icon={ArrowLeftRightIcon}
+              size={16}
+              strokeWidth={1.75}
+              aria-hidden="true"
+            />
+            {link.label}
+            <span className={shared.srOnly}> — {clinicName}</span>
+          </a>
+        </li>
+      ))}
     </ul>
   );
 }
@@ -372,36 +444,61 @@ export default async function TrustedProvidersMockup(
       </nav>
 
       <header className={styles.hero}>
-        <p className={styles.kicker}>Providers</p>
-        <h1>Trusted providers</h1>
-        <p className={styles.dek}>
-          Seven telehealth clinics I’ve been a patient at, and the specialty
-          each one was best at for me. The codes are the ones I use. I’m not a
-          doctor, and these visit links pay me a commission.
-        </p>
-        <div className={styles.heroLinks}>
-          <a href="/hrt-price-comparison-chart" className={shared.buttonText}>
-            Full price chart
-            <Chevron />
-          </a>
+        <div className={styles.heroCopy}>
+          <p className={styles.kicker}>Providers</p>
+          <h1>Trusted providers</h1>
+          <p className={styles.dek}>
+            Seven telehealth clinics I’ve been a patient at, and the specialty
+            each one was best at for me. The codes are the ones I use. I’m not a
+            doctor, and these visit links pay me a commission.
+          </p>
+          <div className={styles.heroLinks}>
+            <a href="/hrt-price-comparison-chart" className={shared.buttonText}>
+              Full price chart
+              <Chevron />
+            </a>
+          </div>
         </div>
-        <ul className={styles.facts} aria-label="About this page">
+        <nav className={styles.floatCluster} aria-label="Clinics">
           {[
-            "Patient at all seven",
-            "Offers from my own orders",
-            "Independent & self-funded",
-          ].map((fact) => (
-            <li key={fact}>
-              <Check />
-              {fact}
-            </li>
+            SPECIALTIES.slice(1, 3),
+            [SPECIALTIES[3], SPECIALTIES[0], SPECIALTIES[4]],
+            SPECIALTIES.slice(5),
+          ].map((row) => (
+            <div
+              key={row.map((item) => item.id).join("-")}
+              className={styles.floatRow}
+            >
+              {row.map((item) => {
+                const clinic = clinicNamed(item.name);
+                return (
+                  <a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    className={styles.floatLogo}
+                  >
+                    {clinic.logo ? (
+                      <Image
+                        src={clinic.logo}
+                        alt={clinic.name}
+                        width={72}
+                        height={72}
+                      />
+                    ) : (
+                      clinic.monogram
+                    )}
+                  </a>
+                );
+              })}
+            </div>
           ))}
-        </ul>
+        </nav>
       </header>
+
+      <div className={shared.divider} aria-hidden="true" />
 
       <nav className={styles.passBand} aria-label="Jump to a clinic">
         <div className={styles.passInner}>
-          <p className={styles.passLabel}>Jump to a specialty</p>
           <ul className={styles.passes}>
             {SPECIALTIES.map((item) => {
               const clinic = clinicNamed(item.name);
@@ -466,71 +563,22 @@ export default async function TrustedProvidersMockup(
               </figure>
             ) : null}
             <div className={styles.deal}>
-              <p className={styles.brand}>
+              <AffiliateBrand
+                clinic={featuredClinic}
+                placement="trusted_providers_lead"
+                className={styles.brand}
+              >
                 <Logo clinic={featuredClinic} large />
                 <span>{featuredClinic.name}</span>
-              </p>
+              </AffiliateBrand>
               <p>
-                <span className={styles.rowAmount}>
-                  ${featuredClinic.monthly}
-                </span>
+                <span className={styles.rowAmount}>$199</span>
                 <span className={styles.per}>/mo</span>
+                <span className={styles.priceNote}>
+                  First six months, then $99.
+                </span>
               </p>
-              <ul className={styles.rowMeta}>
-                <li>
-                  <HugeiconsIcon
-                    icon={Medicine02Icon}
-                    size={16}
-                    strokeWidth={1.75}
-                    aria-hidden="true"
-                  />
-                  {featuredClinic.formulation}
-                </li>
-                {featured.priceDetail ? (
-                  <li>
-                    <HugeiconsIcon
-                      icon={Tag01Icon}
-                      size={16}
-                      strokeWidth={1.75}
-                      aria-hidden="true"
-                    />
-                    {featured.priceDetail}
-                  </li>
-                ) : null}
-                {featuredClinic.priceNote ? (
-                  <li>
-                    <HugeiconsIcon
-                      icon={Tag01Icon}
-                      size={16}
-                      strokeWidth={1.75}
-                      aria-hidden="true"
-                    />
-                    {featuredClinic.priceNote}
-                  </li>
-                ) : null}
-                <li>
-                  <HugeiconsIcon
-                    icon={featuredClinic.insurance ? Tick02Icon : Cancel01Icon}
-                    size={16}
-                    strokeWidth={1.75}
-                    aria-hidden="true"
-                  />
-                  {featuredClinic.insurance
-                    ? "Takes insurance"
-                    : "Doesn’t take insurance"}
-                </li>
-                {featuredClinic.note ? (
-                  <li>
-                    <HugeiconsIcon
-                      icon={Tick02Icon}
-                      size={16}
-                      strokeWidth={1.75}
-                      aria-hidden="true"
-                    />
-                    {featuredClinic.note}
-                  </li>
-                ) : null}
-              </ul>
+              <DealFacts clinic={featuredClinic} />
               <div className={styles.actions}>
                 <AffiliateButton
                   clinic={featuredClinic}
@@ -549,15 +597,7 @@ export default async function TrustedProvidersMockup(
         </div>
       </section>
 
-      <section className={styles.directory} aria-labelledby="directory-title">
-        <header className={styles.directoryHead}>
-          <h2 id="directory-title">Six more I’ve tried</h2>
-          <p>
-            “Voted best for” is what worked best for me. I’m a patient, not a
-            doctor. The prices are what I paid on my orders, and yours can come
-            out different.
-          </p>
-        </header>
+      <section className={styles.directory}>
         <ul className={styles.rows}>
           {rest.map((item) => {
             const clinic = clinicNamed(item.name);
@@ -567,8 +607,14 @@ export default async function TrustedProvidersMockup(
                   <p className={styles.rowKicker}>Voted best for</p>
                   <h3>{item.voted}</h3>
                   <p className={styles.rowName}>
-                    <Logo clinic={clinic} />
-                    {clinic.name}
+                    <AffiliateBrand
+                      clinic={clinic}
+                      placement="trusted_providers_directory"
+                      className={styles.rowBrand}
+                    >
+                      <Logo clinic={clinic} />
+                      <span>{clinic.name}</span>
+                    </AffiliateBrand>
                   </p>
                   {item.detail ? (
                     <p className={styles.detail}>{item.detail}</p>
@@ -610,39 +656,7 @@ export default async function TrustedProvidersMockup(
                         </span>
                       ) : null}
                     </p>
-                    <ul className={styles.rowMeta}>
-                      <li>
-                        <HugeiconsIcon
-                          icon={Medicine02Icon}
-                          size={16}
-                          strokeWidth={1.75}
-                          aria-hidden="true"
-                        />
-                        {clinic.formulation}
-                      </li>
-                      <li>
-                        <HugeiconsIcon
-                          icon={clinic.insurance ? Tick02Icon : Cancel01Icon}
-                          size={16}
-                          strokeWidth={1.75}
-                          aria-hidden="true"
-                        />
-                        {clinic.insurance
-                          ? "Takes insurance"
-                          : "Doesn’t take insurance"}
-                      </li>
-                      {clinic.note ? (
-                        <li>
-                          <HugeiconsIcon
-                            icon={Tick02Icon}
-                            size={16}
-                            strokeWidth={1.75}
-                            aria-hidden="true"
-                          />
-                          {clinic.note}
-                        </li>
-                      ) : null}
-                    </ul>
+                    <DealFacts clinic={clinic} />
                     <div className={styles.actions}>
                       <AffiliateButton
                         clinic={clinic}

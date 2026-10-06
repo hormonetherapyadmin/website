@@ -187,9 +187,18 @@
   color: var(--muted);
 }
 
-.deal .actions a {
+.deal .actions a,
+.bandDeal .actions a {
+  display: inline-flex;
   flex: 1;
-  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.deal .actions a svg,
+.bandDeal .actions a svg {
+  flex: none;
 }
 
 .dealCode {
@@ -371,11 +380,6 @@
   margin-top: 0.15rem;
   font-weight: 500;
   opacity: 0.8;
-}
-
-.bandDeal .actions a {
-  flex: 1;
-  text-align: center;
 }
 
 .bandDeal .dealCode span {
