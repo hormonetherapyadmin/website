@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+/*
+  Semantic design tokens. Values are temporary neutrals until the brand
+  designer delivers the palette and type. Components must use only these
+  semantic names; Tailwind's default palette is removed so raw colors such
+  as `bg-blue-500` are unavailable.
+*/
+@theme {
+  --color-*: initial;
+  --color-background: #fffdf9;
+  --color-surface: #f6f1ea;
+  --color-text: #1f1a17;
+  --color-text-muted: #5c534d;
+  --color-border: #e3dad0;
+  --color-accent: #8a3d2b;
+  --color-cta: #1f1a17;
+  --color-cta-text: #ffffff;
+  --color-focus: #2f5fd0;
+
+  --font-body:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-heading: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+
+  --container-prose: 42rem;
+  --container-content: 72rem;
+
+  --radius-control: 0.5rem;
+  --radius-card: 1rem;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    line-height: 1.2;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
