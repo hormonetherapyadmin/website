@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState, type ReactNode } from "react";
-import styles from "./homepage.module.css";
+import styles from "./mockup.module.css";
 
 /*
   Icon with a tooltip. Shows on hover and keyboard focus, toggles on tap for
@@ -11,9 +11,11 @@ import styles from "./homepage.module.css";
 export function Tip({
   label,
   children,
+  describe = false,
 }: {
   label: string;
   children: ReactNode;
+  describe?: boolean;
 }) {
   const id = useId();
   const [open, setOpen] = useState(false);
@@ -34,7 +36,8 @@ export function Tip({
       <button
         type="button"
         className={styles.tipButton}
-        aria-labelledby={id}
+        aria-labelledby={describe ? undefined : id}
+        aria-describedby={describe ? id : undefined}
         onClick={() => setOpen((value) => !value)}
         onKeyDown={(event) => {
           if (event.key === "Escape") {
