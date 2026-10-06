@@ -57,7 +57,9 @@ export function SiteNav({ items }: { items: NavItem[] }) {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key !== "Escape") return;
       const selector =
-        openGroup === null ? "[data-menu-toggle]" : `[data-group="${openGroup}"]`;
+        openGroup === null
+          ? "[data-menu-toggle]"
+          : `[data-group="${openGroup}"]`;
       if (openGroup === null) setMenuOpen(false);
       setOpenGroup(null);
       navRef.current?.querySelector<HTMLButtonElement>(selector)?.focus();

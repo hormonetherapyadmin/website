@@ -8,7 +8,13 @@ import styles from "./homepage.module.css";
   touch screens, and Escape hides it (WCAG 1.4.13). The label stays in the
   HTML as the button's accessible name.
 */
-export function Tip({ label, children }: { label: string; children: ReactNode }) {
+export function Tip({
+  label,
+  children,
+}: {
+  label: string;
+  children: ReactNode;
+}) {
   const id = useId();
   const [open, setOpen] = useState(false);
   const [dismissed, setDismissed] = useState(false);

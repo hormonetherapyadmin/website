@@ -876,6 +876,10 @@ inventory.
     `@theme`; components use only semantic token names (for example
     `bg-surface`, `text-accent`), never raw palette classes.
 -   ESLint (Next.js config) and Prettier.
+-   A pre-commit hook (`.githooks/pre-commit`, enabled by the
+    `prepare` script on `pnpm install`) formats staged files with
+    Prettier, so the CI format check does not fail on push. A Cursor
+    `afterFileEdit` hook (`.cursor/hooks.json`) formats agent edits.
 -   Vitest for logic; Playwright with axe for smoke, legacy-URL, and
     accessibility checks.
 -   Netlify with its Next.js runtime, configured in `netlify.toml`.
