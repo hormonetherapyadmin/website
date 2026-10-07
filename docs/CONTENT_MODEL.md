@@ -31,7 +31,8 @@ Do not hard-code provider names into the navigation component.
 
 ### Homepage
 
-Use intentional slices/fields for the approved homepage structure.
+The homepage is one single page type. Its slices, the shared Section
+fields, and the rich text rules are specified in `docs/SLICE_MODEL.md`.
 
 ### Providers Landing
 
@@ -109,6 +110,11 @@ Suggested fields:
 -   SEO fields where provider has a public page
 
 Avoid overloading Provider with long review prose.
+
+Provider is a page type. Facts that the homepage or another page reads
+live in the static zone, because a content relationship cannot fetch a
+slice zone. The field ids the homepage comparison and the clinic-page
+hero read are in `docs/SLICE_MODEL.md`.
 
 ### Provider Review
 
@@ -215,6 +221,18 @@ Suggested fields:
 Do not silently fall back from an expired offer to an unrelated
 destination without product approval.
 
+The homepage comparison reads `code` and `display_copy` through the
+provider. The visit address used on the homepage lives on the provider's
+`visit` link. See `docs/SLICE_MODEL.md`.
+
+### Callout
+
+A reusable box inserted in the flow of a post. Callout has no public
+page, so it is a custom type. A post points at it with a content
+relationship. It cannot be embedded inside a rich text field.
+
+Fields are specified in `docs/SLICE_MODEL.md`.
+
 ### Page
 
 General site pages that are not articles, reviews, or comparisons,
@@ -256,7 +274,12 @@ no separate Symptom type.
 
 Keep this intentionally small.
 
-Initial candidates:
+The homepage slices, the shared Section group, and the shared rich text
+component are specified in `docs/SLICE_MODEL.md`. Copy that Section group
+and those rich text presets onto later slices.
+
+Article, review, provider, and trusted-providers slices are not specified
+yet. Candidates:
 
 -   Rich Text
 -   Image + Text
@@ -282,10 +305,11 @@ Initial candidates:
 -   Video / Embed
 -   Timeline / Steps
 
-This list is a starting inventory, not a commitment. Phase 2 trims
-overlapping candidates (for example Provider Card / Provider Grid /
-Provider Comparison / Comparison Table, and Affiliate CTA / Offer
-Callout) before building.
+Trim overlapping candidates before building them (for example Provider
+Card / Provider Grid / Provider Comparison / Comparison Table, and
+Affiliate CTA / Offer Callout). The homepage clinic comparison is the
+comparison slice. A post inserts a Callout document rather than a
+separate Offer Callout slice.
 
 Before adding a new slice, ask whether an existing slice can represent
 the editorial intent cleanly. Avoid variants that differ only
@@ -331,7 +355,10 @@ Preferred graph:
 -   Review -\> Provider
 -   Comparison -\> Providers
 -   Article -\> Topics/Treatments/Providers
--   Provider -\> Offers
+-   Provider -\> Offer
+-   Callout -\> Provider and Offer
+-   Article body -\> Callout
+-   Homepage slices -\> Provider, Article, Provider Review, and Comparison
 -   All editorial documents -\> Author
 -   Landing pages -\> curated document references as needed
 

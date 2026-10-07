@@ -1,6 +1,16 @@
 import type { Metadata } from "next";
+import { Besley } from "next/font/google";
+import { PrismicPreview } from "@prismicio/next";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { repositoryName } from "@/prismicio";
 import "./globals.css";
+
+const besley = Besley({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  variable: "--font-besley",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -9,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en">
+    <html lang="en" className={besley.variable}>
       <body className="antialiased">
         <a
           href="#main"
@@ -18,6 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to main content
         </a>
         <main id="main">{children}</main>
+        <PrismicPreview repositoryName={repositoryName} />
       </body>
     </html>
   );

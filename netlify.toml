@@ -9,3 +9,4 @@
 # ALLOW_INDEXING must stay unset here. Set it to "true" only in the
 # Netlify UI for the production context, at cutover
 # (docs/MIGRATION_RUNBOOK.md).
+# Set PRISMIC_ACCESS_TOKEN and PRISMIC_WEBHOOK_SECRET in the Netlify UI too.
