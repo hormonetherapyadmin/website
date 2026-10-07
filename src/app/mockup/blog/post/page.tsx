@@ -292,7 +292,7 @@ export default async function BlogPostMockup(
 
             <p>
               This blog is a personal reflection of my seven years on{" "}
-              <a href="/copy-of-trusted-providers">
+              <a href="/mockup/trusted-providers">
                 Menopause Hormone Replacement Therapy.
               </a>{" "}
               For the first five years, I relied solely on systemic, whole-body

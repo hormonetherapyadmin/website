@@ -29,7 +29,8 @@ export const CLINICS: Clinic[] = [
     insurance: false,
     formulation: "Oestra vaginal cream",
     note: "Free consults as needed.",
-    reviewHref: "/inner-balance",
+    // Design mockup. The live public URL remains /inner-balance.
+    reviewHref: "/mockup/inner-balance",
     logo: "/mockup/logos/inner-balance.png",
     monogram: "IB",
     isAffiliate: true,
@@ -86,6 +87,7 @@ export const CLINICS: Clinic[] = [
     formulation: "Patch + pills",
     note: "$150 labs required up front, includes a 30-minute consult.",
     reviewHref: "/joiwommenswellness",
+    logo: "/mockup/logos/joi.png",
     monogram: "J+",
     isAffiliate: true,
     offer: "BRONSON: 50% off labs",

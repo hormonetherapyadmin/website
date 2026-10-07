@@ -304,7 +304,7 @@ export default async function HomepageMockup(
             insurance when I could. These are my real costs, not list prices.
             Yours may differ.
           </p>
-          <a href="/copy-of-trusted-providers" className={styles.buttonPrimary}>
+          <a href="/mockup/trusted-providers" className={styles.buttonPrimary}>
             Trusted providers
           </a>
           <a href={DISCLOSURE_HREF} className={styles.disclosureLink}>
