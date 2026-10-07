@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import type { LinkField, RichTextField } from "@prismicio/client";
-import type { SliceSectionFields } from "@/components/slice-section";
 import { Divider } from "@/slices/divider";
 
 export const metadata: Metadata = {
@@ -8,49 +6,53 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const emptyText = [] as RichTextField;
-const emptyLink = { link_type: "Any" } as LinkField;
-
-function section(
-  overrides: Partial<SliceSectionFields> = {},
-): SliceSectionFields[] {
-  return [
-    {
-      small_heading: emptyText,
-      heading: emptyText,
-      intro: emptyText,
-      link: emptyLink,
-      background: null,
-      space_above: "None",
-      space_below: "None",
-      ...overrides,
-    },
-  ];
-}
-
 const samples = [
-  { line: "Squiggly", color: "Accent" },
-  { line: "Straight", color: "Accent" },
-  { line: "Squiggly", color: "Soft" },
-  { line: "Straight", color: "Border" },
-  { line: "Squiggly", color: "Text" },
+  {
+    line: "Squiggly",
+    color: "Accent",
+    background: "Same as the page",
+    space_above: "None",
+    space_below: "None",
+  },
+  {
+    line: "Straight",
+    color: "Accent",
+    background: "Same as the page",
+    space_above: "None",
+    space_below: "None",
+  },
+  {
+    line: "Squiggly",
+    color: "Soft",
+    background: "Soft",
+    space_above: "Small",
+    space_below: "Small",
+  },
+  {
+    line: "Straight",
+    color: "Border",
+    background: "Same as the page",
+    space_above: "None",
+    space_below: "None",
+  },
+  {
+    line: "Squiggly",
+    color: "Text",
+    background: "Highlight",
+    space_above: "Medium",
+    space_below: "None",
+  },
 ] as const;
 
 export default function DividerPreview() {
   return (
     <main>
       {samples.map((sample) => (
-        <div key={`${sample.line}-${sample.color}`}>
+        <div key={`${sample.line}-${sample.color}-${sample.background}`}>
           <p className="mx-auto mt-10 w-full max-w-wrap px-gutter text-sm text-text-muted">
-            {sample.line}, {sample.color}
+            {sample.line}, {sample.color}, {sample.background}
           </p>
-          <Divider
-            primary={{
-              section: section(),
-              line: sample.line,
-              color: sample.color,
-            }}
-          />
+          <Divider primary={sample} />
         </div>
       ))}
     </main>

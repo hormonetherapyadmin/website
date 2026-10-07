@@ -42,9 +42,10 @@ slice. One component reads them. The section wrapper is
 
 ### Section
 
-Every slice starts with a non-repeatable group named `section`, labeled
-**Section**. Groups cannot contain other groups, so the slice's own
-repeatable groups sit beside it.
+Every slice except the Divider starts with a non-repeatable group named
+`section`, labeled **Section**. Groups cannot contain other groups, so
+the slice's own repeatable groups sit beside it. The Divider lists
+Background, Space above, and Space below on the slice itself.
 
 | Label | Id | Kind | Default |
 | --- | --- | --- | --- |
@@ -144,14 +145,18 @@ posts is a repeatable group with one content relationship in each row.
 
 ### Divider
 
-A line between slices. It uses the shared Section group for spacing and
-background only. Both Space above and Space below default to None, so the
-line does not add a gap until she asks for one.
+A line between slices. It does not use the Section group. Background,
+Space above, and Space below are fields on the slice, with the same
+choices as Section. Both spacing fields default to None, so the line does
+not add a gap until she asks for one.
 
 | Label | Id | Kind | Default |
 | --- | --- | --- | --- |
 | Line | `line` | Select | Squiggly |
 | Color | `color` | Select | Accent |
+| Background | `background` | Select | Same as the page |
+| Space above | `space_above` | Select | None |
+| Space below | `space_below` | Select | None |
 
 Line is Squiggly or Straight. Those are the two rules in the mockups.
 Color is Accent, Soft, Border, or Text. Soft is the lighter accent used

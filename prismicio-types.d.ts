@@ -64,7 +64,7 @@ type ContentRelationshipFieldWithData<
   >;
 }[Exclude<TCustomType[number], string>["id"]];
 
-type HomepageDocumentDataSlicesSlice = HeroSlice;
+type HomepageDocumentDataSlicesSlice = DividerSlice | HeroSlice;
 
 /**
  * Content for Homepage documents
@@ -164,6 +164,160 @@ export type HomepageDocument<Lang extends string = string> =
   >;
 
 export type AllDocumentTypes = HomepageDocument;
+
+/**
+ * Item in *Divider → Default → Primary → Section*
+ */
+export interface DividerSliceDefaultPrimarySectionItem {
+  /**
+   * Small heading field in *Divider → Default → Primary → Section*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: divider.default.primary.section[].small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Divider → Default → Primary → Section*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: divider.default.primary.section[].heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Divider → Default → Primary → Section*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: divider.default.primary.section[].intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Divider → Default → Primary → Section*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: divider.default.primary.section[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Divider → Default → Primary → Section*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: divider.default.primary.section[].background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Divider → Default → Primary → Section*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: divider.default.primary.section[].space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Divider → Default → Primary → Section*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: divider.default.primary.section[].space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+}
+
+/**
+ * Primary content in *Divider → Default → Primary*
+ */
+export interface DividerSliceDefaultPrimary {
+  /**
+   * Section field in *Divider → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: divider.default.primary.section[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  section: prismic.GroupField<Simplify<DividerSliceDefaultPrimarySectionItem>>;
+
+  /**
+   * Line field in *Divider → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Squiggly
+   * - **API ID Path**: divider.default.primary.line
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  line: prismic.SelectField<"Squiggly" | "Straight", "filled">;
+
+  /**
+   * Color field in *Divider → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Accent
+   * - **API ID Path**: divider.default.primary.color
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  color: prismic.SelectField<"Accent" | "Soft" | "Border" | "Text", "filled">;
+}
+
+/**
+ * Default variation for Divider Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: A squiggly or straight line.
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type DividerSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<DividerSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Divider*
+ */
+type DividerSliceVariation = DividerSliceDefault;
+
+/**
+ * Divider Shared Slice
+ *
+ * - **API ID**: `divider`
+ * - **Description**: A line between sections.
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type DividerSlice = prismic.SharedSlice<
+  "divider",
+  DividerSliceVariation
+>;
 
 /**
  * Item in *Hero → Home → Primary → Section*
@@ -275,7 +429,7 @@ export interface HeroSliceSubpagePrimarySectionItem {
    * Small heading field in *Hero → Subpage → Primary → Section*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: Providers
+   * - **Placeholder**: Learn
    * - **API ID Path**: hero.subpage.primary.section[].small_heading
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
@@ -285,7 +439,7 @@ export interface HeroSliceSubpagePrimarySectionItem {
    * Heading field in *Hero → Subpage → Primary → Section*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: Trusted providers
+   * - **Placeholder**: New to hormone therapy
    * - **API ID Path**: hero.subpage.primary.section[].heading
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
@@ -305,7 +459,7 @@ export interface HeroSliceSubpagePrimarySectionItem {
    * Link field in *Hero → Subpage → Primary → Section*
    *
    * - **Field Type**: Link
-   * - **Placeholder**: Full price chart
+   * - **Placeholder**: Start here
    * - **API ID Path**: hero.subpage.primary.section[].link
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
@@ -316,12 +470,12 @@ export interface HeroSliceSubpagePrimarySectionItem {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Transparent
+   * - **Default Value**: Same as the page
    * - **API ID Path**: hero.subpage.primary.section[].background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Transparent" | "Soft" | "Highlight" | "Dark",
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
     "filled"
   >;
 
@@ -355,15 +509,102 @@ export interface HeroSliceSubpagePrimarySectionItem {
 }
 
 /**
- * Item in *Hero → Subpage → Primary → Clinics*
+ * Item in *Hero → Brands → Primary → Section*
  */
-export interface HeroSliceSubpagePrimaryClinicsItem {
+export interface HeroSliceBrandsPrimarySectionItem {
   /**
-   * Clinic field in *Hero → Subpage → Primary → Clinics*
+   * Small heading field in *Hero → Brands → Primary → Section*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Providers
+   * - **API ID Path**: hero.brands.primary.section[].small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Hero → Brands → Primary → Section*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Trusted providers
+   * - **API ID Path**: hero.brands.primary.section[].heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Hero → Brands → Primary → Section*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.brands.primary.section[].intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Hero → Brands → Primary → Section*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Full price chart
+   * - **API ID Path**: hero.brands.primary.section[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Hero → Brands → Primary → Section*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: hero.brands.primary.section[].background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Hero → Brands → Primary → Section*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: hero.brands.primary.section[].space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Hero → Brands → Primary → Section*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: hero.brands.primary.section[].space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+}
+
+/**
+ * Item in *Hero → Brands → Primary → Clinics*
+ */
+export interface HeroSliceBrandsPrimaryClinicsItem {
+  /**
+   * Clinic field in *Hero → Brands → Primary → Clinics*
    *
    * - **Field Type**: Content Relationship
    * - **Placeholder**: *None*
-   * - **API ID Path**: hero.subpage.primary.clinics[].clinic
+   * - **API ID Path**: hero.brands.primary.clinics[].clinic
    * - **Documentation**: https://prismic.io/docs/fields/content-relationship
    */
   clinic: ContentRelationshipFieldWithData<
@@ -371,11 +612,11 @@ export interface HeroSliceSubpagePrimaryClinicsItem {
   >;
 
   /**
-   * Link field in *Hero → Subpage → Primary → Clinics*
+   * Link field in *Hero → Brands → Primary → Clinics*
    *
    * - **Field Type**: Link
    * - **Placeholder**: Where this logo goes, often a jump link like #inner-balance
-   * - **API ID Path**: hero.subpage.primary.clinics[].link
+   * - **API ID Path**: hero.brands.primary.clinics[].link
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
   link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
@@ -591,26 +832,64 @@ export interface HeroSliceSubpagePrimary {
   section: prismic.GroupField<Simplify<HeroSliceSubpagePrimarySectionItem>>;
 
   /**
-   * Clinics field in *Hero → Subpage → Primary*
+   * Image field in *Hero → Subpage → Primary*
    *
-   * - **Field Type**: Group
+   * - **Field Type**: Image
    * - **Placeholder**: *None*
-   * - **API ID Path**: hero.subpage.primary.clinics[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   * - **API ID Path**: hero.subpage.primary.image
+   * - **Documentation**: https://prismic.io/docs/fields/image
    */
-  clinics: prismic.GroupField<Simplify<HeroSliceSubpagePrimaryClinicsItem>>;
+  image: prismic.ImageField<never>;
 }
 
 /**
  * Subpage variation for Hero Slice
  *
  * - **API ID**: `subpage`
- * - **Description**: A page title, a short intro, one text link, and clinic logos.
+ * - **Description**: A page title, a short intro, one text link, and a photo.
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type HeroSliceSubpage = prismic.SharedSliceVariation<
   "subpage",
   Simplify<HeroSliceSubpagePrimary>,
+  never
+>;
+
+/**
+ * Primary content in *Hero → Brands → Primary*
+ */
+export interface HeroSliceBrandsPrimary {
+  /**
+   * Section field in *Hero → Brands → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.brands.primary.section[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  section: prismic.GroupField<Simplify<HeroSliceBrandsPrimarySectionItem>>;
+
+  /**
+   * Clinics field in *Hero → Brands → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.brands.primary.clinics[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  clinics: prismic.GroupField<Simplify<HeroSliceBrandsPrimaryClinicsItem>>;
+}
+
+/**
+ * Brands variation for Hero Slice
+ *
+ * - **API ID**: `brands`
+ * - **Description**: A page title, a short intro, one text link, and clinic logos.
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type HeroSliceBrands = prismic.SharedSliceVariation<
+  "brands",
+  Simplify<HeroSliceBrandsPrimary>,
   never
 >;
 
@@ -716,13 +995,14 @@ export type HeroSliceProvider = prismic.SharedSliceVariation<
 /**
  * Slice variation for *Hero*
  */
-type HeroSliceVariation = HeroSliceHome | HeroSliceSubpage | HeroSliceProvider;
+type HeroSliceVariation =
+  HeroSliceHome | HeroSliceSubpage | HeroSliceBrands | HeroSliceProvider;
 
 /**
  * Hero Shared Slice
  *
  * - **API ID**: `hero`
- * - **Description**: The top of the homepage, a subpage, or a clinic page.
+ * - **Description**: The top of the homepage, a subpage, the brand logos, or a clinic page.
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
@@ -752,18 +1032,26 @@ declare module "@prismicio/client" {
       HomepageDocumentData,
       HomepageDocumentDataSlicesSlice,
       AllDocumentTypes,
+      DividerSlice,
+      DividerSliceDefaultPrimarySectionItem,
+      DividerSliceDefaultPrimary,
+      DividerSliceVariation,
+      DividerSliceDefault,
       HeroSlice,
       HeroSliceHomePrimarySectionItem,
       HeroSliceHomePrimaryTrustLinesItem,
       HeroSliceHomePrimary,
       HeroSliceSubpagePrimarySectionItem,
-      HeroSliceSubpagePrimaryClinicsItem,
       HeroSliceSubpagePrimary,
+      HeroSliceBrandsPrimarySectionItem,
+      HeroSliceBrandsPrimaryClinicsItem,
+      HeroSliceBrandsPrimary,
       HeroSliceProviderPrimarySectionItem,
       HeroSliceProviderPrimary,
       HeroSliceVariation,
       HeroSliceHome,
       HeroSliceSubpage,
+      HeroSliceBrands,
       HeroSliceProvider,
     };
   }

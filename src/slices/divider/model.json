@@ -1,96 +1,59 @@
 {
-  "id": "divider",
-  "type": "SharedSlice",
-  "name": "Divider",
   "description": "A line between sections.",
+  "id": "divider",
+  "name": "Divider",
+  "type": "SharedSlice",
   "variations": [
     {
-      "id": "default",
-      "name": "Default",
       "description": "A squiggly or straight line.",
       "docURL": "",
-      "imageUrl": "",
-      "version": "initial",
+      "id": "default",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/divider/default/79c116a66cb9552b53f1b580ed2ddd0c20ddeca4.png?auto=compress%2Cformat",
+      "items": {},
+      "name": "Default",
       "primary": {
-        "section": {
-          "type": "Group",
-          "config": {
-            "label": "Section",
-            "repeat": false,
-            "fields": {
-              "small_heading": {
-                "type": "StructuredText",
-                "config": {
-                  "label": "Small heading",
-                  "single": "paragraph,strong,em,hyperlink"
-                }
-              },
-              "heading": {
-                "type": "StructuredText",
-                "config": {
-                  "label": "Heading",
-                  "single": "paragraph,strong,em,hyperlink"
-                }
-              },
-              "intro": {
-                "type": "StructuredText",
-                "config": {
-                  "label": "Intro",
-                  "single": "paragraph,strong,em,hyperlink"
-                }
-              },
-              "link": {
-                "type": "Link",
-                "config": {
-                  "label": "Link",
-                  "allowText": true
-                }
-              },
-              "background": {
-                "type": "Select",
-                "config": {
-                  "label": "Background",
-                  "options": ["Same as the page", "Soft", "Highlight", "Dark"],
-                  "default_value": "Same as the page"
-                }
-              },
-              "space_above": {
-                "type": "Select",
-                "config": {
-                  "label": "Space above",
-                  "options": ["None", "Small", "Medium", "Large"],
-                  "default_value": "None"
-                }
-              },
-              "space_below": {
-                "type": "Select",
-                "config": {
-                  "label": "Space below",
-                  "options": ["None", "Small", "Medium", "Large"],
-                  "default_value": "None"
-                }
-              }
-            }
-          }
-        },
         "line": {
-          "type": "Select",
           "config": {
+            "default_value": "Squiggly",
             "label": "Line",
-            "options": ["Squiggly", "Straight"],
-            "default_value": "Squiggly"
-          }
+            "options": ["Squiggly", "Straight"]
+          },
+          "type": "Select"
         },
         "color": {
-          "type": "Select",
           "config": {
+            "default_value": "Accent",
             "label": "Color",
-            "options": ["Accent", "Soft", "Border", "Text"],
-            "default_value": "Accent"
-          }
+            "options": ["Accent", "Soft", "Border", "Text"]
+          },
+          "type": "Select"
+        },
+        "background": {
+          "config": {
+            "default_value": "Same as the page",
+            "label": "Background",
+            "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+          },
+          "type": "Select"
+        },
+        "space_above": {
+          "config": {
+            "default_value": "None",
+            "label": "Space above",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "space_below": {
+          "config": {
+            "default_value": "None",
+            "label": "Space below",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
         }
       },
-      "items": {}
+      "version": "initial"
     }
   ]
 }
