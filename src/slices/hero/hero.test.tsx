@@ -87,10 +87,45 @@ describe("Hero", () => {
     expect(html).not.toContain("Hi, I");
   });
 
-  it("renders a subpage title and clinic logo link", () => {
-    const html = renderToStaticMarkup(
+  it("renders a subpage title beside its photo and hides an empty photo", () => {
+    const filled = renderToStaticMarkup(
       <Hero
         variation="subpage"
+        primary={{
+          section: section({
+            small_heading: rich("Learn"),
+            heading: rich("New to hormone therapy"),
+            link: {
+              link_type: "Web",
+              url: "/ishrtforme",
+              text: "Start here",
+            },
+          }),
+          image: image("/mockup/peggy-portrait.jpg", "Peggy, smiling"),
+        }}
+      />,
+    );
+    const empty = renderToStaticMarkup(
+      <Hero
+        variation="subpage"
+        primary={{
+          section: section({ heading: rich("Blog") }),
+          image: emptyImage,
+        }}
+      />,
+    );
+
+    expect(filled).toContain('id="new-to-hormone-therapy"');
+    expect(filled).toContain("Start here");
+    expect(filled).toContain('alt="Peggy, smiling"');
+    expect(empty).toContain("Blog");
+    expect(empty).not.toContain("<img");
+  });
+
+  it("renders the brands title and a clinic logo link", () => {
+    const html = renderToStaticMarkup(
+      <Hero
+        variation="brands"
         primary={{
           section: section({
             small_heading: rich("Providers"),

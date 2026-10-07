@@ -5,6 +5,7 @@
 
 .home,
 .subpage,
+.brands,
 .provider {
   display: grid;
   align-items: center;
@@ -17,6 +18,12 @@
 }
 
 .subpage {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  padding-block: clamp(1.75rem, 4vw, 3rem);
+}
+
+.brands {
   grid-template-columns: minmax(0, 1fr) auto;
   gap: clamp(2rem, 5vw, 4.5rem);
   padding-block: clamp(1.75rem, 4vw, 3rem);
@@ -480,6 +487,7 @@
 @media (max-width: 960px) {
   .home,
   .subpage,
+  .brands,
   .provider {
     grid-template-columns: 1fr;
   }

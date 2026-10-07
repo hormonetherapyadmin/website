@@ -316,12 +316,12 @@ export interface HeroSliceSubpagePrimarySectionItem {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Transparent
    * - **API ID Path**: hero.subpage.primary.section[].background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Transparent" | "Soft" | "Highlight" | "Dark",
     "filled"
   >;
 

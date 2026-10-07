@@ -1,0 +1,96 @@
+{
+  "id": "divider",
+  "type": "SharedSlice",
+  "name": "Divider",
+  "description": "A line between sections.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "description": "A squiggly or straight line.",
+      "docURL": "",
+      "imageUrl": "",
+      "version": "initial",
+      "primary": {
+        "section": {
+          "type": "Group",
+          "config": {
+            "label": "Section",
+            "repeat": false,
+            "fields": {
+              "small_heading": {
+                "type": "StructuredText",
+                "config": {
+                  "label": "Small heading",
+                  "single": "paragraph,strong,em,hyperlink"
+                }
+              },
+              "heading": {
+                "type": "StructuredText",
+                "config": {
+                  "label": "Heading",
+                  "single": "paragraph,strong,em,hyperlink"
+                }
+              },
+              "intro": {
+                "type": "StructuredText",
+                "config": {
+                  "label": "Intro",
+                  "single": "paragraph,strong,em,hyperlink"
+                }
+              },
+              "link": {
+                "type": "Link",
+                "config": {
+                  "label": "Link",
+                  "allowText": true
+                }
+              },
+              "background": {
+                "type": "Select",
+                "config": {
+                  "label": "Background",
+                  "options": ["Same as the page", "Soft", "Highlight", "Dark"],
+                  "default_value": "Same as the page"
+                }
+              },
+              "space_above": {
+                "type": "Select",
+                "config": {
+                  "label": "Space above",
+                  "options": ["None", "Small", "Medium", "Large"],
+                  "default_value": "None"
+                }
+              },
+              "space_below": {
+                "type": "Select",
+                "config": {
+                  "label": "Space below",
+                  "options": ["None", "Small", "Medium", "Large"],
+                  "default_value": "None"
+                }
+              }
+            }
+          }
+        },
+        "line": {
+          "type": "Select",
+          "config": {
+            "label": "Line",
+            "options": ["Squiggly", "Straight"],
+            "default_value": "Squiggly"
+          }
+        },
+        "color": {
+          "type": "Select",
+          "config": {
+            "label": "Color",
+            "options": ["Accent", "Soft", "Border", "Text"],
+            "default_value": "Accent"
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

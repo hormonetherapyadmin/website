@@ -6,6 +6,9 @@
       "slices": {
         "config": {
           "choices": {
+            "divider": {
+              "type": "SharedSlice"
+            },
             "hero": {
               "type": "SharedSlice"
             }

@@ -142,6 +142,22 @@ links leave variants off.
 A row with several fields is a repeatable group. A list of clinics or
 posts is a repeatable group with one content relationship in each row.
 
+### Divider
+
+A line between slices. It uses the shared Section group for spacing and
+background only. Both Space above and Space below default to None, so the
+line does not add a gap until she asks for one.
+
+| Label | Id | Kind | Default |
+| --- | --- | --- | --- |
+| Line | `line` | Select | Squiggly |
+| Color | `color` | Select | Accent |
+
+Line is Squiggly or Straight. Those are the two rules in the mockups.
+Color is Accent, Soft, Border, or Text. Soft is the lighter accent used
+by the homepage wave. Accent, Border, and Text use those color tokens.
+There is no free color picker.
+
 ## Homepage
 
 Single page type. Use the page type's built-in metadata for the SEO
@@ -160,7 +176,7 @@ Each slice below lists only its own fields. Section is on all of them.
 
 ### Hero
 
-One slice, three variations. Each variation includes the shared Section
+One slice, four variations. Each variation includes the shared Section
 group and lays the heading out itself. Section supplies the spacing and
 background. The homepage section id comes from the tagline.
 
@@ -189,9 +205,21 @@ Image help: "Describe who is in the photo and what they are doing."
 
 #### Subpage
 
-Trusted providers, and later pages with the same shape. Section Small
-heading is "Providers". Section Heading is the page title. Section Intro
-is the dek. Section Link is "Full price chart".
+A normal interior page. Section Small heading, Heading, Intro, and Link
+are the kicker, the page title, the dek, and the text link.
+
+| Label | Id | Kind | Required |
+| --- | --- | --- | --- |
+| Image | `image` | Image, including its description | No |
+
+Hide the photo when the image is empty. Image help: "Describe who is in
+the photo and what they are doing."
+
+#### Brands
+
+Trusted providers. Section Small heading is "Providers". Section Heading
+is the page title. Section Intro is the dek. Section Link is "Full price
+chart".
 
 | Label | Id | Kind | Required |
 | --- | --- | --- | --- |

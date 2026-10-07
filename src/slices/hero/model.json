@@ -1,5 +1,5 @@
 {
-  "description": "The top of the homepage, a subpage, or a clinic page.",
+  "description": "The top of the homepage, a subpage, the brand logos, or a clinic page.",
   "id": "hero",
   "name": "Hero",
   "type": "SharedSlice",
@@ -146,12 +146,96 @@
       "version": "initial"
     },
     {
-      "description": "A page title, a short intro, one text link, and clinic logos.",
+      "description": "A page title, a short intro, one text link, and a photo.",
       "docURL": "",
       "id": "subpage",
       "imageUrl": "",
       "items": {},
       "name": "Subpage",
+      "primary": {
+        "section": {
+          "config": {
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "label": "Small heading",
+                  "placeholder": "Learn",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "heading": {
+                "config": {
+                  "label": "Heading",
+                  "placeholder": "New to hormone therapy",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "intro": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Intro",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowText": true,
+                  "label": "Link",
+                  "placeholder": "Start here"
+                },
+                "type": "Link"
+              },
+              "background": {
+                "config": {
+                  "default_value": "Same as the page",
+                  "label": "Background",
+                  "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+                },
+                "type": "Select"
+              },
+              "space_above": {
+                "config": {
+                  "default_value": "Medium",
+                  "label": "Space above",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              },
+              "space_below": {
+                "config": {
+                  "default_value": "None",
+                  "label": "Space below",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Section",
+            "repeat": false
+          },
+          "type": "Group"
+        },
+        "image": {
+          "config": {
+            "constraint": {},
+            "label": "Image",
+            "thumbnails": []
+          },
+          "type": "Image"
+        }
+      },
+      "version": "initial"
+    },
+    {
+      "description": "A page title, a short intro, one text link, and clinic logos.",
+      "docURL": "",
+      "id": "brands",
+      "imageUrl": "",
+      "items": {},
+      "name": "Brands",
       "primary": {
         "section": {
           "config": {
@@ -254,7 +338,7 @@
       "description": "The top of a clinic page. The name, price, logo, and coupon come from the clinic.",
       "docURL": "",
       "id": "provider",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/hero/provider/9ea44f329298b409e4e018a9ba58deb474acac67.png?auto=compress%2Cformat",
       "items": {},
       "name": "Provider",
       "primary": {

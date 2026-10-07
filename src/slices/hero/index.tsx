@@ -48,6 +48,11 @@ type HomePrimary = {
 
 type SubpagePrimary = {
   section?: readonly SliceSectionFields[] | null;
+  image: ImageField;
+};
+
+type BrandsPrimary = {
+  section?: readonly SliceSectionFields[] | null;
   clinics?: readonly { clinic: HeroClinicLink; link: LinkField }[] | null;
 };
 
@@ -63,6 +68,7 @@ type ProviderPrimary = {
 export type HeroSlice =
   | { variation: "home"; primary: HomePrimary }
   | { variation: "subpage"; primary: SubpagePrimary }
+  | { variation: "brands"; primary: BrandsPrimary }
   | { variation: "provider"; primary: ProviderPrimary };
 
 function text(value: KeyTextField | null | undefined) {
@@ -367,38 +373,61 @@ function ClinicLogo({
   );
 }
 
+function TitleCopy({ section }: { section?: SliceSectionFields }) {
+  return (
+    <div>
+      <RichText
+        field={section?.small_heading}
+        as="p"
+        unstyled
+        className={styles.kicker}
+      />
+      <RichText
+        field={section?.heading}
+        as="h1"
+        unstyled
+        className={`${styles.display} ${styles.subpageTitle}`}
+      />
+      <RichText field={section?.intro} as="p" unstyled className={styles.dek} />
+      {section ? (
+        <div className={styles.subpageLinks}>
+          <TextLink field={section.link} />
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 function SubpageHero({ primary }: { primary: SubpagePrimary }) {
+  const section = primary.section?.[0];
+
+  return (
+    <SliceSection section={primary.section} showHeader={false}>
+      <div className={styles.subpage}>
+        <TitleCopy section={section} />
+        {isFilled.image(primary.image) ? (
+          <figure className={styles.figure}>
+            <div className={styles.photo}>
+              <Media
+                field={primary.image}
+                sizes="(min-width: 960px) 520px, 90vw"
+              />
+            </div>
+          </figure>
+        ) : null}
+      </div>
+    </SliceSection>
+  );
+}
+
+function BrandsHero({ primary }: { primary: BrandsPrimary }) {
   const section = primary.section?.[0];
   const clinics = primary.clinics ?? [];
 
   return (
     <SliceSection section={primary.section} showHeader={false}>
-      <div className={styles.subpage}>
-        <div>
-          <RichText
-            field={section?.small_heading}
-            as="p"
-            unstyled
-            className={styles.kicker}
-          />
-          <RichText
-            field={section?.heading}
-            as="h1"
-            unstyled
-            className={`${styles.display} ${styles.subpageTitle}`}
-          />
-          <RichText
-            field={section?.intro}
-            as="p"
-            unstyled
-            className={styles.dek}
-          />
-          {section ? (
-            <div className={styles.subpageLinks}>
-              <TextLink field={section.link} />
-            </div>
-          ) : null}
-        </div>
+      <div className={styles.brands}>
+        <TitleCopy section={section} />
         {clinics.length > 0 ? (
           <nav className={styles.floatCluster} aria-label="Clinics">
             {logoRows(clinics).map((row, rowIndex) => (
@@ -546,13 +575,15 @@ function ProviderHero({ primary }: { primary: ProviderPrimary }) {
   );
 }
 
-/** Homepage, subpage, and clinic-page heroes. */
+/** Homepage, subpage, brand-logo, and clinic-page heroes. */
 export function Hero({ variation, primary }: HeroSlice) {
   switch (variation) {
     case "home":
       return <HomeHero primary={primary} />;
     case "subpage":
       return <SubpageHero primary={primary} />;
+    case "brands":
+      return <BrandsHero primary={primary} />;
     case "provider":
       return <ProviderHero primary={primary} />;
   }

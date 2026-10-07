@@ -122,6 +122,29 @@ export default function HeroPreview() {
         variation="subpage"
         primary={{
           section: section({
+            small_heading: rich("Learn"),
+            heading: rich("New to hormone therapy"),
+            intro: rich(
+              "Start with what I wish I had known before my first prescription.",
+            ),
+            link: {
+              link_type: "Web",
+              url: "/ishrtforme",
+              text: "Start here",
+            },
+          }),
+          image: image(
+            "/mockup/peggy-portrait.jpg",
+            "Peggy, smiling, in a dark sweater",
+            1389,
+            1600,
+          ),
+        }}
+      />
+      <Hero
+        variation="brands"
+        primary={{
+          section: section({
             small_heading: rich("Providers"),
             heading: rich("Trusted providers"),
             intro: rich(
