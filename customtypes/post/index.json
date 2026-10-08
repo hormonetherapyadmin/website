@@ -15,7 +15,8 @@
           "allowTargetBlank": true,
           "label": "Title",
           "placeholder": "",
-          "single": "paragraph,strong,em,hyperlink"
+          "single": "paragraph,strong,em,hyperlink",
+          "labels": ["superscript"]
         },
         "type": "StructuredText"
       },
@@ -24,7 +25,8 @@
           "allowTargetBlank": true,
           "label": "Subtitle",
           "placeholder": "The line under the title, and the card.",
-          "single": "paragraph,strong,em,hyperlink"
+          "single": "paragraph,strong,em,hyperlink",
+          "labels": ["superscript"]
         },
         "type": "StructuredText"
       },
@@ -33,7 +35,8 @@
           "allowTargetBlank": true,
           "label": "Personal note",
           "placeholder": "The box above the story. The label Personal review note is added for you.",
-          "single": "paragraph,strong,em,hyperlink"
+          "single": "paragraph,strong,em,hyperlink",
+          "labels": ["superscript"]
         },
         "type": "StructuredText"
       },
@@ -60,7 +63,8 @@
           "allowTargetBlank": true,
           "label": "Caption",
           "placeholder": "The line under the photo. It can include a link.",
-          "single": "paragraph,strong,em,hyperlink"
+          "single": "paragraph,strong,em,hyperlink",
+          "labels": ["superscript"]
         },
         "type": "StructuredText"
       },

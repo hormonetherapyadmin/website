@@ -604,6 +604,7 @@ export default async function BlogPostMockup(
         </div>
       </article>
 
+      <div className={shared.divider} aria-hidden="true" />
       <section className={styles.related} aria-labelledby="related-title">
         <div className={shared.sectionHead}>
           <h2 id="related-title">Keep reading</h2>

@@ -30,7 +30,8 @@
           "allowTargetBlank": true,
           "label": "Short description",
           "placeholder": "",
-          "single": "paragraph,strong,em,hyperlink"
+          "single": "paragraph,strong,em,hyperlink",
+          "labels": ["superscript"]
         },
         "type": "StructuredText"
       },
@@ -76,7 +77,8 @@
           "allowTargetBlank": true,
           "label": "Testing notes",
           "placeholder": "",
-          "single": "paragraph,strong,em,hyperlink"
+          "single": "paragraph,strong,em,hyperlink",
+          "labels": ["superscript"]
         },
         "type": "StructuredText"
       },
@@ -99,7 +101,8 @@
           "allowTargetBlank": true,
           "label": "Source notes",
           "placeholder": "",
-          "single": "paragraph,strong,em,hyperlink"
+          "single": "paragraph,strong,em,hyperlink",
+          "labels": ["superscript"]
         },
         "type": "StructuredText"
       }
@@ -168,7 +171,8 @@
           "allowTargetBlank": true,
           "label": "Lab notes",
           "placeholder": "",
-          "single": "paragraph,strong,em,hyperlink"
+          "single": "paragraph,strong,em,hyperlink",
+          "labels": ["superscript"]
         },
         "type": "StructuredText"
       },
@@ -200,7 +204,8 @@
           "allowTargetBlank": true,
           "label": "Eligibility",
           "placeholder": "",
-          "single": "paragraph,strong,em,hyperlink"
+          "single": "paragraph,strong,em,hyperlink",
+          "labels": ["superscript"]
         },
         "type": "StructuredText"
       },
@@ -243,7 +248,8 @@
           "allowTargetBlank": true,
           "label": "In my words",
           "placeholder": "",
-          "single": "paragraph,strong,em,hyperlink"
+          "single": "paragraph,strong,em,hyperlink",
+          "labels": ["superscript"]
         },
         "type": "StructuredText"
       },
@@ -252,7 +258,8 @@
           "allowTargetBlank": true,
           "label": "Extra note",
           "placeholder": "The line under the quote.",
-          "single": "paragraph,strong,em,hyperlink"
+          "single": "paragraph,strong,em,hyperlink",
+          "labels": ["superscript"]
         },
         "type": "StructuredText"
       },

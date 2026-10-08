@@ -20,30 +20,27 @@ const ARTICLE_URL =
   "https://www.hormonetherapyhub.com/post/hrt-skin-before-and-after-my-12-month-results-and-experience";
 const ARTICLE_TITLE = "HRT & Skin Before and After: My Experience";
 
-const url = encodeURIComponent(ARTICLE_URL);
-const title = encodeURIComponent(ARTICLE_TITLE);
-
-const NETWORKS: {
-  label: string;
-  href: string;
-  icon: IconSvgElement;
-}[] = [
-  {
-    label: "Facebook",
-    href: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
-    icon: Facebook02Icon,
-  },
-  {
-    label: "X",
-    href: `https://twitter.com/intent/tweet?url=${url}&text=${title}`,
-    icon: NewTwitterIcon,
-  },
-  {
-    label: "LinkedIn",
-    href: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
-    icon: Linkedin02Icon,
-  },
-];
+function networks(articleUrl: string, articleTitle: string) {
+  const url = encodeURIComponent(articleUrl);
+  const title = encodeURIComponent(articleTitle);
+  return [
+    {
+      label: "Facebook",
+      href: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      icon: Facebook02Icon,
+    },
+    {
+      label: "X",
+      href: `https://twitter.com/intent/tweet?url=${url}&text=${title}`,
+      icon: NewTwitterIcon,
+    },
+    {
+      label: "LinkedIn",
+      href: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+      icon: Linkedin02Icon,
+    },
+  ];
+}
 
 function ShareIcon({ icon }: { icon: IconSvgElement }) {
   return (
@@ -56,12 +53,18 @@ function ShareIcon({ icon }: { icon: IconSvgElement }) {
   );
 }
 
-export function Share() {
+export function Share({
+  url = ARTICLE_URL,
+  title = ARTICLE_TITLE,
+}: {
+  url?: string;
+  title?: string;
+} = {}) {
   const [copied, setCopied] = useState(false);
 
   async function copyLink() {
     try {
-      await navigator.clipboard.writeText(ARTICLE_URL);
+      await navigator.clipboard.writeText(url);
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -75,7 +78,7 @@ export function Share() {
         Share
       </h2>
       <ul className={styles.shareList}>
-        {NETWORKS.map((network) => (
+        {networks(url, title).map((network) => (
           <li key={network.label}>
             <a
               href={network.href}

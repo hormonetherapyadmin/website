@@ -3,7 +3,8 @@ import type { RichTextField } from "@prismicio/client";
 /** Average reading speed. Nearest-minute rounding matches most live Wix times. */
 export const WORDS_PER_MINUTE = 250;
 
-const PROVIDER_TOKEN = /\{\{provider:[a-z0-9-]+:(?:offer|facts)\}\}/g;
+const STORY_TOKEN =
+  /\{\{provider:[a-z0-9-]+:(?:offer|facts)\}\}|\{\{photos\}\}/g;
 
 /** Words in the story. A clinic token is not a word the reader speaks. */
 export function storyWordCount(
@@ -15,7 +16,7 @@ export function storyWordCount(
       "text" in block && typeof block.text === "string" ? block.text : "",
     )
     .join(" ")
-    .replace(PROVIDER_TOKEN, " ")
+    .replace(STORY_TOKEN, " ")
     .trim();
   if (!text) return 0;
   return text.split(/\s+/).length;

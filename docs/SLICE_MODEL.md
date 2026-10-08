@@ -129,7 +129,7 @@ content field's JSON (`labels`), not in the Type Builder. Handle them in
 | Label | Renders as |
 | --- | --- |
 | `highlight` | A phrase that stands out |
-| `superscript` | A source number |
+| `superscript` | A source number. Registered on every rich text field |
 | `signoff` | The large closing line, when the label covers the whole paragraph |
 | `note` | The tint box, when the label covers the whole paragraph |
 
@@ -669,8 +669,8 @@ the story.
 
 Minutes to read is not a field. The build counts the words in the
 story, at 250 words a minute, and rounds to the nearest minute. A
-story with any words is at least one minute. A clinic token is not
-counted. Wix tags are the document tags at the top of the post, not a
+story with any words is at least one minute. A clinic token and
+`{{photos}}` are not counted. Wix tags are the document tags at the top of the post, not a
 group on this type. Public `/blog/tags/…` addresses still need a
 disposition in the URL manifest.
 
@@ -696,10 +696,10 @@ and do not repeat the photo.
 | Paragraph | Paragraph |
 | Heading | Heading 2, 3, or 4. The page title is the only Heading 1. A heading 1, 5, or 6 in the story becomes Heading 2 |
 | Bold, italic | Bold, italic |
-| Underline, text color, font size | The words, as a normal paragraph |
+| Underline, text color, font size | The words, as a normal paragraph. A 10px number becomes the superscript label |
 | Link | Link. Keep the full address, including affiliate parameters |
 | Image | Image, then its caption as the next paragraph |
-| Two photos side by side | Two images, each with its caption |
+| Two photos side by side | Two images, each with its caption. See Photo row |
 | Button | A paragraph that is only that link |
 | YouTube or other video | Video embed |
 | List | List |
@@ -716,6 +716,16 @@ Peggy can check that the grid still reads. A grid that is only one
 clinic's current price and formulation can later be replaced with a
 facts token. A grid that compares several clinics, or lists lab
 markers, stays written out. Those words are not on the clinic.
+
+### Photo row
+
+A paragraph that is only `{{photos}}` places the next two photos side
+by side, in the same row as the mockup. The paragraph under each photo
+is that photo's caption. Bold the first word for a label such as
+Before or After. A photo with no token above it stays full width. One
+photo after the token stays full width, and the token is not shown. A
+heading or another token between the photos ends the row. Import does
+not write the token.
 
 ### Clinic tokens
 
@@ -758,7 +768,9 @@ slices.
 ### Groups
 
 Sources. The number is the row order. A superscript in the story links
-to that number.
+to that number, and each source has an arrow back to its superscript.
+The link uses the same hover as a link in the story. A story that ends
+with "Resources:" and a list uses that list when this group is empty.
 
 | Label | Id | Kind | Required | Example |
 | --- | --- | --- | --- | --- |

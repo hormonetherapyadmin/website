@@ -19,6 +19,12 @@ describe("minutesToRead", () => {
     ] as RichTextField;
 
     expect(storyWordCount(field)).toBe(5);
+    expect(
+      storyWordCount([
+        paragraph("{{photos}}"),
+        paragraph("one two"),
+      ] as RichTextField),
+    ).toBe(2);
   });
 
   it("rounds to the nearest minute and stays at least one", () => {

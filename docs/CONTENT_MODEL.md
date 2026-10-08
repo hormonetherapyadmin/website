@@ -152,8 +152,9 @@ Fields:
 
 The card reads Title, Image, Subtitle, Published, Category, and the
 minutes to read. Clinics in the sidebar come from provider tokens in
-the story. Minutes to read, Keep reading, and the document tags are
-derived. Published is the original publish date. There is no updated
+the story. A paragraph that is only `{{photos}}` places the next two
+photos side by side. Minutes to read, Keep reading, and the document
+tags are derived. Published is the original publish date. There is no updated
 date. Migration writes the Wix excerpt into Subtitle.
 
 ### Comparison

@@ -21,7 +21,8 @@
           "allowTargetBlank": true,
           "label": "About",
           "multi": "paragraph,strong,em,hyperlink",
-          "placeholder": ""
+          "placeholder": "",
+          "labels": ["superscript"]
         },
         "type": "StructuredText"
       },

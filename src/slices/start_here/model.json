@@ -19,7 +19,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Small heading",
-                  "single": "paragraph,strong,em,hyperlink"
+                  "single": "paragraph,strong,em,hyperlink",
+                  "labels": ["superscript"]
                 },
                 "type": "StructuredText"
               },
@@ -28,7 +29,8 @@
                   "allowTargetBlank": true,
                   "label": "Heading",
                   "placeholder": "Where should I start?",
-                  "single": "paragraph,strong,em,hyperlink"
+                  "single": "paragraph,strong,em,hyperlink",
+                  "labels": ["superscript"]
                 },
                 "type": "StructuredText"
               },
@@ -36,7 +38,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Intro",
-                  "single": "paragraph,strong,em,hyperlink"
+                  "single": "paragraph,strong,em,hyperlink",
+                  "labels": ["superscript"]
                 },
                 "type": "StructuredText"
               },
@@ -86,7 +89,8 @@
                   "allowTargetBlank": true,
                   "label": "Small heading",
                   "placeholder": "Brand new to this",
-                  "single": "paragraph,strong,em,hyperlink"
+                  "single": "paragraph,strong,em,hyperlink",
+                  "labels": ["superscript"]
                 },
                 "type": "StructuredText"
               },
@@ -95,7 +99,8 @@
                   "allowTargetBlank": true,
                   "label": "Heading",
                   "placeholder": "Is HRT for me?",
-                  "single": "paragraph,strong,em,hyperlink"
+                  "single": "paragraph,strong,em,hyperlink",
+                  "labels": ["superscript"]
                 },
                 "type": "StructuredText"
               },
@@ -104,7 +109,8 @@
                   "allowTargetBlank": true,
                   "label": "Text",
                   "placeholder": "The sentence under the title",
-                  "single": "paragraph,strong,em,hyperlink"
+                  "single": "paragraph,strong,em,hyperlink",
+                  "labels": ["superscript"]
                 },
                 "type": "StructuredText"
               },

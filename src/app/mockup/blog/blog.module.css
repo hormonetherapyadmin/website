@@ -64,11 +64,30 @@
 .crumbs li + li::before {
   content: "/";
   margin-right: 0.4rem;
+  color: var(--muted);
+}
+
+.crumbs a {
+  color: inherit;
+  text-decoration: none;
+  background-image: linear-gradient(var(--tint), var(--tint));
+  background-repeat: no-repeat;
+  background-position: 0 0.7em;
+  background-size: 0 0.42em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size 160ms ease;
+}
+
+.crumbs a:hover,
+.crumbs a:focus-visible {
+  background-size: 100% 0.42em;
 }
 
 .crumbs [aria-current] {
   max-width: 36ch;
   overflow: hidden;
+  color: hsl(from var(--text) h s 42%);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -83,6 +102,10 @@
   grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
   gap: clamp(2rem, 5vw, 4.5rem);
   align-items: center;
+}
+
+.articleHeadText {
+  grid-template-columns: minmax(0, 42rem);
 }
 
 .articleHead .title {
@@ -118,10 +141,6 @@
   text-decoration: none;
 }
 
-.bylineAuthor:hover .bylineName {
-  text-decoration: underline;
-}
-
 .bylineAuthor:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 4px;
@@ -135,6 +154,12 @@
   border-radius: 50%;
   object-fit: cover;
   object-position: center 20%;
+  transition: box-shadow 0.2s ease;
+}
+
+.bylineAuthor:hover .avatar,
+.bylineAuthor:focus-visible .avatar {
+  box-shadow: 0 0 0 2px var(--text);
 }
 
 .bylineName {
@@ -169,11 +194,19 @@
   object-position: 70% center;
 }
 
+.heroCover img {
+  object-position: center;
+}
+
 .heroFigure figcaption {
   margin-top: 0.9rem;
   font-size: 0.9rem;
   line-height: 1.5;
   color: var(--muted);
+}
+
+.heroFigure figcaption p {
+  margin: 0;
 }
 
 .heroFigure figcaption a {
@@ -209,6 +242,71 @@
   scroll-margin-top: 1.5rem;
 }
 
+.body h3 {
+  margin: 2.2rem 0 0.8rem;
+  font-size: 1.55rem;
+  text-wrap: balance;
+  scroll-margin-top: 1.5rem;
+}
+
+.body h4 {
+  margin: 1.8rem 0 0.6rem;
+  font-size: 1.25rem;
+  scroll-margin-top: 1.5rem;
+}
+
+.body ul,
+.body ol {
+  margin: 0 0 1.4rem;
+  padding-left: 1.4rem;
+}
+
+.body li {
+  margin: 0.35rem 0;
+}
+
+.body li a,
+.sources a:not(.backRef) {
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  background-image: linear-gradient(var(--tint), var(--tint));
+  background-repeat: no-repeat;
+  background-position: 0 0.85em;
+  background-size: 0 0.42em;
+  transition: background-size 160ms ease;
+}
+
+.body li a:hover,
+.body li a:focus-visible,
+.sources a:not(.backRef):hover,
+.sources a:not(.backRef):focus-visible {
+  background-size: 100% 0.42em;
+}
+
+.body figure {
+  margin: 2.5rem 0;
+}
+
+.body figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 1.25rem;
+}
+
+.body .embed {
+  margin: 0 0 1.4rem;
+}
+
+.body .embed iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 0;
+  border-radius: 1.25rem;
+}
+
 .body p a {
   font-weight: 600;
   color: var(--accent);
@@ -227,6 +325,9 @@
   background-size: 100% 0.42em;
 }
 
+.body .ref a,
+.body .ref a:hover,
+.body .ref a:focus-visible,
 .ref a,
 .ref a:hover,
 .ref a:focus-visible {
@@ -380,7 +481,7 @@
 
 .backRef {
   text-decoration: none;
-  color: var(--accent) !important;
+  color: var(--text) !important;
 }
 
 .tags {
@@ -405,7 +506,8 @@
   list-style: none;
 }
 
-.tags a {
+.tags a,
+.tags li span {
   display: block;
   padding: 0.35rem 0.8rem;
   border-radius: 999px;
@@ -614,7 +716,6 @@
   max-width: var(--wrap);
   margin: 0 auto;
   padding: clamp(3rem, 6vw, 5rem) var(--gutter);
-  border-top: 1px solid var(--rule);
 }
 
 .cardGrid {
