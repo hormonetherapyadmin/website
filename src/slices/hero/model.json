@@ -19,8 +19,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Small heading",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -28,9 +28,9 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Heading",
+                  "labels": ["superscript"],
                   "placeholder": "Hormone Therapy Replacement",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -38,8 +38,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Intro",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -84,9 +84,9 @@
         "tagline": {
           "config": {
             "label": "Tagline",
+            "labels": ["superscript"],
             "placeholder": "Feel like you again.",
-            "single": "paragraph,strong,em,hyperlink",
-            "labels": ["superscript"]
+            "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
         },
@@ -142,8 +142,8 @@
         "caption": {
           "config": {
             "label": "Caption",
-            "single": "paragraph,strong,em,hyperlink",
-            "labels": ["superscript"]
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
         }
@@ -164,18 +164,18 @@
               "small_heading": {
                 "config": {
                   "label": "Small heading",
+                  "labels": ["superscript"],
                   "placeholder": "Learn",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
               "heading": {
                 "config": {
                   "label": "Heading",
+                  "labels": ["superscript"],
                   "placeholder": "New to hormone therapy",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -183,8 +183,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Intro",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -251,18 +251,18 @@
               "small_heading": {
                 "config": {
                   "label": "Small heading",
+                  "labels": ["superscript"],
                   "placeholder": "Providers",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
               "heading": {
                 "config": {
                   "label": "Heading",
+                  "labels": ["superscript"],
                   "placeholder": "Trusted providers",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -270,8 +270,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Intro",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -359,26 +359,26 @@
               "small_heading": {
                 "config": {
                   "label": "Small heading",
+                  "labels": ["superscript"],
                   "placeholder": "Optional. Otherwise the clinic's top choice label is used.",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
               "heading": {
                 "config": {
                   "label": "Heading",
+                  "labels": ["superscript"],
                   "placeholder": "Optional. The clinic name is the title.",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
               "intro": {
                 "config": {
                   "label": "Intro",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -452,17 +452,17 @@
         "voted": {
           "config": {
             "label": "Voted best for",
+            "labels": ["superscript"],
             "placeholder": "Voted best for sleep",
-            "single": "paragraph,strong,em,hyperlink",
-            "labels": ["superscript"]
+            "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
         },
         "quote": {
           "config": {
             "label": "Quote",
-            "single": "paragraph,strong,em,hyperlink",
-            "labels": ["superscript"]
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
         },

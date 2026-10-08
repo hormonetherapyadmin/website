@@ -69,6 +69,8 @@ Fields:
 
 -   UID
 -   Name
+-   Name title — a short line under the name, on the byline and the
+    author card
 -   About
 -   Profile
 
@@ -90,13 +92,15 @@ in tabs. A tab is a group of fields. The model is in that file.
 
 Tabs:
 
--   Profile — name, logo, description, visit link, tested status
--   Price — what she paid, and the price the clinic page shows
--   Care — formulation, labs, insurance, shipping, eligibility, states
--   Words — her short quote, pros, and cons
+-   Profile — name, logo, short description, visit link
+-   Price — the chart price, and the price a clinic page shows
+-   Care — formulation, labs, insurance, HSA, states, getting started
+-   Words — her short quote
 -   Offer — the coupon
--   Links — her review, and related posts
--   SEO — public page fields. "No public page" is the default
+-   Links — her review
+
+A clinic has no public page and no SEO tab. A clinic page is a Page.
+Slices on that page point at the clinic.
 
 Field ids are in `docs/SLICE_MODEL.md`. The long review stays on the
 Provider review. A story inserts a clinic with a token such as
@@ -115,7 +119,6 @@ Fields:
 -   Published date
 -   Updated date
 -   Summary/verdict
--   Personally tested declaration
 -   Review sections/slices
 -   Pros/cons if editorially specific
 -   Related comparisons
@@ -330,8 +333,10 @@ Rule:
 
 -   UID is the Wix slug, unchanged (typos included).
 -   A Post is always `/post/<uid>`. It has no URL section field.
+-   A Clinic has no public URL. A clinic page is a Page, and the slices
+    on that page point at the clinic.
 -   Every other routable editorial type (Provider Review, Comparison,
-    Page, and Provider/Treatment/Topic when they have a public page)
+    Page, and Treatment/Topic when they have a public page)
     has a required **URL section** select field:
     -   "Blog post (/post/…)" → `/post/<uid>` (default)
     -   "Site page (/…)" → `/<uid>`
@@ -345,13 +350,12 @@ the URL manifest.
 
 ## Freshness
 
-Provider facts should expose a `last_verified_date`.
+The comparison chart has a Prices checked date. That is the day the
+prices in that chart were confirmed. A clinic does not store its own
+checked date.
 
-The UI should make freshness visible where useful, especially on
-reviews/comparisons/pricing.
-
-Do not automatically update this date when unrelated editorial fields
-change.
+Do not automatically update the chart date when unrelated editorial
+fields change.
 
 ## Relationships
 

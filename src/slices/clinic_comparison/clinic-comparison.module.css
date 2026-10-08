@@ -210,7 +210,7 @@ a.clinicName:focus-visible {
   white-space: nowrap;
 }
 
-.bestFor {
+.description {
   display: block;
   max-width: 10rem;
   font-weight: 700;
@@ -311,27 +311,6 @@ a.clinicName:focus-visible {
   font-size: 0.9rem;
   font-weight: 700;
   text-decoration: none;
-}
-
-.testedSeal {
-  position: absolute;
-  right: -0.55rem;
-  bottom: -0.55rem;
-}
-
-.testedSeal .tipText {
-  left: -2.4rem;
-  text-align: left;
-  transform: none;
-}
-
-.testedSeal .tipButton {
-  padding: 0.1rem;
-  background: var(--row-bg);
-}
-
-.testedIcon {
-  color: var(--color-accent);
 }
 
 .insYes {

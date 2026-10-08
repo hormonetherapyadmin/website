@@ -14,9 +14,9 @@
         "config": {
           "allowTargetBlank": true,
           "label": "Title",
+          "labels": ["superscript"],
           "placeholder": "",
-          "single": "paragraph,strong,em,hyperlink",
-          "labels": ["superscript"]
+          "single": "paragraph,strong,em,hyperlink"
         },
         "type": "StructuredText"
       },
@@ -24,29 +24,9 @@
         "config": {
           "allowTargetBlank": true,
           "label": "Subtitle",
+          "labels": ["superscript"],
           "placeholder": "The line under the title, and the card.",
-          "single": "paragraph,strong,em,hyperlink",
-          "labels": ["superscript"]
-        },
-        "type": "StructuredText"
-      },
-      "note": {
-        "config": {
-          "allowTargetBlank": true,
-          "label": "Personal note",
-          "placeholder": "The box above the story. The label Personal review note is added for you.",
-          "single": "paragraph,strong,em,hyperlink",
-          "labels": ["superscript"]
-        },
-        "type": "StructuredText"
-      },
-      "body": {
-        "config": {
-          "allowTargetBlank": true,
-          "label": "Story",
-          "labels": ["highlight", "superscript"],
-          "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
-          "placeholder": "Write the story readers will see."
+          "single": "paragraph,strong,em,hyperlink"
         },
         "type": "StructuredText"
       },
@@ -61,10 +41,30 @@
       "caption": {
         "config": {
           "allowTargetBlank": true,
-          "label": "Caption",
+          "label": "Image caption",
+          "labels": ["superscript"],
           "placeholder": "The line under the photo. It can include a link.",
-          "single": "paragraph,strong,em,hyperlink",
-          "labels": ["superscript"]
+          "single": "paragraph,strong,em,hyperlink"
+        },
+        "type": "StructuredText"
+      },
+      "note": {
+        "config": {
+          "allowTargetBlank": true,
+          "label": "Personal note",
+          "labels": ["superscript"],
+          "placeholder": "The box above the story. The label Personal review note is added for you.",
+          "single": "paragraph,strong,em,hyperlink"
+        },
+        "type": "StructuredText"
+      },
+      "body": {
+        "config": {
+          "allowTargetBlank": true,
+          "label": "Story",
+          "labels": ["highlight", "superscript"],
+          "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
+          "placeholder": "Write the story readers will see."
         },
         "type": "StructuredText"
       },

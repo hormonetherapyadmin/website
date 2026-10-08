@@ -19,8 +19,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Small heading",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -28,9 +28,9 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Heading",
+                  "labels": ["superscript"],
                   "placeholder": "Latest reviews and posts",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -38,8 +38,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Intro",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -113,8 +113,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Small heading",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -122,9 +122,9 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Heading",
+                  "labels": ["superscript"],
                   "placeholder": "Latest reviews and posts",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -132,8 +132,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Intro",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -215,8 +215,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Small heading",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -224,9 +224,9 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Heading",
+                  "labels": ["superscript"],
                   "placeholder": "Latest reviews and posts",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -234,8 +234,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Intro",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -316,8 +316,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Small heading",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -325,9 +325,9 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Heading",
+                  "labels": ["superscript"],
                   "placeholder": "Latest reviews and posts",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -335,8 +335,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Intro",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },

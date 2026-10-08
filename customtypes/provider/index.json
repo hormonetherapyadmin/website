@@ -27,30 +27,10 @@
       },
       "short_description": {
         "config": {
-          "allowTargetBlank": true,
           "label": "Short description",
-          "placeholder": "",
-          "single": "paragraph,strong,em,hyperlink",
-          "labels": ["superscript"]
-        },
-        "type": "StructuredText"
-      },
-      "best_for": {
-        "config": {
-          "label": "Best for",
-          "placeholder": ""
+          "placeholder": "Better sleep. The comparison chart and other clinic summaries use this."
         },
         "type": "Text"
-      },
-      "website": {
-        "config": {
-          "allowTargetBlank": true,
-          "allowText": false,
-          "label": "Official website",
-          "repeat": false,
-          "select": null
-        },
-        "type": "Link"
       },
       "visit": {
         "config": {
@@ -63,48 +43,12 @@
         },
         "type": "Link"
       },
-      "personally_tested": {
-        "config": {
-          "default_value": false,
-          "label": "Personally tested",
-          "placeholder_false": "No",
-          "placeholder_true": "Yes"
-        },
-        "type": "Boolean"
-      },
-      "testing_notes": {
-        "config": {
-          "allowTargetBlank": true,
-          "label": "Testing notes",
-          "placeholder": "",
-          "single": "paragraph,strong,em,hyperlink",
-          "labels": ["superscript"]
-        },
-        "type": "StructuredText"
-      },
-      "last_verified_date": {
-        "config": {
-          "label": "Facts checked",
-          "placeholder": "The day you last confirmed the prices and care details."
-        },
-        "type": "Date"
-      },
       "top_choice_label": {
         "config": {
           "label": "Top choice label",
           "placeholder": "Leave blank for no badge."
         },
         "type": "Text"
-      },
-      "source_notes": {
-        "config": {
-          "allowTargetBlank": true,
-          "label": "Source notes",
-          "placeholder": "",
-          "single": "paragraph,strong,em,hyperlink",
-          "labels": ["superscript"]
-        },
-        "type": "StructuredText"
       }
     },
     "Price": {
@@ -135,46 +79,22 @@
           "placeholder": "First six months, then $99."
         },
         "type": "Text"
-      },
-      "consultation_fee": {
-        "config": {
-          "label": "Consultation fee",
-          "placeholder": "No visit, or 150"
-        },
-        "type": "Text"
-      },
-      "membership_fee": {
-        "config": {
-          "label": "Membership fee",
-          "placeholder": "Leave blank when there is none."
-        },
-        "type": "Text"
       }
     },
     "Care": {
       "formulation": {
         "config": {
           "label": "Typically prescribed",
-          "placeholder": ""
+          "placeholder": "Oestra vaginal cream. The chart and the price card use this."
         },
         "type": "Text"
       },
       "lab_requirement": {
         "config": {
-          "label": "Lab requirement",
-          "placeholder": ""
+          "label": "Labs",
+          "placeholder": "None, or $150 labs up front."
         },
         "type": "Text"
-      },
-      "lab_notes": {
-        "config": {
-          "allowTargetBlank": true,
-          "label": "Lab notes",
-          "placeholder": "",
-          "single": "paragraph,strong,em,hyperlink",
-          "labels": ["superscript"]
-        },
-        "type": "StructuredText"
       },
       "insurance": {
         "config": {
@@ -188,26 +108,9 @@
       "hsa_fsa": {
         "config": {
           "label": "HSA / FSA",
-          "placeholder": ""
+          "placeholder": "Yes, or No"
         },
         "type": "Text"
-      },
-      "shipping": {
-        "config": {
-          "label": "Shipping",
-          "placeholder": ""
-        },
-        "type": "Text"
-      },
-      "eligibility": {
-        "config": {
-          "allowTargetBlank": true,
-          "label": "Eligibility",
-          "placeholder": "",
-          "single": "paragraph,strong,em,hyperlink",
-          "labels": ["superscript"]
-        },
-        "type": "StructuredText"
       },
       "state_availability": {
         "config": {
@@ -216,28 +119,10 @@
         },
         "type": "Text"
       },
-      "treatments": {
+      "note": {
         "config": {
-          "fields": {
-            "treatment": {
-              "config": {
-                "customtypes": ["treatment"],
-                "label": "Treatment",
-                "repeat": false,
-                "select": "document"
-              },
-              "type": "Link"
-            }
-          },
-          "label": "Treatments",
-          "repeat": true
-        },
-        "type": "Group"
-      },
-      "weight_support": {
-        "config": {
-          "label": "Weight support",
-          "placeholder": ""
+          "label": "Getting started",
+          "placeholder": "No visit. Shown under the quote and on the clinic facts."
         },
         "type": "Text"
       }
@@ -247,53 +132,11 @@
         "config": {
           "allowTargetBlank": true,
           "label": "In my words",
+          "labels": ["superscript"],
           "placeholder": "",
-          "single": "paragraph,strong,em,hyperlink",
-          "labels": ["superscript"]
+          "single": "paragraph,strong,em,hyperlink"
         },
         "type": "StructuredText"
-      },
-      "note": {
-        "config": {
-          "allowTargetBlank": true,
-          "label": "Extra note",
-          "placeholder": "The line under the quote.",
-          "single": "paragraph,strong,em,hyperlink",
-          "labels": ["superscript"]
-        },
-        "type": "StructuredText"
-      },
-      "pros": {
-        "config": {
-          "fields": {
-            "text": {
-              "config": {
-                "label": "Text",
-                "placeholder": ""
-              },
-              "type": "Text"
-            }
-          },
-          "label": "Pros",
-          "repeat": true
-        },
-        "type": "Group"
-      },
-      "cons": {
-        "config": {
-          "fields": {
-            "text": {
-              "config": {
-                "label": "Text",
-                "placeholder": ""
-              },
-              "type": "Text"
-            }
-          },
-          "label": "Cons",
-          "repeat": true
-        },
-        "type": "Group"
       }
     },
     "Offer": {
@@ -316,70 +159,6 @@
           "select": "document"
         },
         "type": "Link"
-      },
-      "related": {
-        "config": {
-          "fields": {
-            "item": {
-              "config": {
-                "customtypes": ["post", "provider_review", "comparison"],
-                "label": "Item",
-                "repeat": false,
-                "select": "document"
-              },
-              "type": "Link"
-            }
-          },
-          "label": "Related",
-          "repeat": true
-        },
-        "type": "Group"
-      }
-    },
-    "SEO": {
-      "meta_title": {
-        "config": {
-          "label": "Meta title",
-          "placeholder": ""
-        },
-        "type": "Text"
-      },
-      "meta_description": {
-        "config": {
-          "label": "Meta description",
-          "placeholder": ""
-        },
-        "type": "Text"
-      },
-      "meta_image": {
-        "config": {
-          "constraint": {},
-          "label": "Social image",
-          "thumbnails": []
-        },
-        "type": "Image"
-      },
-      "url_section": {
-        "config": {
-          "default_value": "No public page",
-          "label": "URL section",
-          "options": [
-            "No public page",
-            "Blog post (/post/…)",
-            "Site page (/…)"
-          ],
-          "placeholder": ""
-        },
-        "type": "Select"
-      },
-      "indexing": {
-        "config": {
-          "default_value": "Index",
-          "label": "Indexing",
-          "options": ["Index", "No index"],
-          "placeholder": ""
-        },
-        "type": "Select"
       }
     }
   },

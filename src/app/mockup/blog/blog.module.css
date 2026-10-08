@@ -162,8 +162,21 @@
   box-shadow: 0 0 0 2px var(--text);
 }
 
+.bylineText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
 .bylineName {
   margin: 0;
+}
+
+.bylineTitle {
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--muted);
 }
 
 .body .disclosure {
@@ -542,6 +555,17 @@
 .body .authorName {
   margin: 0 0 0.5rem;
   font-size: 1.5rem;
+}
+
+.body .authorName:has(+ .authorTitle) {
+  margin-bottom: 0.15rem;
+}
+
+.body .authorTitle {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--muted);
 }
 
 .body .author p {

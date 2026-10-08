@@ -16,13 +16,20 @@
         },
         "type": "Text"
       },
+      "name_title": {
+        "config": {
+          "label": "Name title",
+          "placeholder": ""
+        },
+        "type": "Text"
+      },
       "about": {
         "config": {
           "allowTargetBlank": true,
           "label": "About",
+          "labels": ["superscript"],
           "multi": "paragraph,strong,em,hyperlink",
-          "placeholder": "",
-          "labels": ["superscript"]
+          "placeholder": ""
         },
         "type": "StructuredText"
       },

@@ -19,8 +19,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Small heading",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -28,9 +28,9 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Heading",
+                  "labels": ["superscript"],
                   "placeholder": "Menopause isn't a dirty word.",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -38,8 +38,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Intro",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -101,9 +101,9 @@
         "caption": {
           "config": {
             "label": "Caption",
+            "labels": ["superscript"],
             "placeholder": "Sits on the photo. Me and Winston, my Bernedoodle.",
-            "single": "paragraph,strong,em,hyperlink",
-            "labels": ["superscript"]
+            "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
         },
@@ -146,8 +146,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Small heading",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -155,8 +155,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Heading",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -164,8 +164,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Intro",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -225,9 +225,9 @@
         "caption": {
           "config": {
             "label": "Caption",
+            "labels": ["superscript"],
             "placeholder": "Sits on the video.",
-            "single": "paragraph,strong,em,hyperlink",
-            "labels": ["superscript"]
+            "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
         },
@@ -270,8 +270,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Small heading",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -279,8 +279,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Heading",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -288,8 +288,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Intro",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -342,9 +342,9 @@
         "quote": {
           "config": {
             "label": "Quote",
+            "labels": ["superscript"],
             "placeholder": "The large sentence on the media side.",
-            "single": "paragraph,strong,em,hyperlink",
-            "labels": ["superscript"]
+            "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
         },
@@ -394,8 +394,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Small heading",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -403,8 +403,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Heading",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },
@@ -412,8 +412,8 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Intro",
-                  "single": "paragraph,strong,em,hyperlink",
-                  "labels": ["superscript"]
+                  "labels": ["superscript"],
+                  "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
               },

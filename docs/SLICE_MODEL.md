@@ -17,8 +17,7 @@ rules below.
 ## Document kinds
 
 A public page is a Prismic page type. A document other pages read is a
-custom type. The clinic is a custom type, and it still has a public
-page when its URL section is set.
+custom type. The clinic has no public page. A clinic page is a Page.
 
 | Document | Kind | Why |
 | --- | --- | --- |
@@ -367,7 +366,7 @@ change a price, a quote, or a coupon, edit that clinic."
 The slice is in `src/slices/clinic_comparison`. The page resolves each
 clinic and passes the fields this table reads.
 
-The columns stay fixed: Clinic, Best for, What I paid per month,
+The columns stay fixed: Clinic, Description, What I paid per month,
 Insurance, Typically prescribed, In my words. The relationship fetches
 the Provider fields in the next section, including `offer.code` and
 `offer.display_copy`.
@@ -442,10 +441,11 @@ and `{{provider:inner-balance:facts}}` tokens as the post.
 
 Custom type, in `customtypes/provider`. One clinic, one document.
 Peggy fills it in tabs. A tab is a group of fields in the editor.
-Every tab is static, so a slice or a story token can read it. The
-clinic page's slices are not in this type yet.
+Every tab is static, so a slice or a story token can read it.
 
-The UID is the id a story token uses, such as `inner-balance`.
+The UID is the id a story token uses, such as `inner-balance`. A clinic
+has no public page. A clinic page is a Page, and the slices on that
+page point at this document.
 
 Slices point at this document with a content relationship. Each slice
 fills itself from the fields it lists. Monthly price is one field.
@@ -456,7 +456,7 @@ The comparison chart, a facts token, and any later slice that lists
 | --- | --- | --- |
 | Hero, brands | `clinic` | Name, logo |
 | Hero, provider | `clinic` | Name, logo, formulation, visit, display price, display price note, top choice label, offer code, offer copy |
-| Clinic comparison | `clinic` | Name, logo, best for, monthly price, price note, insurance, formulation, quote, extra note, tested seal, top choice label, review, visit, offer code, offer copy |
+| Clinic comparison | `clinic` | Name, logo, short description, monthly price, price note, insurance, formulation, quote, getting started, top choice label, review, visit, offer code, offer copy |
 | Quote | `clinic` | Logo, name, visit. A Name on the slice replaces the clinic name |
 | Side by side, clinic | `clinic` | Logo, name, quote, visit |
 | Post sidebar | `clinic` | Name, logo, review |
@@ -472,19 +472,15 @@ this tab.
 | --- | --- | --- | --- |
 | Name | `name` | Text | Yes |
 | Logo | `logo` | Image | Yes |
-| Short description | `short_description` | Heading rich text | No |
-| Best for | `best_for` | Text | No |
-| Official website | `website` | Link, no display text | No |
+| Short description | `short_description` | Text | No |
 | Visit | `visit` | Link, with display text, open in a new tab | No |
-| Personally tested | `personally_tested` | Boolean | Yes |
-| Testing notes | `testing_notes` | Heading rich text | No |
-| Facts checked | `last_verified_date` | Date | No |
 | Top choice label | `top_choice_label` | Text | No |
-| Source notes | `source_notes` | Heading rich text | No |
 
-An empty Visit link means the name is not a link. A blank Top choice
-label means no badge. Facts checked is the date the prices and care
-details were last confirmed. Nothing else writes that date.
+Short description is the one line about the clinic. The comparison
+chart's Description column reads it, and so does any other clinic
+summary that needs a short line. An empty Visit link means the name is
+not a link. A blank Top choice label means no badge. A clinic on the
+site is one Peggy has tried. There is no tested checkbox.
 
 #### Price
 
@@ -496,46 +492,37 @@ What she paid, and what the clinic page shows.
 | Price note | `price_note` | Text | Line under the chart price |
 | Display price | `display_price` | Text | 199, on the clinic page |
 | Display price note | `display_price_note` | Text | First six months, then $99. |
-| Consultation fee | `consultation_fee` | Text | No visit, or $150 |
-| Membership fee | `membership_fee` | Text | Blank when there is none |
 
-The comparison chart uses Monthly price. The clinic page uses Display
-price.
+The comparison chart uses Monthly price. A clinic page uses Display
+price. Inner Balance is $199, then $99, and the chart lists $150, the
+average over the first year. A consult fee goes in Price note, such as
+"+ $99 one-time consult."
 
 #### Care
 
-How the clinic works. The clinic page reads this tab. The facts token
-reads Formulation and Takes insurance from it, plus the price fields.
+The shared facts. The comparison chart reads Typically prescribed and
+Takes insurance. A clinic page fact list reads this whole tab.
 
 | Label | Id | Kind |
 | --- | --- | --- |
 | Typically prescribed | `formulation` | Text |
-| Lab requirement | `lab_requirement` | Text |
-| Lab notes | `lab_notes` | Heading rich text |
+| Labs | `lab_requirement` | Text |
 | Takes insurance | `insurance` | Boolean |
 | HSA / FSA | `hsa_fsa` | Text |
-| Shipping | `shipping` | Text |
-| Eligibility | `eligibility` | Heading rich text |
 | State availability | `state_availability` | Text |
-| Treatments | `treatments` | Repeatable group |
-| Weight support | `weight_support` | Text |
+| Getting started | `note` | Text |
 
-Each treatment row has one field, `treatment`, a content relationship
-to Treatment.
+Getting started is the line under the quote on the chart, such as "No
+visit" or "$150 labs required up front." The clinic page fact list
+uses that same line.
 
 #### Words
 
-Short lines in Peggy's voice. The long review stays on the Provider
-review document.
+Her one sentence. The long review stays on the Provider review.
 
 | Label | Id | Kind | Homepage use |
 | --- | --- | --- | --- |
 | In my words | `quote` | Heading rich text | The table quote |
-| Extra note | `note` | Heading rich text | The line under the quote |
-| Pros | `pros` | Repeatable group | |
-| Cons | `cons` | Repeatable group | |
-
-Each pro and each con is one Text field, `text`.
 
 #### Offer
 
@@ -551,18 +538,9 @@ The homepage code line and the story offer box read `code` and
 | Label | Id | Kind |
 | --- | --- | --- |
 | Review | `review` | Content relationship to her review |
-| Related | `related` | Repeatable group |
 
-"Read review" uses a fixed label. Each related row has one field,
-`item`, a content relationship limited to Post, Provider review,
-and Comparison.
-
-#### SEO
-
-Meta title, meta description, and social image. URL section and
-Indexing sit here too. URL section adds "No public page", and that is
-the default. A clinic with no public page stays a document slices can
-link to.
+"Read review" uses a fixed label. Extra links on a clinic page, such
+as a video or a second article, are written on that page's slice.
 
 ### Offer
 

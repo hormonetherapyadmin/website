@@ -987,7 +987,7 @@ a.clinicName:focus-visible {
   bottom: auto;
 }
 
-.bestFor {
+.description {
   display: block;
   max-width: 10rem;
   font-weight: 700;
@@ -1007,27 +1007,6 @@ a.clinicName:focus-visible {
 .logoWrap {
   position: relative;
   flex: none;
-}
-
-.testedSeal {
-  position: absolute;
-  right: -0.55rem;
-  bottom: -0.55rem;
-}
-
-.testedSeal .tipText {
-  left: -2.4rem;
-  transform: none;
-  text-align: left;
-}
-
-.testedSeal .tipButton {
-  padding: 0.1rem;
-  background: var(--row-bg);
-}
-
-.testedIcon {
-  color: var(--accent);
 }
 
 .insYes {

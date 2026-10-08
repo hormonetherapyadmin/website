@@ -80,19 +80,6 @@ function ChevronRightIcon() {
   );
 }
 
-function TestedIcon() {
-  return (
-    <svg {...SMALL_ICON_PROPS} className={styles.testedIcon}>
-      <path
-        d="M12 2l2.17 1.89 2.83-.55.94 2.72 2.72.94-.55 2.83L22 12l-1.89 2.17.55 2.83-2.72.94-.94 2.72-2.83-.55L12 22l-2.17-1.89-2.83.55-.94-2.72-2.72-.94.55-2.83L2 12l1.89-2.17-.55-2.83 2.72-.94.94-2.72 2.83.55z"
-        fill="currentColor"
-        stroke="none"
-      />
-      <path d="M8.5 12.2l2.4 2.4 4.6-4.8" stroke="#fff" />
-    </svg>
-  );
-}
-
 function InsuranceYesIcon() {
   return (
     <svg {...SMALL_ICON_PROPS} className={styles.insYes}>
@@ -316,13 +303,14 @@ export default async function HomepageMockup(
         >
           <table className={styles.ledger}>
             <caption className={styles.srOnly}>
-              What each clinic is best for, monthly cost, insurance, typical
-              formulation, and Peggy’s notes for eight online HRT clinics
+              A short description of each clinic, monthly cost, insurance,
+              typical formulation, and Peggy’s notes for eight online HRT
+              clinics
             </caption>
             <thead>
               <tr>
                 <th scope="col">Clinic</th>
-                <th scope="col">Best for</th>
+                <th scope="col">Description</th>
                 <th scope="col" className={styles.priceHead}>
                   <Tip label="Checked Sep 9, 2026" describe>
                     What I paid per month
@@ -358,11 +346,6 @@ export default async function HomepageMockup(
                             <ClinicLogo clinic={clinic} />
                           </span>
                         )}
-                        <span className={styles.testedSeal}>
-                          <Tip label="Tested by Peggy. I was a patient here.">
-                            <TestedIcon />
-                          </Tip>
-                        </span>
                       </span>
                       <span>
                         {clinic.isAffiliate ? (
@@ -390,7 +373,9 @@ export default async function HomepageMockup(
                     </span>
                   </th>
                   <td>
-                    <span className={styles.bestFor}>{clinic.bestFor}</span>
+                    <span className={styles.description}>
+                      {clinic.shortDescription}
+                    </span>
                   </td>
                   <td className={styles.priceCell}>
                     <span className={styles.price}>${clinic.monthly}</span>

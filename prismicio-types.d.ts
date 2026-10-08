@@ -80,6 +80,17 @@ interface AuthorDocumentData {
   name: prismic.KeyTextField;
 
   /**
+   * Name title field in *Author*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: author.name_title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  name_title: prismic.KeyTextField;
+
+  /**
    * About field in *Author*
    *
    * - **Field Type**: Rich Text
@@ -289,6 +300,28 @@ interface PostDocumentData {
   sub_title: prismic.RichTextField;
 
   /**
+   * Image field in *Blog post*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: post.image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Image caption field in *Blog post*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The line under the photo. It can include a link.
+   * - **API ID Path**: post.caption
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  caption: prismic.RichTextField;
+
+  /**
    * Personal note field in *Blog post*
    *
    * - **Field Type**: Rich Text
@@ -309,28 +342,6 @@ interface PostDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   body: prismic.RichTextField;
-
-  /**
-   * Image field in *Blog post*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: post.image
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  image: prismic.ImageField<never>;
-
-  /**
-   * Caption field in *Blog post*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: The line under the photo. It can include a link.
-   * - **API ID Path**: post.caption
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  caption: prismic.RichTextField;
 
   /**
    * Author field in *Blog post*
@@ -378,9 +389,7 @@ interface PostDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
    */
-  sources: prismic.GroupField<Simplify<PostDocumentDataSourcesItem>>;
-
-  /**
+  sources: prismic.GroupField<Simplify<PostDocumentDataSourcesItem>>; /**
    * Meta title field in *Blog post*
    *
    * - **Field Type**: Text
@@ -456,69 +465,6 @@ export type PostDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PostDocumentData>, "post", Lang>;
 
 /**
- * Item in *Clinic → Treatments*
- */
-export interface ProviderDocumentDataTreatmentsItem {
-  /**
-   * Treatment field in *Clinic → Treatments*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.treatments[].treatment
-   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
-   */
-  treatment: prismic.ContentRelationshipField<"treatment">;
-}
-
-/**
- * Item in *Clinic → Pros*
- */
-export interface ProviderDocumentDataProsItem {
-  /**
-   * Text field in *Clinic → Pros*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.pros[].text
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  text: prismic.KeyTextField;
-}
-
-/**
- * Item in *Clinic → Cons*
- */
-export interface ProviderDocumentDataConsItem {
-  /**
-   * Text field in *Clinic → Cons*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.cons[].text
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  text: prismic.KeyTextField;
-}
-
-/**
- * Item in *Clinic → Related*
- */
-export interface ProviderDocumentDataRelatedItem {
-  /**
-   * Item field in *Clinic → Related*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.related[].item
-   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
-   */
-  item:
-    | prismic.ContentRelationshipField<"post">
-    | prismic.ContentRelationshipField<"provider_review">
-    | prismic.ContentRelationshipField<"comparison">;
-}
-
-/**
  * Content for Clinic documents
  */
 interface ProviderDocumentData {
@@ -547,41 +493,13 @@ interface ProviderDocumentData {
   /**
    * Short description field in *Clinic*
    *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.short_description
-   * - **Tab**: Profile
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  short_description: prismic.RichTextField;
-
-  /**
-   * Best for field in *Clinic*
-   *
    * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.best_for
+   * - **Placeholder**: Better sleep. The comparison chart and other clinic summaries use this.
+   * - **API ID Path**: provider.short_description
    * - **Tab**: Profile
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
-  best_for: prismic.KeyTextField;
-
-  /**
-   * Official website field in *Clinic*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.website
-   * - **Tab**: Profile
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  website: prismic.LinkField<
-    string,
-    string,
-    unknown,
-    prismic.FieldState,
-    never
-  >;
+  short_description: prismic.KeyTextField;
 
   /**
    * Visit field in *Clinic*
@@ -595,40 +513,6 @@ interface ProviderDocumentData {
   visit: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
-   * Personally tested field in *Clinic*
-   *
-   * - **Field Type**: Boolean
-   * - **Placeholder**: *None*
-   * - **Default Value**: false
-   * - **API ID Path**: provider.personally_tested
-   * - **Tab**: Profile
-   * - **Documentation**: https://prismic.io/docs/fields/boolean
-   */
-  personally_tested: prismic.BooleanField;
-
-  /**
-   * Testing notes field in *Clinic*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.testing_notes
-   * - **Tab**: Profile
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  testing_notes: prismic.RichTextField;
-
-  /**
-   * Facts checked field in *Clinic*
-   *
-   * - **Field Type**: Date
-   * - **Placeholder**: The day you last confirmed the prices and care details.
-   * - **API ID Path**: provider.last_verified_date
-   * - **Tab**: Profile
-   * - **Documentation**: https://prismic.io/docs/fields/date
-   */
-  last_verified_date: prismic.DateField;
-
-  /**
    * Top choice label field in *Clinic*
    *
    * - **Field Type**: Text
@@ -640,15 +524,6 @@ interface ProviderDocumentData {
   top_choice_label: prismic.KeyTextField;
 
   /**
-   * Source notes field in *Clinic*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.source_notes
-   * - **Tab**: Profile
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  source_notes: prismic.RichTextField; /**
    * Monthly price field in *Clinic*
    *
    * - **Field Type**: Number
@@ -693,26 +568,6 @@ interface ProviderDocumentData {
   display_price_note: prismic.KeyTextField;
 
   /**
-   * Consultation fee field in *Clinic*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: No visit, or 150
-   * - **API ID Path**: provider.consultation_fee
-   * - **Tab**: Price
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  consultation_fee: prismic.KeyTextField;
-
-  /**
-   * Membership fee field in *Clinic*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: Leave blank when there is none.
-   * - **API ID Path**: provider.membership_fee
-   * - **Tab**: Price
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  membership_fee: prismic.KeyTextField; /**
    * Typically prescribed field in *Clinic*
    *
    * - **Field Type**: Text
@@ -724,26 +579,15 @@ interface ProviderDocumentData {
   formulation: prismic.KeyTextField;
 
   /**
-   * Lab requirement field in *Clinic*
+   * Labs field in *Clinic*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: *None*
+   * - **Placeholder**: None, or $150 labs up front.
    * - **API ID Path**: provider.lab_requirement
    * - **Tab**: Care
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   lab_requirement: prismic.KeyTextField;
-
-  /**
-   * Lab notes field in *Clinic*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.lab_notes
-   * - **Tab**: Care
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  lab_notes: prismic.RichTextField;
 
   /**
    * Takes insurance field in *Clinic*
@@ -769,28 +613,6 @@ interface ProviderDocumentData {
   hsa_fsa: prismic.KeyTextField;
 
   /**
-   * Shipping field in *Clinic*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.shipping
-   * - **Tab**: Care
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  shipping: prismic.KeyTextField;
-
-  /**
-   * Eligibility field in *Clinic*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.eligibility
-   * - **Tab**: Care
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  eligibility: prismic.RichTextField;
-
-  /**
    * State availability field in *Clinic*
    *
    * - **Field Type**: Text
@@ -802,26 +624,17 @@ interface ProviderDocumentData {
   state_availability: prismic.KeyTextField;
 
   /**
-   * Treatments field in *Clinic*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.treatments[]
-   * - **Tab**: Care
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-   */
-  treatments: prismic.GroupField<Simplify<ProviderDocumentDataTreatmentsItem>>;
-
-  /**
-   * Weight support field in *Clinic*
+   * Getting started field in *Clinic*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.weight_support
+   * - **Placeholder**: No visit. Shown under the quote and on the clinic facts.
+   * - **API ID Path**: provider.note
    * - **Tab**: Care
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
-  weight_support: prismic.KeyTextField; /**
+  note: prismic.KeyTextField;
+
+  /**
    * In my words field in *Clinic*
    *
    * - **Field Type**: Rich Text
@@ -833,37 +646,6 @@ interface ProviderDocumentData {
   quote: prismic.RichTextField;
 
   /**
-   * Extra note field in *Clinic*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: The line under the quote.
-   * - **API ID Path**: provider.note
-   * - **Tab**: Words
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  note: prismic.RichTextField;
-
-  /**
-   * Pros field in *Clinic*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.pros[]
-   * - **Tab**: Words
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-   */
-  pros: prismic.GroupField<Simplify<ProviderDocumentDataProsItem>>;
-
-  /**
-   * Cons field in *Clinic*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.cons[]
-   * - **Tab**: Words
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-   */
-  cons: prismic.GroupField<Simplify<ProviderDocumentDataConsItem>>; /**
    * Offer field in *Clinic*
    *
    * - **Field Type**: Content Relationship
@@ -882,75 +664,6 @@ interface ProviderDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/content-relationship
    */
   review: prismic.ContentRelationshipField<"provider_review">;
-
-  /**
-   * Related field in *Clinic*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.related[]
-   * - **Tab**: Links
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-   */
-  related: prismic.GroupField<Simplify<ProviderDocumentDataRelatedItem>>; /**
-   * Meta title field in *Clinic*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.meta_title
-   * - **Tab**: SEO
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  meta_title: prismic.KeyTextField;
-
-  /**
-   * Meta description field in *Clinic*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.meta_description
-   * - **Tab**: SEO
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  meta_description: prismic.KeyTextField;
-
-  /**
-   * Social image field in *Clinic*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.meta_image
-   * - **Tab**: SEO
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  meta_image: prismic.ImageField<never>;
-
-  /**
-   * URL section field in *Clinic*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: No public page
-   * - **API ID Path**: provider.url_section
-   * - **Tab**: SEO
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  url_section: prismic.SelectField<
-    "No public page" | "Blog post (/post/…)" | "Site page (/…)",
-    "filled"
-  >;
-
-  /**
-   * Indexing field in *Clinic*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Index
-   * - **API ID Path**: provider.indexing
-   * - **Tab**: SEO
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  indexing: prismic.SelectField<"Index" | "No index", "filled">;
 }
 
 /**
@@ -3644,10 +3357,6 @@ declare module "@prismicio/client" {
       PostDocumentDataSourcesItem,
       ProviderDocument,
       ProviderDocumentData,
-      ProviderDocumentDataTreatmentsItem,
-      ProviderDocumentDataProsItem,
-      ProviderDocumentDataConsItem,
-      ProviderDocumentDataRelatedItem,
       AllDocumentTypes,
       ClinicComparisonSlice,
       ClinicComparisonSliceDefaultPrimarySectionItem,

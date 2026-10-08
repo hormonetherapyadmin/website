@@ -556,7 +556,7 @@ export default async function BlogPostMockup(
               />
               <div>
                 <h2 id="author-title" className={styles.authorName}>
-                  Written by Peggy B.
+                  Peggy B.
                 </h2>
                 <p>
                   An experienced HRT patient reviewer. Not a doctor. I began my

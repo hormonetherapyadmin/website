@@ -142,8 +142,6 @@ The Providers destination should support:
 -   Lab requirements
 -   Insurance/HSA/FSA where relevant
 -   Availability
--   Personally tested indicator
--   Last verified date
 -   Review link
 -   Affiliate CTA
 
@@ -226,11 +224,12 @@ Preserve existing high-performing content and intent during migration.
 
 Provider is a structured entity, not merely an article.
 
-Core fields should include identity, official destination, affiliate
-destination, offers, pricing, fees, treatments, availability, labs,
-insurance, HSA/FSA, shipping, eligibility, pros/cons, last verified,
-personally tested status, and relationships to
-reviews/articles/comparisons.
+Core fields should include identity, the affiliate visit link, a short
+description, her quote, offers, the chart price and the page price,
+formulation, labs, insurance, HSA/FSA, state availability, how to get
+started, and her review. The visit link is the only outbound clinic
+link. A clinic on the site is one Peggy has tried. A clinic page is a
+Page.
 
 ### Provider Review
 

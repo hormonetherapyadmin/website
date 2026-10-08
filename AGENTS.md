@@ -153,19 +153,15 @@ practical.
 Examples:
 
 -   Pricing
--   Consultation fees
--   Membership fees
--   Treatment options
--   Lab requirements
+-   Formulation
+-   Labs
 -   Insurance
 -   HSA/FSA
 -   State availability
--   Shipping
--   Eligibility
+-   How to get started
 -   Affiliate destination
 -   Coupon/offer
--   Last verified date
--   Personally tested status
+-   Short description
 
 Do not hard-code the same provider fact into multiple components/pages
 when it can be sourced from the canonical provider document.

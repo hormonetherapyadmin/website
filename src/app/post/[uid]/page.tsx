@@ -83,7 +83,12 @@ async function loadPost(uid: string) {
   const client = createClient();
   try {
     return await client.getByUID("post", uid, {
-      fetchLinks: ["author.name", "author.about", "author.profile"],
+      fetchLinks: [
+        "author.name",
+        "author.name_title",
+        "author.about",
+        "author.profile",
+      ],
     });
   } catch (error) {
     if (error instanceof NotFoundError) return null;
@@ -157,6 +162,10 @@ function authorName(data: AuthorDocument["data"] | null) {
   return name || PEGGY_NAME;
 }
 
+function authorTitle(data: AuthorDocument["data"] | null) {
+  return data?.name_title?.trim() || "";
+}
+
 export async function generateMetadata(
   props: PageProps<"/post/[uid]">,
 ): Promise<Metadata> {
@@ -201,6 +210,7 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
   const title = textOf(post.data.title);
   const dek = textOf(post.data.sub_title);
   const name = authorName(author);
+  const nameTitle = authorTitle(author);
   const published = post.data.published_date;
   const minutes = minutesToRead(post.data.body);
   const sections = headingAnchors(post.data.body).filter(
@@ -302,7 +312,12 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
                   className={styles.avatar}
                   size={56}
                 />
-                <span className={styles.bylineName}>{name}</span>
+                <span className={styles.bylineText}>
+                  <span className={styles.bylineName}>{name}</span>
+                  {nameTitle ? (
+                    <span className={styles.bylineTitle}>{nameTitle}</span>
+                  ) : null}
+                </span>
               </Link>
             </div>
           </div>
@@ -397,8 +412,11 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
               />
               <div>
                 <h2 id="author-title" className={styles.authorName}>
-                  Written by {name}
+                  {name}
                 </h2>
+                {nameTitle ? (
+                  <p className={styles.authorTitle}>{nameTitle}</p>
+                ) : null}
                 {author && isFilled.richText(author.about) ? (
                   <PrismicRichText field={author.about} />
                 ) : null}
