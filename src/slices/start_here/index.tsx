@@ -30,6 +30,7 @@ type StartHerePrimary = {
 };
 
 const toneClass = [styles.tone1, styles.tone2, styles.tone3, styles.tone4];
+const cardsPerRow = 4;
 
 function choice<T extends string>(
   value: string | null | undefined,
@@ -50,8 +51,8 @@ function choice<T extends string>(
 export function cardRows<T>(items: readonly T[]): T[][] {
   const rows: T[][] = [];
 
-  for (let index = 0; index < items.length; index += 4) {
-    rows.push(items.slice(index, index + 4));
+  for (let index = 0; index < items.length; index += cardsPerRow) {
+    rows.push(items.slice(index, index + cardsPerRow));
   }
 
   return rows;
@@ -148,15 +149,13 @@ export function StartHere({ primary }: { primary: StartHerePrimary }) {
     isFilled.link(card.link),
   );
   const rows = cardRows(cards);
-  let seen = 0;
 
   return (
     <SliceSection section={primary.section}>
       {rows.length > 0 ? (
         <div className={styles.rows}>
-          {rows.map((row) => {
-            const rowStart = seen;
-            seen += row.length;
+          {rows.map((row, rowIndex) => {
+            const rowStart = rowIndex * cardsPerRow;
 
             return (
               <ul key={rowStart} className={styles.row} data-count={row.length}>
