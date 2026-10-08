@@ -428,18 +428,11 @@
                   "logo",
                   "formulation",
                   "visit",
-                  "display_price",
-                  "display_price_note",
+                  "monthly_price",
+                  "price_note",
                   "top_choice_label",
-                  {
-                    "customtypes": [
-                      {
-                        "fields": ["code", "display_copy"],
-                        "id": "offer"
-                      }
-                    ],
-                    "id": "offer"
-                  }
+                  "code",
+                  "code_note"
                 ],
                 "id": "provider"
               }

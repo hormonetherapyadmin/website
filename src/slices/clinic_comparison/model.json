@@ -114,6 +114,15 @@
                   "select": "document"
                 },
                 "type": "Link"
+              },
+              "review": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "label": "Review",
+                  "placeholder": "Read review. This page chooses the review."
+                },
+                "type": "Link"
               }
             },
             "label": "Clinics",

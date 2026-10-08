@@ -54,45 +54,22 @@
     "Price": {
       "monthly_price": {
         "config": {
-          "label": "Monthly price",
-          "placeholder": "What I paid per month. The comparison chart uses this."
+          "label": "Price",
+          "placeholder": "What I paid per month. The chart and the clinic page use this."
         },
         "type": "Number"
       },
       "price_note": {
         "config": {
           "label": "Price note",
-          "placeholder": "The line under the chart price."
+          "placeholder": "The line under the price, such as First six months, then $99."
         },
         "type": "Text"
       },
-      "display_price": {
-        "config": {
-          "label": "Display price",
-          "placeholder": "The price on the clinic page, such as 199."
-        },
-        "type": "Text"
-      },
-      "display_price_note": {
-        "config": {
-          "label": "Display price note",
-          "placeholder": "First six months, then $99."
-        },
-        "type": "Text"
-      }
-    },
-    "Care": {
       "formulation": {
         "config": {
           "label": "Typically prescribed",
-          "placeholder": "Oestra vaginal cream. The chart and the price card use this."
-        },
-        "type": "Text"
-      },
-      "lab_requirement": {
-        "config": {
-          "label": "Labs",
-          "placeholder": "None, or $150 labs up front."
+          "placeholder": "First bullet in the price box. Oestra vaginal cream."
         },
         "type": "Text"
       },
@@ -105,24 +82,49 @@
         },
         "type": "Boolean"
       },
-      "hsa_fsa": {
+      "note": {
         "config": {
-          "label": "HSA / FSA",
-          "placeholder": "Yes, or No"
+          "label": "Getting started",
+          "placeholder": "Third bullet in the price box. No visit."
         },
         "type": "Text"
+      },
+      "code": {
+        "config": {
+          "label": "Code",
+          "placeholder": "PEGGY10. Leave blank when there is no code."
+        },
+        "type": "Text"
+      },
+      "code_note": {
+        "config": {
+          "label": "Code line",
+          "placeholder": "10% off your first order."
+        },
+        "type": "Text"
+      }
+    },
+    "Care": {
+      "lab_requirement": {
+        "config": {
+          "label": "Labs",
+          "placeholder": "None, or $150 labs up front."
+        },
+        "type": "Text"
+      },
+      "hsa_fsa": {
+        "config": {
+          "default_value": false,
+          "label": "HSA / FSA",
+          "placeholder_false": "No",
+          "placeholder_true": "Yes"
+        },
+        "type": "Boolean"
       },
       "state_availability": {
         "config": {
           "label": "State availability",
           "placeholder": "All 50 states"
-        },
-        "type": "Text"
-      },
-      "note": {
-        "config": {
-          "label": "Getting started",
-          "placeholder": "No visit. Shown under the quote and on the clinic facts."
         },
         "type": "Text"
       }
@@ -137,28 +139,6 @@
           "single": "paragraph,strong,em,hyperlink"
         },
         "type": "StructuredText"
-      }
-    },
-    "Offer": {
-      "offer": {
-        "config": {
-          "customtypes": ["offer"],
-          "label": "Offer",
-          "repeat": false,
-          "select": "document"
-        },
-        "type": "Link"
-      }
-    },
-    "Links": {
-      "review": {
-        "config": {
-          "customtypes": ["provider_review"],
-          "label": "Review",
-          "repeat": false,
-          "select": "document"
-        },
-        "type": "Link"
       }
     }
   },

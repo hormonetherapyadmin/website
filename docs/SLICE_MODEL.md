@@ -26,7 +26,6 @@ custom type. The clinic has no public page. A clinic page is a Page.
 | Provider | Custom type | The clinic every slice links to. File: `customtypes/provider` |
 | Post | Page type | A blog post. File: `customtypes/post` |
 | Provider review, Comparison, Page | Page type | Public pages |
-| Offer | Custom type | A coupon has no page |
 | Callout | Custom type | A reusable box inside a post has no page |
 
 A content relationship points at a document so the page can show that
@@ -271,11 +270,10 @@ clinic.
 | Product image | `product` | Image | No | The Oestra jar |
 
 The relationship fetches `name`, `logo`, `formulation`, `visit`,
-`display_price`, `display_price_note`, `top_choice_label`, and the
-offer's `code` and `display_copy`. The price card shows the formulation
-when that field is filled, and the clinic name otherwise. `display_price`
-is the price on the clinic page, such as 199. The comparison chart still
-uses `monthly_price`.
+`monthly_price`, `price_note`, `top_choice_label`, `code`, and
+`code_note`. The price card shows the formulation when
+that field is filled, and the clinic name otherwise. The price is the
+clinic's one monthly price.
 
 ### Start here
 
@@ -359,17 +357,18 @@ The section id is the heading, and the hero button scrolls to it.
 | Disclosure | `disclosure` | Link, with display text | No | Affiliate disclosure |
 | Clinics | `clinics` | Repeatable group | Yes | The clinics, in table order |
 
-Each row has one field, `clinic`, a content relationship limited to
-Provider. Help: "Add the clinics in the order they should appear. To
-change a price, a quote, or a coupon, edit that clinic."
+Each row has `clinic`, a content relationship limited to Provider, and
+`review`, the link behind "Read review." Help: "Add the clinics in the
+order they should appear. To change a price, a quote, or a code, edit
+that clinic. Pick the review on this row."
 
 The slice is in `src/slices/clinic_comparison`. The page resolves each
 clinic and passes the fields this table reads.
 
 The columns stay fixed: Clinic, Description, What I paid per month,
 Insurance, Typically prescribed, In my words. The relationship fetches
-the Provider fields in the next section, including `offer.code` and
-`offer.display_copy`.
+the Provider fields in the next section, including `code` and
+`code_note`. The review link is the row's Review field.
 
 ### Quote
 
@@ -448,20 +447,20 @@ has no public page. A clinic page is a Page, and the slices on that
 page point at this document.
 
 Slices point at this document with a content relationship. Each slice
-fills itself from the fields it lists. Monthly price is one field.
-The comparison chart, a facts token, and any later slice that lists
-`monthly_price` all show that same number.
+fills itself from the fields it lists. Price is one field. The
+comparison chart, the clinic price card, a facts token, and any later
+slice that lists `monthly_price` all show that same number.
 
 | Place | Points with | Fills in |
 | --- | --- | --- |
 | Hero, brands | `clinic` | Name, logo |
-| Hero, provider | `clinic` | Name, logo, formulation, visit, display price, display price note, top choice label, offer code, offer copy |
-| Clinic comparison | `clinic` | Name, logo, short description, monthly price, price note, insurance, formulation, quote, getting started, top choice label, review, visit, offer code, offer copy |
+| Hero, provider | `clinic` | Name, logo, formulation, visit, price, price note, top choice label, code, code line |
+| Clinic comparison | `clinic` | Name, logo, short description, price, price note, insurance, formulation, quote, getting started, top choice label, visit, code, code line. The review link is on the slice row |
 | Quote | `clinic` | Logo, name, visit. A Name on the slice replaces the clinic name |
 | Side by side, clinic | `clinic` | Logo, name, quote, visit |
-| Post sidebar | `clinic` | Name, logo, review |
-| Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, offer code, offer copy, plus the sentence in that paragraph |
-| Story facts token | `{{provider:uid:facts}}` | Monthly price, price note, insurance, formulation |
+| Post sidebar | `clinic` | Name, logo |
+| Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, code, code line, plus the sentence in that paragraph |
+| Story facts token | `{{provider:uid:facts}}` | Price, price note, insurance, formulation |
 
 #### Profile
 
@@ -484,37 +483,37 @@ site is one Peggy has tried. There is no tested checkbox.
 
 #### Price
 
-What she paid, and what the clinic page shows.
+The one monthly amount, and the line under it.
 
 | Label | Id | Kind | Example |
 | --- | --- | --- | --- |
-| Monthly price | `monthly_price` | Number | What I paid per month |
-| Price note | `price_note` | Text | Line under the chart price |
-| Display price | `display_price` | Text | 199, on the clinic page |
-| Display price note | `display_price_note` | Text | First six months, then $99. |
+| Price | `monthly_price` | Number | What I paid per month |
+| Price note | `price_note` | Text | First six months, then $99. |
+| Typically prescribed | `formulation` | Text | Oestra vaginal cream |
+| Takes insurance | `insurance` | Boolean | No |
+| Getting started | `note` | Text | Free consults as needed. |
+| Code | `code` | Text | PEGGY10. Blank when there is no code. |
+| Code line | `code_note` | Text | 10% off your first order. |
 
-The comparison chart uses Monthly price. A clinic page uses Display
-price. Inner Balance is $199, then $99, and the chart lists $150, the
-average over the first year. A consult fee goes in Price note, such as
-"+ $99 one-time consult."
+The comparison chart and the clinic price card show this same price.
+A step-down, such as $199 then $99, is written in Price note. A consult
+fee goes there too, such as "+ $99 one-time consult."
+
+Typically prescribed, Takes insurance, and Getting started are the
+three bullets in the price box, in that order. The chart also uses
+the first two as columns, and Getting started is the line under the
+quote.
 
 #### Care
 
-The shared facts. The comparison chart reads Typically prescribed and
-Takes insurance. A clinic page fact list reads this whole tab.
+Facts that are not in the price box. A clinic page fact list reads
+this tab.
 
 | Label | Id | Kind |
 | --- | --- | --- |
-| Typically prescribed | `formulation` | Text |
 | Labs | `lab_requirement` | Text |
-| Takes insurance | `insurance` | Boolean |
-| HSA / FSA | `hsa_fsa` | Text |
+| HSA / FSA | `hsa_fsa` | Boolean |
 | State availability | `state_availability` | Text |
-| Getting started | `note` | Text |
-
-Getting started is the line under the quote on the chart, such as "No
-visit" or "$150 labs required up front." The clinic page fact list
-uses that same line.
 
 #### Words
 
@@ -524,39 +523,12 @@ Her one sentence. The long review stays on the Provider review.
 | --- | --- | --- | --- |
 | In my words | `quote` | Heading rich text | The table quote |
 
-#### Offer
-
-| Label | Id | Kind |
-| --- | --- | --- |
-| Offer | `offer` | Content relationship to Offer |
-
-The homepage code line and the story offer box read `code` and
-`display_copy` through this field. The visit address stays on Visit.
-
-#### Links
-
-| Label | Id | Kind |
-| --- | --- | --- |
-| Review | `review` | Content relationship to her review |
-
-"Read review" uses a fixed label. Extra links on a clinic page, such
-as a video or a second article, are written on that page's slice.
-
-### Offer
-
-Custom type. The full field list is in `docs/CONTENT_MODEL.md`. The
-homepage reads two of them through the clinic:
-
-| Label | Id | Kind | Example |
-| --- | --- | --- | --- |
-| Code | `code` | Text | PEGGY10 |
-| Display copy | `display_copy` | Heading rich text | 10% off your first order |
-
-The visit address stays on the clinic's `visit` link.
+Code and Code line sit on the Price tab. Visit is the only link to the
+clinic. "Read review" is a link on the slice that shows it.
 
 ### Callout
 
-Custom type. A rich text field cannot contain a Provider, an Offer, or a
+Custom type. A rich text field cannot contain a Provider or a
 Callout, so a page that wants one between paragraphs needs a slice. The
 post does not. Its personal note is a field. An offer box in the
 story is a provider token, described under Post.
@@ -570,10 +542,9 @@ fields stay as specified for a later page:
 | Style | `style` | Select: Note or Offer |
 | Text | `text` | Content rich text |
 | Clinic | `clinic` | Content relationship to Provider, optional |
-| Offer | `offer` | Content relationship to Offer, optional |
 
-An Offer box reads the code and the visit link from the linked Offer
-and clinic. The sentence for that spot lives in Text.
+An Offer box reads the code and the visit link from the clinic. The
+sentence for that spot lives in Text.
 
 ## Post
 
@@ -724,8 +695,8 @@ The middle word is the clinic's UID. The last word is the part.
 
 | Part | Renders | Reads |
 | --- | --- | --- |
-| `offer` | The offer box: logo, name, visit button, code | Profile and Offer. The sentence is the rest of the paragraph. If the paragraph is only the token, the sentence is the offer's display copy |
-| `facts` | One clinic's price, price note, insurance, and formulation | Price and Care |
+| `offer` | The offer box: logo, name, visit button, code | Profile and Price. The sentence is the rest of the paragraph. If the paragraph is only the token, the sentence is the code line |
+| `facts` | One clinic's price, price note, insurance, and formulation | Price |
 
 The token is the first thing in the paragraph. A facts token is the
 whole paragraph. Any other last word is ordinary text. In preview, an
@@ -736,7 +707,8 @@ Story help: "Write the story readers will see."
 
 The sidebar is not a field. It reads the story. Each clinic appears
 once, in the order of its first token, and the sidebar shows the first
-four. The logo, the name, and the review link come from that clinic.
+four. The logo and the name come from that clinic. A review link is
+written on the slice that shows Read review.
 "Compare all clinics" is part of the layout. A clinic named only in
 ordinary sentences stays out of the sidebar until a token names it.
 Another part can be added later by teaching the renderer a new word.

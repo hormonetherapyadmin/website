@@ -93,18 +93,17 @@ in tabs. A tab is a group of fields. The model is in that file.
 Tabs:
 
 -   Profile — name, logo, short description, visit link
--   Price — the chart price, and the price a clinic page shows
--   Care — formulation, labs, insurance, HSA, states, getting started
+-   Price — the monthly price, the three price-box lines, and the coupon code
+-   Care — labs, HSA, states
 -   Words — her short quote
--   Offer — the coupon
--   Links — her review
 
 A clinic has no public page and no SEO tab. A clinic page is a Page.
-Slices on that page point at the clinic.
+Slices on that page point at the clinic. Visit is the only link to the
+clinic. A review link is written on the slice that shows it.
 
 Field ids are in `docs/SLICE_MODEL.md`. The long review stays on the
 Provider review. A story inserts a clinic with a token such as
-`{{provider:inner-balance:offer}}`, which reads the Profile and Offer
+`{{provider:inner-balance:offer}}`, which reads the Profile and Price
 tabs.
 
 ### Provider Review
@@ -207,27 +206,6 @@ should be a real URL.
 
 Use a Category document only where it provides a meaningful editorial
 taxonomy of its own. Avoid duplicating Topic semantics.
-
-### Offer
-
-Suggested fields:
-
--   Name/internal label
--   Provider reference
--   Display copy
--   Coupon code
--   Affiliate destination
--   Terms/notes
--   Active
--   Start/end date if applicable
--   Last verified date
-
-Do not silently fall back from an expired offer to an unrelated
-destination without product approval.
-
-The homepage comparison reads `code` and `display_copy` through the
-provider. The visit address used on the homepage lives on the provider's
-`visit` link. See `docs/SLICE_MODEL.md`.
 
 ### Callout
 
@@ -365,8 +343,7 @@ Preferred graph:
 -   Comparison -\> Providers
 -   Clinics in the sidebar come from provider tokens in the story, in the order each clinic is first named.
 -   Keep reading is the newest posts in the same category, then the newest posts in any category. It is not a field.
--   Provider -\> Offer
--   Callout -\> Provider and Offer
+-   Callout -\> Provider
 -   Homepage slices -\> Provider, Post, Provider Review, and Comparison
 -   All editorial documents -\> Author
 -   A story token looks up a Provider by its UID. That lookup is not a

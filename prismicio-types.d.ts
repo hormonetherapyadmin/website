@@ -524,10 +524,10 @@ interface ProviderDocumentData {
   top_choice_label: prismic.KeyTextField;
 
   /**
-   * Monthly price field in *Clinic*
+   * Price field in *Clinic*
    *
    * - **Field Type**: Number
-   * - **Placeholder**: What I paid per month. The comparison chart uses this.
+   * - **Placeholder**: What I paid per month. The chart and the clinic page use this.
    * - **API ID Path**: provider.monthly_price
    * - **Tab**: Price
    * - **Documentation**: https://prismic.io/docs/fields/number
@@ -538,7 +538,7 @@ interface ProviderDocumentData {
    * Price note field in *Clinic*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: The line under the chart price.
+   * - **Placeholder**: The line under the price, such as First six months, then $99.
    * - **API ID Path**: provider.price_note
    * - **Tab**: Price
    * - **Documentation**: https://prismic.io/docs/fields/text
@@ -546,34 +546,12 @@ interface ProviderDocumentData {
   price_note: prismic.KeyTextField;
 
   /**
-   * Display price field in *Clinic*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: The price on the clinic page, such as 199.
-   * - **API ID Path**: provider.display_price
-   * - **Tab**: Price
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  display_price: prismic.KeyTextField;
-
-  /**
-   * Display price note field in *Clinic*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: First six months, then $99.
-   * - **API ID Path**: provider.display_price_note
-   * - **Tab**: Price
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  display_price_note: prismic.KeyTextField;
-
-  /**
    * Typically prescribed field in *Clinic*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
    * - **API ID Path**: provider.formulation
-   * - **Tab**: Care
+   * - **Tab**: Price
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   formulation: prismic.KeyTextField;
@@ -596,7 +574,7 @@ interface ProviderDocumentData {
    * - **Placeholder**: *None*
    * - **Default Value**: false
    * - **API ID Path**: provider.insurance
-   * - **Tab**: Care
+   * - **Tab**: Price
    * - **Documentation**: https://prismic.io/docs/fields/boolean
    */
   insurance: prismic.BooleanField;
@@ -604,13 +582,14 @@ interface ProviderDocumentData {
   /**
    * HSA / FSA field in *Clinic*
    *
-   * - **Field Type**: Text
+   * - **Field Type**: Boolean
    * - **Placeholder**: *None*
+   * - **Default Value**: false
    * - **API ID Path**: provider.hsa_fsa
    * - **Tab**: Care
-   * - **Documentation**: https://prismic.io/docs/fields/text
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
    */
-  hsa_fsa: prismic.KeyTextField;
+  hsa_fsa: prismic.BooleanField;
 
   /**
    * State availability field in *Clinic*
@@ -629,10 +608,32 @@ interface ProviderDocumentData {
    * - **Field Type**: Text
    * - **Placeholder**: No visit. Shown under the quote and on the clinic facts.
    * - **API ID Path**: provider.note
-   * - **Tab**: Care
+   * - **Tab**: Price
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   note: prismic.KeyTextField;
+
+  /**
+   * Code field in *Clinic*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: PEGGY10. Leave blank when there is no code.
+   * - **API ID Path**: provider.code
+   * - **Tab**: Price
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  code: prismic.KeyTextField;
+
+  /**
+   * Code line field in *Clinic*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: 10% off your first order.
+   * - **API ID Path**: provider.code_note
+   * - **Tab**: Price
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  code_note: prismic.KeyTextField;
 
   /**
    * In my words field in *Clinic*
@@ -644,26 +645,6 @@ interface ProviderDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   quote: prismic.RichTextField;
-
-  /**
-   * Offer field in *Clinic*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.offer
-   * - **Tab**: Offer
-   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
-   */
-  offer: prismic.ContentRelationshipField<"offer">; /**
-   * Review field in *Clinic*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: provider.review
-   * - **Tab**: Links
-   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
-   */
-  review: prismic.ContentRelationshipField<"provider_review">;
 }
 
 /**
@@ -785,6 +766,16 @@ export interface ClinicComparisonSliceDefaultPrimaryClinicsItem {
    * - **Documentation**: https://prismic.io/docs/fields/content-relationship
    */
   clinic: prismic.ContentRelationshipField<"provider">;
+
+  /**
+   * Review field in *Clinic comparison → Default → Primary → Clinics*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Read review. This page chooses the review.
+   * - **API ID Path**: clinic_comparison.default.primary.clinics[].review
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  review: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 }
 
 /**
@@ -1585,13 +1576,11 @@ export interface HeroSliceProviderPrimary {
           "logo",
           "formulation",
           "visit",
-          "display_price",
-          "display_price_note",
+          "monthly_price",
+          "price_note",
           "top_choice_label",
-          {
-            customtypes: [{ fields: ["code", "display_copy"]; id: "offer" }];
-            id: "offer";
-          },
+          "code",
+          "code_note",
         ];
         id: "provider";
       },
