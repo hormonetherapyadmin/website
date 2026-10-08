@@ -1,15 +1,29 @@
 import {
+  Cancel01Icon,
+  Medicine02Icon,
+  Tick02Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+import {
   isFilled,
   type EmbedField,
   type RichTextField,
 } from "@prismicio/client";
 import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 import { PrismicRichText, type RichTextComponents } from "@prismicio/react";
+import Image from "next/image";
 import { isValidElement, type ReactNode } from "react";
-import { parseProviderToken } from "@/components/content-blocks";
+import {
+  parseProviderToken,
+  type ProviderToken,
+  type TokenClinic,
+} from "@/components/content-blocks";
 import { headingAnchors, type HeadingAnchor } from "@/lib/post-headings";
 import { storySegments, type PhotoCell } from "@/lib/story-segments";
+import shared from "@/app/mockup/_shared/mockup.module.css";
 import styles from "@/app/mockup/blog/blog.module.css";
+
+const AFFILIATE_REL = "sponsored nofollow noopener noreferrer";
 
 const VIDEO_PROVIDERS = new Set(["YouTube", "Vimeo"]);
 
@@ -166,16 +180,177 @@ function PhotoRow({
   );
 }
 
+function money(value: number) {
+  return Number.isInteger(value) ? `$${value}` : `$${value.toFixed(2)}`;
+}
+
+function findClinic(clinics: readonly TokenClinic[] | undefined, uid: string) {
+  return clinics?.find((clinic) => clinic.uid === uid);
+}
+
+function ClinicMark({ src }: { src: string }) {
+  return (
+    <span className={styles.offerLogo}>
+      <Image src={src} alt="" width={76} height={76} />
+    </span>
+  );
+}
+
+function ClinicActions({
+  clinic,
+  placement,
+}: {
+  clinic: TokenClinic;
+  placement: string;
+}) {
+  if (!clinic.visitHref && !clinic.offerCode) return null;
+  const visit = clinic.visitText?.trim() || `Visit ${clinic.name}`;
+
+  return (
+    <div className={styles.offerActions}>
+      {clinic.visitHref ? (
+        <a
+          href={clinic.visitHref}
+          className={shared.buttonPrimary}
+          target={clinic.newTab ? "_blank" : undefined}
+          rel={clinic.newTab ? AFFILIATE_REL : undefined}
+          data-provider={clinic.name}
+          data-placement={placement}
+        >
+          {visit}
+          {clinic.newTab ? (
+            <span className={shared.srOnly}>
+              {" "}
+              (affiliate link, opens in a new tab)
+            </span>
+          ) : null}
+        </a>
+      ) : (
+        <span>{clinic.name}</span>
+      )}
+      {clinic.offerCode ? (
+        <span className={shared.offer}>Code {clinic.offerCode}</span>
+      ) : null}
+    </div>
+  );
+}
+
+function OfferCallout({
+  clinic,
+  sentence,
+}: {
+  clinic: TokenClinic;
+  sentence: string;
+}) {
+  const line = sentence || clinic.offerCopy || "";
+
+  return (
+    <aside className={styles.offerCallout} aria-label={`${clinic.name} offer`}>
+      {clinic.logo?.src ? <ClinicMark src={clinic.logo.src} /> : null}
+      <div>
+        {line ? <p className={styles.offerText}>{line}</p> : null}
+        <ClinicActions clinic={clinic} placement="story_offer" />
+      </div>
+    </aside>
+  );
+}
+
+function factBullets(clinic: TokenClinic) {
+  const bullets: { icon: IconSvgElement; text: string }[] = [];
+  if (clinic.formulation) {
+    bullets.push({ icon: Medicine02Icon, text: clinic.formulation });
+  }
+  if (clinic.insurance === true) {
+    bullets.push({ icon: Tick02Icon, text: "Takes insurance" });
+  } else if (clinic.insurance === false) {
+    bullets.push({ icon: Cancel01Icon, text: "Doesn’t take insurance" });
+  }
+  if (clinic.gettingStarted) {
+    bullets.push({ icon: Tick02Icon, text: clinic.gettingStarted });
+  }
+  return bullets;
+}
+
+function FactsCallout({ clinic }: { clinic: TokenClinic }) {
+  const bullets = factBullets(clinic);
+
+  return (
+    <aside className={styles.facts} aria-label={clinic.name}>
+      {clinic.logo?.src ? <ClinicMark src={clinic.logo.src} /> : null}
+      <div>
+        {typeof clinic.monthlyPrice === "number" ? (
+          <p className={styles.factsPrice}>
+            <span className={shared.srOnly}>What I paid per month </span>
+            <span>{money(clinic.monthlyPrice)}</span>
+            <span className={styles.factsPer}>/mo</span>
+          </p>
+        ) : null}
+        {clinic.priceNote ? (
+          <p className={styles.factsNote}>{clinic.priceNote}</p>
+        ) : null}
+        {bullets.length > 0 ? (
+          <ul className={styles.factsMeta}>
+            {bullets.map((bullet) => (
+              <li key={bullet.text}>
+                <HugeiconsIcon
+                  icon={bullet.icon}
+                  size={16}
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                />
+                {bullet.text}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        <ClinicActions clinic={clinic} placement="story_facts" />
+      </div>
+    </aside>
+  );
+}
+
+function StoryToken({
+  token,
+  clinic,
+  preview,
+}: {
+  token: ProviderToken;
+  clinic: TokenClinic | undefined;
+  preview: boolean;
+}) {
+  const missing = !clinic && preview ? `No clinic with id ${token.uid}.` : null;
+
+  return (
+    <>
+      {missing ? <p className={styles.missing}>{missing}</p> : null}
+      {clinic && token.part === "offer" ? (
+        <OfferCallout clinic={clinic} sentence={token.sentence} />
+      ) : null}
+      {clinic && token.part === "facts" ? (
+        <FactsCallout clinic={clinic} />
+      ) : null}
+      {clinic && token.part === "facts" && token.sentence ? (
+        <p>{token.sentence}</p>
+      ) : null}
+      {!clinic && token.sentence ? <p>{token.sentence}</p> : null}
+    </>
+  );
+}
+
 function RichChunk({
   field,
   anchors,
   start,
   sourceId,
+  clinics,
+  preview,
 }: {
   field: RichTextField;
   anchors: HeadingAnchor[];
   start: number;
   sourceId: (number: string) => string;
+  clinics?: readonly TokenClinic[];
+  preview: boolean;
 }) {
   let headingIndex = start;
 
@@ -191,7 +366,15 @@ function RichChunk({
     },
     paragraph: ({ node, children }) => {
       const token = parseProviderToken(node.text);
-      if (token) return token.sentence ? <p>{token.sentence}</p> : null;
+      if (token) {
+        return (
+          <StoryToken
+            token={token}
+            clinic={findClinic(clinics, token.uid)}
+            preview={preview}
+          />
+        );
+      }
       return <p>{children}</p>;
     },
     hyperlink: ({ node, children }) => (
@@ -237,9 +420,14 @@ const inlineComponents = (
 export function PostStory({
   field,
   promoteResources = false,
+  clinics,
+  tokens = "public",
 }: {
   field: RichTextField;
   promoteResources?: boolean;
+  clinics?: readonly TokenClinic[];
+  /** Preview names a missing clinic. The public page drops the token. */
+  tokens?: "preview" | "public";
 }) {
   const anchors = headingAnchors(field);
   const seenSources = new Map<string, number>();
@@ -283,6 +471,8 @@ export function PostStory({
         anchors={anchors}
         start={start}
         sourceId={sourceId}
+        clinics={clinics}
+        preview={tokens === "preview"}
       />
     );
   });

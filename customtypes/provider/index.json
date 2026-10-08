@@ -43,6 +43,15 @@
         },
         "type": "Link"
       },
+      "page": {
+        "config": {
+          "customtypes": ["page"],
+          "label": "Page",
+          "placeholder": "The site page about this clinic. Leave blank until that page exists.",
+          "select": "document"
+        },
+        "type": "Link"
+      },
       "top_choice_label": {
         "config": {
           "label": "Top choice label",

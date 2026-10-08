@@ -16,6 +16,10 @@ export type TokenClinic = {
   priceNote?: string;
   insurance?: boolean;
   formulation?: string;
+  /** Getting started, the third price-box bullet. */
+  gettingStarted?: string;
+  /** Site page about this clinic. Blank until that page exists. */
+  pageHref?: string;
 };
 
 export type ProviderToken = {

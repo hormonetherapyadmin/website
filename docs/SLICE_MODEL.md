@@ -458,7 +458,7 @@ slice that lists `monthly_price` all show that same number.
 | Clinic comparison | `clinic` | Name, logo, short description, price, price note, insurance, formulation, quote, getting started, top choice label, visit, code, code line. The review link is on the slice row |
 | Quote | `clinic` | Logo, name, visit. A Name on the slice replaces the clinic name |
 | Side by side, clinic | `clinic` | Logo, name, quote, visit |
-| Post sidebar | `clinic` | Name, logo |
+| Post sidebar | `clinic` | Name, logo. The name links to Page when that field is set |
 | Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, code, code line, plus the sentence in that paragraph |
 | Story facts token | `{{provider:uid:facts}}` | Price, price note, insurance, formulation |
 
@@ -473,13 +473,17 @@ this tab.
 | Logo | `logo` | Image | Yes |
 | Short description | `short_description` | Text | No |
 | Visit | `visit` | Link, with display text, open in a new tab | No |
+| Page | `page` | Link to a Page document | No |
 | Top choice label | `top_choice_label` | Text | No |
 
 Short description is the one line about the clinic. The comparison
 chart's Description column reads it, and so does any other clinic
-summary that needs a short line. An empty Visit link means the name is
-not a link. A blank Top choice label means no badge. A clinic on the
-site is one Peggy has tried. There is no tested checkbox.
+summary that needs a short line. An empty Visit link means a name that
+would go to the clinic's site is not a link. Page is the site page
+about this clinic. The sidebar name links there when Page is set, and
+a blank Page leaves that name as text. A blank Top choice label means
+no badge. A clinic on the site is one Peggy has tried. There is no
+tested checkbox.
 
 #### Price
 
@@ -707,8 +711,9 @@ Story help: "Write the story readers will see."
 
 The sidebar is not a field. It reads the story. Each clinic appears
 once, in the order of its first token, and the sidebar shows the first
-four. The logo and the name come from that clinic. A review link is
-written on the slice that shows Read review.
+four. The logo and the name come from that clinic. The name links to
+the clinic's Page field. A blank Page leaves the name as text. A review
+link is written on the slice that shows Read review.
 "Compare all clinics" is part of the layout. A clinic named only in
 ordinary sentences stays out of the sidebar until a token names it.
 Another part can be added later by teaching the renderer a new word.

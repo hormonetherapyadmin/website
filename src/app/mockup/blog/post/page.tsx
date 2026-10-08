@@ -580,9 +580,17 @@ export default async function BlogPostMockup(
             <Share />
             <InThisPost sections={SECTIONS} />
             <section aria-labelledby="rail-clinics">
-              <p id="rail-clinics" className={styles.railHeading}>
-                Clinics
-              </p>
+              <div className={styles.railClinicsHead}>
+                <p id="rail-clinics" className={styles.railHeading}>
+                  Clinics
+                </p>
+                <a
+                  href="/hrt-price-comparison-chart"
+                  className={styles.railLink}
+                >
+                  Compare all clinics
+                </a>
+              </div>
               <ul className={styles.mentioned}>
                 {MENTIONED.slice(0, RAIL_CLINIC_LIMIT)
                   .map(clinicNamed)
@@ -596,9 +604,6 @@ export default async function BlogPostMockup(
                     </li>
                   ))}
               </ul>
-              <a href="/hrt-price-comparison-chart" className={styles.railLink}>
-                Compare all clinics
-              </a>
             </section>
           </aside>
         </div>

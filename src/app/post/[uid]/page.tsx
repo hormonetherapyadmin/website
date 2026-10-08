@@ -13,7 +13,9 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
+import { storyClinicUids } from "@/components/content-blocks";
 import {
   PostSources,
   PostStory,
@@ -24,8 +26,13 @@ import { isIndexingAllowed } from "@/lib/env";
 import { headingAnchors } from "@/lib/post-headings";
 import { minutesToRead, relatedPosts } from "@/lib/post-derived";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { tokenClinic } from "@/lib/token-clinic";
 import { createClient } from "@/prismicio";
-import type { AuthorDocument, PostDocument } from "../../../../prismicio-types";
+import type {
+  AuthorDocument,
+  PostDocument,
+  ProviderDocument,
+} from "../../../../prismicio-types";
 import {
   DISCLOSURE_HREF,
   MockupShell,
@@ -202,10 +209,25 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
   if (!post) notFound();
 
   const client = createClient();
-  const [author, catalog] = await Promise.all([
+  const clinicUids = storyClinicUids(post.data.body);
+  const [draft, author, catalog, providers] = await Promise.all([
+    draftMode(),
     loadAuthor(post),
     client.getAllByType("post"),
+    clinicUids.length
+      ? client.getAllByUIDs("provider", clinicUids)
+      : Promise.resolve([] as ProviderDocument[]),
   ]);
+  const clinics = providers.flatMap((document) => {
+    const clinic = tokenClinic(document);
+    return clinic ? [clinic] : [];
+  });
+  const railClinics = clinicUids
+    .flatMap((uid) => {
+      const clinic = clinics.find((item) => item.uid === uid);
+      return clinic ? [clinic] : [];
+    })
+    .slice(0, 4);
 
   const title = textOf(post.data.title);
   const dek = textOf(post.data.sub_title);
@@ -367,6 +389,8 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
             <PostStory
               field={post.data.body}
               promoteResources={sources.length === 0}
+              clinics={clinics}
+              tokens={draft.isEnabled ? "preview" : "public"}
             />
 
             {sources.length > 0 ? (
@@ -435,6 +459,47 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
           <aside className={styles.rail}>
             <Share url={`${SITE_URL}/post/${post.uid}`} title={title} />
             {sections.length > 0 ? <InThisPost sections={sections} /> : null}
+            {railClinics.length > 0 ? (
+              <section aria-labelledby="rail-clinics">
+                <div className={styles.railClinicsHead}>
+                  <p id="rail-clinics" className={styles.railHeading}>
+                    Clinics
+                  </p>
+                  <Link
+                    href="/hrt-price-comparison-chart"
+                    className={styles.railLink}
+                  >
+                    Compare all clinics
+                  </Link>
+                </div>
+                <ul className={styles.mentioned}>
+                  {railClinics.map((clinic) => (
+                    <li key={clinic.uid}>
+                      {clinic.logo?.src ? (
+                        <span className={styles.railLogo}>
+                          <Image
+                            src={clinic.logo.src}
+                            alt=""
+                            width={36}
+                            height={36}
+                          />
+                        </span>
+                      ) : null}
+                      {clinic.pageHref ? (
+                        <Link
+                          href={clinic.pageHref}
+                          className={styles.railName}
+                        >
+                          {clinic.name}
+                        </Link>
+                      ) : (
+                        <span className={styles.railName}>{clinic.name}</span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
           </aside>
         </div>
       </article>

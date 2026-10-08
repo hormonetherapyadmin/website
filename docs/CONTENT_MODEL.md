@@ -92,14 +92,16 @@ in tabs. A tab is a group of fields. The model is in that file.
 
 Tabs:
 
--   Profile — name, logo, short description, visit link
+-   Profile — name, logo, short description, visit link, page link
 -   Price — the monthly price, the three price-box lines, and the coupon code
 -   Care — labs, HSA, states
 -   Words — her short quote
 
 A clinic has no public page and no SEO tab. A clinic page is a Page.
 Slices on that page point at the clinic. Visit is the only link to the
-clinic. A review link is written on the slice that shows it.
+clinic's own site. Page is a link to the site page about this clinic,
+and it stays blank until that page exists. The sidebar name uses Page.
+A review link is written on the slice that shows it.
 
 Field ids are in `docs/SLICE_MODEL.md`. The long review stays on the
 Provider review. A story inserts a clinic with a token such as
@@ -341,7 +343,8 @@ Preferred graph:
 
 -   Review -\> Provider
 -   Comparison -\> Providers
--   Clinics in the sidebar come from provider tokens in the story, in the order each clinic is first named.
+-   Clinics in the sidebar come from provider tokens in the story, in the order each clinic is first named. The name links to the clinic's Page field. A blank Page leaves the name as text.
+-   Clinic -\> Page. The clinic stores which site page is about it. Slices on that page still point back at the clinic for its facts.
 -   Keep reading is the newest posts in the same category, then the newest posts in any category. It is not a field.
 -   Callout -\> Provider
 -   Homepage slices -\> Provider, Post, Provider Review, and Comparison
@@ -351,4 +354,6 @@ Preferred graph:
 -   Landing pages -\> curated document references as needed
 
 Avoid circular authoring dependencies that make migration or editing
-fragile.
+fragile. The clinic's Page field and the slices on that page are the
+one accepted pair: the clinic names its page, and the page names the
+clinic.

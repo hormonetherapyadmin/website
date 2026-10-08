@@ -513,6 +513,17 @@ interface ProviderDocumentData {
   visit: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
+   * Page field in *Clinic*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: The site page about this clinic. Leave blank until that page exists.
+   * - **API ID Path**: provider.page
+   * - **Tab**: Profile
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  page: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
    * Top choice label field in *Clinic*
    *
    * - **Field Type**: Text
