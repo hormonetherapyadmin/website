@@ -349,9 +349,9 @@ export default async function BlogPostMockup(
             <p>
               Looking back, HRT wasn’t the only major change I made during this
               period—but it was definitely the catalyst. The{" "}
-              <a href="/post/bioidentical-hormone-reviews-my-story">
+              <Link href="/post/bioidentical-hormone-reviews-my-story">
                 positive impact that hormone therapy
-              </a>{" "}
+              </Link>{" "}
               had on my mind, body, and overall well-being helped me feel better
               than I had in years. That renewed energy empowered me to lose 40
               pounds, which you can clearly see in the close-up photos above
@@ -398,9 +398,9 @@ export default async function BlogPostMockup(
               </AffiliateLink>
               , everything changed. That was the breakthrough moment for
               smoothing out the{" "}
-              <a href="/post/musely-eye-serum-review-can-it-fix-menopausal-dark-circles-wrinkles">
+              <Link href="/post/musely-eye-serum-review-can-it-fix-menopausal-dark-circles-wrinkles">
                 fine lines and crow’s feet
-              </a>{" "}
+              </Link>{" "}
               that naturally creep up as we age.
             </p>
 

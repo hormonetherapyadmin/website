@@ -337,6 +337,23 @@ function StoryToken({
   );
 }
 
+/** Ids for this chunk's heading 2 blocks, in story order. */
+function headingIds(
+  field: RichTextField,
+  anchors: HeadingAnchor[],
+  start: number,
+) {
+  const ids = new Map<RichTextField[number], string>();
+  let index = start;
+  for (const block of field) {
+    if (block.type !== "heading2") continue;
+    const anchor = anchors[index];
+    if (anchor) ids.set(block, anchor.id);
+    index += 1;
+  }
+  return ids;
+}
+
 function RichChunk({
   field,
   anchors,
@@ -352,14 +369,12 @@ function RichChunk({
   clinics?: readonly TokenClinic[];
   preview: boolean;
 }) {
-  let headingIndex = start;
+  const ids = headingIds(field, anchors, start);
 
   const components: RichTextComponents = {
-    heading2: ({ children }) => {
-      const anchor = anchors[headingIndex];
-      headingIndex += 1;
+    heading2: ({ node, children }) => {
       return (
-        <h2 id={anchor?.id} tabIndex={-1}>
+        <h2 id={ids.get(node)} tabIndex={-1}>
           {children}
         </h2>
       );

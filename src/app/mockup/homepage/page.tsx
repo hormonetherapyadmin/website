@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import styles from "../_shared/mockup.module.css";
 import {
   Idea01Icon,
@@ -466,12 +467,12 @@ export default async function HomepageMockup(
               This is my personal experience, not medical advice.
             </p>
             <div className={styles.takeActions}>
-              <a
+              <Link
                 href="/post/oestra-by-inner-balance-my-honest-1-year-review"
                 className={styles.buttonPanel}
               >
                 Read my 1-year Oestra review
-              </a>
+              </Link>
               <a
                 href="#affiliate-link"
                 target="_blank"

@@ -88,6 +88,21 @@ describe("PostStory clinic tokens", () => {
     expect(markup).not.toContain("Visit Inner Balance");
   });
 
+  it("gives each heading the rail id, in order", () => {
+    const markup = renderToStaticMarkup(
+      <PostStory
+        field={[
+          { type: "heading2", text: "First section", spans: [] },
+          { type: "paragraph", text: "Between the headings.", spans: [] },
+          { type: "heading2", text: "Second section", spans: [] },
+        ]}
+      />,
+    );
+
+    expect(markup).toContain('<h2 id="first-section" tabindex="-1">');
+    expect(markup).toContain('<h2 id="second-section" tabindex="-1">');
+  });
+
   it("names a missing clinic in preview", () => {
     const markup = renderToStaticMarkup(
       <PostStory

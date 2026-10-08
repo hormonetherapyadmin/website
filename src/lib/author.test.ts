@@ -12,6 +12,9 @@ describe("resolveAuthorId", () => {
       resolveAuthorId({
         link_type: "Document",
         id: "other-author",
+        type: "author",
+        tags: [],
+        lang: "en-us",
       }),
     ).toBe("other-author");
   });

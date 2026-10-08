@@ -1,7 +1,12 @@
 // Creates three Post documents in a Prismic migration release.
 // Does not publish that release.
 import { readdirSync, readFileSync } from "node:fs";
-import { createMigration, createWriteClient } from "@prismicio/client";
+import {
+  createMigration,
+  createWriteClient,
+  type PendingPrismicDocument,
+} from "@prismicio/client";
+import type { PostDocument } from "../prismicio-types";
 import {
   mapWixPost,
   type MappedBlock,
@@ -119,6 +124,8 @@ for (const post of posts) {
         alt: post.data.image.alt,
       })
     : undefined;
+  // The generated Post type describes a fetched document, so every field is
+  // required. This release only writes the fields the Wix post actually has.
   migration.createDocument(
     {
       type: "post",
@@ -140,7 +147,7 @@ for (const post of posts) {
           : {}),
         indexing: true,
       },
-    },
+    } as PendingPrismicDocument<PostDocument>,
     post.title,
   );
 }
