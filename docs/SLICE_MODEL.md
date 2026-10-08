@@ -84,7 +84,7 @@ The small heading is a line above the title. She does not pick the level.
 - Same as the page
 - Soft, the comparison band (`surface`)
 - Highlight (`tint`)
-- Dark, the "Peggy's take" band (`panel`)
+- Dark, the quote band (`panel`)
 
 A Dark section uses light text. These are token names, so a later palette
 change updates every section. Do not use a free color picker.
@@ -130,6 +130,8 @@ content field's JSON (`labels`), not in the Type Builder. Handle them in
 | --- | --- |
 | `highlight` | A phrase that stands out |
 | `superscript` | A source number |
+| `signoff` | The large closing line, when the label covers the whole paragraph |
+| `note` | The tint box, when the label covers the whole paragraph |
 
 A label styles words. It does not insert a document.
 
@@ -188,8 +190,8 @@ Slices, in mockup order:
 2. Start here
 3. Latest posts
 4. Clinic comparison
-5. Peggy's take
-6. My story
+5. Quote
+6. Side by side
 
 Each slice below lists only its own fields. Section is on all of them.
 
@@ -363,48 +365,77 @@ Each row has one field, `clinic`, a content relationship limited to
 Provider. Help: "Add the clinics in the order they should appear. To
 change a price, a quote, or a coupon, edit that clinic."
 
+The slice is in `src/slices/clinic_comparison`. The page resolves each
+clinic and passes the fields this table reads.
+
 The columns stay fixed: Clinic, Best for, What I paid per month,
 Insurance, Typically prescribed, In my words. The relationship fetches
 the Provider fields in the next section, including `offer.code` and
 `offer.display_copy`.
 
-### Peggy's take
+### Quote
 
-Section Heading is "Peggy's take: what I'm using now." Background is
-Dark.
+Section Heading in the mockup is "Peggy's take: what I'm using now."
+Background is Dark.
+
+The slice is in `src/slices/quote`. The page resolves the clinic.
 
 | Label | Id | Kind | Required |
 | --- | --- | --- | --- |
 | Quote | `quote` | Heading rich text | Yes |
+| Name | `name` | Text | No |
 | Clinic | `clinic` | Content relationship to Provider | Yes |
 | Text | `text` | Heading rich text | Yes |
 | Reminder | `reminder` | Heading rich text | Yes |
 | Review button | `review_button` | Link, with display text | No |
 
-The logo, the clinic name, and the visit button come from the clinic.
-The visit button is the clinic's `visit` link. She changes the affiliate
-address on the clinic.
+The logo and the visit button come from the clinic. The visit button is
+the clinic's `visit` link, including its display text. She changes the
+affiliate address on the clinic. Name is the line beside the logo. Leave
+it empty to use the clinic name. The chart says "Inner Balance." This
+band says "Oestra by Inner Balance."
 
 The reminder in the mockup is "This is my personal experience, not
 medical advice."
 
-### My story
+### Side by side
 
-Section holds the small heading, "Menopause isn't a dirty word," and the
-lead sentence.
+One slice, four variations, in `src/slices/side_by_side`. The homepage
+story is the Image variation with the media on the left. Section holds
+the small heading, the title, and the lead sentence. Buttons sit under
+the writing. Solid is the filled button, such as "Read my whole story."
+Ghost is the quieter text button, with an arrow. A button with no words
+is hidden.
 
-| Label | Id | Kind | Required |
+Side is Media left or Media right. Media left matches the story photo.
+On a narrow screen the media stacks above the writing either way.
+
+| Variation | Id | The media side |
+| --- | --- | --- |
+| Image | `image` | Image and Caption. The description is the image's alt text. Caption sits on the photo. |
+| Video | `video` | Video, a YouTube or Vimeo embed, and Caption |
+| Quote | `quote` | Quote, and Attribution under it |
+| Clinic | `clinic` | A clinic. Logo, name, quote, and the visit link come from the clinic |
+
+| Label | Id | Kind | Variations |
 | --- | --- | --- | --- |
-| Image | `image` | Image, including its description | Yes |
-| Caption | `caption` | Heading rich text | No |
-| Text | `text` | Content rich text | Yes |
-| Closing line | `closing_line` | Heading rich text | No |
-| Reminder | `reminder` | Heading rich text | Yes |
-| Button | `button` | Link, with display text | No |
+| Section | `section` | The shared group | All |
+| Side | `side` | Select: Media left, Media right. Default Media left | All |
+| Text | `text` | Content rich text | All |
+| Buttons | `button` | Repeatable link, with display text and a style | All |
+| Image | `image` | Image | Image |
+| Caption | `caption` | Heading rich text | Image, Video |
+| Video | `video` | Embed | Video |
+| Quote | `quote` | Heading rich text | Quote |
+| Attribution | `attribution` | Text | Quote |
+| Clinic | `clinic` | Content relationship to Provider | Clinic |
 
-Text allows the content toolbar, including the link to her reviews. The
-reminder in the mockup is "I am not a medical professional, and this site
-does not provide medical advice or treatment plans."
+Text uses the content toolbar. A Signoff label on a whole paragraph is
+the large closing line. A Note label on a whole paragraph is the tint
+box. The story's note is "I am not a medical professional, and this site
+does not provide medical advice or treatment plans." A paragraph can
+start with a clinic token, the same `{{provider:inner-balance:offer}}`
+and `{{provider:inner-balance:facts}}` tokens as the article.
 
 ## Provider, Offer, and Callout
 
@@ -427,7 +458,8 @@ The comparison chart, a facts token, and any later slice that lists
 | Hero, brands | `clinic` | Name, logo |
 | Hero, provider | `clinic` | Name, logo, formulation, visit, display price, display price note, top choice label, offer code, offer copy |
 | Clinic comparison | `clinic` | Name, logo, best for, monthly price, price note, insurance, formulation, quote, extra note, tested seal, top choice label, review, visit, offer code, offer copy |
-| Peggy's take | `clinic` | Logo, name, visit |
+| Quote | `clinic` | Logo, name, visit. A Name on the slice replaces the clinic name |
+| Side by side, clinic | `clinic` | Logo, name, quote, visit |
 | Article sidebar | `clinic` | Name, logo, review |
 | Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, offer code, offer copy, plus the sentence in that paragraph |
 | Story facts token | `{{provider:uid:facts}}` | Monthly price, price note, insurance, formulation |

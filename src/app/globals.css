@@ -23,11 +23,16 @@
   --color-tint: #f5e0e5;
   --color-panel: #182033;
   --color-panel-text: #eef0f5;
+  /* Small heading on a dark band, such as the quote slice. */
+  --color-panel-accent: #f3bccb;
   /* Start-here cards. They cycle in order. */
   --color-card-1: #f4d9e0;
   --color-card-2: #d9e3f3;
   --color-card-3: #f1e4c8;
   --color-card-4: #e3e0ef;
+  /* Clinic comparison. Paper is a table row. Badge is the top-choice pill. */
+  --color-paper: #ffffff;
+  --color-badge: #f6e3a1;
 
   --font-body:
     ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;

@@ -1,0 +1,125 @@
+{
+  "description": "Clinics side by side. Prices and quotes come from each clinic.",
+  "id": "clinic_comparison",
+  "name": "Clinic comparison",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "The homepage chart. Add clinics in order. Edit a price on the clinic.",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "items": {},
+      "name": "Default",
+      "primary": {
+        "section": {
+          "config": {
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Small heading",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Heading",
+                  "placeholder": "Eight online HRT clinics, side by side",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "intro": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Intro",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "label": "Link"
+                },
+                "type": "Link"
+              },
+              "background": {
+                "config": {
+                  "default_value": "Same as the page",
+                  "label": "Background",
+                  "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+                },
+                "type": "Select"
+              },
+              "space_above": {
+                "config": {
+                  "default_value": "Medium",
+                  "label": "Space above",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              },
+              "space_below": {
+                "config": {
+                  "default_value": "None",
+                  "label": "Space below",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Section",
+            "repeat": false
+          },
+          "type": "Group"
+        },
+        "prices_checked": {
+          "config": {
+            "label": "Prices checked on",
+            "placeholder": "Shown beside What I paid per month."
+          },
+          "type": "Date"
+        },
+        "button": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Button"
+          },
+          "type": "Link"
+        },
+        "disclosure": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Disclosure"
+          },
+          "type": "Link"
+        },
+        "clinics": {
+          "config": {
+            "fields": {
+              "clinic": {
+                "config": {
+                  "customtypes": ["provider"],
+                  "label": "Clinic",
+                  "select": "document"
+                },
+                "type": "Link"
+              }
+            },
+            "label": "Clinics",
+            "repeat": true
+          },
+          "type": "Group"
+        }
+      },
+      "version": "initial"
+    }
+  ]
+}

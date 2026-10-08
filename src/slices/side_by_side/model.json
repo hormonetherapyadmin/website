@@ -1,0 +1,484 @@
+{
+  "description": "Writing beside a photo, a video, a quote, or a clinic. The media can sit on either side.",
+  "id": "side_by_side",
+  "name": "Side by side",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "A photo beside the writing. The homepage story uses this.",
+      "docURL": "",
+      "id": "image",
+      "imageUrl": "",
+      "items": {},
+      "name": "Image",
+      "primary": {
+        "section": {
+          "config": {
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Small heading",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Heading",
+                  "placeholder": "Menopause isn't a dirty word.",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "intro": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Intro",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "label": "Link"
+                },
+                "type": "Link"
+              },
+              "background": {
+                "config": {
+                  "default_value": "Same as the page",
+                  "label": "Background",
+                  "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+                },
+                "type": "Select"
+              },
+              "space_above": {
+                "config": {
+                  "default_value": "Medium",
+                  "label": "Space above",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              },
+              "space_below": {
+                "config": {
+                  "default_value": "None",
+                  "label": "Space below",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Section",
+            "repeat": false
+          },
+          "type": "Group"
+        },
+        "side": {
+          "config": {
+            "default_value": "Media left",
+            "label": "Side",
+            "options": ["Media left", "Media right"],
+            "placeholder": "Media left puts the photo on the left."
+          },
+          "type": "Select"
+        },
+        "image": {
+          "config": {
+            "constraint": {},
+            "label": "Image",
+            "thumbnails": []
+          },
+          "type": "Image"
+        },
+        "caption": {
+          "config": {
+            "label": "Caption",
+            "placeholder": "Sits on the photo. Me and Winston, my Bernedoodle.",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "text": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Text",
+            "labels": ["highlight", "superscript", "signoff", "note"],
+            "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
+            "placeholder": "Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in."
+          },
+          "type": "StructuredText"
+        },
+        "button": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Buttons",
+            "placeholder": "Read my whole story",
+            "repeat": true,
+            "variants": ["Solid", "Ghost"]
+          },
+          "type": "Link"
+        }
+      },
+      "version": "initial"
+    },
+    {
+      "description": "A YouTube or Vimeo video beside the writing.",
+      "docURL": "",
+      "id": "video",
+      "imageUrl": "",
+      "items": {},
+      "name": "Video",
+      "primary": {
+        "section": {
+          "config": {
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Small heading",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Heading",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "intro": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Intro",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "label": "Link"
+                },
+                "type": "Link"
+              },
+              "background": {
+                "config": {
+                  "default_value": "Same as the page",
+                  "label": "Background",
+                  "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+                },
+                "type": "Select"
+              },
+              "space_above": {
+                "config": {
+                  "default_value": "Medium",
+                  "label": "Space above",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              },
+              "space_below": {
+                "config": {
+                  "default_value": "None",
+                  "label": "Space below",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Section",
+            "repeat": false
+          },
+          "type": "Group"
+        },
+        "side": {
+          "config": {
+            "default_value": "Media left",
+            "label": "Side",
+            "options": ["Media left", "Media right"]
+          },
+          "type": "Select"
+        },
+        "video": {
+          "config": {
+            "label": "Video",
+            "placeholder": "Paste a YouTube or Vimeo link."
+          },
+          "type": "Embed"
+        },
+        "caption": {
+          "config": {
+            "label": "Caption",
+            "placeholder": "Sits on the video.",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "text": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Text",
+            "labels": ["highlight", "superscript", "signoff", "note"],
+            "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
+            "placeholder": "Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in."
+          },
+          "type": "StructuredText"
+        },
+        "button": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Buttons",
+            "placeholder": "Read my whole story",
+            "repeat": true,
+            "variants": ["Solid", "Ghost"]
+          },
+          "type": "Link"
+        }
+      },
+      "version": "initial"
+    },
+    {
+      "description": "A pull quote beside the writing.",
+      "docURL": "",
+      "id": "quote",
+      "imageUrl": "",
+      "items": {},
+      "name": "Quote",
+      "primary": {
+        "section": {
+          "config": {
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Small heading",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Heading",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "intro": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Intro",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "label": "Link"
+                },
+                "type": "Link"
+              },
+              "background": {
+                "config": {
+                  "default_value": "Same as the page",
+                  "label": "Background",
+                  "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+                },
+                "type": "Select"
+              },
+              "space_above": {
+                "config": {
+                  "default_value": "Medium",
+                  "label": "Space above",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              },
+              "space_below": {
+                "config": {
+                  "default_value": "None",
+                  "label": "Space below",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Section",
+            "repeat": false
+          },
+          "type": "Group"
+        },
+        "side": {
+          "config": {
+            "default_value": "Media left",
+            "label": "Side",
+            "options": ["Media left", "Media right"]
+          },
+          "type": "Select"
+        },
+        "quote": {
+          "config": {
+            "label": "Quote",
+            "placeholder": "The large sentence on the media side.",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "attribution": {
+          "config": {
+            "label": "Attribution",
+            "placeholder": "Who said it. Peggy."
+          },
+          "type": "Text"
+        },
+        "text": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Text",
+            "labels": ["highlight", "superscript", "signoff", "note"],
+            "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
+            "placeholder": "Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in."
+          },
+          "type": "StructuredText"
+        },
+        "button": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Buttons",
+            "placeholder": "Read my whole story",
+            "repeat": true,
+            "variants": ["Solid", "Ghost"]
+          },
+          "type": "Link"
+        }
+      },
+      "version": "initial"
+    },
+    {
+      "description": "A clinic beside the writing. The logo, name, quote, and visit link come from the clinic.",
+      "docURL": "",
+      "id": "clinic",
+      "imageUrl": "",
+      "items": {},
+      "name": "Clinic",
+      "primary": {
+        "section": {
+          "config": {
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Small heading",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Heading",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "intro": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Intro",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "label": "Link"
+                },
+                "type": "Link"
+              },
+              "background": {
+                "config": {
+                  "default_value": "Same as the page",
+                  "label": "Background",
+                  "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+                },
+                "type": "Select"
+              },
+              "space_above": {
+                "config": {
+                  "default_value": "Medium",
+                  "label": "Space above",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              },
+              "space_below": {
+                "config": {
+                  "default_value": "None",
+                  "label": "Space below",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Section",
+            "repeat": false
+          },
+          "type": "Group"
+        },
+        "side": {
+          "config": {
+            "default_value": "Media right",
+            "label": "Side",
+            "options": ["Media left", "Media right"]
+          },
+          "type": "Select"
+        },
+        "clinic": {
+          "config": {
+            "customtypes": ["provider"],
+            "label": "Clinic",
+            "select": "document"
+          },
+          "type": "Link"
+        },
+        "text": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Text",
+            "labels": ["highlight", "superscript", "signoff", "note"],
+            "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
+            "placeholder": "Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in."
+          },
+          "type": "StructuredText"
+        },
+        "button": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Buttons",
+            "placeholder": "Read my whole story",
+            "repeat": true,
+            "variants": ["Solid", "Ghost"]
+          },
+          "type": "Link"
+        }
+      },
+      "version": "initial"
+    }
+  ]
+}

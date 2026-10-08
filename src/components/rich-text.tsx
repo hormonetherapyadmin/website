@@ -46,6 +46,14 @@ function RichTextLabel({
     return <sup>{children}</sup>;
   }
 
+  if (label === "signoff") {
+    return <span className="font-heading">{children}</span>;
+  }
+
+  if (label === "note") {
+    return <span className="rounded-control bg-tint px-1">{children}</span>;
+  }
+
   return <span>{children}</span>;
 }
 

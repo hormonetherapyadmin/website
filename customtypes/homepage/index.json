@@ -17,6 +17,15 @@
             },
             "posts": {
               "type": "SharedSlice"
+            },
+            "clinic_comparison": {
+              "type": "SharedSlice"
+            },
+            "quote": {
+              "type": "SharedSlice"
+            },
+            "side_by_side": {
+              "type": "SharedSlice"
             }
           }
         },

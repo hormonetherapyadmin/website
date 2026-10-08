@@ -1,0 +1,136 @@
+.body {
+  font-size: 1.1rem;
+  line-height: 1.75;
+}
+
+.body p {
+  margin: 0 0 1.25rem;
+}
+
+.body p:last-child {
+  margin-bottom: 0;
+}
+
+.body a {
+  font-weight: 700;
+}
+
+.signoff {
+  margin: 2.25rem 0 1.5rem;
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 2.2vw, 1.75rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.signoff p {
+  margin: 0;
+}
+
+.note {
+  margin: 0 0 2rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: 1rem;
+  background: var(--color-tint);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.note p {
+  margin: 0;
+}
+
+.offer,
+.facts {
+  margin: 0 0 1.25rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 1rem;
+  background: var(--color-surface);
+}
+
+.body .offer p,
+.body .facts p {
+  margin: 0;
+}
+
+.offerBrand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  overflow: hidden;
+  border-radius: 0.7rem;
+  background: var(--color-paper);
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.offerName {
+  font-weight: 700;
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+.body .offerLine {
+  margin: 0.75rem 0 0;
+}
+
+.body .code {
+  display: block;
+  width: fit-content;
+  margin: 0.75rem 0 0;
+  padding: 0.15rem 0.55rem;
+  border: 1.5px dashed var(--color-accent);
+  border-radius: 0.5rem;
+  color: var(--color-accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.body .factsName {
+  margin: 0 0 0.65rem;
+  font-weight: 700;
+}
+
+.facts dl {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+}
+
+.facts div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  justify-content: space-between;
+}
+
+.facts dt {
+  color: var(--color-text-muted);
+}
+
+.facts dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.body .missing {
+  margin: 0 0 0.5rem;
+  color: var(--color-accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+}

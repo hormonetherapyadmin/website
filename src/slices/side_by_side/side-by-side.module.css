@@ -1,0 +1,233 @@
+.head {
+  max-width: 44rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.kicker {
+  margin: 0 0 0.9rem;
+  color: var(--color-accent);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.lead {
+  margin: 1.25rem 0 0;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas: "media copy";
+  align-items: start;
+  gap: 2.5rem clamp(2.5rem, 6vw, 6rem);
+}
+
+.grid[data-side="right"] {
+  grid-template-areas: "copy media";
+}
+
+.figure,
+.pull,
+.clinic {
+  grid-area: media;
+}
+
+.copy {
+  grid-area: copy;
+  max-width: 38rem;
+}
+
+.figure {
+  position: sticky;
+  top: 2rem;
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 2rem;
+}
+
+.photo {
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.video,
+.videoLink {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  background: var(--color-surface);
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.video :global(iframe) {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.caption {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  max-width: calc(100% - 2.5rem);
+  padding: 0.45rem 0.85rem;
+  border-radius: 0.75rem;
+  background: var(--color-background);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.caption p {
+  margin: 0;
+}
+
+.pull,
+.clinic {
+  position: sticky;
+  top: 2rem;
+  margin: 0;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: 2rem;
+  background: var(--color-surface);
+}
+
+.pullText {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.attribution {
+  margin-top: 1.25rem;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.clinicBrand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.logo {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  overflow: hidden;
+  border-radius: 0.8rem;
+  background: var(--color-paper);
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.clinicQuote {
+  display: block;
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  line-height: 1.35;
+}
+
+.visit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.6rem 1.35rem;
+  border-radius: 0.75rem;
+  background: var(--color-cta);
+  color: var(--color-cta-text);
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.button:hover {
+  background: var(--color-cta-hover);
+}
+
+.ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ghost svg {
+  transition: transform 0.15s ease;
+}
+
+.ghost:hover svg {
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ghost svg {
+    transition: none;
+  }
+
+  .ghost:hover svg {
+    transform: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .grid,
+  .grid[data-side="right"] {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "media"
+      "copy";
+  }
+
+  .figure,
+  .pull,
+  .clinic {
+    position: relative;
+    top: auto;
+  }
+
+  .figure {
+    aspect-ratio: 1;
+  }
+}

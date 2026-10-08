@@ -128,6 +128,11 @@ type SliceSectionProps = {
    * The homepage hero passes its tagline.
    */
   title?: string | null;
+  /**
+   * Labels the section when the slice draws its own heading.
+   * Pass the id of that heading.
+   */
+  labelId?: string;
   children?: ReactNode;
 };
 
@@ -141,6 +146,7 @@ export function SliceSection({
   headingLevel = "h2",
   showHeader = true,
   title,
+  labelId,
   children,
 }: SliceSectionProps) {
   const headingId = useId();
@@ -160,7 +166,8 @@ export function SliceSection({
     <section
       id={anchor}
       aria-labelledby={
-        header && isFilled.richText(header.heading) ? headingId : undefined
+        labelId ??
+        (header && isFilled.richText(header.heading) ? headingId : undefined)
       }
       className={[
         spaceAboveClass[spaceAbove],
