@@ -1,0 +1,59 @@
+{
+  "description": "A line between sections.",
+  "id": "divider",
+  "name": "Divider",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "A squiggly or straight line.",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/divider/default/79c116a66cb9552b53f1b580ed2ddd0c20ddeca4.png?auto=compress%2Cformat",
+      "items": {},
+      "name": "Default",
+      "primary": {
+        "line": {
+          "config": {
+            "default_value": "Squiggly",
+            "label": "Line",
+            "options": ["Squiggly", "Straight"]
+          },
+          "type": "Select"
+        },
+        "color": {
+          "config": {
+            "default_value": "Accent",
+            "label": "Color",
+            "options": ["Accent", "Soft", "Border", "Text"]
+          },
+          "type": "Select"
+        },
+        "background": {
+          "config": {
+            "default_value": "Same as the page",
+            "label": "Background",
+            "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+          },
+          "type": "Select"
+        },
+        "space_above": {
+          "config": {
+            "default_value": "None",
+            "label": "Space above",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "space_below": {
+          "config": {
+            "default_value": "None",
+            "label": "Space below",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        }
+      },
+      "version": "initial"
+    }
+  ]
+}

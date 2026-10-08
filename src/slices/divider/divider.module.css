@@ -1,0 +1,37 @@
+/*
+  Squiggly line matches the homepage mockup wave. The mask is black so the
+  background color shows through as the stroke.
+*/
+
+.line {
+  width: 100%;
+  background: var(--color-accent);
+}
+
+.squiggly {
+  height: 12px;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='12' viewBox='0 0 28 12'%3E%3Cpath d='M0 6 Q7 0 14 6 T28 6' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E")
+    repeat-x left center / 28px 12px;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='12' viewBox='0 0 28 12'%3E%3Cpath d='M0 6 Q7 0 14 6 T28 6' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E")
+    repeat-x left center / 28px 12px;
+}
+
+.straight {
+  height: 1px;
+}
+
+.accent {
+  background: var(--color-accent);
+}
+
+.soft {
+  background: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+}
+
+.border {
+  background: var(--color-border);
+}
+
+.text {
+  background: var(--color-text);
+}

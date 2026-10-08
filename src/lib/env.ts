@@ -11,3 +11,10 @@ export function getPrismicWebhookSecret(): string {
   }
   return secret;
 }
+
+// Optional while the repository API is public. Required once API access is private.
+export function getPrismicAccessToken(): string | undefined {
+  const token = process.env.PRISMIC_ACCESS_TOKEN;
+  if (!token) return undefined;
+  return token;
+}

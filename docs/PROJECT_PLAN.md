@@ -171,7 +171,10 @@ unique editorial value.
 
 ## 7. Homepage Architecture
 
-Proposed content sequence:
+The approved slices and fields are in `docs/SLICE_MODEL.md`. The
+mockup at `src/app/mockup/homepage` is the layout source.
+
+Earlier proposed sequence:
 
 1.  Hero with human/editorial positioning
 2.  Primary actions: compare providers / start with HRT basics
@@ -192,6 +195,10 @@ trust.
 ## 8. Page Templates
 
 ### Article
+
+The field list to build is in `docs/SLICE_MODEL.md`. The post is one
+page type with no slices. Quick answer, key takeaways, FAQ, and
+pros/cons are headings in the story when a post actually has them.
 
 Recommended structure:
 
@@ -289,7 +296,10 @@ code/destination can be updated centrally.
 
 ## 10. Design System
 
-Brand designer will provide final logo/colors/type.
+Brand designer will provide final logo/colors/type. The working palette
+is Navy & raspberry from the homepage mockup, with Besley for headings.
+The content measure is 88rem, with the mockup gutter. Those values live
+in `src/app/globals.css`.
 
 Engineering should establish semantic tokens such as:
 

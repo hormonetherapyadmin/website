@@ -31,7 +31,15 @@ Do not hard-code provider names into the navigation component.
 
 ### Homepage
 
-Use intentional slices/fields for the approved homepage structure.
+The homepage is one single page type. Its slices, the shared Section
+fields, and the rich text rules are specified in `docs/SLICE_MODEL.md`.
+
+### Blog
+
+The blog index is one single page type at `/blog`. It has no slices.
+The title, dek, topic links, and the telehealth reasons at the bottom
+of the live page are fields. The post grid is every Article, newest
+first. Field ids are in `docs/SLICE_MODEL.md`.
 
 ### Providers Landing
 
@@ -72,43 +80,28 @@ actually applicable.
 
 ### Provider
 
-Canonical provider facts.
+One clinic, one document. She updates a price, a coupon, or a logo
+here, and every slice that shows that fact updates with it. A slice
+stores a content relationship to the clinic. The slice decides which
+fields it fills in. It does not keep its own copy of the price.
 
-Suggested fields:
+The clinic is a custom type, `customtypes/provider`. Peggy fills it
+in tabs. A tab is a group of fields. The model is in that file.
 
--   Name
--   UID/internal identifier
--   URL section, only if the provider has a public page (see Public
-    Path Strategy)
--   Logo
--   Short description
--   Official website
--   Default affiliate destination
--   Personally tested status
--   Testing notes/date
--   Last verified date
--   Starting price
--   Consultation fee
--   Membership fee
--   Price notes
--   Lab requirement
--   Lab notes
--   Insurance
--   HSA/FSA
--   Shipping
--   Eligibility
--   State availability
--   Treatment references
--   Weight-management support
--   Pros
--   Cons
--   Offer references
--   Review reference(s)
--   Related content
--   Source/verification notes
--   SEO fields where provider has a public page
+Tabs:
 
-Avoid overloading Provider with long review prose.
+-   Profile — name, logo, description, visit link, tested status
+-   Price — what she paid, and the price the clinic page shows
+-   Care — formulation, labs, insurance, shipping, eligibility, states
+-   Words — her short quote, pros, and cons
+-   Offer — the coupon
+-   Links — her review, and related posts
+-   SEO — public page fields. "No public page" is the default
+
+Field ids are in `docs/SLICE_MODEL.md`. The long review stays on the
+Provider review. A story inserts a clinic with a token such as
+`{{provider:inner-balance:offer}}`, which reads the Profile and Offer
+tabs.
 
 ### Provider Review
 
@@ -135,27 +128,39 @@ Fields:
 
 ### Article
 
+One Wix blog post becomes one Article. The page type is
+`customtypes/article`. It has no slice zone. The story is one rich
+text field. Field ids, the Wix mapping, and the pieces the mockup
+adds are in `docs/SLICE_MODEL.md`.
+
 Fields:
 
 -   Title
 -   UID
 -   URL section (see Public Path Strategy)
+-   Excerpt
 -   Dek
+-   Image
+-   Caption
 -   Author
--   Published date
--   Updated date
--   Category
+-   Published
+-   Updated
+-   Minutes to read
+-   Category (a select on the post, not a Category document)
+-   Personal note
+-   Story
+-   Sources
+-   Tags (the Wix tags, kept as labels)
 -   Topic references
 -   Treatment references
 -   Provider references
--   Hero image
--   Body slices
--   Related content
--   SEO title
--   SEO description
--   Social image
+-   Related posts
+-   SEO title, SEO description, and social image (the page type's SEO tab)
 -   Canonical override only when required
 -   Indexability control with safe default
+
+The card reads Title, Image, Excerpt, Published, Minutes to read, and
+Category. Those ids match the Latest posts slice.
 
 ### Comparison
 
@@ -195,8 +200,14 @@ practical.
 
 ### Category
 
-Use only where it provides meaningful editorial taxonomy. Avoid
-duplicating Topic semantics.
+The article's Category field is a select: Review, Comparison, My
+experience, or HRT 101. Wix posts have no categories. Do not create
+Category documents for those four labels, and do not give them public
+pages, until an indexing decision says the blog filter should be a
+real URL.
+
+Use a Category document only where it provides a meaningful editorial
+taxonomy of its own. Avoid duplicating Topic semantics.
 
 ### Offer
 
@@ -214,6 +225,18 @@ Suggested fields:
 
 Do not silently fall back from an expired offer to an unrelated
 destination without product approval.
+
+The homepage comparison reads `code` and `display_copy` through the
+provider. The visit address used on the homepage lives on the provider's
+`visit` link. See `docs/SLICE_MODEL.md`.
+
+### Callout
+
+A reusable box inserted in the flow of a post. Callout has no public
+page, so it is a custom type. A post points at it with a content
+relationship. It cannot be embedded inside a rich text field.
+
+Fields are specified in `docs/SLICE_MODEL.md`.
 
 ### Page
 
@@ -256,7 +279,14 @@ no separate Symptom type.
 
 Keep this intentionally small.
 
-Initial candidates:
+The homepage slices, the shared Section group, and the shared rich text
+component are specified in `docs/SLICE_MODEL.md`. Copy that Section group
+and those rich text presets onto later slices.
+
+The article and the blog index do not use slices. A post pulls a
+clinic's offer or facts into the story with a provider token. Review,
+provider, and trusted-providers slices are not specified yet.
+Candidates:
 
 -   Rich Text
 -   Image + Text
@@ -282,10 +312,11 @@ Initial candidates:
 -   Video / Embed
 -   Timeline / Steps
 
-This list is a starting inventory, not a commitment. Phase 2 trims
-overlapping candidates (for example Provider Card / Provider Grid /
-Provider Comparison / Comparison Table, and Affiliate CTA / Offer
-Callout) before building.
+Trim overlapping candidates before building them (for example Provider
+Card / Provider Grid / Provider Comparison / Comparison Table, and
+Affiliate CTA / Offer Callout). The homepage clinic comparison is the
+comparison slice. An article inserts a clinic offer with a provider
+token. It does not insert a Callout.
 
 Before adding a new slice, ask whether an existing slice can represent
 the editorial intent cleanly. Avoid variants that differ only
@@ -331,8 +362,13 @@ Preferred graph:
 -   Review -\> Provider
 -   Comparison -\> Providers
 -   Article -\> Topics/Treatments/Providers
--   Provider -\> Offers
+-   Article -\> related Article, Provider Review, and Comparison
+-   Provider -\> Offer
+-   Callout -\> Provider and Offer
+-   Homepage slices -\> Provider, Article, Provider Review, and Comparison
 -   All editorial documents -\> Author
+-   A story token looks up a Provider by its UID. That lookup is not a
+    content relationship.
 -   Landing pages -\> curated document references as needed
 
 Avoid circular authoring dependencies that make migration or editing

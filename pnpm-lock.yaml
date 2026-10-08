@@ -172,6 +172,15 @@ importers:
       '@hugeicons/react':
         specifier: ^1.1.10
         version: 1.1.10(react@19.2.8)
+      '@prismicio/client':
+        specifier: ^7.22.1
+        version: 7.22.1
+      '@prismicio/next':
+        specifier: ^2.3.3
+        version: 2.3.3(@prismicio/client@7.22.1)(next@16.3.8(@babel/core@7.29.7(supports-color@7.2.0))(@playwright/test@1.63.0)(@types/node@24.19.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
+      '@prismicio/react':
+        specifier: ^3.5.1
+        version: 3.5.1(@prismicio/client@7.22.1)(react@19.2.8)
       next:
         specifier: 16.3.8
         version: 16.3.8(@babel/core@7.29.7(supports-color@7.2.0))(@playwright/test@1.63.0)(@types/node@24.19.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -647,6 +656,31 @@ packages:
     resolution: {integrity: sha512-oxMK4vllB9RK5NQ2l1pq1IfOf2AvnEuj/vYGDj0H2nMtmtZpKtCwt/l00GEO6xjGfpBNAvjovvYdCm50dRQkpQ==}
     engines: {node: '>=20'}
     hasBin: true
+
+  '@prismicio/client@7.22.1':
+    resolution: {integrity: sha512-7W86TSmGMtE/LVFduePP2Lznk0qC6sennOyw7kRfVbVtyfFD7BMs8H9vyOp8LvtSrzNoJh3/p9gj46v8Oc8h1Q==}
+    engines: {node: '>=20'}
+
+  '@prismicio/next@2.3.3':
+    resolution: {integrity: sha512-mS6XwXlxs7kcac++4w01oj9GFNP55IQ17ueLJHTQlsIN/qKjFW9Zz0HhOQzgnaBdbYx5iT0SAVZIk9qlRIrNDg==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      '@prismicio/client': ^7
+      next: ^13.4.5 || ^14 || ^15 || ^16
+      react: ^18 || ^19
+
+  '@prismicio/react@3.5.1':
+    resolution: {integrity: sha512-+hY91LZsywC2NivjkCGYpiwmyeIl2gNAbg0KjLUJVTzJ/LapRLA9RJElq57qWCrWXDVmSkvO88IQd514BU05ew==}
+    engines: {node: '>=22'}
+    peerDependencies:
+      '@prismicio/client': ^7
+      react: ^18 || ^19
+
+  '@prismicio/simulator@0.2.4':
+    resolution: {integrity: sha512-dmxqaihyUkuUbbJwe/AJuE40c6jH233plJiGza8sTGmzNKd/V8tsP11+NuBN0vuFSpZ1zBEWYsZFbsCwHuJZyA==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      '@prismicio/client': ^7
 
   '@rolldown/binding-android-arm-eabi@1.2.12':
     resolution: {integrity: sha512-dB/a1214qKfHMXCpgqR4OZT+jS4kTyEXbQGJPqzobt5EwH5rX080pxE37alt3RzvR1bf1Yz/yGqRfrYAxuPw0A==}
@@ -1437,6 +1471,9 @@ packages:
       jiti:
         optional: true
 
+  esm-env@1.2.2:
+    resolution: {integrity: sha512-Epxrv+Nr/CaL4ZcFGPJIYLWFom+YeV1DqMLHJoEd9SYRxNbaFruBwfEX/kkHUJf55j2+TUbmDcmuilbP1TmXHA==}
+
   espree@10.4.0:
     resolution: {integrity: sha512-j6PAQ2uUr79PZhBjP5C5fhl8e39FmRnOjsD5lGnWrFU8i2G776tBK7+nP8KuQUTTyAZUwfQqXAgrVH5MbH9CYQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -1617,6 +1654,10 @@ packages:
   ignore@7.0.12:
     resolution: {integrity: sha512-/8UvqAPU9DGTI9k4mxtf49U37Isfwr8Uts96+SBHIkFxPJnHS0Ew4f00sM4Scd8V8EjM0jUNtVDdv1kPdt35lg==}
     engines: {node: '>= 4'}
+
+  imgix-url-builder@0.0.6:
+    resolution: {integrity: sha512-lFVbvaE9vMck8qz9j+y6o7vsyc1vZhdqzWu+Wp/nlnOCi9zAErc31QMkZKYUGMNLLzxOO4YIBAUPndTPah8HFg==}
+    engines: {node: '>=12.7.0'}
 
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
@@ -1960,6 +2001,10 @@ packages:
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
+
+  lz-string@1.5.0:
+    resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
+    hasBin: true
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -2937,6 +2982,29 @@ snapshots:
     dependencies:
       playwright: 1.63.0
 
+  '@prismicio/client@7.22.1':
+    dependencies:
+      imgix-url-builder: 0.0.6
+
+  '@prismicio/next@2.3.3(@prismicio/client@7.22.1)(next@16.3.8(@babel/core@7.29.7(supports-color@7.2.0))(@playwright/test@1.63.0)(@types/node@24.19.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)':
+    dependencies:
+      '@prismicio/client': 7.22.1
+      '@prismicio/simulator': 0.2.4(@prismicio/client@7.22.1)
+      imgix-url-builder: 0.0.6
+      lz-string: 1.5.0
+      next: 16.3.8(@babel/core@7.29.7(supports-color@7.2.0))(@playwright/test@1.63.0)(@types/node@24.19.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      react: 19.2.8
+
+  '@prismicio/react@3.5.1(@prismicio/client@7.22.1)(react@19.2.8)':
+    dependencies:
+      '@prismicio/client': 7.22.1
+      esm-env: 1.2.2
+      react: 19.2.8
+
+  '@prismicio/simulator@0.2.4(@prismicio/client@7.22.1)':
+    dependencies:
+      '@prismicio/client': 7.22.1
+
   '@rolldown/binding-android-arm-eabi@1.2.12':
     optional: true
 
@@ -3809,6 +3877,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  esm-env@1.2.2: {}
+
   espree@10.4.0:
     dependencies:
       acorn: 8.18.0
@@ -3982,6 +4052,8 @@ snapshots:
   ignore@5.3.2: {}
 
   ignore@7.0.12: {}
+
+  imgix-url-builder@0.0.6: {}
 
   import-fresh@3.3.1:
     dependencies:
@@ -4280,6 +4352,8 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
+
+  lz-string@1.5.0: {}
 
   magic-string@0.30.21:
     dependencies:

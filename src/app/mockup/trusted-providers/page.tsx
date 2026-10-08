@@ -541,6 +541,16 @@ export default async function TrustedProvidersMockup(
             </p>
             <p className={styles.leadKicker}>Voted best for</p>
             <h2 id="featured-title">{featured.voted}</h2>
+            <p className={styles.leadName}>
+              <AffiliateBrand
+                clinic={featuredClinic}
+                placement="trusted_providers_lead"
+                className={styles.brand}
+              >
+                <Logo clinic={featuredClinic} />
+                <span>{featuredClinic.name}</span>
+              </AffiliateBrand>
+            </p>
             <blockquote className={styles.leadQuote}>
               <p>{featuredClinic.quote}</p>
             </blockquote>
@@ -563,14 +573,6 @@ export default async function TrustedProvidersMockup(
               </figure>
             ) : null}
             <div className={styles.deal}>
-              <AffiliateBrand
-                clinic={featuredClinic}
-                placement="trusted_providers_lead"
-                className={styles.brand}
-              >
-                <Logo clinic={featuredClinic} large />
-                <span>{featuredClinic.name}</span>
-              </AffiliateBrand>
               <p>
                 <span className={styles.rowAmount}>$199</span>
                 <span className={styles.per}>/mo</span>

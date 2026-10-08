@@ -1,32 +1,56 @@
 @import "tailwindcss";
 
 /*
-  Semantic design tokens. Values are temporary neutrals until the brand
-  designer delivers the palette and type. Components must use only these
-  semantic names; Tailwind's default palette is removed so raw colors such
-  as `bg-blue-500` are unavailable.
+  Semantic design tokens. The working palette is Navy & raspberry from the
+  homepage mockup, and headings are Besley. A later brand delivery replaces
+  these values. Components must use only these semantic names; Tailwind's
+  default palette is removed so raw colors such as `bg-blue-500` are
+  unavailable.
 */
 @theme {
   --color-*: initial;
-  --color-background: #fffdf9;
-  --color-surface: #f6f1ea;
-  --color-text: #1f1a17;
-  --color-text-muted: #5c534d;
-  --color-border: #e3dad0;
-  --color-accent: #8a3d2b;
-  --color-cta: #1f1a17;
+  --color-background: #faf7f2;
+  --color-surface: #edf0f5;
+  --color-text: #182033;
+  --color-text-muted: #4b5367;
+  --color-border: #d6dae3;
+  --color-accent: #9a2347;
+  --color-cta: #9a2347;
+  --color-cta-hover: #7d1b39;
   --color-cta-text: #ffffff;
   --color-focus: #2f5fd0;
+  /* Section backgrounds from docs/SLICE_MODEL.md. Highlight and Dark. */
+  --color-tint: #f5e0e5;
+  --color-panel: #182033;
+  --color-panel-text: #eef0f5;
+  /* Small heading on a dark band, such as the quote slice. */
+  --color-panel-accent: #f3bccb;
+  /* Start-here cards. They cycle in order. */
+  --color-card-1: #f4d9e0;
+  --color-card-2: #d9e3f3;
+  --color-card-3: #f1e4c8;
+  --color-card-4: #e3e0ef;
+  /* Clinic comparison. Paper is a table row. Badge is the top-choice pill. */
+  --color-paper: #ffffff;
+  --color-badge: #f6e3a1;
 
   --font-body:
     ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-heading: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  --font-heading: var(--font-besley), Georgia, serif;
 
   --container-prose: 42rem;
-  --container-content: 72rem;
+  /* Inner measure from the mockup (`--max`). The padded shell is `--wrap`. */
+  --container-content: 88rem;
+  --spacing-gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --container-wrap: calc(var(--container-content) + var(--spacing-gutter) * 2);
 
   --radius-control: 0.5rem;
   --radius-card: 1rem;
+
+  /* Gap outside a slice. See docs/SLICE_MODEL.md. */
+  --spacing-slice-sm: 1.5rem;
+  --spacing-slice: 4rem;
+  --spacing-slice-lg: 6.5rem;
 }
 
 @layer base {
@@ -42,7 +66,8 @@
   h3,
   h4 {
     font-family: var(--font-heading);
-    line-height: 1.2;
+    font-weight: 500;
+    line-height: 1.15;
   }
 
   :focus-visible {

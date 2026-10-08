@@ -1,0 +1,135 @@
+{
+  "description": "A quote beside a clinic. The clinic supplies the logo and the visit link.",
+  "id": "quote",
+  "name": "Quote",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "A dark band. Quote on the left, the clinic on the right.",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "items": {},
+      "name": "Default",
+      "primary": {
+        "section": {
+          "config": {
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Small heading",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Heading",
+                  "placeholder": "Peggy's take: what I'm using now",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "intro": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Intro",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "label": "Link"
+                },
+                "type": "Link"
+              },
+              "background": {
+                "config": {
+                  "default_value": "Same as the page",
+                  "label": "Background",
+                  "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+                },
+                "type": "Select"
+              },
+              "space_above": {
+                "config": {
+                  "default_value": "Medium",
+                  "label": "Space above",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              },
+              "space_below": {
+                "config": {
+                  "default_value": "None",
+                  "label": "Space below",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Section",
+            "repeat": false
+          },
+          "type": "Group"
+        },
+        "quote": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Quote",
+            "placeholder": "The large sentence.",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "name": {
+          "config": {
+            "label": "Name",
+            "placeholder": "Oestra by Inner Balance. Leave empty to use the clinic name."
+          },
+          "type": "Text"
+        },
+        "clinic": {
+          "config": {
+            "customtypes": ["provider"],
+            "label": "Clinic",
+            "select": "document"
+          },
+          "type": "Link"
+        },
+        "text": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Text",
+            "placeholder": "The note under the name.",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "reminder": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Reminder",
+            "placeholder": "This is my personal experience, not medical advice.",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "review_button": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Review button"
+          },
+          "type": "Link"
+        }
+      },
+      "version": "initial"
+    }
+  ]
+}

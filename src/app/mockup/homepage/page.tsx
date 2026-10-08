@@ -14,7 +14,7 @@ import {
   DISCLOSURE_HREF,
   MockupShell,
 } from "../_shared/mockup-shell";
-import { POSTS, PostCard, TOPICS } from "../_shared/posts";
+import { POSTS, PostCard } from "../_shared/posts";
 import { Tip } from "../_shared/tip";
 
 /*
@@ -281,14 +281,6 @@ export default async function HomepageMockup(
             />
           ))}
         </div>
-        <nav className={styles.topics} aria-label="Browse by topic">
-          <span>Browse by topic:</span>
-          {TOPICS.map((topic) => (
-            <a key={topic.href} href={topic.href}>
-              {topic.label}
-            </a>
-          ))}
-        </nav>
       </section>
 
       {/* Comparison */}

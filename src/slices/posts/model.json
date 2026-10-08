@@ -1,0 +1,387 @@
+{
+  "description": "Recent posts, newest first.",
+  "id": "posts",
+  "name": "Posts",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Five posts. The newest is the large card. Category limits the list.",
+      "docURL": "",
+      "id": "home",
+      "imageUrl": "",
+      "items": {},
+      "name": "Homepage",
+      "primary": {
+        "section": {
+          "config": {
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Small heading",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Heading",
+                  "placeholder": "Latest reviews and posts",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "intro": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Intro",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "label": "Link"
+                },
+                "type": "Link"
+              },
+              "background": {
+                "config": {
+                  "default_value": "Same as the page",
+                  "label": "Background",
+                  "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+                },
+                "type": "Select"
+              },
+              "space_above": {
+                "config": {
+                  "default_value": "Medium",
+                  "label": "Space above",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              },
+              "space_below": {
+                "config": {
+                  "default_value": "None",
+                  "label": "Space below",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Section",
+            "repeat": false
+          },
+          "type": "Group"
+        },
+        "category": {
+          "config": {
+            "default_value": "All",
+            "label": "Category",
+            "options": [
+              "All",
+              "Review",
+              "Comparison",
+              "My experience",
+              "HRT 101"
+            ]
+          },
+          "type": "Select"
+        }
+      },
+      "version": "initial"
+    },
+    {
+      "description": "One post. Leave Post empty for the newest in Category, or pick a post.",
+      "docURL": "",
+      "id": "featured",
+      "imageUrl": "",
+      "items": {},
+      "name": "Featured",
+      "primary": {
+        "section": {
+          "config": {
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Small heading",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Heading",
+                  "placeholder": "Latest reviews and posts",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "intro": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Intro",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "label": "Link"
+                },
+                "type": "Link"
+              },
+              "background": {
+                "config": {
+                  "default_value": "Same as the page",
+                  "label": "Background",
+                  "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+                },
+                "type": "Select"
+              },
+              "space_above": {
+                "config": {
+                  "default_value": "Medium",
+                  "label": "Space above",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              },
+              "space_below": {
+                "config": {
+                  "default_value": "None",
+                  "label": "Space below",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Section",
+            "repeat": false
+          },
+          "type": "Group"
+        },
+        "category": {
+          "config": {
+            "default_value": "All",
+            "label": "Category",
+            "options": [
+              "All",
+              "Review",
+              "Comparison",
+              "My experience",
+              "HRT 101"
+            ]
+          },
+          "type": "Select"
+        },
+        "post": {
+          "config": {
+            "customtypes": ["article", "provider_review", "comparison"],
+            "label": "Post",
+            "select": "document"
+          },
+          "type": "Link"
+        }
+      },
+      "version": "initial"
+    },
+    {
+      "description": "A page of posts. Empty Posts per page means 12. All adds the category tabs.",
+      "docURL": "",
+      "id": "grid",
+      "imageUrl": "",
+      "items": {},
+      "name": "Grid",
+      "primary": {
+        "section": {
+          "config": {
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Small heading",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Heading",
+                  "placeholder": "Latest reviews and posts",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "intro": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Intro",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "label": "Link"
+                },
+                "type": "Link"
+              },
+              "background": {
+                "config": {
+                  "default_value": "Same as the page",
+                  "label": "Background",
+                  "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+                },
+                "type": "Select"
+              },
+              "space_above": {
+                "config": {
+                  "default_value": "Medium",
+                  "label": "Space above",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              },
+              "space_below": {
+                "config": {
+                  "default_value": "None",
+                  "label": "Space below",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Section",
+            "repeat": false
+          },
+          "type": "Group"
+        },
+        "category": {
+          "config": {
+            "default_value": "All",
+            "label": "Category",
+            "options": [
+              "All",
+              "Review",
+              "Comparison",
+              "My experience",
+              "HRT 101"
+            ]
+          },
+          "type": "Select"
+        },
+        "count": {
+          "config": {
+            "label": "Posts per page",
+            "placeholder": "12"
+          },
+          "type": "Number"
+        }
+      },
+      "version": "initial"
+    },
+    {
+      "description": "Three posts across. Category limits the list.",
+      "docURL": "",
+      "id": "row",
+      "imageUrl": "",
+      "items": {},
+      "name": "Row",
+      "primary": {
+        "section": {
+          "config": {
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Small heading",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Heading",
+                  "placeholder": "Latest reviews and posts",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "intro": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Intro",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "label": "Link"
+                },
+                "type": "Link"
+              },
+              "background": {
+                "config": {
+                  "default_value": "Same as the page",
+                  "label": "Background",
+                  "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+                },
+                "type": "Select"
+              },
+              "space_above": {
+                "config": {
+                  "default_value": "Medium",
+                  "label": "Space above",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              },
+              "space_below": {
+                "config": {
+                  "default_value": "None",
+                  "label": "Space below",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Section",
+            "repeat": false
+          },
+          "type": "Group"
+        },
+        "category": {
+          "config": {
+            "default_value": "All",
+            "label": "Category",
+            "options": [
+              "All",
+              "Review",
+              "Comparison",
+              "My experience",
+              "HRT 101"
+            ]
+          },
+          "type": "Select"
+        }
+      },
+      "version": "initial"
+    }
+  ]
+}

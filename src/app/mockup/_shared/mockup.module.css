@@ -820,11 +820,11 @@
 }
 
 .ledger tr {
-  --row-bg: var(--bg);
+  --row-bg: #fff;
 }
 
 .ledger tbody tr.topRow {
-  --row-bg: var(--top-row);
+  --row-bg: var(--bg);
 }
 
 .ledger thead th {
@@ -857,6 +857,12 @@
   left: 0;
   z-index: 1;
   min-width: 14rem;
+  padding-left: 2rem;
+}
+
+.ledger thead th:last-child,
+.ledger td:last-child {
+  padding-right: 2rem;
 }
 
 .clinic {
@@ -928,8 +934,8 @@ a.clinicName:focus-visible {
   margin-top: 0.2rem;
   padding: 0.15rem 0.55rem;
   border-radius: 999px;
-  background: var(--cta);
-  color: var(--cta-text);
+  background: #f6e3a1;
+  color: var(--text);
   font-family: var(--sans);
   font-size: 0.75rem;
   font-weight: 700;
@@ -1125,7 +1131,7 @@ a.clinicName:focus-visible {
 
 .quote {
   display: block;
-  font-family: var(--display);
+  font-family: var(--sans);
   font-size: 1rem;
   line-height: 1.4;
   color: var(--text);
@@ -1269,22 +1275,6 @@ a.clinicName:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  font-weight: 600;
-}
-
-.topics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 1.25rem;
-  margin: 1.75rem 0 0;
-  font-size: 0.95rem;
-}
-
-.topics span {
-  color: var(--muted);
-}
-
-.topics a {
   font-weight: 600;
 }
 
@@ -1804,7 +1794,7 @@ a.clinicName:focus-visible {
     min-width: 9.75rem;
     width: 9.75rem;
     max-width: 9.75rem;
-    padding-inline: 0.75rem;
+    padding-inline: 1.15rem;
   }
 
   .clinic {

@@ -1,0 +1,382 @@
+{
+  "format": "custom",
+  "id": "provider",
+  "label": "Clinic",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Profile": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "UID",
+          "placeholder": "inner-balance"
+        }
+      },
+      "name": {
+        "type": "Text",
+        "config": {
+          "label": "Name",
+          "placeholder": ""
+        }
+      },
+      "logo": {
+        "type": "Image",
+        "config": {
+          "label": "Logo",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "short_description": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Short description",
+          "placeholder": "",
+          "allowTargetBlank": true,
+          "single": "paragraph,strong,em,hyperlink"
+        }
+      },
+      "best_for": {
+        "type": "Text",
+        "config": {
+          "label": "Best for",
+          "placeholder": ""
+        }
+      },
+      "website": {
+        "type": "Link",
+        "config": {
+          "label": "Official website",
+          "select": null,
+          "allowTargetBlank": true,
+          "allowText": false,
+          "repeat": false
+        }
+      },
+      "visit": {
+        "type": "Link",
+        "config": {
+          "label": "Visit",
+          "placeholder": "The affiliate link. Opens in a new tab.",
+          "select": null,
+          "allowTargetBlank": true,
+          "allowText": true,
+          "repeat": false
+        }
+      },
+      "personally_tested": {
+        "type": "Boolean",
+        "config": {
+          "label": "Personally tested",
+          "placeholder_false": "No",
+          "placeholder_true": "Yes",
+          "default_value": false
+        }
+      },
+      "testing_notes": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Testing notes",
+          "placeholder": "",
+          "allowTargetBlank": true,
+          "single": "paragraph,strong,em,hyperlink"
+        }
+      },
+      "last_verified_date": {
+        "type": "Date",
+        "config": {
+          "label": "Facts checked",
+          "placeholder": "The day you last confirmed the prices and care details."
+        }
+      },
+      "top_choice_label": {
+        "type": "Text",
+        "config": {
+          "label": "Top choice label",
+          "placeholder": "Leave blank for no badge."
+        }
+      },
+      "source_notes": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Source notes",
+          "placeholder": "",
+          "allowTargetBlank": true,
+          "single": "paragraph,strong,em,hyperlink"
+        }
+      }
+    },
+    "Price": {
+      "monthly_price": {
+        "type": "Number",
+        "config": {
+          "label": "Monthly price",
+          "placeholder": "What I paid per month. The comparison chart uses this."
+        }
+      },
+      "price_note": {
+        "type": "Text",
+        "config": {
+          "label": "Price note",
+          "placeholder": "The line under the chart price."
+        }
+      },
+      "display_price": {
+        "type": "Text",
+        "config": {
+          "label": "Display price",
+          "placeholder": "The price on the clinic page, such as 199."
+        }
+      },
+      "display_price_note": {
+        "type": "Text",
+        "config": {
+          "label": "Display price note",
+          "placeholder": "First six months, then $99."
+        }
+      },
+      "consultation_fee": {
+        "type": "Text",
+        "config": {
+          "label": "Consultation fee",
+          "placeholder": "No visit, or 150"
+        }
+      },
+      "membership_fee": {
+        "type": "Text",
+        "config": {
+          "label": "Membership fee",
+          "placeholder": "Leave blank when there is none."
+        }
+      }
+    },
+    "Care": {
+      "formulation": {
+        "type": "Text",
+        "config": {
+          "label": "Typically prescribed",
+          "placeholder": ""
+        }
+      },
+      "lab_requirement": {
+        "type": "Text",
+        "config": {
+          "label": "Lab requirement",
+          "placeholder": ""
+        }
+      },
+      "lab_notes": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Lab notes",
+          "placeholder": "",
+          "allowTargetBlank": true,
+          "single": "paragraph,strong,em,hyperlink"
+        }
+      },
+      "insurance": {
+        "type": "Boolean",
+        "config": {
+          "label": "Takes insurance",
+          "placeholder_false": "No",
+          "placeholder_true": "Yes",
+          "default_value": false
+        }
+      },
+      "hsa_fsa": {
+        "type": "Text",
+        "config": {
+          "label": "HSA / FSA",
+          "placeholder": ""
+        }
+      },
+      "shipping": {
+        "type": "Text",
+        "config": {
+          "label": "Shipping",
+          "placeholder": ""
+        }
+      },
+      "eligibility": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Eligibility",
+          "placeholder": "",
+          "allowTargetBlank": true,
+          "single": "paragraph,strong,em,hyperlink"
+        }
+      },
+      "state_availability": {
+        "type": "Text",
+        "config": {
+          "label": "State availability",
+          "placeholder": "All 50 states"
+        }
+      },
+      "treatments": {
+        "type": "Group",
+        "config": {
+          "label": "Treatments",
+          "repeat": true,
+          "fields": {
+            "treatment": {
+              "type": "Link",
+              "config": {
+                "label": "Treatment",
+                "select": "document",
+                "customtypes": ["treatment"],
+                "repeat": false
+              }
+            }
+          }
+        }
+      },
+      "weight_support": {
+        "type": "Text",
+        "config": {
+          "label": "Weight support",
+          "placeholder": ""
+        }
+      }
+    },
+    "Words": {
+      "quote": {
+        "type": "StructuredText",
+        "config": {
+          "label": "In my words",
+          "placeholder": "",
+          "allowTargetBlank": true,
+          "single": "paragraph,strong,em,hyperlink"
+        }
+      },
+      "note": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Extra note",
+          "placeholder": "The line under the quote.",
+          "allowTargetBlank": true,
+          "single": "paragraph,strong,em,hyperlink"
+        }
+      },
+      "pros": {
+        "type": "Group",
+        "config": {
+          "label": "Pros",
+          "repeat": true,
+          "fields": {
+            "text": {
+              "type": "Text",
+              "config": {
+                "label": "Text",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      },
+      "cons": {
+        "type": "Group",
+        "config": {
+          "label": "Cons",
+          "repeat": true,
+          "fields": {
+            "text": {
+              "type": "Text",
+              "config": {
+                "label": "Text",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "Offer": {
+      "offer": {
+        "type": "Link",
+        "config": {
+          "label": "Offer",
+          "select": "document",
+          "customtypes": ["offer"],
+          "repeat": false
+        }
+      }
+    },
+    "Links": {
+      "review": {
+        "type": "Link",
+        "config": {
+          "label": "Review",
+          "select": "document",
+          "customtypes": ["provider_review"],
+          "repeat": false
+        }
+      },
+      "related": {
+        "type": "Group",
+        "config": {
+          "label": "Related",
+          "repeat": true,
+          "fields": {
+            "item": {
+              "type": "Link",
+              "config": {
+                "label": "Item",
+                "select": "document",
+                "customtypes": ["article", "provider_review", "comparison"],
+                "repeat": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "SEO": {
+      "meta_title": {
+        "type": "Text",
+        "config": {
+          "label": "Meta title",
+          "placeholder": ""
+        }
+      },
+      "meta_description": {
+        "type": "Text",
+        "config": {
+          "label": "Meta description",
+          "placeholder": ""
+        }
+      },
+      "meta_image": {
+        "type": "Image",
+        "config": {
+          "label": "Social image",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "url_section": {
+        "type": "Select",
+        "config": {
+          "label": "URL section",
+          "placeholder": "",
+          "options": [
+            "No public page",
+            "Blog post (/post/…)",
+            "Site page (/…)"
+          ],
+          "default_value": "No public page"
+        }
+      },
+      "indexing": {
+        "type": "Select",
+        "config": {
+          "label": "Indexing",
+          "placeholder": "",
+          "options": ["Index", "No index"],
+          "default_value": "Index"
+        }
+      }
+    }
+  }
+}

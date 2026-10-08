@@ -1,0 +1,474 @@
+{
+  "description": "The top of the homepage, a subpage, the brand logos, or a clinic page.",
+  "id": "hero",
+  "name": "Hero",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Homepage. Peggy's photo, the benefit links, and the two buttons.",
+      "docURL": "",
+      "id": "home",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/hero/home/e59c8032175bdc2b8663e5e0ae6c132c2536422f.png?auto=compress%2Cformat",
+      "items": {},
+      "name": "Home",
+      "primary": {
+        "section": {
+          "config": {
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Small heading",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Heading",
+                  "placeholder": "Hormone Therapy Replacement",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "intro": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Intro",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "label": "Link"
+                },
+                "type": "Link"
+              },
+              "background": {
+                "config": {
+                  "default_value": "Same as the page",
+                  "label": "Background",
+                  "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+                },
+                "type": "Select"
+              },
+              "space_above": {
+                "config": {
+                  "default_value": "Medium",
+                  "label": "Space above",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              },
+              "space_below": {
+                "config": {
+                  "default_value": "None",
+                  "label": "Space below",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Section",
+            "repeat": false
+          },
+          "type": "Group"
+        },
+        "tagline": {
+          "config": {
+            "label": "Tagline",
+            "placeholder": "Feel like you again.",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "benefits": {
+          "config": {
+            "allowText": true,
+            "label": "Benefits",
+            "repeat": true
+          },
+          "type": "Link"
+        },
+        "button": {
+          "config": {
+            "allowText": true,
+            "label": "Buttons",
+            "placeholder": "See what each clinic cost me",
+            "repeat": true,
+            "variants": ["Solid", "Ghost"]
+          },
+          "type": "Link"
+        },
+        "trust_lines": {
+          "config": {
+            "fields": {
+              "text": {
+                "config": {
+                  "label": "Text",
+                  "placeholder": "Patient since 2019"
+                },
+                "type": "Text"
+              }
+            },
+            "label": "Trust lines",
+            "repeat": true
+          },
+          "type": "Group"
+        },
+        "image": {
+          "config": {
+            "constraint": {},
+            "label": "Image",
+            "thumbnails": []
+          },
+          "type": "Image"
+        },
+        "photo_greeting": {
+          "config": {
+            "label": "Words on the photo",
+            "placeholder": "Hi, I'm Peggy!"
+          },
+          "type": "Text"
+        },
+        "caption": {
+          "config": {
+            "label": "Caption",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        }
+      },
+      "version": "initial"
+    },
+    {
+      "description": "A page title, a short intro, one text link, and a photo.",
+      "docURL": "",
+      "id": "subpage",
+      "imageUrl": "",
+      "items": {},
+      "name": "Subpage",
+      "primary": {
+        "section": {
+          "config": {
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "label": "Small heading",
+                  "placeholder": "Learn",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "heading": {
+                "config": {
+                  "label": "Heading",
+                  "placeholder": "New to hormone therapy",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "intro": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Intro",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowText": true,
+                  "label": "Link",
+                  "placeholder": "Start here"
+                },
+                "type": "Link"
+              },
+              "background": {
+                "config": {
+                  "default_value": "Same as the page",
+                  "label": "Background",
+                  "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+                },
+                "type": "Select"
+              },
+              "space_above": {
+                "config": {
+                  "default_value": "Medium",
+                  "label": "Space above",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              },
+              "space_below": {
+                "config": {
+                  "default_value": "None",
+                  "label": "Space below",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Section",
+            "repeat": false
+          },
+          "type": "Group"
+        },
+        "image": {
+          "config": {
+            "constraint": {},
+            "label": "Image",
+            "thumbnails": []
+          },
+          "type": "Image"
+        }
+      },
+      "version": "initial"
+    },
+    {
+      "description": "A page title, a short intro, one text link, and clinic logos.",
+      "docURL": "",
+      "id": "brands",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/hero/brands/4b3a844833b1c752e896fb542808471748d8ad53.png?auto=compress%2Cformat",
+      "items": {},
+      "name": "Brands",
+      "primary": {
+        "section": {
+          "config": {
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "label": "Small heading",
+                  "placeholder": "Providers",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "heading": {
+                "config": {
+                  "label": "Heading",
+                  "placeholder": "Trusted providers",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "intro": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Intro",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowText": true,
+                  "label": "Link",
+                  "placeholder": "Full price chart"
+                },
+                "type": "Link"
+              },
+              "background": {
+                "config": {
+                  "default_value": "Same as the page",
+                  "label": "Background",
+                  "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+                },
+                "type": "Select"
+              },
+              "space_above": {
+                "config": {
+                  "default_value": "Medium",
+                  "label": "Space above",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              },
+              "space_below": {
+                "config": {
+                  "default_value": "None",
+                  "label": "Space below",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Section",
+            "repeat": false
+          },
+          "type": "Group"
+        },
+        "clinics": {
+          "config": {
+            "fields": {
+              "clinic": {
+                "config": {
+                  "customtypes": [
+                    {
+                      "fields": ["name", "logo"],
+                      "id": "provider"
+                    }
+                  ],
+                  "label": "Clinic",
+                  "select": "document"
+                },
+                "type": "Link"
+              },
+              "link": {
+                "config": {
+                  "label": "Link",
+                  "placeholder": "Where this logo goes, often a jump link like #inner-balance"
+                },
+                "type": "Link"
+              }
+            },
+            "label": "Clinics",
+            "repeat": true
+          },
+          "type": "Group"
+        }
+      },
+      "version": "initial"
+    },
+    {
+      "description": "The top of a clinic page. The name, price, logo, and coupon come from the clinic.",
+      "docURL": "",
+      "id": "provider",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/hero/provider/9ea44f329298b409e4e018a9ba58deb474acac67.png?auto=compress%2Cformat",
+      "items": {},
+      "name": "Provider",
+      "primary": {
+        "section": {
+          "config": {
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "label": "Small heading",
+                  "placeholder": "Optional. Otherwise the clinic's top choice label is used.",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "heading": {
+                "config": {
+                  "label": "Heading",
+                  "placeholder": "Optional. The clinic name is the title.",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "intro": {
+                "config": {
+                  "label": "Intro",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowText": true,
+                  "label": "Link"
+                },
+                "type": "Link"
+              },
+              "background": {
+                "config": {
+                  "default_value": "Same as the page",
+                  "label": "Background",
+                  "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+                },
+                "type": "Select"
+              },
+              "space_above": {
+                "config": {
+                  "default_value": "Medium",
+                  "label": "Space above",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              },
+              "space_below": {
+                "config": {
+                  "default_value": "None",
+                  "label": "Space below",
+                  "options": ["None", "Small", "Medium", "Large"]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Section",
+            "repeat": false
+          },
+          "type": "Group"
+        },
+        "clinic": {
+          "config": {
+            "customtypes": [
+              {
+                "fields": [
+                  "name",
+                  "logo",
+                  "formulation",
+                  "visit",
+                  "display_price",
+                  "display_price_note",
+                  "top_choice_label",
+                  {
+                    "customtypes": [
+                      {
+                        "fields": ["code", "display_copy"],
+                        "id": "offer"
+                      }
+                    ],
+                    "id": "offer"
+                  }
+                ],
+                "id": "provider"
+              }
+            ],
+            "label": "Clinic",
+            "select": "document"
+          },
+          "type": "Link"
+        },
+        "voted": {
+          "config": {
+            "label": "Voted best for",
+            "placeholder": "Voted best for sleep",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "quote": {
+          "config": {
+            "label": "Quote",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "links": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Links",
+            "repeat": true
+          },
+          "type": "Link"
+        },
+        "product": {
+          "config": {
+            "constraint": {},
+            "label": "Product image",
+            "thumbnails": []
+          },
+          "type": "Image"
+        }
+      },
+      "version": "initial"
+    }
+  ]
+}

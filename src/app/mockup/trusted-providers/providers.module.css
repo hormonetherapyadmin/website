@@ -282,6 +282,10 @@
   font-weight: 700;
 }
 
+.leadName {
+  margin: 1rem 0 0;
+}
+
 .leadQuote {
   margin: 1rem 0 0;
   font-family: var(--sans);
@@ -722,12 +726,19 @@
 .relatedGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.5rem 1.75rem;
+  border-top: 1px solid var(--text);
 }
 
 .relatedGrid article:nth-child(n) {
-  padding: 0;
+  padding: 1.5rem 1.5rem 1.75rem 0;
   border: 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.relatedGrid article:nth-child(3n + 2),
+.relatedGrid article:nth-child(3n) {
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--rule);
 }
 
 .close {
@@ -846,6 +857,12 @@
 
   .relatedGrid {
     grid-template-columns: 1fr;
+  }
+
+  .relatedGrid article:nth-child(n) {
+    padding-right: 0;
+    padding-left: 0;
+    border-left: 0;
   }
 }
 
