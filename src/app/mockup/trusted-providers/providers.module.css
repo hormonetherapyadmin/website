@@ -282,6 +282,10 @@
   font-weight: 700;
 }
 
+.leadName {
+  margin: 1rem 0 0;
+}
+
 .leadQuote {
   margin: 1rem 0 0;
   font-family: var(--sans);

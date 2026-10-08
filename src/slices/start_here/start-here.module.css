@@ -1,0 +1,130 @@
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.row {
+  display: grid;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row[data-count="1"] {
+  grid-template-columns: 1fr;
+}
+
+.row[data-count="1"] > li {
+  width: 50%;
+  margin-inline: auto;
+}
+
+.row[data-count="2"] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.row[data-count="3"] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.row[data-count="4"] {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding: 1.5rem 1.5rem 1.35rem;
+  border-radius: var(--radius-card);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 30px -18px rgb(24 32 51 / 0.4);
+}
+
+.tone1 {
+  background: var(--color-card-1);
+}
+
+.tone2 {
+  background: var(--color-card-2);
+}
+
+.tone3 {
+  background: var(--color-card-3);
+}
+
+.tone4 {
+  background: var(--color-card-4);
+}
+
+.icon {
+  display: grid;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 1.25rem;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--color-background);
+}
+
+.kicker {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.detail {
+  margin-top: 0.6rem;
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  margin-top: auto;
+  padding-top: 1.25rem;
+  font-weight: 700;
+}
+
+.card:hover .cta {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 960px) {
+  .row[data-count="3"],
+  .row[data-count="4"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .row[data-count="1"] > li {
+    width: 100%;
+  }
+
+  .row[data-count="2"],
+  .row[data-count="3"],
+  .row[data-count="4"] {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+}

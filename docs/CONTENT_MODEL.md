@@ -159,8 +159,8 @@ Fields:
 -   Canonical override only when required
 -   Indexability control with safe default
 
-The card reads Title, Image, Excerpt, Published, and Minutes to read.
-Those ids match the Latest posts slice.
+The card reads Title, Image, Excerpt, Published, Minutes to read, and
+Category. Those ids match the Latest posts slice.
 
 ### Comparison
 

@@ -2,8 +2,12 @@
 
 import Divider from "./divider";
 import Hero from "./hero";
+import Posts from "./posts";
+import StartHere from "./start_here";
 
 export const components = {
   divider: Divider,
   hero: Hero,
+  posts: Posts,
+  start_here: StartHere,
 };

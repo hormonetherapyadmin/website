@@ -296,23 +296,47 @@ Each card:
 
 The card is the link. The label "Start here" is part of the design.
 
+A row holds at most four cards. One card is half the row, centered.
+Two cards are halves. Three are thirds. Four are quarters. Five or
+more fill rows of four, and the leftover row follows the same rule.
+
 ### Latest posts
 
-The same slice is "Keep reading" on the trusted-providers page. Section
-Heading and Section Link are the title and "All posts." An article does
-not use this slice. Its "Keep reading" block reads the article's
-Related posts field, and the heading and the "All posts" link are part
-of that page's layout.
+One slice, four variations, in `src/slices/posts`. The page loads the
+posts and passes them in. The slice does not store a hand-picked list.
+Every variation lists them newest first by Published. Category limits
+that list. All uses every post.
 
-| Label | Id | Kind | Required |
+The grid tabs are this Category: Review, Comparison, My experience, and
+HRT 101. That is the label on the card. Topic documents stay the browse
+links on the blog page.
+
+| Variation | Id | What it shows |
+| --- | --- | --- |
+| Homepage | `home` | Five posts. The newest is the large card. |
+| Featured | `featured` | One post. An empty Post uses the newest in Category. A picked Post is that post. |
+| Grid | `grid` | A page of posts. An empty Posts per page means 12. All shows the category tabs and the page numbers. A chosen Category hides the tabs. |
+| Row | `row` | Three posts across. This is Keep reading. |
+
+| Label | Id | Kind | Variations |
 | --- | --- | --- | --- |
-| Posts | `posts` | Repeatable group | Yes |
+| Section | `section` | The shared group | All |
+| Category | `category` | Select: All, Review, Comparison, My experience, HRT 101. Default All | All |
+| Post | `post` | Content relationship to Article, Provider review, and Comparison | Featured |
+| Posts per page | `count` | Number. Empty means 12 | Grid |
 
-Each post row has one field, `post`, a content relationship limited to
-Article, Provider review, and Comparison. The first post is the large
-card. Help: "Add them in order. The first one is the big card."
+On the blog page, the featured post is left out of the grid. A selected
+category hides the featured card, and that post can appear in the grid.
+Page addresses are `/blog` and `/blog/page/N`. The category tabs do not
+get their own public URL until the indexing decision in
+`docs/SEO_AEO_GEO.md`.
 
-The card reads these fields. Use the same ids on all three page types:
+An article's Keep reading uses the row variation. When Related posts is
+filled, the page passes those posts in that order. An empty Related
+posts field uses the three newest.
+
+The card reads these fields. Use the same ids on Article, Provider
+review, and Comparison:
 
 | Label | Id | Kind |
 | --- | --- | --- |
@@ -321,6 +345,7 @@ The card reads these fields. Use the same ids on all three page types:
 | Excerpt | `excerpt` | Heading rich text |
 | Published | `published_date` | Date |
 | Minutes to read | `read_time` | Number |
+| Category | `category` | Select on the article |
 
 ### Clinic comparison
 
@@ -546,7 +571,7 @@ and clinic. The sentence for that spot lives in Text.
 Repeatable page type, in `customtypes/article`. No slice zone. One Wix
 blog post becomes one Article. The layout is the blog post mockup. The card fields are the
 same ids the Latest posts slice already reads: `title`, `image`,
-`excerpt`, `published_date`, and `read_time`.
+`excerpt`, `published_date`, `read_time`, and `category`.
 
 Use the page type's SEO tab for the meta title, meta description, and
 social image. An empty meta title uses the post title. An empty social
@@ -720,8 +745,9 @@ clinic. "Compare all clinics" is part of the layout, not a field.
 Related posts. One field, `post`, a content relationship limited to
 Article, Provider review, and Comparison. Help: "Add them in order.
 Leave this empty to show the three newest posts." The card reads the
-same five fields as Latest posts. "Keep reading" and "All posts" are
-part of the layout.
+same fields as Latest posts. The row variation is the layout: its
+heading is "Keep reading" and its link is "All posts." When this field
+is filled, the page passes those posts in this order.
 
 ### What the page derives
 

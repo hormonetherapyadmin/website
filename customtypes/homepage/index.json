@@ -11,6 +11,12 @@
             },
             "hero": {
               "type": "SharedSlice"
+            },
+            "start_here": {
+              "type": "SharedSlice"
+            },
+            "posts": {
+              "type": "SharedSlice"
             }
           }
         },
