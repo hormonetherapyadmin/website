@@ -25,8 +25,7 @@ type PickContentRelationshipFieldData<
         prismic.CustomTypeModelFetchContentRelationshipLevel1
       > as TSubRelationship["id"]
     ]: ContentRelationshipFieldWithData<TSubRelationship["customtypes"], TLang>;
-  } & {
-    // Group
+  } & { // Group
     [
       TGroup in Extract<
         TRelationship["fields"][number],
@@ -38,8 +37,7 @@ type PickContentRelationshipFieldData<
           PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
         >
       : never;
-  } & {
-    // Other fields
+  } & { // Other fields
     [
       TFieldKey in Extract<TRelationship["fields"][number], string>
     ]: TFieldKey extends keyof TData ? TData[TFieldKey] : never;
@@ -63,6 +61,162 @@ type ContentRelationshipFieldWithData<
     >
   >;
 }[Exclude<TCustomType[number], string>["id"]];
+
+/**
+ * Content for Author documents
+ */
+interface AuthorDocumentData {
+  /**
+   * Name field in *Author*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: author.name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  name: prismic.KeyTextField;
+
+  /**
+   * About field in *Author*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: author.about
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  about: prismic.RichTextField;
+
+  /**
+   * Profile field in *Author*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: author.profile
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  profile: prismic.ImageField<never>;
+}
+
+/**
+ * Author document from Prismic
+ *
+ * - **API ID**: `author`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type AuthorDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<AuthorDocumentData>, "author", Lang>;
+
+type HomepageDocumentDataSlicesSlice =
+  | DividerSlice
+  | HeroSlice
+  | StartHereSlice
+  | PostsSlice
+  | ClinicComparisonSlice
+  | QuoteSlice
+  | SideBySideSlice;
+
+/**
+ * Content for Homepage documents
+ */
+interface HomepageDocumentData {
+  /**
+   * Slice Zone field in *Homepage*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<HomepageDocumentDataSlicesSlice>; /**
+   * Meta Title field in *Homepage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: homepage.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Homepage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: homepage.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField; /**
+   * Copyright Text field in *Homepage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.footer_copyright_text
+   * - **Tab**: Footer
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  footer_copyright_text: prismic.KeyTextField;
+
+  /**
+   * Cookies Link field in *Homepage*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.footer_cookies_link
+   * - **Tab**: Footer
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  footer_cookies_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Social Links field in *Homepage*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage.footer_social_links
+   * - **Tab**: Footer
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  footer_social_links: prismic.Repeatable<
+    prismic.LinkField<
+      string,
+      string,
+      unknown,
+      prismic.FieldState,
+      "X" | "YouTube" | "GitHub" | "LinkedIn"
+    >
+  >;
+}
+
+/**
+ * Homepage document from Prismic
+ *
+ * - **API ID**: `homepage`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type HomepageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<HomepageDocumentData>,
+    "homepage",
+    Lang
+  >;
 
 /**
  * Item in *Blog post → Sources*
@@ -145,7 +299,7 @@ interface PostDocumentData {
    * Story field in *Blog post*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
+   * - **Placeholder**: To add a clinic's offer, start a paragraph with {{provider:inner-balance:offer}} and use that clinic's id. Write your sentence after it. {{provider:inner-balance:facts}} adds that clinic's price and formulation. The sidebar lists each clinic the first time a token names it.
    * - **API ID Path**: post.body
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
@@ -178,12 +332,14 @@ interface PostDocumentData {
    * Author field in *Blog post*
    *
    * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
+   * - **Placeholder**: Leave empty for Peggy.
    * - **API ID Path**: post.author
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/content-relationship
    */
-  author: prismic.ContentRelationshipField<"author">;
+  author: ContentRelationshipFieldWithData<
+    [{ fields: ["name", "about", "profile"]; id: "author" }]
+  >;
 
   /**
    * Published field in *Blog post*
@@ -303,112 +459,6 @@ interface PostDocumentData {
  */
 export type PostDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PostDocumentData>, "post", Lang>;
-
-type HomepageDocumentDataSlicesSlice =
-  | DividerSlice
-  | HeroSlice
-  | StartHereSlice
-  | PostsSlice
-  | ClinicComparisonSlice
-  | QuoteSlice
-  | SideBySideSlice;
-
-/**
- * Content for Homepage documents
- */
-interface HomepageDocumentData {
-  /**
-   * Slice Zone field in *Homepage*
-   *
-   * - **Field Type**: Slice Zone
-   * - **Placeholder**: *None*
-   * - **API ID Path**: homepage.slices[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/slices
-   */
-  slices: prismic.SliceZone<HomepageDocumentDataSlicesSlice>; /**
-   * Meta Title field in *Homepage*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: A title of the page used for social media and search engines
-   * - **API ID Path**: homepage.meta_title
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  meta_title: prismic.KeyTextField;
-
-  /**
-   * Meta Description field in *Homepage*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: A brief summary of the page
-   * - **API ID Path**: homepage.meta_description
-   * - **Tab**: SEO & Metadata
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  meta_description: prismic.KeyTextField; /**
-   * Copyright Text field in *Homepage*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: homepage.footer_copyright_text
-   * - **Tab**: Footer
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  footer_copyright_text: prismic.KeyTextField;
-
-  /**
-   * Cookies Link field in *Homepage*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: homepage.footer_cookies_link
-   * - **Tab**: Footer
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  footer_cookies_link: prismic.LinkField<
-    string,
-    string,
-    unknown,
-    prismic.FieldState,
-    never
-  >;
-
-  /**
-   * Social Links field in *Homepage*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: homepage.footer_social_links
-   * - **Tab**: Footer
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  footer_social_links: prismic.Repeatable<
-    prismic.LinkField<
-      string,
-      string,
-      unknown,
-      prismic.FieldState,
-      "X" | "YouTube" | "GitHub" | "LinkedIn"
-    >
-  >;
-}
-
-/**
- * Homepage document from Prismic
- *
- * - **API ID**: `homepage`
- * - **Repeatable**: `false`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type HomepageDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<
-    Simplify<HomepageDocumentData>,
-    "homepage",
-    Lang
-  >;
 
 /**
  * Item in *Clinic → Treatments*
@@ -925,7 +975,7 @@ export type ProviderDocument<Lang extends string = string> =
   >;
 
 export type AllDocumentTypes =
-  PostDocument | HomepageDocument | ProviderDocument;
+  AuthorDocument | HomepageDocument | PostDocument | ProviderDocument;
 
 /**
  * Item in *Clinic comparison → Default → Primary → Section*
@@ -3589,13 +3639,15 @@ declare module "@prismicio/client" {
 
   namespace Content {
     export type {
+      AuthorDocument,
+      AuthorDocumentData,
+      HomepageDocument,
+      HomepageDocumentData,
+      HomepageDocumentDataSlicesSlice,
       PostDocument,
       PostDocumentData,
       PostDocumentDataSourcesItem,
       PostDocumentDataTopicsItem,
-      HomepageDocument,
-      HomepageDocumentData,
-      HomepageDocumentDataSlicesSlice,
       ProviderDocument,
       ProviderDocumentData,
       ProviderDocumentDataTreatmentsItem,

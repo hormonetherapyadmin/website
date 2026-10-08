@@ -629,7 +629,7 @@ use featured or comments.
 | Story | `body` | Content rich text | Yes | Wix rich content |
 | Image | `image` | Image, including its description | Yes | Wix cover |
 | Caption | `caption` | Heading rich text | No | The line under the cover, when that photo has one |
-| Author | `author` | Content relationship to Author | Yes | Peggy |
+| Author | `author` | Content relationship to Author | No | Empty means Peggy B. |
 | Published | `published_date` | Date | Yes | Wix first published date |
 | Category | `category` | Select | No | Mockup only. Wix posts have no category |
 | Sources | `sources` | Repeatable group | No | Mockup only |
@@ -773,8 +773,9 @@ field.
 ### What the page derives
 
 Breadcrumbs are Home, Blog, and the title. Minutes to read and Keep
-reading are calculated, as above. The byline and the author
-block read the Author document: name, photo, and short bio. "Read my
+reading are calculated, as above. An empty Author field uses Peggy B.
+The byline and the author block read that document: name, profile,
+and about. "Read my
 whole story" and "How I review" are the about page and the editorial
 standards page. The disclosure line is the site affiliate disclosure.
 Share has no fields.

@@ -66,8 +66,14 @@
       },
       "author": {
         "config": {
-          "customtypes": ["author"],
+          "customtypes": [
+            {
+              "fields": ["name", "about", "profile"],
+              "id": "author"
+            }
+          ],
           "label": "Author",
+          "placeholder": "Leave empty for Peggy.",
           "repeat": false,
           "select": "document"
         },

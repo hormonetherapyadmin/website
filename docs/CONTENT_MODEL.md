@@ -63,17 +63,17 @@ Canonical disclosure content that can be linked/reused.
 
 ### Author
 
+Custom type, `customtypes/author`. One person, one document.
+
 Fields:
 
--   Name
 -   UID
--   Photo
--   Short bio
--   Long bio
--   Role descriptor
--   Experience/timeline content
--   Social links if applicable
--   SEO fields
+-   Name
+-   About
+-   Profile
+
+Peggy B. is the author document. A post with an empty Author field
+uses her. Choose another author only when the post is not hers.
 
 Do not create credential fields that imply medical expertise unless
 actually applicable.

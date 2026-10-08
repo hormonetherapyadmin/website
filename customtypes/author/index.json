@@ -1,0 +1,41 @@
+{
+  "format": "custom",
+  "id": "author",
+  "json": {
+    "Main": {
+      "uid": {
+        "config": {
+          "label": "UID"
+        },
+        "type": "UID"
+      },
+      "name": {
+        "config": {
+          "label": "Name",
+          "placeholder": ""
+        },
+        "type": "Text"
+      },
+      "about": {
+        "config": {
+          "allowTargetBlank": true,
+          "label": "About",
+          "multi": "paragraph,strong,em,hyperlink",
+          "placeholder": ""
+        },
+        "type": "StructuredText"
+      },
+      "profile": {
+        "config": {
+          "constraint": {},
+          "label": "Profile",
+          "thumbnails": []
+        },
+        "type": "Image"
+      }
+    }
+  },
+  "label": "Author",
+  "repeatable": true,
+  "status": true
+}
