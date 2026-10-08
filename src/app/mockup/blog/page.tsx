@@ -9,7 +9,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import shared from "../_shared/mockup.module.css";
 import { MockupShell } from "../_shared/mockup-shell";
-import { POSTS, POST_KINDS, PostCard, TOPICS } from "../_shared/posts";
+import { POSTS, POST_KINDS, PostCard } from "../_shared/posts";
 import styles from "./blog.module.css";
 
 /*
@@ -145,15 +145,6 @@ export default async function BlogMockup(props: PageProps<"/mockup/blog">) {
               </a>
             </li>
           </ul>
-        </nav>
-
-        <nav className={shared.topics} aria-label="Browse by topic">
-          <span>Browse by topic:</span>
-          {TOPICS.map((topic) => (
-            <a key={topic.href} href={topic.href}>
-              {topic.label}
-            </a>
-          ))}
         </nav>
 
         <section className={styles.why} aria-labelledby="why-title">

@@ -1125,7 +1125,7 @@ a.clinicName:focus-visible {
 
 .quote {
   display: block;
-  font-family: var(--display);
+  font-family: var(--sans);
   font-size: 1rem;
   line-height: 1.4;
   color: var(--text);
@@ -1269,22 +1269,6 @@ a.clinicName:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  font-weight: 600;
-}
-
-.topics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 1.25rem;
-  margin: 1.75rem 0 0;
-  font-size: 0.95rem;
-}
-
-.topics span {
-  color: var(--muted);
-}
-
-.topics a {
   font-weight: 600;
 }
 

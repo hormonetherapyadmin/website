@@ -196,6 +196,10 @@ trust.
 
 ### Article
 
+The field list to build is in `docs/SLICE_MODEL.md`. The post is one
+page type with no slices. Quick answer, key takeaways, FAQ, and
+pros/cons are headings in the story when a post actually has them.
+
 Recommended structure:
 
 -   Breadcrumbs

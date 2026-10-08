@@ -160,18 +160,6 @@ export const POSTS: Post[] = [
   },
 ];
 
-// Existing topic pages on the live site.
-export const TOPICS = [
-  { label: "Getting started", href: "/ishrtforme" },
-  { label: "Providers", href: "/tipstofindprovider" },
-  { label: "Formulations", href: "/formuations" },
-  { label: "Cost & insurance", href: "/costandinsurance" },
-  { label: "Weight & HRT", href: "/copy-of-weight-gain" },
-  { label: "Sleep", href: "/sleep" },
-  { label: "Hair loss", href: "/hair-loss" },
-  { label: "Face creams", href: "/skincare" },
-];
-
 export function postAt(href: string): Post {
   const post = POSTS.find((item) => item.href === href);
   if (!post) throw new Error(`Unknown post: ${href}`);
