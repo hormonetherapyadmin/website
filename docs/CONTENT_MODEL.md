@@ -146,7 +146,6 @@ Fields:
 -   Published
 -   Category (a select on the post, not a Category document)
 -   Sources
--   Topic references
 -   SEO title, SEO description, and social image (the page type's SEO tab)
 -   Canonical override only when required
 -   Indexability control with safe default
@@ -359,7 +358,7 @@ Preferred graph:
 
 -   Review -\> Provider
 -   Comparison -\> Providers
--   Post -\> Topics. Clinics in the sidebar come from provider tokens in the story, in the order each clinic is first named.
+-   Clinics in the sidebar come from provider tokens in the story, in the order each clinic is first named.
 -   Keep reading is the newest posts in the same category, then the newest posts in any category. It is not a field.
 -   Provider -\> Offer
 -   Callout -\> Provider and Offer

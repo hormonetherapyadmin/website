@@ -25,8 +25,8 @@ type PickContentRelationshipFieldData<
         prismic.CustomTypeModelFetchContentRelationshipLevel1
       > as TSubRelationship["id"]
     ]: ContentRelationshipFieldWithData<TSubRelationship["customtypes"], TLang>;
-  } & // Group
-  {
+  } & {
+    // Group
     [
       TGroup in Extract<
         TRelationship["fields"][number],
@@ -38,8 +38,8 @@ type PickContentRelationshipFieldData<
           PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
         >
       : never;
-  } & // Other fields
-  {
+  } & {
+    // Other fields
     [
       TFieldKey in Extract<TRelationship["fields"][number], string>
     ]: TFieldKey extends keyof TData ? TData[TFieldKey] : never;
@@ -263,21 +263,6 @@ export interface PostDocumentDataSourcesItem {
 }
 
 /**
- * Item in *Blog post → Topics*
- */
-export interface PostDocumentDataTopicsItem {
-  /**
-   * Topic field in *Blog post → Topics*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: post.topics[].topic
-   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
-   */
-  topic: prismic.ContentRelationshipField<"topic">;
-}
-
-/**
  * Content for Blog post documents
  */
 interface PostDocumentData {
@@ -296,7 +281,7 @@ interface PostDocumentData {
    * Subtitle field in *Blog post*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: The line under the title, and the card. The Wix excerpt goes here.
+   * - **Placeholder**: The line under the title, and the card.
    * - **API ID Path**: post.sub_title
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
@@ -318,7 +303,7 @@ interface PostDocumentData {
    * Story field in *Blog post*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: To add a clinic's offer, start a paragraph with {{provider:inner-balance:offer}} and use that clinic's id. Write your sentence after it. {{provider:inner-balance:facts}} adds that clinic's price and formulation. The sidebar lists each clinic the first time a token names it.
+   * - **Placeholder**: Write the story readers will see.
    * - **API ID Path**: post.body
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
@@ -396,15 +381,6 @@ interface PostDocumentData {
   sources: prismic.GroupField<Simplify<PostDocumentDataSourcesItem>>;
 
   /**
-   * Topics field in *Blog post*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: post.topics[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-   */
-  topics: prismic.GroupField<Simplify<PostDocumentDataTopicsItem>>; /**
    * Meta title field in *Blog post*
    *
    * - **Field Type**: Text
@@ -419,7 +395,7 @@ interface PostDocumentData {
    * Meta description field in *Blog post*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: The search result. It is not the subtitle.
+   * - **Placeholder**: Leave empty to use the subtitle.
    * - **API ID Path**: post.meta_description
    * - **Tab**: SEO
    * - **Documentation**: https://prismic.io/docs/fields/text
@@ -457,14 +433,14 @@ interface PostDocumentData {
   /**
    * Indexing field in *Blog post*
    *
-   * - **Field Type**: Select
+   * - **Field Type**: Boolean
    * - **Placeholder**: *None*
-   * - **Default Value**: Index
+   * - **Default Value**: true
    * - **API ID Path**: post.indexing
    * - **Tab**: SEO
-   * - **Documentation**: https://prismic.io/docs/fields/select
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
    */
-  indexing: prismic.SelectField<"Index" | "No index", "filled">;
+  indexing: prismic.BooleanField;
 }
 
 /**
@@ -3666,7 +3642,6 @@ declare module "@prismicio/client" {
       PostDocument,
       PostDocumentData,
       PostDocumentDataSourcesItem,
-      PostDocumentDataTopicsItem,
       ProviderDocument,
       ProviderDocumentData,
       ProviderDocumentDataTreatmentsItem,

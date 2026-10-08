@@ -6,7 +6,7 @@
       "uid": {
         "config": {
           "label": "UID",
-          "placeholder": "Wix slug, unchanged"
+          "placeholder": "URL for page"
         },
         "type": "UID"
       },
@@ -23,7 +23,7 @@
         "config": {
           "allowTargetBlank": true,
           "label": "Subtitle",
-          "placeholder": "The line under the title, and the card. The Wix excerpt goes here.",
+          "placeholder": "The line under the title, and the card.",
           "single": "paragraph,strong,em,hyperlink"
         },
         "type": "StructuredText"
@@ -43,7 +43,7 @@
           "label": "Story",
           "labels": ["highlight", "superscript"],
           "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
-          "placeholder": "To add a clinic's offer, start a paragraph with {{provider:inner-balance:offer}} and use that clinic's id. Write your sentence after it. {{provider:inner-balance:facts}} adds that clinic's price and formulation. The sidebar lists each clinic the first time a token names it."
+          "placeholder": "Write the story readers will see."
         },
         "type": "StructuredText"
       },
@@ -119,24 +119,6 @@
           "repeat": true
         },
         "type": "Group"
-      },
-      "topics": {
-        "config": {
-          "fields": {
-            "topic": {
-              "config": {
-                "customtypes": ["topic"],
-                "label": "Topic",
-                "repeat": false,
-                "select": "document"
-              },
-              "type": "Link"
-            }
-          },
-          "label": "Topics",
-          "repeat": true
-        },
-        "type": "Group"
       }
     },
     "SEO": {
@@ -150,7 +132,7 @@
       "meta_description": {
         "config": {
           "label": "Meta description",
-          "placeholder": "The search result. It is not the subtitle."
+          "placeholder": "Leave empty to use the subtitle."
         },
         "type": "Text"
       },
@@ -175,12 +157,12 @@
       },
       "indexing": {
         "config": {
-          "default_value": "Index",
+          "default_value": true,
           "label": "Indexing",
-          "options": ["Index", "No index"],
-          "placeholder": ""
+          "placeholder_false": "No index",
+          "placeholder_true": "Index"
         },
-        "type": "Select"
+        "type": "Boolean"
       }
     }
   },

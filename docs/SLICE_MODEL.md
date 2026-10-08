@@ -603,10 +603,11 @@ Repeatable page type, in `customtypes/post`. No slice zone. One Wix
 blog post becomes one Post. The layout is the blog post mockup. The card reads `title`, `image`, `sub_title`, `published_date`, and `category`. Minutes to read is calculated from the story.
 
 Use the page type's SEO tab for the meta title, meta description, and
-social image. An empty meta title uses the post title. An empty social
-image uses Image. The meta description has no fallback. On the live
-site it is its own sentence, so migration fills it from the Wix meta
-description. The Wix excerpt goes in Subtitle.
+social image. An empty meta title uses the post title. An empty meta
+description uses the subtitle. An empty social image uses Image. On the
+live site the meta description is its own sentence, so migration fills
+it from the Wix meta description when Wix has one. The Wix excerpt goes
+in Subtitle.
 
 Sampled from the live site in October 2026, then checked against the
 Wix API on 2026-10-08: the post sitemap lists 142 posts, the feed lists
@@ -638,9 +639,8 @@ corrected in Prismic.
 | Published | `published_date` | Date | Yes | The date on the Wix article. Wix first published date |
 | Category | `category` | Select | No | Left empty. Wix blog categories are not this select |
 | Sources | `sources` | Repeatable group | No | Mockup only |
-| Topics | `topics` | Repeatable group | No | Not in Wix. Peggy files the post |
 | Canonical | `canonical` | Link, no display text | No | Only when the post should point elsewhere |
-| Indexing | `indexing` | Select | Yes | Index. Change it only to hide a post |
+| Indexing | `indexing` | Boolean | Yes | On. Turn it off only to hide a post |
 
 Every post is `/post/<uid>`. There is no URL section field. The UID is
 the Wix slug.
@@ -650,7 +650,7 @@ Empty means no kicker. These are not Category documents and they are
 not public pages. The `?type=` filter on the blog mockup stays off
 the public site until an indexing decision says otherwise.
 
-Indexing choices are Index and No index. Index is the default. The
+Indexing is on by default. Turn it off only to hide a post. The
 site-wide noindex switch still hides every page until cutover.
 
 Hide Subtitle, Caption, Personal note, and Sources when those fields
@@ -744,11 +744,7 @@ whole paragraph. Any other last word is ordinary text. In preview, an
 unknown clinic shows an error where the box would be. On the public
 site that token is removed and the rest of the paragraph stays.
 
-Story help: "To add a clinic's offer, start a paragraph with
-{{provider:inner-balance:offer}} and use that clinic's id. Write your
-sentence after it. {{provider:inner-balance:facts}} adds that clinic's
-price and formulation. The sidebar lists each clinic the first time a
-token names it."
+Story help: "Write the story readers will see."
 
 The sidebar is not a field. It reads the story. Each clinic appears
 once, in the order of its first token, and the sidebar shows the first
@@ -768,8 +764,6 @@ to that number.
 | --- | --- | --- | --- | --- |
 | Link | `link` | Link, with display text | Yes | Journal of Clinical and Aesthetic Dermatology |
 | Detail | `detail` | Text | No | PubMed Central |
-
-Topics. One field, `topic`, a content relationship to Topic.
 
 Keep reading is three posts. The same category comes first, newest
 first. If that is fewer than three, the rest are the newest posts in
