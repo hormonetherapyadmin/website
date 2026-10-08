@@ -1,382 +1,382 @@
 {
   "format": "custom",
   "id": "provider",
-  "label": "Clinic",
-  "repeatable": true,
-  "status": true,
   "json": {
     "Profile": {
       "uid": {
-        "type": "UID",
         "config": {
           "label": "UID",
           "placeholder": "inner-balance"
-        }
+        },
+        "type": "UID"
       },
       "name": {
-        "type": "Text",
         "config": {
           "label": "Name",
           "placeholder": ""
-        }
+        },
+        "type": "Text"
       },
       "logo": {
-        "type": "Image",
         "config": {
-          "label": "Logo",
           "constraint": {},
+          "label": "Logo",
           "thumbnails": []
-        }
+        },
+        "type": "Image"
       },
       "short_description": {
-        "type": "StructuredText",
         "config": {
+          "allowTargetBlank": true,
           "label": "Short description",
           "placeholder": "",
-          "allowTargetBlank": true,
           "single": "paragraph,strong,em,hyperlink"
-        }
+        },
+        "type": "StructuredText"
       },
       "best_for": {
-        "type": "Text",
         "config": {
           "label": "Best for",
           "placeholder": ""
-        }
+        },
+        "type": "Text"
       },
       "website": {
-        "type": "Link",
         "config": {
-          "label": "Official website",
-          "select": null,
           "allowTargetBlank": true,
           "allowText": false,
-          "repeat": false
-        }
+          "label": "Official website",
+          "repeat": false,
+          "select": null
+        },
+        "type": "Link"
       },
       "visit": {
-        "type": "Link",
         "config": {
-          "label": "Visit",
-          "placeholder": "The affiliate link. Opens in a new tab.",
-          "select": null,
           "allowTargetBlank": true,
           "allowText": true,
-          "repeat": false
-        }
+          "label": "Visit",
+          "placeholder": "The affiliate link. Opens in a new tab.",
+          "repeat": false,
+          "select": null
+        },
+        "type": "Link"
       },
       "personally_tested": {
-        "type": "Boolean",
         "config": {
+          "default_value": false,
           "label": "Personally tested",
           "placeholder_false": "No",
-          "placeholder_true": "Yes",
-          "default_value": false
-        }
+          "placeholder_true": "Yes"
+        },
+        "type": "Boolean"
       },
       "testing_notes": {
-        "type": "StructuredText",
         "config": {
+          "allowTargetBlank": true,
           "label": "Testing notes",
           "placeholder": "",
-          "allowTargetBlank": true,
           "single": "paragraph,strong,em,hyperlink"
-        }
+        },
+        "type": "StructuredText"
       },
       "last_verified_date": {
-        "type": "Date",
         "config": {
           "label": "Facts checked",
           "placeholder": "The day you last confirmed the prices and care details."
-        }
+        },
+        "type": "Date"
       },
       "top_choice_label": {
-        "type": "Text",
         "config": {
           "label": "Top choice label",
           "placeholder": "Leave blank for no badge."
-        }
+        },
+        "type": "Text"
       },
       "source_notes": {
-        "type": "StructuredText",
         "config": {
+          "allowTargetBlank": true,
           "label": "Source notes",
           "placeholder": "",
-          "allowTargetBlank": true,
           "single": "paragraph,strong,em,hyperlink"
-        }
+        },
+        "type": "StructuredText"
       }
     },
     "Price": {
       "monthly_price": {
-        "type": "Number",
         "config": {
           "label": "Monthly price",
           "placeholder": "What I paid per month. The comparison chart uses this."
-        }
+        },
+        "type": "Number"
       },
       "price_note": {
-        "type": "Text",
         "config": {
           "label": "Price note",
           "placeholder": "The line under the chart price."
-        }
+        },
+        "type": "Text"
       },
       "display_price": {
-        "type": "Text",
         "config": {
           "label": "Display price",
           "placeholder": "The price on the clinic page, such as 199."
-        }
+        },
+        "type": "Text"
       },
       "display_price_note": {
-        "type": "Text",
         "config": {
           "label": "Display price note",
           "placeholder": "First six months, then $99."
-        }
+        },
+        "type": "Text"
       },
       "consultation_fee": {
-        "type": "Text",
         "config": {
           "label": "Consultation fee",
           "placeholder": "No visit, or 150"
-        }
+        },
+        "type": "Text"
       },
       "membership_fee": {
-        "type": "Text",
         "config": {
           "label": "Membership fee",
           "placeholder": "Leave blank when there is none."
-        }
+        },
+        "type": "Text"
       }
     },
     "Care": {
       "formulation": {
-        "type": "Text",
         "config": {
           "label": "Typically prescribed",
           "placeholder": ""
-        }
+        },
+        "type": "Text"
       },
       "lab_requirement": {
-        "type": "Text",
         "config": {
           "label": "Lab requirement",
           "placeholder": ""
-        }
+        },
+        "type": "Text"
       },
       "lab_notes": {
-        "type": "StructuredText",
         "config": {
+          "allowTargetBlank": true,
           "label": "Lab notes",
           "placeholder": "",
-          "allowTargetBlank": true,
           "single": "paragraph,strong,em,hyperlink"
-        }
+        },
+        "type": "StructuredText"
       },
       "insurance": {
-        "type": "Boolean",
         "config": {
+          "default_value": false,
           "label": "Takes insurance",
           "placeholder_false": "No",
-          "placeholder_true": "Yes",
-          "default_value": false
-        }
+          "placeholder_true": "Yes"
+        },
+        "type": "Boolean"
       },
       "hsa_fsa": {
-        "type": "Text",
         "config": {
           "label": "HSA / FSA",
           "placeholder": ""
-        }
+        },
+        "type": "Text"
       },
       "shipping": {
-        "type": "Text",
         "config": {
           "label": "Shipping",
           "placeholder": ""
-        }
+        },
+        "type": "Text"
       },
       "eligibility": {
-        "type": "StructuredText",
         "config": {
+          "allowTargetBlank": true,
           "label": "Eligibility",
           "placeholder": "",
-          "allowTargetBlank": true,
           "single": "paragraph,strong,em,hyperlink"
-        }
+        },
+        "type": "StructuredText"
       },
       "state_availability": {
-        "type": "Text",
         "config": {
           "label": "State availability",
           "placeholder": "All 50 states"
-        }
+        },
+        "type": "Text"
       },
       "treatments": {
-        "type": "Group",
         "config": {
-          "label": "Treatments",
-          "repeat": true,
           "fields": {
             "treatment": {
-              "type": "Link",
               "config": {
-                "label": "Treatment",
-                "select": "document",
                 "customtypes": ["treatment"],
-                "repeat": false
-              }
+                "label": "Treatment",
+                "repeat": false,
+                "select": "document"
+              },
+              "type": "Link"
             }
-          }
-        }
+          },
+          "label": "Treatments",
+          "repeat": true
+        },
+        "type": "Group"
       },
       "weight_support": {
-        "type": "Text",
         "config": {
           "label": "Weight support",
           "placeholder": ""
-        }
+        },
+        "type": "Text"
       }
     },
     "Words": {
       "quote": {
-        "type": "StructuredText",
         "config": {
+          "allowTargetBlank": true,
           "label": "In my words",
           "placeholder": "",
-          "allowTargetBlank": true,
           "single": "paragraph,strong,em,hyperlink"
-        }
+        },
+        "type": "StructuredText"
       },
       "note": {
-        "type": "StructuredText",
         "config": {
+          "allowTargetBlank": true,
           "label": "Extra note",
           "placeholder": "The line under the quote.",
-          "allowTargetBlank": true,
           "single": "paragraph,strong,em,hyperlink"
-        }
+        },
+        "type": "StructuredText"
       },
       "pros": {
-        "type": "Group",
         "config": {
-          "label": "Pros",
-          "repeat": true,
           "fields": {
             "text": {
-              "type": "Text",
               "config": {
                 "label": "Text",
                 "placeholder": ""
-              }
+              },
+              "type": "Text"
             }
-          }
-        }
+          },
+          "label": "Pros",
+          "repeat": true
+        },
+        "type": "Group"
       },
       "cons": {
-        "type": "Group",
         "config": {
-          "label": "Cons",
-          "repeat": true,
           "fields": {
             "text": {
-              "type": "Text",
               "config": {
                 "label": "Text",
                 "placeholder": ""
-              }
+              },
+              "type": "Text"
             }
-          }
-        }
+          },
+          "label": "Cons",
+          "repeat": true
+        },
+        "type": "Group"
       }
     },
     "Offer": {
       "offer": {
-        "type": "Link",
         "config": {
-          "label": "Offer",
-          "select": "document",
           "customtypes": ["offer"],
-          "repeat": false
-        }
+          "label": "Offer",
+          "repeat": false,
+          "select": "document"
+        },
+        "type": "Link"
       }
     },
     "Links": {
       "review": {
-        "type": "Link",
         "config": {
-          "label": "Review",
-          "select": "document",
           "customtypes": ["provider_review"],
-          "repeat": false
-        }
+          "label": "Review",
+          "repeat": false,
+          "select": "document"
+        },
+        "type": "Link"
       },
       "related": {
-        "type": "Group",
         "config": {
-          "label": "Related",
-          "repeat": true,
           "fields": {
             "item": {
-              "type": "Link",
               "config": {
+                "customtypes": ["post", "provider_review", "comparison"],
                 "label": "Item",
-                "select": "document",
-                "customtypes": ["article", "provider_review", "comparison"],
-                "repeat": false
-              }
+                "repeat": false,
+                "select": "document"
+              },
+              "type": "Link"
             }
-          }
-        }
+          },
+          "label": "Related",
+          "repeat": true
+        },
+        "type": "Group"
       }
     },
     "SEO": {
       "meta_title": {
-        "type": "Text",
         "config": {
           "label": "Meta title",
           "placeholder": ""
-        }
+        },
+        "type": "Text"
       },
       "meta_description": {
-        "type": "Text",
         "config": {
           "label": "Meta description",
           "placeholder": ""
-        }
+        },
+        "type": "Text"
       },
       "meta_image": {
-        "type": "Image",
         "config": {
-          "label": "Social image",
           "constraint": {},
+          "label": "Social image",
           "thumbnails": []
-        }
+        },
+        "type": "Image"
       },
       "url_section": {
-        "type": "Select",
         "config": {
+          "default_value": "No public page",
           "label": "URL section",
-          "placeholder": "",
           "options": [
             "No public page",
             "Blog post (/post/…)",
             "Site page (/…)"
           ],
-          "default_value": "No public page"
-        }
+          "placeholder": ""
+        },
+        "type": "Select"
       },
       "indexing": {
-        "type": "Select",
         "config": {
+          "default_value": "Index",
           "label": "Indexing",
-          "placeholder": "",
           "options": ["Index", "No index"],
-          "default_value": "Index"
-        }
+          "placeholder": ""
+        },
+        "type": "Select"
       }
     }
-  }
+  },
+  "label": "Clinic",
+  "repeatable": true,
+  "status": true
 }

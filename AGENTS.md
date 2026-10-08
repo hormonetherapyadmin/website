@@ -219,7 +219,7 @@ destination, not merely a list of links.
 
 Expected Prismic repeatable types:
 
--   Article
+-   Post
 -   Provider
 -   Provider Review
 -   Comparison

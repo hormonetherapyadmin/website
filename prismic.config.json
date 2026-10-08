@@ -1,4 +1,13 @@
 {
   "repositoryName": "1shr96di",
-  "routes": [{ "type": "homepage", "path": "/" }]
+  "routes": [
+    {
+      "type": "post",
+      "path": "/post/:uid"
+    },
+    {
+      "type": "homepage",
+      "path": "/"
+    }
+  ]
 }

@@ -185,7 +185,7 @@
         },
         "post": {
           "config": {
-            "customtypes": ["article", "provider_review", "comparison"],
+            "customtypes": ["post", "provider_review", "comparison"],
             "label": "Post",
             "select": "document"
           },

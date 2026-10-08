@@ -1,6 +1,10 @@
 import type { RichTextField } from "@prismicio/client";
 import { describe, expect, it } from "vitest";
-import { contentPieces, parseProviderToken } from "./content-blocks";
+import {
+  contentPieces,
+  parseProviderToken,
+  storyClinicUids,
+} from "./content-blocks";
 
 const paragraph = (text: string, spans: object[] = []) => ({
   type: "paragraph" as const,
@@ -82,5 +86,24 @@ describe("contentPieces", () => {
 
     expect(pieces).toHaveLength(1);
     expect(pieces[0]?.kind).toBe("rich");
+  });
+});
+
+describe("storyClinicUids", () => {
+  it("lists each clinic once, in the order its first token appears", () => {
+    expect(
+      storyClinicUids([
+        paragraph("She started with cream."),
+        paragraph("{{provider:inner-balance:facts}}"),
+        paragraph("{{provider:musely:offer}} This one helped my sleep."),
+        paragraph("{{provider:inner-balance:offer}} Still the one I use."),
+        paragraph("I tried {{provider:winona:offer}} later."),
+      ] as RichTextField),
+    ).toEqual(["inner-balance", "musely"]);
+  });
+
+  it("returns nothing when the story has no clinic token", () => {
+    expect(storyClinicUids([])).toEqual([]);
+    expect(storyClinicUids(null)).toEqual([]);
   });
 });

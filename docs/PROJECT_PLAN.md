@@ -864,9 +864,11 @@ established search and revenue equity.
     `rel="nofollow noreferrer"` (some add `noopener`).
 -   Blog posts emit `BlogPosting`, `Person`, `Organization`, and
     `ImageObject` structured data.
--   No GA measurement ID appears in the static HTML. Wix may still
-    inject one through Marketing Integrations; confirm in the Wix
-    dashboard.
+-   No GA measurement ID appears in the static HTML. Wix injects it
+    through Marketing Integrations. Google Tag is connected. The GA4
+    measurement ID is `G-VK8P9CJBX2`. Meta Pixel, Google Tag Manager,
+    TikTok Pixel, Facebook Catalog, and Google Merchant Feed are not
+    connected. Wix's own Analytics reports are also in use.
 -   `/my-addresses` (a Wix members page) is in the pages sitemap and
     needs an explicit disposition.
 
@@ -914,10 +916,12 @@ inventory.
 
 -   Keep the `www` host, no trailing slash (`trailingSlash: false`),
     and lowercase Wix slugs exactly as they are, typos included.
--   Each editorial document's UID is its Wix slug. A required
-    "URL section" field chooses between "Blog post (/post/…)" and
-    "Site page (/…)". The public path is always the section plus the
-    UID. New content defaults to blog post.
+-   Each editorial document's UID is its Wix slug. A Post is always
+    `/post/<uid>` and has no URL section field. Every other routable
+    editorial type has a required "URL section" field that chooses
+    between "Blog post (/post/…)" and "Site page (/…)". The public
+    path is the section plus the UID. New content of those types
+    defaults to blog post.
 -   The build fails if two documents resolve to the same path, or if a
     known legacy URL from the URL manifest has no disposition.
 -   `/blog-feed.xml` is kept as an RSS feed at the same path.
@@ -977,7 +981,9 @@ inventory.
 
 ### Analytics
 
--   Reuse Peggy's GA4 property if one exists; otherwise create one.
+-   Reuse Peggy's existing GA4 property, measurement ID
+    `G-VK8P9CJBX2`, found in Wix Marketing Integrations under Google
+    Tag.
 -   Load through `@next/third-parties` `GoogleAnalytics`, in production
     only, initialized once.
 -   One affiliate event, `affiliate_click`, with properties
@@ -988,6 +994,5 @@ inventory.
 
 ### Open questions for the owner
 
--   Is GA4 connected in Wix Marketing Integrations?
 -   Who has Search Console access?
 -   Where is the domain registered?

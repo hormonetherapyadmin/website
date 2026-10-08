@@ -1,0 +1,184 @@
+{
+  "format": "page",
+  "id": "post",
+  "json": {
+    "Main": {
+      "uid": {
+        "config": {
+          "label": "UID",
+          "placeholder": "Wix slug, unchanged"
+        },
+        "type": "UID"
+      },
+      "title": {
+        "config": {
+          "allowTargetBlank": true,
+          "label": "Title",
+          "placeholder": "",
+          "single": "paragraph,strong,em,hyperlink"
+        },
+        "type": "StructuredText"
+      },
+      "sub_title": {
+        "config": {
+          "allowTargetBlank": true,
+          "label": "Subtitle",
+          "placeholder": "The line under the title, and the card. The Wix excerpt goes here.",
+          "single": "paragraph,strong,em,hyperlink"
+        },
+        "type": "StructuredText"
+      },
+      "note": {
+        "config": {
+          "allowTargetBlank": true,
+          "label": "Personal note",
+          "placeholder": "The box above the story. The label Personal review note is added for you.",
+          "single": "paragraph,strong,em,hyperlink"
+        },
+        "type": "StructuredText"
+      },
+      "body": {
+        "config": {
+          "allowTargetBlank": true,
+          "label": "Story",
+          "labels": ["highlight", "superscript"],
+          "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
+          "placeholder": "To add a clinic's offer, start a paragraph with {{provider:inner-balance:offer}} and use that clinic's id. Write your sentence after it. {{provider:inner-balance:facts}} adds that clinic's price and formulation. The sidebar lists each clinic the first time a token names it."
+        },
+        "type": "StructuredText"
+      },
+      "image": {
+        "config": {
+          "constraint": {},
+          "label": "Image",
+          "thumbnails": []
+        },
+        "type": "Image"
+      },
+      "caption": {
+        "config": {
+          "allowTargetBlank": true,
+          "label": "Caption",
+          "placeholder": "The line under the photo. It can include a link.",
+          "single": "paragraph,strong,em,hyperlink"
+        },
+        "type": "StructuredText"
+      },
+      "author": {
+        "config": {
+          "customtypes": ["author"],
+          "label": "Author",
+          "repeat": false,
+          "select": "document"
+        },
+        "type": "Link"
+      },
+      "published_date": {
+        "config": {
+          "label": "Published",
+          "placeholder": ""
+        },
+        "type": "Date"
+      },
+      "category": {
+        "config": {
+          "label": "Category",
+          "options": ["Review", "Comparison", "My experience", "HRT 101"],
+          "placeholder": "Shown above the title. Leave blank if none of these fit."
+        },
+        "type": "Select"
+      },
+      "sources": {
+        "config": {
+          "fields": {
+            "link": {
+              "config": {
+                "allowTargetBlank": true,
+                "allowText": true,
+                "label": "Link",
+                "repeat": false,
+                "select": null
+              },
+              "type": "Link"
+            },
+            "detail": {
+              "config": {
+                "label": "Detail",
+                "placeholder": "PubMed Central"
+              },
+              "type": "Text"
+            }
+          },
+          "label": "Sources",
+          "repeat": true
+        },
+        "type": "Group"
+      },
+      "topics": {
+        "config": {
+          "fields": {
+            "topic": {
+              "config": {
+                "customtypes": ["topic"],
+                "label": "Topic",
+                "repeat": false,
+                "select": "document"
+              },
+              "type": "Link"
+            }
+          },
+          "label": "Topics",
+          "repeat": true
+        },
+        "type": "Group"
+      }
+    },
+    "SEO": {
+      "meta_title": {
+        "config": {
+          "label": "Meta title",
+          "placeholder": "Leave empty to use the post title."
+        },
+        "type": "Text"
+      },
+      "meta_description": {
+        "config": {
+          "label": "Meta description",
+          "placeholder": "The search result. It is not the subtitle."
+        },
+        "type": "Text"
+      },
+      "meta_image": {
+        "config": {
+          "constraint": {},
+          "label": "Social image",
+          "thumbnails": []
+        },
+        "type": "Image"
+      },
+      "canonical": {
+        "config": {
+          "allowTargetBlank": false,
+          "allowText": false,
+          "label": "Canonical",
+          "placeholder": "Leave empty unless this post should point at a different address.",
+          "repeat": false,
+          "select": null
+        },
+        "type": "Link"
+      },
+      "indexing": {
+        "config": {
+          "default_value": "Index",
+          "label": "Indexing",
+          "options": ["Index", "No index"],
+          "placeholder": ""
+        },
+        "type": "Select"
+      }
+    }
+  },
+  "label": "Blog post",
+  "repeatable": true,
+  "status": true
+}

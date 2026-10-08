@@ -38,7 +38,7 @@ fields, and the rich text rules are specified in `docs/SLICE_MODEL.md`.
 
 The blog index is one single page type at `/blog`. It has no slices.
 The title, dek, topic links, and the telehealth reasons at the bottom
-of the live page are fields. The post grid is every Article, newest
+of the live page are fields. The post grid is every Post, newest
 first. Field ids are in `docs/SLICE_MODEL.md`.
 
 ### Providers Landing
@@ -126,10 +126,10 @@ Fields:
 -   Canonical override only when required
 -   Indexability control with safe default
 
-### Article
+### Post
 
-One Wix blog post becomes one Article. The page type is
-`customtypes/article`. It has no slice zone. The story is one rich
+One Wix blog post becomes one Post. The page type is
+`customtypes/post`. It has no slice zone. The story is one rich
 text field. Field ids, the Wix mapping, and the pieces the mockup
 adds are in `docs/SLICE_MODEL.md`.
 
@@ -137,30 +137,25 @@ Fields:
 
 -   Title
 -   UID
--   URL section (see Public Path Strategy)
--   Excerpt
--   Dek
+-   Subtitle (`sub_title`, the line under the title and the card; the Wix excerpt)
+-   Personal note
+-   Story
 -   Image
 -   Caption
 -   Author
 -   Published
--   Updated
--   Minutes to read
 -   Category (a select on the post, not a Category document)
--   Personal note
--   Story
 -   Sources
--   Tags (the Wix tags, kept as labels)
 -   Topic references
--   Treatment references
--   Provider references
--   Related posts
 -   SEO title, SEO description, and social image (the page type's SEO tab)
 -   Canonical override only when required
 -   Indexability control with safe default
 
-The card reads Title, Image, Excerpt, Published, Minutes to read, and
-Category. Those ids match the Latest posts slice.
+The card reads Title, Image, Subtitle, Published, Category, and the
+minutes to read. Clinics in the sidebar come from provider tokens in
+the story. Minutes to read, Keep reading, and the document tags are
+derived. Published is the original publish date. There is no updated
+date. Migration writes the Wix excerpt into Subtitle.
 
 ### Comparison
 
@@ -200,7 +195,7 @@ practical.
 
 ### Category
 
-The article's Category field is a select: Review, Comparison, My
+The post's Category field is a select: Review, Comparison, My
 experience, or HRT 101. Wix posts have no categories. Do not create
 Category documents for those four labels, and do not give them public
 pages, until an indexing decision says the blog filter should be a
@@ -283,7 +278,7 @@ The homepage slices, the shared Section group, and the shared rich text
 component are specified in `docs/SLICE_MODEL.md`. Copy that Section group
 and those rich text presets onto later slices.
 
-The article and the blog index do not use slices. A post pulls a
+The post and the blog index do not use slices. A post pulls a
 clinic's offer or facts into the story with a provider token. Review,
 provider, and trusted-providers slices are not specified yet.
 Candidates:
@@ -315,7 +310,7 @@ Candidates:
 Trim overlapping candidates before building them (for example Provider
 Card / Provider Grid / Provider Comparison / Comparison Table, and
 Affiliate CTA / Offer Callout). The homepage clinic comparison is the
-comparison slice. An article inserts a clinic offer with a provider
+comparison slice. A post inserts a clinic offer with a provider
 token. It does not insert a Callout.
 
 Before adding a new slice, ask whether an existing slice can represent
@@ -333,17 +328,19 @@ paths.
 Rule:
 
 -   UID is the Wix slug, unchanged (typos included).
--   Every routable editorial type (Article, Provider Review,
-    Comparison, Page, and Provider/Treatment/Topic when they have a
-    public page) has a required **URL section** select field:
+-   A Post is always `/post/<uid>`. It has no URL section field.
+-   Every other routable editorial type (Provider Review, Comparison,
+    Page, and Provider/Treatment/Topic when they have a public page)
+    has a required **URL section** select field:
     -   "Blog post (/post/…)" → `/post/<uid>` (default)
     -   "Site page (/…)" → `/<uid>`
--   The public path is always section + UID. There is no free-text
-    path field.
+-   The public path is always section + UID, except for a Post,
+    whose section is fixed. There is no free-text path field.
 -   Prismic only guarantees UID uniqueness within one type, so the
     build fails if two documents of any type resolve to the same path.
 
-Migration populates UID and URL section from the URL manifest.
+Migration populates UID, and URL section where that field exists, from
+the URL manifest.
 
 ## Freshness
 
@@ -361,11 +358,11 @@ Preferred graph:
 
 -   Review -\> Provider
 -   Comparison -\> Providers
--   Article -\> Topics/Treatments/Providers
--   Article -\> related Article, Provider Review, and Comparison
+-   Post -\> Topics. Clinics in the sidebar come from provider tokens in the story, in the order each clinic is first named.
+-   Keep reading is the newest posts in the same category, then the newest posts in any category. It is not a field.
 -   Provider -\> Offer
 -   Callout -\> Provider and Offer
--   Homepage slices -\> Provider, Article, Provider Review, and Comparison
+-   Homepage slices -\> Provider, Post, Provider Review, and Comparison
 -   All editorial documents -\> Author
 -   A story token looks up a Provider by its UID. That lookup is not a
     content relationship.

@@ -67,8 +67,8 @@ export type PostsProps = {
   /** Left out of the list. The blog page passes the featured post. */
   skipHref?: string;
   /**
-   * Keep the given order and category mix. An article's Related posts
-   * uses this for the three-across row.
+   * Keep the given order and category mix. Keep reading passes its
+   * computed posts in this order.
    */
   keepOrder?: boolean;
   categoryHref?: (category: PostCategoryOption) => string;
