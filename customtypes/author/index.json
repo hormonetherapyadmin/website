@@ -32,6 +32,17 @@
           "thumbnails": []
         },
         "type": "Image"
+      },
+      "author_link": {
+        "config": {
+          "allowTargetBlank": true,
+          "allowText": true,
+          "label": "Author link",
+          "placeholder": "",
+          "repeat": false,
+          "select": null
+        },
+        "type": "Link"
       }
     }
   },

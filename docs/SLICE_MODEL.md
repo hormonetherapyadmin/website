@@ -608,16 +608,21 @@ image uses Image. The meta description has no fallback. On the live
 site it is its own sentence, so migration fills it from the Wix meta
 description. The Wix excerpt goes in Subtitle.
 
-Sampled from the live site in October 2026: the post sitemap lists 142
-posts, the feed lists the latest 20, and 18 posts were read in full.
-Categories are unused. The categories sitemap contains only `/blog`.
-Every sampled post is by Peggy and has a cover image. One of the 142
-excerpts matches its meta description, so those stay separate fields. Tags are sparse and messy.
-Migration writes each Wix tag label onto the document's Prismic tags.
-Published is the Wix first published date. The last published date and
-`relatedPostIds` are not stored. Confirm `featured` and
-`commentingEnabled` when the Wix API is available. The page does not
-use featured or comments.
+Sampled from the live site in October 2026, then checked against the
+Wix API on 2026-10-08: the post sitemap lists 142 posts, the feed lists
+the latest 20, and 18 posts were read in full. The categories sitemap
+contains only `/blog`. The API also returns five Wix blog categories
+on 42 posts. Those are not the Category select, and migration leaves
+Category empty. Every post has a cover image. One of the 142 excerpts
+matches its meta description, so those stay separate fields. Tags are
+sparse and messy. Migration writes each Wix tag label onto the
+document's Prismic tags. Published is the date on the Wix article, the
+first published date. One hundred twenty posts also have a later last
+published date. That later date and `relatedPostIds` are not stored.
+Comments are turned on in Wix and are not imported. One post is
+featured. Featured, pinned, and comments are not stored. Author is
+left empty. Two posts use a different Wix member id. Those two are
+corrected in Prismic.
 
 ### Fields
 
@@ -629,9 +634,9 @@ use featured or comments.
 | Story | `body` | Content rich text | Yes | Wix rich content |
 | Image | `image` | Image, including its description | Yes | Wix cover |
 | Caption | `caption` | Heading rich text | No | The line under the cover, when that photo has one |
-| Author | `author` | Content relationship to Author | No | Empty means Peggy B. |
-| Published | `published_date` | Date | Yes | Wix first published date |
-| Category | `category` | Select | No | Mockup only. Wix posts have no category |
+| Author | `author` | Content relationship to Author | No | Left empty. Empty means Peggy B. Two posts are corrected in Prismic |
+| Published | `published_date` | Date | Yes | The date on the Wix article. Wix first published date |
+| Category | `category` | Select | No | Left empty. Wix blog categories are not this select |
 | Sources | `sources` | Repeatable group | No | Mockup only |
 | Topics | `topics` | Repeatable group | No | Not in Wix. Peggy files the post |
 | Canonical | `canonical` | Link, no display text | No | Only when the post should point elsewhere |
@@ -657,8 +662,10 @@ Image help: "Describe the photo. This is the text a screen reader
 reads." Caption help: "The line under the photo. It can include a
 link."
 
-Published is the day the post first went live. There is no updated
-date. A revision she wants readers to see is written in the story.
+Published is the day the post first went live, the date shown on the
+Wix article. There is no updated date. A later Wix "last published"
+date is not copied. A revision she wants readers to see is written in
+the story.
 
 Minutes to read is not a field. The build counts the words in the
 story, at 250 words a minute, and rounds to the nearest minute. A
@@ -687,9 +694,9 @@ and do not repeat the photo.
 | Wix block | Becomes |
 | --- | --- |
 | Paragraph | Paragraph |
-| Heading | Heading 2, 3, or 4. A heading 1 in the story becomes Heading 2 |
+| Heading | Heading 2, 3, or 4. The page title is the only Heading 1. A heading 1, 5, or 6 in the story becomes Heading 2 |
 | Bold, italic | Bold, italic |
-| Underline | The words, without the underline |
+| Underline, text color, font size | The words, as a normal paragraph |
 | Link | Link. Keep the full address, including affiliate parameters |
 | Image | Image, then its caption as the next paragraph |
 | Two photos side by side | Two images, each with its caption |
@@ -699,6 +706,7 @@ and do not repeat the photo.
 | Quote | A paragraph. The story has no quote block |
 | Table | The same words, written out under the heading they sat under, and a migration flag |
 | Empty line used as spacing | Dropped |
+| Divider | Not imported. A horizontal line in the Wix story is left out |
 | File, custom HTML, poll, or code | Not dropped. The migration report lists the post for manual review |
 
 Tables showed up in several of the 18 posts, usually a pricing or lab
@@ -782,12 +790,12 @@ Share has no fields.
 
 ### Wix fields this page does not store
 
-Commenting, featured, pinned, language, pricing plan, and the Wix
-member id. Author replaces the member. Category is assigned here, not
-imported. Keyword meta tags are not copied. The Wix last published
-date and the Wix related-post list are not stored. The Wix excerpt is
-Subtitle. Tag labels are the document tags. Read time and Keep
-reading are calculated.
+Comments, featured, pinned, language, pricing plan, and the Wix
+member id. Author is left empty. Category is left empty. Keyword meta
+tags are not copied. The date on the Wix article is Published. The
+later last published date and the Wix related-post list are not
+stored. The Wix excerpt is Subtitle. Tag labels are the document tags.
+Read time and Keep reading are calculated.
 
 ## Blog
 

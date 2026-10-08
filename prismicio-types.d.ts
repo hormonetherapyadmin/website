@@ -25,7 +25,8 @@ type PickContentRelationshipFieldData<
         prismic.CustomTypeModelFetchContentRelationshipLevel1
       > as TSubRelationship["id"]
     ]: ContentRelationshipFieldWithData<TSubRelationship["customtypes"], TLang>;
-  } & { // Group
+  } & // Group
+  {
     [
       TGroup in Extract<
         TRelationship["fields"][number],
@@ -37,7 +38,8 @@ type PickContentRelationshipFieldData<
           PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
         >
       : never;
-  } & { // Other fields
+  } & // Other fields
+  {
     [
       TFieldKey in Extract<TRelationship["fields"][number], string>
     ]: TFieldKey extends keyof TData ? TData[TFieldKey] : never;
@@ -98,6 +100,23 @@ interface AuthorDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/image
    */
   profile: prismic.ImageField<never>;
+
+  /**
+   * Author link field in *Author*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: author.author_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  author_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 }
 
 /**

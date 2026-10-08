@@ -196,10 +196,11 @@ practical.
 ### Category
 
 The post's Category field is a select: Review, Comparison, My
-experience, or HRT 101. Wix posts have no categories. Do not create
-Category documents for those four labels, and do not give them public
-pages, until an indexing decision says the blog filter should be a
-real URL.
+experience, or HRT 101. Wix blog categories are a different list and
+are not copied onto this select. Migration leaves Category empty. Do
+not create Category documents for those four labels, and do not give
+them public pages, until an indexing decision says the blog filter
+should be a real URL.
 
 Use a Category document only where it provides a meaningful editorial
 taxonomy of its own. Avoid duplicating Topic semantics.
