@@ -22,7 +22,7 @@ export const SECTION_SPACING = ["None", "Small", "Medium", "Large"] as const;
 export type SectionBackground = (typeof SECTION_BACKGROUNDS)[number];
 export type SectionSpacing = (typeof SECTION_SPACING)[number];
 
-/** The non-repeatable `section` group copied onto every slice. */
+/** The Section fields copied onto every slice, beside its own fields. */
 export type SliceSectionFields = {
   small_heading: RichTextField;
   heading: RichTextField;
@@ -80,7 +80,7 @@ export function sectionAnchor(value: string | null | undefined) {
   return id;
 }
 
-function hasHeader(fields: SliceSectionFields) {
+function hasHeader(fields: Partial<SliceSectionFields>) {
   return (
     isFilled.richText(fields.small_heading) ||
     isFilled.richText(fields.heading) ||
@@ -89,8 +89,8 @@ function hasHeader(fields: SliceSectionFields) {
   );
 }
 
-function SectionLink({ field }: { field: LinkField }) {
-  if (!isFilled.link(field) || !field.text) return null;
+function SectionLink({ field }: { field: LinkField | null | undefined }) {
+  if (!field || !isFilled.link(field) || !field.text) return null;
 
   return (
     <PrismicNextLink
@@ -117,8 +117,8 @@ function SectionLink({ field }: { field: LinkField }) {
 }
 
 type SliceSectionProps = {
-  /** The slice's `section` group. The first item is the only one used. */
-  section?: readonly SliceSectionFields[] | null;
+  /** The slice's fields. Only the Section fields are read. */
+  section?: Partial<SliceSectionFields> | null;
   /** Hero passes `h1`. Every other slice uses `h2`. */
   headingLevel?: "h1" | "h2";
   /** Hero lays the heading out itself and hides this header. */
@@ -150,7 +150,7 @@ export function SliceSection({
   children,
 }: SliceSectionProps) {
   const headingId = useId();
-  const fields = section?.[0];
+  const fields = section ?? undefined;
   const background = choice(
     fields?.background,
     SECTION_BACKGROUNDS,

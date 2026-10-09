@@ -55,10 +55,11 @@ slice. One component reads them. The section wrapper is
 
 ### Section
 
-Every slice except the Divider starts with a non-repeatable group named
-`section`, labeled **Section**. Groups cannot contain other groups, so
-the slice's own repeatable groups sit beside it. The Divider lists
-Background, Space above, and Space below on the slice itself.
+Every slice except the Divider starts with these seven fields, directly
+on the slice and before its own fields. They are not in a group. In the
+Page Builder even a non-repeatable group starts empty, and she has to
+add an item before she can type a heading, so the fields stay open
+instead. The Divider has only Background, Space above, and Space below.
 
 | Label | Id | Kind | Default |
 | --- | --- | --- | --- |
@@ -160,7 +161,7 @@ posts is a repeatable group with one content relationship in each row.
 
 ### Divider
 
-A line between slices. It does not use the Section group. Background,
+A line between slices. It does not use the Section header. Background,
 Space above, and Space below are fields on the slice, with the same
 choices as Section. Both spacing fields default to None, so the line does
 not add a gap until she asks for one.
@@ -248,7 +249,7 @@ Each slice below lists only its own fields. Section is on all of them.
 ### Hero
 
 One slice, four variations. Each variation includes the shared Section
-group and lays the heading out itself. Section supplies the spacing and
+fields and lays the heading out itself. Section supplies the spacing and
 background. The homepage section id comes from the tagline.
 
 #### Home
@@ -371,7 +372,7 @@ links on the blog page.
 
 | Label | Id | Kind | Variations |
 | --- | --- | --- | --- |
-| Section | `section` | The shared group | All |
+| Section | The seven Section fields | Shared, open on the slice | All |
 | Category | `category` | Select: All, Review, Comparison, My experience, HRT 101. Default All | All |
 | Post | `post` | Content relationship to Post, Provider review, and Comparison | Featured |
 | Posts per page | `count` | Number. Empty means 12 | Grid |
@@ -468,7 +469,7 @@ On a narrow screen the media stacks above the writing either way.
 
 | Label | Id | Kind | Variations |
 | --- | --- | --- | --- |
-| Section | `section` | The shared group | All |
+| Section | The seven Section fields | Shared, open on the slice | All |
 | Side | `side` | Select: Media left, Media right. Default Media left | All |
 | Text | `text` | Content rich text | All |
 | Buttons | `button` | Repeatable link, with display text and a style | All |

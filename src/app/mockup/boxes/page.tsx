@@ -18,19 +18,17 @@ const jump = (href: string) => ({ link_type: "Web", url: href }) as LinkField;
 
 function section(
   overrides: Partial<SliceSectionFields> = {},
-): SliceSectionFields[] {
-  return [
-    {
-      small_heading: emptyRich,
-      heading: emptyRich,
-      intro: emptyRich,
-      link: emptyLink,
-      background: null,
-      space_above: "Medium",
-      space_below: "Medium",
-      ...overrides,
-    },
-  ];
+): SliceSectionFields {
+  return {
+    small_heading: emptyRich,
+    heading: emptyRich,
+    intro: emptyRich,
+    link: emptyLink,
+    background: null,
+    space_above: "Medium",
+    space_below: "Medium",
+    ...overrides,
+  };
 }
 
 /* The trusted-providers jump band. Codes and labels are from that mockup. */
@@ -112,12 +110,12 @@ export default function BoxesPreview() {
   return (
     <>
       <Boxes
-        primary={{ section: section(), across: "7", boxes: clinicBoxes }}
+        primary={{ ...section(), across: "7", boxes: clinicBoxes }}
         clinics={clinics}
       />
       <Boxes
         primary={{
-          section: section({
+          ...section({
             heading: rich("Default: five across, written by hand"),
             background: "Soft",
           }),
@@ -127,7 +125,7 @@ export default function BoxesPreview() {
       />
       <Boxes
         primary={{
-          section: section({ heading: rich("Three boxes, seven across") }),
+          ...section({ heading: rich("Three boxes, seven across") }),
           across: "7",
           boxes: clinicBoxes.slice(0, 3),
         }}

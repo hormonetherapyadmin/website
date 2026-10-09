@@ -17,18 +17,16 @@ const rich = (value: string) =>
 
 const emptyRich = [] as RichTextField;
 
-function section(heading: string): SliceSectionFields[] {
-  return [
-    {
-      small_heading: emptyRich,
-      heading: rich(heading),
-      intro: emptyRich,
-      link: { link_type: "Any" },
-      background: "Same as the page",
-      space_above: "None",
-      space_below: "None",
-    },
-  ];
+function section(heading: string): SliceSectionFields {
+  return {
+    small_heading: emptyRich,
+    heading: rich(heading),
+    intro: emptyRich,
+    link: { link_type: "Any" },
+    background: "Same as the page",
+    space_above: "None",
+    space_below: "None",
+  };
 }
 
 const clinicLink = {
@@ -94,14 +92,14 @@ describe("PageSliceZone", () => {
   it("fills a comparison row and a quote from the clinic", () => {
     const html = render([
       slice("clinic_comparison", {
-        section: section("Clinics side by side"),
+        ...section("Clinics side by side"),
         prices_checked: null,
         button: { link_type: "Any" },
         disclosure: { link_type: "Any" },
         clinics: [{ clinic: clinicLink, review: { link_type: "Any" } }],
       }),
       slice("quote", {
-        section: section("Peggy's take"),
+        ...section("Peggy's take"),
         quote: rich("I would pick it again."),
         name: null,
         clinic: clinicLink,
@@ -124,7 +122,7 @@ describe("PageSliceZone", () => {
     const html = render(
       [
         slice("quote", {
-          section: section("Peggy's take"),
+          ...section("Peggy's take"),
           quote: rich("I would pick it again."),
           name: null,
           clinic: clinicLink,
@@ -142,13 +140,7 @@ describe("PageSliceZone", () => {
 
   it("shows the posts the page loaded", () => {
     const html = render(
-      [
-        slice(
-          "posts",
-          { section: section("Keep reading"), category: "All" },
-          "row",
-        ),
-      ],
+      [slice("posts", { ...section("Keep reading"), category: "All" }, "row")],
       context({
         posts: [
           {
@@ -174,7 +166,7 @@ describe("PageSliceZone", () => {
         space_below: "None",
       }),
       slice("start_here", {
-        section: section("Where should I start?"),
+        ...section("Where should I start?"),
         cards: [
           {
             small_heading: emptyRich,

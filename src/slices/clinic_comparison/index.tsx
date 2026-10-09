@@ -32,8 +32,7 @@ export type ComparisonClinic = {
   reviewHref?: string;
 };
 
-type ClinicComparisonPrimary = {
-  section?: readonly SliceSectionFields[] | null;
+type ClinicComparisonPrimary = Partial<SliceSectionFields> & {
   /** `YYYY-MM-DD`. Shown beside "What I paid per month". */
   prices_checked?: string | null;
   button?: LinkField | null;
@@ -227,8 +226,7 @@ export function ClinicComparison({
   primary: ClinicComparisonPrimary;
   clinics?: readonly ComparisonClinic[];
 }) {
-  const fields = primary.section?.[0];
-  const heading = fields?.heading;
+  const heading = primary.heading;
   const slug = sectionAnchor(heading ? asText(heading) : "");
   const titleId = slug ? `${slug}-title` : undefined;
   const checked = formatCheckedDate(primary.prices_checked);
@@ -236,11 +234,7 @@ export function ClinicComparison({
   const max = maxMonthly(rows);
 
   return (
-    <SliceSection
-      section={primary.section}
-      showHeader={false}
-      labelId={titleId}
-    >
+    <SliceSection section={primary} showHeader={false} labelId={titleId}>
       <div className={styles.head}>
         <RichText
           field={heading}
@@ -250,7 +244,7 @@ export function ClinicComparison({
           className={styles.heading}
         />
         <RichText
-          field={fields?.intro}
+          field={primary.intro}
           as="p"
           unstyled
           className={styles.intro}

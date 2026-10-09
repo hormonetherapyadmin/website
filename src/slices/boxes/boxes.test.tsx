@@ -17,18 +17,16 @@ const emptyRich = [] as RichTextField;
 const emptyLink = { link_type: "Any" } as LinkField;
 const jump = (href: string) => ({ link_type: "Web", url: href }) as LinkField;
 
-function section(heading = emptyRich): SliceSectionFields[] {
-  return [
-    {
-      small_heading: emptyRich,
-      heading,
-      intro: emptyRich,
-      link: emptyLink,
-      background: null,
-      space_above: "None",
-      space_below: null,
-    },
-  ];
+function section(heading = emptyRich): SliceSectionFields {
+  return {
+    small_heading: emptyRich,
+    heading,
+    intro: emptyRich,
+    link: emptyLink,
+    background: null,
+    space_above: "None",
+    space_below: null,
+  };
 }
 
 const innerBalance: BoxClinic = {
@@ -99,7 +97,7 @@ describe("Boxes", () => {
     const html = renderToStaticMarkup(
       <Boxes
         primary={{
-          section: section(),
+          ...section(),
           across: "7",
           boxes: [
             box("Improved sleep", { link: jump("#inner-balance") }),
@@ -124,7 +122,7 @@ describe("Boxes", () => {
     const html = renderToStaticMarkup(
       <Boxes
         primary={{
-          section: section(),
+          ...section(),
           across: "7",
           boxes: [box("One"), box("Two"), box("Three")],
         }}
@@ -138,7 +136,7 @@ describe("Boxes", () => {
     const html = renderToStaticMarkup(
       <Boxes
         primary={{
-          section: section(rich("Jump to a clinic")),
+          ...section(rich("Jump to a clinic")),
           across: null,
           boxes: ["A", "B", "C", "D", "E", "F", "G"].map((title) => box(title)),
         }}

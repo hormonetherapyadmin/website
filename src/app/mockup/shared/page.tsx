@@ -18,18 +18,16 @@ const empty = [] as RichTextField;
 
 const section = (
   overrides: Partial<SliceSectionFields>,
-): SliceSectionFields[] => [
-  {
-    small_heading: empty,
-    heading: empty,
-    intro: empty,
-    link: { link_type: "Any" },
-    background: null,
-    space_above: null,
-    space_below: null,
-    ...overrides,
-  },
-];
+): SliceSectionFields => ({
+  small_heading: empty,
+  heading: empty,
+  intro: empty,
+  link: { link_type: "Any" },
+  background: null,
+  space_above: null,
+  space_below: null,
+  ...overrides,
+});
 
 const story = [
   {

@@ -49,18 +49,16 @@ function section(
   small: string,
   heading: string,
   intro = "",
-): SliceSectionFields[] {
-  return [
-    {
-      small_heading: small ? rich(small) : emptyRich,
-      heading: rich(heading),
-      intro: intro ? rich(intro) : emptyRich,
-      link: { link_type: "Any" },
-      background: "Same as the page",
-      space_above: "Medium",
-      space_below: "None",
-    },
-  ];
+): SliceSectionFields {
+  return {
+    small_heading: small ? rich(small) : emptyRich,
+    heading: rich(heading),
+    intro: intro ? rich(intro) : emptyRich,
+    link: { link_type: "Any" },
+    background: "Same as the page",
+    space_above: "Medium",
+    space_below: "None",
+  };
 }
 
 const inner = CLINICS.find((clinic) => clinic.name === "Inner Balance");
@@ -108,7 +106,7 @@ export default function SideBySidePreview() {
       <SideBySide
         variation="image"
         primary={{
-          section: section(
+          ...section(
             "My hormone replacement story",
             "Menopause isn’t a dirty word.",
             "I’ll say that again: menopause isn’t something to be ashamed of, or a subject you should feel embarrassed to talk about.",
@@ -133,7 +131,7 @@ export default function SideBySidePreview() {
       <SideBySide
         variation="image"
         primary={{
-          section: section(
+          ...section(
             "Same slice, other side",
             "The photo can sit on the right.",
             "Media right keeps the writing first on a wide screen. On a phone the photo still comes first.",
@@ -154,7 +152,7 @@ export default function SideBySidePreview() {
         tokens="preview"
         clinics={clinics}
         primary={{
-          section: section(
+          ...section(
             "A pull quote",
             "The media can be a line she wants remembered.",
           ),
@@ -179,7 +177,7 @@ export default function SideBySidePreview() {
       <SideBySide
         variation="clinic"
         primary={{
-          section: section(
+          ...section(
             "A clinic card",
             "Or the media can be the clinic itself.",
             "The logo, the quote, and the visit link come from the clinic. This page does not invent a destination, so the visit link is a stand-in.",

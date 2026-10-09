@@ -25,8 +25,7 @@ type PickContentRelationshipFieldData<
         prismic.CustomTypeModelFetchContentRelationshipLevel1
       > as TSubRelationship["id"]
     ]: ContentRelationshipFieldWithData<TSubRelationship["customtypes"], TLang>;
-  } & {
-    // Group
+  } & { // Group
     [
       TGroup in Extract<
         TRelationship["fields"][number],
@@ -38,8 +37,7 @@ type PickContentRelationshipFieldData<
           PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
         >
       : never;
-  } & {
-    // Other fields
+  } & { // Other fields
     [
       TFieldKey in Extract<TRelationship["fields"][number], string>
     ]: TFieldKey extends keyof TData ? TData[TFieldKey] : never;
@@ -994,93 +992,6 @@ export type AllDocumentTypes =
   | ProviderDocument;
 
 /**
- * Item in *Boxes → Default → Primary → Section*
- */
-export interface BoxesSliceDefaultPrimarySectionItem {
-  /**
-   * Small heading field in *Boxes → Default → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: boxes.default.primary.section[].small_heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  small_heading: prismic.RichTextField;
-
-  /**
-   * Heading field in *Boxes → Default → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: boxes.default.primary.section[].heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  heading: prismic.RichTextField;
-
-  /**
-   * Intro field in *Boxes → Default → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: boxes.default.primary.section[].intro
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Boxes → Default → Primary → Section*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: boxes.default.primary.section[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
-   * Background field in *Boxes → Default → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
-   * - **API ID Path**: boxes.default.primary.section[].background
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
-    "filled"
-  >;
-
-  /**
-   * Space above field in *Boxes → Default → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Medium
-   * - **API ID Path**: boxes.default.primary.section[].space_above
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_above: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-
-  /**
-   * Space below field in *Boxes → Default → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: None
-   * - **API ID Path**: boxes.default.primary.section[].space_below
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_below: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-}
-
-/**
  * Item in *Boxes → Default → Primary → Boxes*
  */
 export interface BoxesSliceDefaultPrimaryBoxesItem {
@@ -1152,14 +1063,86 @@ export interface BoxesSliceDefaultPrimaryBoxesItem {
  */
 export interface BoxesSliceDefaultPrimary {
   /**
-   * Section field in *Boxes → Default → Primary*
+   * Small heading field in *Boxes → Default → Primary*
    *
-   * - **Field Type**: Group
+   * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: boxes.default.primary.section[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   * - **API ID Path**: boxes.default.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  section: prismic.GroupField<Simplify<BoxesSliceDefaultPrimarySectionItem>>;
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Boxes → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: boxes.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Boxes → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: boxes.default.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Boxes → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: boxes.default.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Boxes → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: boxes.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Boxes → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: boxes.default.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Boxes → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: boxes.default.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
 
   /**
    * Boxes across field in *Boxes → Default → Primary*
@@ -1211,93 +1194,6 @@ type BoxesSliceVariation = BoxesSliceDefault;
 export type BoxesSlice = prismic.SharedSlice<"boxes", BoxesSliceVariation>;
 
 /**
- * Item in *Clinic comparison → Default → Primary → Section*
- */
-export interface ClinicComparisonSliceDefaultPrimarySectionItem {
-  /**
-   * Small heading field in *Clinic comparison → Default → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: clinic_comparison.default.primary.section[].small_heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  small_heading: prismic.RichTextField;
-
-  /**
-   * Heading field in *Clinic comparison → Default → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Eight online HRT clinics, side by side
-   * - **API ID Path**: clinic_comparison.default.primary.section[].heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  heading: prismic.RichTextField;
-
-  /**
-   * Intro field in *Clinic comparison → Default → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: clinic_comparison.default.primary.section[].intro
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Clinic comparison → Default → Primary → Section*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: clinic_comparison.default.primary.section[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
-   * Background field in *Clinic comparison → Default → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
-   * - **API ID Path**: clinic_comparison.default.primary.section[].background
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
-    "filled"
-  >;
-
-  /**
-   * Space above field in *Clinic comparison → Default → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Medium
-   * - **API ID Path**: clinic_comparison.default.primary.section[].space_above
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_above: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-
-  /**
-   * Space below field in *Clinic comparison → Default → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: None
-   * - **API ID Path**: clinic_comparison.default.primary.section[].space_below
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_below: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-}
-
-/**
  * Item in *Clinic comparison → Default → Primary → Clinics*
  */
 export interface ClinicComparisonSliceDefaultPrimaryClinicsItem {
@@ -1327,15 +1223,85 @@ export interface ClinicComparisonSliceDefaultPrimaryClinicsItem {
  */
 export interface ClinicComparisonSliceDefaultPrimary {
   /**
-   * Section field in *Clinic comparison → Default → Primary*
+   * Small heading field in *Clinic comparison → Default → Primary*
    *
-   * - **Field Type**: Group
+   * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: clinic_comparison.default.primary.section[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   * - **API ID Path**: clinic_comparison.default.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  section: prismic.GroupField<
-    Simplify<ClinicComparisonSliceDefaultPrimarySectionItem>
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Clinic comparison → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Eight online HRT clinics, side by side
+   * - **API ID Path**: clinic_comparison.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Clinic comparison → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: clinic_comparison.default.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Clinic comparison → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: clinic_comparison.default.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Clinic comparison → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: clinic_comparison.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Clinic comparison → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: clinic_comparison.default.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Clinic comparison → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: clinic_comparison.default.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
   >;
 
   /**
@@ -1517,93 +1483,6 @@ export type DividerSlice = prismic.SharedSlice<
 >;
 
 /**
- * Item in *Hero → Home → Primary → Section*
- */
-export interface HeroSliceHomePrimarySectionItem {
-  /**
-   * Small heading field in *Hero → Home → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.home.primary.section[].small_heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  small_heading: prismic.RichTextField;
-
-  /**
-   * Heading field in *Hero → Home → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Hormone Therapy Replacement
-   * - **API ID Path**: hero.home.primary.section[].heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  heading: prismic.RichTextField;
-
-  /**
-   * Intro field in *Hero → Home → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.home.primary.section[].intro
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Hero → Home → Primary → Section*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.home.primary.section[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
-   * Background field in *Hero → Home → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
-   * - **API ID Path**: hero.home.primary.section[].background
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
-    "filled"
-  >;
-
-  /**
-   * Space above field in *Hero → Home → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Medium
-   * - **API ID Path**: hero.home.primary.section[].space_above
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_above: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-
-  /**
-   * Space below field in *Hero → Home → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: None
-   * - **API ID Path**: hero.home.primary.section[].space_below
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_below: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-}
-
-/**
  * Item in *Hero → Home → Primary → Trust lines*
  */
 export interface HeroSliceHomePrimaryTrustLinesItem {
@@ -1616,180 +1495,6 @@ export interface HeroSliceHomePrimaryTrustLinesItem {
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   text: prismic.KeyTextField;
-}
-
-/**
- * Item in *Hero → Subpage → Primary → Section*
- */
-export interface HeroSliceSubpagePrimarySectionItem {
-  /**
-   * Small heading field in *Hero → Subpage → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Learn
-   * - **API ID Path**: hero.subpage.primary.section[].small_heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  small_heading: prismic.RichTextField;
-
-  /**
-   * Heading field in *Hero → Subpage → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: New to hormone therapy
-   * - **API ID Path**: hero.subpage.primary.section[].heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  heading: prismic.RichTextField;
-
-  /**
-   * Intro field in *Hero → Subpage → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.subpage.primary.section[].intro
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Hero → Subpage → Primary → Section*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: Start here
-   * - **API ID Path**: hero.subpage.primary.section[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
-   * Background field in *Hero → Subpage → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
-   * - **API ID Path**: hero.subpage.primary.section[].background
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
-    "filled"
-  >;
-
-  /**
-   * Space above field in *Hero → Subpage → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Medium
-   * - **API ID Path**: hero.subpage.primary.section[].space_above
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_above: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-
-  /**
-   * Space below field in *Hero → Subpage → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: None
-   * - **API ID Path**: hero.subpage.primary.section[].space_below
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_below: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-}
-
-/**
- * Item in *Hero → Brands → Primary → Section*
- */
-export interface HeroSliceBrandsPrimarySectionItem {
-  /**
-   * Small heading field in *Hero → Brands → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Providers
-   * - **API ID Path**: hero.brands.primary.section[].small_heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  small_heading: prismic.RichTextField;
-
-  /**
-   * Heading field in *Hero → Brands → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Trusted providers
-   * - **API ID Path**: hero.brands.primary.section[].heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  heading: prismic.RichTextField;
-
-  /**
-   * Intro field in *Hero → Brands → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.brands.primary.section[].intro
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Hero → Brands → Primary → Section*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: Full price chart
-   * - **API ID Path**: hero.brands.primary.section[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
-   * Background field in *Hero → Brands → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
-   * - **API ID Path**: hero.brands.primary.section[].background
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
-    "filled"
-  >;
-
-  /**
-   * Space above field in *Hero → Brands → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Medium
-   * - **API ID Path**: hero.brands.primary.section[].space_above
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_above: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-
-  /**
-   * Space below field in *Hero → Brands → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: None
-   * - **API ID Path**: hero.brands.primary.section[].space_below
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_below: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
 }
 
 /**
@@ -1820,56 +1525,56 @@ export interface HeroSliceBrandsPrimaryClinicsItem {
 }
 
 /**
- * Item in *Hero → Provider → Primary → Section*
+ * Primary content in *Hero → Home → Primary*
  */
-export interface HeroSliceProviderPrimarySectionItem {
+export interface HeroSliceHomePrimary {
   /**
-   * Small heading field in *Hero → Provider → Primary → Section*
+   * Small heading field in *Hero → Home → Primary*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: Optional. Otherwise the clinic's top choice label is used.
-   * - **API ID Path**: hero.provider.primary.section[].small_heading
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.home.primary.small_heading
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   small_heading: prismic.RichTextField;
 
   /**
-   * Heading field in *Hero → Provider → Primary → Section*
+   * Heading field in *Hero → Home → Primary*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: Optional. The clinic name is the title.
-   * - **API ID Path**: hero.provider.primary.section[].heading
+   * - **Placeholder**: Hormone Therapy Replacement
+   * - **API ID Path**: hero.home.primary.heading
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   heading: prismic.RichTextField;
 
   /**
-   * Intro field in *Hero → Provider → Primary → Section*
+   * Intro field in *Hero → Home → Primary*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: hero.provider.primary.section[].intro
+   * - **API ID Path**: hero.home.primary.intro
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   intro: prismic.RichTextField;
 
   /**
-   * Link field in *Hero → Provider → Primary → Section*
+   * Link field in *Hero → Home → Primary*
    *
    * - **Field Type**: Link
    * - **Placeholder**: *None*
-   * - **API ID Path**: hero.provider.primary.section[].link
+   * - **API ID Path**: hero.home.primary.link
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
   link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
-   * Background field in *Hero → Provider → Primary → Section*
+   * Background field in *Hero → Home → Primary*
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
    * - **Default Value**: Same as the page
-   * - **API ID Path**: hero.provider.primary.section[].background
+   * - **API ID Path**: hero.home.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
@@ -1878,12 +1583,12 @@ export interface HeroSliceProviderPrimarySectionItem {
   >;
 
   /**
-   * Space above field in *Hero → Provider → Primary → Section*
+   * Space above field in *Hero → Home → Primary*
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
    * - **Default Value**: Medium
-   * - **API ID Path**: hero.provider.primary.section[].space_above
+   * - **API ID Path**: hero.home.primary.space_above
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   space_above: prismic.SelectField<
@@ -1892,33 +1597,18 @@ export interface HeroSliceProviderPrimarySectionItem {
   >;
 
   /**
-   * Space below field in *Hero → Provider → Primary → Section*
+   * Space below field in *Hero → Home → Primary*
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
    * - **Default Value**: None
-   * - **API ID Path**: hero.provider.primary.section[].space_below
+   * - **API ID Path**: hero.home.primary.space_below
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   space_below: prismic.SelectField<
     "None" | "Small" | "Medium" | "Large",
     "filled"
   >;
-}
-
-/**
- * Primary content in *Hero → Home → Primary*
- */
-export interface HeroSliceHomePrimary {
-  /**
-   * Section field in *Hero → Home → Primary*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.home.primary.section[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-   */
-  section: prismic.GroupField<Simplify<HeroSliceHomePrimarySectionItem>>;
 
   /**
    * Tagline field in *Hero → Home → Primary*
@@ -2019,14 +1709,86 @@ export type HeroSliceHome = prismic.SharedSliceVariation<
  */
 export interface HeroSliceSubpagePrimary {
   /**
-   * Section field in *Hero → Subpage → Primary*
+   * Small heading field in *Hero → Subpage → Primary*
    *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.subpage.primary.section[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Learn
+   * - **API ID Path**: hero.subpage.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  section: prismic.GroupField<Simplify<HeroSliceSubpagePrimarySectionItem>>;
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Hero → Subpage → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: New to hormone therapy
+   * - **API ID Path**: hero.subpage.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Hero → Subpage → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.subpage.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Hero → Subpage → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Start here
+   * - **API ID Path**: hero.subpage.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Hero → Subpage → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: hero.subpage.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Hero → Subpage → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: hero.subpage.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Hero → Subpage → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: hero.subpage.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
 
   /**
    * Image field in *Hero → Subpage → Primary*
@@ -2057,14 +1819,86 @@ export type HeroSliceSubpage = prismic.SharedSliceVariation<
  */
 export interface HeroSliceBrandsPrimary {
   /**
-   * Section field in *Hero → Brands → Primary*
+   * Small heading field in *Hero → Brands → Primary*
    *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.brands.primary.section[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Providers
+   * - **API ID Path**: hero.brands.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  section: prismic.GroupField<Simplify<HeroSliceBrandsPrimarySectionItem>>;
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Hero → Brands → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Trusted providers
+   * - **API ID Path**: hero.brands.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Hero → Brands → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.brands.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Hero → Brands → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Full price chart
+   * - **API ID Path**: hero.brands.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Hero → Brands → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: hero.brands.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Hero → Brands → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: hero.brands.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Hero → Brands → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: hero.brands.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
 
   /**
    * Clinics field in *Hero → Brands → Primary*
@@ -2095,14 +1929,86 @@ export type HeroSliceBrands = prismic.SharedSliceVariation<
  */
 export interface HeroSliceProviderPrimary {
   /**
-   * Section field in *Hero → Provider → Primary*
+   * Small heading field in *Hero → Provider → Primary*
    *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.provider.primary.section[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Optional. Otherwise the clinic's top choice label is used.
+   * - **API ID Path**: hero.provider.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  section: prismic.GroupField<Simplify<HeroSliceProviderPrimarySectionItem>>;
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Hero → Provider → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Optional. The clinic name is the title.
+   * - **API ID Path**: hero.provider.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Hero → Provider → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.provider.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Hero → Provider → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.provider.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Hero → Provider → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: hero.provider.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Hero → Provider → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: hero.provider.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Hero → Provider → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: hero.provider.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
 
   /**
    * Clinic field in *Hero → Provider → Primary*
@@ -2203,366 +2109,90 @@ type HeroSliceVariation =
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
 /**
- * Item in *Posts → Homepage → Primary → Section*
- */
-export interface PostsSliceHomePrimarySectionItem {
-  /**
-   * Small heading field in *Posts → Homepage → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: posts.home.primary.section[].small_heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  small_heading: prismic.RichTextField;
-
-  /**
-   * Heading field in *Posts → Homepage → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Latest reviews and posts
-   * - **API ID Path**: posts.home.primary.section[].heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  heading: prismic.RichTextField;
-
-  /**
-   * Intro field in *Posts → Homepage → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: posts.home.primary.section[].intro
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Posts → Homepage → Primary → Section*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: posts.home.primary.section[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
-   * Background field in *Posts → Homepage → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
-   * - **API ID Path**: posts.home.primary.section[].background
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
-    "filled"
-  >;
-
-  /**
-   * Space above field in *Posts → Homepage → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Medium
-   * - **API ID Path**: posts.home.primary.section[].space_above
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_above: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-
-  /**
-   * Space below field in *Posts → Homepage → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: None
-   * - **API ID Path**: posts.home.primary.section[].space_below
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_below: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-}
-
-/**
- * Item in *Posts → Featured → Primary → Section*
- */
-export interface PostsSliceFeaturedPrimarySectionItem {
-  /**
-   * Small heading field in *Posts → Featured → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: posts.featured.primary.section[].small_heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  small_heading: prismic.RichTextField;
-
-  /**
-   * Heading field in *Posts → Featured → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Latest reviews and posts
-   * - **API ID Path**: posts.featured.primary.section[].heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  heading: prismic.RichTextField;
-
-  /**
-   * Intro field in *Posts → Featured → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: posts.featured.primary.section[].intro
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Posts → Featured → Primary → Section*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: posts.featured.primary.section[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
-   * Background field in *Posts → Featured → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
-   * - **API ID Path**: posts.featured.primary.section[].background
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
-    "filled"
-  >;
-
-  /**
-   * Space above field in *Posts → Featured → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Medium
-   * - **API ID Path**: posts.featured.primary.section[].space_above
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_above: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-
-  /**
-   * Space below field in *Posts → Featured → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: None
-   * - **API ID Path**: posts.featured.primary.section[].space_below
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_below: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-}
-
-/**
- * Item in *Posts → Grid → Primary → Section*
- */
-export interface PostsSliceGridPrimarySectionItem {
-  /**
-   * Small heading field in *Posts → Grid → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: posts.grid.primary.section[].small_heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  small_heading: prismic.RichTextField;
-
-  /**
-   * Heading field in *Posts → Grid → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Latest reviews and posts
-   * - **API ID Path**: posts.grid.primary.section[].heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  heading: prismic.RichTextField;
-
-  /**
-   * Intro field in *Posts → Grid → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: posts.grid.primary.section[].intro
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Posts → Grid → Primary → Section*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: posts.grid.primary.section[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
-   * Background field in *Posts → Grid → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
-   * - **API ID Path**: posts.grid.primary.section[].background
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
-    "filled"
-  >;
-
-  /**
-   * Space above field in *Posts → Grid → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Medium
-   * - **API ID Path**: posts.grid.primary.section[].space_above
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_above: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-
-  /**
-   * Space below field in *Posts → Grid → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: None
-   * - **API ID Path**: posts.grid.primary.section[].space_below
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_below: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-}
-
-/**
- * Item in *Posts → Row → Primary → Section*
- */
-export interface PostsSliceRowPrimarySectionItem {
-  /**
-   * Small heading field in *Posts → Row → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: posts.row.primary.section[].small_heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  small_heading: prismic.RichTextField;
-
-  /**
-   * Heading field in *Posts → Row → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Latest reviews and posts
-   * - **API ID Path**: posts.row.primary.section[].heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  heading: prismic.RichTextField;
-
-  /**
-   * Intro field in *Posts → Row → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: posts.row.primary.section[].intro
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Posts → Row → Primary → Section*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: posts.row.primary.section[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
-   * Background field in *Posts → Row → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
-   * - **API ID Path**: posts.row.primary.section[].background
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
-    "filled"
-  >;
-
-  /**
-   * Space above field in *Posts → Row → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Medium
-   * - **API ID Path**: posts.row.primary.section[].space_above
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_above: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-
-  /**
-   * Space below field in *Posts → Row → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: None
-   * - **API ID Path**: posts.row.primary.section[].space_below
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_below: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-}
-
-/**
  * Primary content in *Posts → Homepage → Primary*
  */
 export interface PostsSliceHomePrimary {
   /**
-   * Section field in *Posts → Homepage → Primary*
+   * Small heading field in *Posts → Homepage → Primary*
    *
-   * - **Field Type**: Group
+   * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: posts.home.primary.section[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   * - **API ID Path**: posts.home.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  section: prismic.GroupField<Simplify<PostsSliceHomePrimarySectionItem>>;
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Posts → Homepage → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Latest reviews and posts
+   * - **API ID Path**: posts.home.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Posts → Homepage → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: posts.home.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Posts → Homepage → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: posts.home.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Posts → Homepage → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: posts.home.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Posts → Homepage → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: posts.home.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Posts → Homepage → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: posts.home.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
 
   /**
    * Category field in *Posts → Homepage → Primary*
@@ -2597,14 +2227,86 @@ export type PostsSliceHome = prismic.SharedSliceVariation<
  */
 export interface PostsSliceFeaturedPrimary {
   /**
-   * Section field in *Posts → Featured → Primary*
+   * Small heading field in *Posts → Featured → Primary*
    *
-   * - **Field Type**: Group
+   * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: posts.featured.primary.section[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   * - **API ID Path**: posts.featured.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  section: prismic.GroupField<Simplify<PostsSliceFeaturedPrimarySectionItem>>;
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Posts → Featured → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Latest reviews and posts
+   * - **API ID Path**: posts.featured.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Posts → Featured → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: posts.featured.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Posts → Featured → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: posts.featured.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Posts → Featured → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: posts.featured.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Posts → Featured → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: posts.featured.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Posts → Featured → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: posts.featured.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
 
   /**
    * Category field in *Posts → Featured → Primary*
@@ -2652,14 +2354,86 @@ export type PostsSliceFeatured = prismic.SharedSliceVariation<
  */
 export interface PostsSliceGridPrimary {
   /**
-   * Section field in *Posts → Grid → Primary*
+   * Small heading field in *Posts → Grid → Primary*
    *
-   * - **Field Type**: Group
+   * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: posts.grid.primary.section[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   * - **API ID Path**: posts.grid.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  section: prismic.GroupField<Simplify<PostsSliceGridPrimarySectionItem>>;
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Posts → Grid → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Latest reviews and posts
+   * - **API ID Path**: posts.grid.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Posts → Grid → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: posts.grid.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Posts → Grid → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: posts.grid.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Posts → Grid → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: posts.grid.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Posts → Grid → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: posts.grid.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Posts → Grid → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: posts.grid.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
 
   /**
    * Category field in *Posts → Grid → Primary*
@@ -2704,14 +2478,86 @@ export type PostsSliceGrid = prismic.SharedSliceVariation<
  */
 export interface PostsSliceRowPrimary {
   /**
-   * Section field in *Posts → Row → Primary*
+   * Small heading field in *Posts → Row → Primary*
    *
-   * - **Field Type**: Group
+   * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: posts.row.primary.section[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   * - **API ID Path**: posts.row.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  section: prismic.GroupField<Simplify<PostsSliceRowPrimarySectionItem>>;
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Posts → Row → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Latest reviews and posts
+   * - **API ID Path**: posts.row.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Posts → Row → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: posts.row.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Posts → Row → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: posts.row.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Posts → Row → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: posts.row.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Posts → Row → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: posts.row.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Posts → Row → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: posts.row.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
 
   /**
    * Category field in *Posts → Row → Primary*
@@ -2757,56 +2603,56 @@ type PostsSliceVariation =
 export type PostsSlice = prismic.SharedSlice<"posts", PostsSliceVariation>;
 
 /**
- * Item in *Quote → Default → Primary → Section*
+ * Primary content in *Quote → Default → Primary*
  */
-export interface QuoteSliceDefaultPrimarySectionItem {
+export interface QuoteSliceDefaultPrimary {
   /**
-   * Small heading field in *Quote → Default → Primary → Section*
+   * Small heading field in *Quote → Default → Primary*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: quote.default.primary.section[].small_heading
+   * - **API ID Path**: quote.default.primary.small_heading
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   small_heading: prismic.RichTextField;
 
   /**
-   * Heading field in *Quote → Default → Primary → Section*
+   * Heading field in *Quote → Default → Primary*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: Peggy's take: what I'm using now
-   * - **API ID Path**: quote.default.primary.section[].heading
+   * - **API ID Path**: quote.default.primary.heading
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   heading: prismic.RichTextField;
 
   /**
-   * Intro field in *Quote → Default → Primary → Section*
+   * Intro field in *Quote → Default → Primary*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: quote.default.primary.section[].intro
+   * - **API ID Path**: quote.default.primary.intro
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   intro: prismic.RichTextField;
 
   /**
-   * Link field in *Quote → Default → Primary → Section*
+   * Link field in *Quote → Default → Primary*
    *
    * - **Field Type**: Link
    * - **Placeholder**: *None*
-   * - **API ID Path**: quote.default.primary.section[].link
+   * - **API ID Path**: quote.default.primary.link
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
   link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
-   * Background field in *Quote → Default → Primary → Section*
+   * Background field in *Quote → Default → Primary*
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
    * - **Default Value**: Same as the page
-   * - **API ID Path**: quote.default.primary.section[].background
+   * - **API ID Path**: quote.default.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
@@ -2815,12 +2661,12 @@ export interface QuoteSliceDefaultPrimarySectionItem {
   >;
 
   /**
-   * Space above field in *Quote → Default → Primary → Section*
+   * Space above field in *Quote → Default → Primary*
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
    * - **Default Value**: Medium
-   * - **API ID Path**: quote.default.primary.section[].space_above
+   * - **API ID Path**: quote.default.primary.space_above
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   space_above: prismic.SelectField<
@@ -2829,33 +2675,18 @@ export interface QuoteSliceDefaultPrimarySectionItem {
   >;
 
   /**
-   * Space below field in *Quote → Default → Primary → Section*
+   * Space below field in *Quote → Default → Primary*
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
    * - **Default Value**: None
-   * - **API ID Path**: quote.default.primary.section[].space_below
+   * - **API ID Path**: quote.default.primary.space_below
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   space_below: prismic.SelectField<
     "None" | "Small" | "Medium" | "Large",
     "filled"
   >;
-}
-
-/**
- * Primary content in *Quote → Default → Primary*
- */
-export interface QuoteSliceDefaultPrimary {
-  /**
-   * Section field in *Quote → Default → Primary*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: quote.default.primary.section[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-   */
-  section: prismic.GroupField<Simplify<QuoteSliceDefaultPrimarySectionItem>>;
 
   /**
    * Quote field in *Quote → Default → Primary*
@@ -2952,366 +2783,90 @@ type QuoteSliceVariation = QuoteSliceDefault;
 export type QuoteSlice = prismic.SharedSlice<"quote", QuoteSliceVariation>;
 
 /**
- * Item in *Side by side → Image → Primary → Section*
- */
-export interface SideBySideSliceImagePrimarySectionItem {
-  /**
-   * Small heading field in *Side by side → Image → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.image.primary.section[].small_heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  small_heading: prismic.RichTextField;
-
-  /**
-   * Heading field in *Side by side → Image → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Menopause isn't a dirty word.
-   * - **API ID Path**: side_by_side.image.primary.section[].heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  heading: prismic.RichTextField;
-
-  /**
-   * Intro field in *Side by side → Image → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.image.primary.section[].intro
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Side by side → Image → Primary → Section*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.image.primary.section[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
-   * Background field in *Side by side → Image → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
-   * - **API ID Path**: side_by_side.image.primary.section[].background
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
-    "filled"
-  >;
-
-  /**
-   * Space above field in *Side by side → Image → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Medium
-   * - **API ID Path**: side_by_side.image.primary.section[].space_above
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_above: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-
-  /**
-   * Space below field in *Side by side → Image → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: None
-   * - **API ID Path**: side_by_side.image.primary.section[].space_below
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_below: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-}
-
-/**
- * Item in *Side by side → Video → Primary → Section*
- */
-export interface SideBySideSliceVideoPrimarySectionItem {
-  /**
-   * Small heading field in *Side by side → Video → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.video.primary.section[].small_heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  small_heading: prismic.RichTextField;
-
-  /**
-   * Heading field in *Side by side → Video → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.video.primary.section[].heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  heading: prismic.RichTextField;
-
-  /**
-   * Intro field in *Side by side → Video → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.video.primary.section[].intro
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Side by side → Video → Primary → Section*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.video.primary.section[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
-   * Background field in *Side by side → Video → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
-   * - **API ID Path**: side_by_side.video.primary.section[].background
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
-    "filled"
-  >;
-
-  /**
-   * Space above field in *Side by side → Video → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Medium
-   * - **API ID Path**: side_by_side.video.primary.section[].space_above
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_above: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-
-  /**
-   * Space below field in *Side by side → Video → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: None
-   * - **API ID Path**: side_by_side.video.primary.section[].space_below
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_below: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-}
-
-/**
- * Item in *Side by side → Quote → Primary → Section*
- */
-export interface SideBySideSliceQuotePrimarySectionItem {
-  /**
-   * Small heading field in *Side by side → Quote → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.quote.primary.section[].small_heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  small_heading: prismic.RichTextField;
-
-  /**
-   * Heading field in *Side by side → Quote → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.quote.primary.section[].heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  heading: prismic.RichTextField;
-
-  /**
-   * Intro field in *Side by side → Quote → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.quote.primary.section[].intro
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Side by side → Quote → Primary → Section*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.quote.primary.section[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
-   * Background field in *Side by side → Quote → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
-   * - **API ID Path**: side_by_side.quote.primary.section[].background
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
-    "filled"
-  >;
-
-  /**
-   * Space above field in *Side by side → Quote → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Medium
-   * - **API ID Path**: side_by_side.quote.primary.section[].space_above
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_above: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-
-  /**
-   * Space below field in *Side by side → Quote → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: None
-   * - **API ID Path**: side_by_side.quote.primary.section[].space_below
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_below: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-}
-
-/**
- * Item in *Side by side → Clinic → Primary → Section*
- */
-export interface SideBySideSliceClinicPrimarySectionItem {
-  /**
-   * Small heading field in *Side by side → Clinic → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.clinic.primary.section[].small_heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  small_heading: prismic.RichTextField;
-
-  /**
-   * Heading field in *Side by side → Clinic → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.clinic.primary.section[].heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  heading: prismic.RichTextField;
-
-  /**
-   * Intro field in *Side by side → Clinic → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.clinic.primary.section[].intro
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Side by side → Clinic → Primary → Section*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.clinic.primary.section[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
-   * Background field in *Side by side → Clinic → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
-   * - **API ID Path**: side_by_side.clinic.primary.section[].background
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
-    "filled"
-  >;
-
-  /**
-   * Space above field in *Side by side → Clinic → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Medium
-   * - **API ID Path**: side_by_side.clinic.primary.section[].space_above
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_above: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-
-  /**
-   * Space below field in *Side by side → Clinic → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: None
-   * - **API ID Path**: side_by_side.clinic.primary.section[].space_below
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_below: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-}
-
-/**
  * Primary content in *Side by side → Image → Primary*
  */
 export interface SideBySideSliceImagePrimary {
   /**
-   * Section field in *Side by side → Image → Primary*
+   * Small heading field in *Side by side → Image → Primary*
    *
-   * - **Field Type**: Group
+   * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.image.primary.section[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   * - **API ID Path**: side_by_side.image.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  section: prismic.GroupField<Simplify<SideBySideSliceImagePrimarySectionItem>>;
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Side by side → Image → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Menopause isn't a dirty word.
+   * - **API ID Path**: side_by_side.image.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Side by side → Image → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: side_by_side.image.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Side by side → Image → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: side_by_side.image.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Side by side → Image → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: side_by_side.image.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Side by side → Image → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: side_by_side.image.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Side by side → Image → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: side_by_side.image.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
 
   /**
    * Side field in *Side by side → Image → Primary*
@@ -3391,14 +2946,86 @@ export type SideBySideSliceImage = prismic.SharedSliceVariation<
  */
 export interface SideBySideSliceVideoPrimary {
   /**
-   * Section field in *Side by side → Video → Primary*
+   * Small heading field in *Side by side → Video → Primary*
    *
-   * - **Field Type**: Group
+   * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.video.primary.section[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   * - **API ID Path**: side_by_side.video.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  section: prismic.GroupField<Simplify<SideBySideSliceVideoPrimarySectionItem>>;
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Side by side → Video → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: side_by_side.video.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Side by side → Video → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: side_by_side.video.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Side by side → Video → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: side_by_side.video.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Side by side → Video → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: side_by_side.video.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Side by side → Video → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: side_by_side.video.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Side by side → Video → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: side_by_side.video.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
 
   /**
    * Side field in *Side by side → Video → Primary*
@@ -3478,14 +3105,86 @@ export type SideBySideSliceVideo = prismic.SharedSliceVariation<
  */
 export interface SideBySideSliceQuotePrimary {
   /**
-   * Section field in *Side by side → Quote → Primary*
+   * Small heading field in *Side by side → Quote → Primary*
    *
-   * - **Field Type**: Group
+   * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.quote.primary.section[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   * - **API ID Path**: side_by_side.quote.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  section: prismic.GroupField<Simplify<SideBySideSliceQuotePrimarySectionItem>>;
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Side by side → Quote → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: side_by_side.quote.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Side by side → Quote → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: side_by_side.quote.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Side by side → Quote → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: side_by_side.quote.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Side by side → Quote → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: side_by_side.quote.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Side by side → Quote → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: side_by_side.quote.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Side by side → Quote → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: side_by_side.quote.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
 
   /**
    * Side field in *Side by side → Quote → Primary*
@@ -3565,15 +3264,85 @@ export type SideBySideSliceQuote = prismic.SharedSliceVariation<
  */
 export interface SideBySideSliceClinicPrimary {
   /**
-   * Section field in *Side by side → Clinic → Primary*
+   * Small heading field in *Side by side → Clinic → Primary*
    *
-   * - **Field Type**: Group
+   * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.clinic.primary.section[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   * - **API ID Path**: side_by_side.clinic.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  section: prismic.GroupField<
-    Simplify<SideBySideSliceClinicPrimarySectionItem>
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Side by side → Clinic → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: side_by_side.clinic.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Side by side → Clinic → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: side_by_side.clinic.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Side by side → Clinic → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: side_by_side.clinic.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Side by side → Clinic → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: side_by_side.clinic.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Side by side → Clinic → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: side_by_side.clinic.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Side by side → Clinic → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: side_by_side.clinic.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
   >;
 
   /**
@@ -3661,93 +3430,6 @@ export type SideBySideSlice = prismic.SharedSlice<
 >;
 
 /**
- * Item in *Start here → Default → Primary → Section*
- */
-export interface StartHereSliceDefaultPrimarySectionItem {
-  /**
-   * Small heading field in *Start here → Default → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: start_here.default.primary.section[].small_heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  small_heading: prismic.RichTextField;
-
-  /**
-   * Heading field in *Start here → Default → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Where should I start?
-   * - **API ID Path**: start_here.default.primary.section[].heading
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  heading: prismic.RichTextField;
-
-  /**
-   * Intro field in *Start here → Default → Primary → Section*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: start_here.default.primary.section[].intro
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Start here → Default → Primary → Section*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: start_here.default.primary.section[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
-   * Background field in *Start here → Default → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
-   * - **API ID Path**: start_here.default.primary.section[].background
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
-    "filled"
-  >;
-
-  /**
-   * Space above field in *Start here → Default → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: Medium
-   * - **API ID Path**: start_here.default.primary.section[].space_above
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_above: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-
-  /**
-   * Space below field in *Start here → Default → Primary → Section*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: *None*
-   * - **Default Value**: None
-   * - **API ID Path**: start_here.default.primary.section[].space_below
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  space_below: prismic.SelectField<
-    "None" | "Small" | "Medium" | "Large",
-    "filled"
-  >;
-}
-
-/**
  * Item in *Start here → Default → Primary → Cards*
  */
 export interface StartHereSliceDefaultPrimaryCardsItem {
@@ -3807,15 +3489,85 @@ export interface StartHereSliceDefaultPrimaryCardsItem {
  */
 export interface StartHereSliceDefaultPrimary {
   /**
-   * Section field in *Start here → Default → Primary*
+   * Small heading field in *Start here → Default → Primary*
    *
-   * - **Field Type**: Group
+   * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: start_here.default.primary.section[]
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   * - **API ID Path**: start_here.default.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  section: prismic.GroupField<
-    Simplify<StartHereSliceDefaultPrimarySectionItem>
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Start here → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Where should I start?
+   * - **API ID Path**: start_here.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Start here → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: start_here.default.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Start here → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: start_here.default.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Start here → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: start_here.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Start here → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: start_here.default.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Start here → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: start_here.default.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
   >;
 
   /**
@@ -3902,13 +3654,11 @@ declare module "@prismicio/client" {
       ProviderDocumentData,
       AllDocumentTypes,
       BoxesSlice,
-      BoxesSliceDefaultPrimarySectionItem,
       BoxesSliceDefaultPrimaryBoxesItem,
       BoxesSliceDefaultPrimary,
       BoxesSliceVariation,
       BoxesSliceDefault,
       ClinicComparisonSlice,
-      ClinicComparisonSliceDefaultPrimarySectionItem,
       ClinicComparisonSliceDefaultPrimaryClinicsItem,
       ClinicComparisonSliceDefaultPrimary,
       ClinicComparisonSliceVariation,
@@ -3918,15 +3668,11 @@ declare module "@prismicio/client" {
       DividerSliceVariation,
       DividerSliceDefault,
       HeroSlice,
-      HeroSliceHomePrimarySectionItem,
       HeroSliceHomePrimaryTrustLinesItem,
       HeroSliceHomePrimary,
-      HeroSliceSubpagePrimarySectionItem,
       HeroSliceSubpagePrimary,
-      HeroSliceBrandsPrimarySectionItem,
       HeroSliceBrandsPrimaryClinicsItem,
       HeroSliceBrandsPrimary,
-      HeroSliceProviderPrimarySectionItem,
       HeroSliceProviderPrimary,
       HeroSliceVariation,
       HeroSliceHome,
@@ -3934,13 +3680,9 @@ declare module "@prismicio/client" {
       HeroSliceBrands,
       HeroSliceProvider,
       PostsSlice,
-      PostsSliceHomePrimarySectionItem,
       PostsSliceHomePrimary,
-      PostsSliceFeaturedPrimarySectionItem,
       PostsSliceFeaturedPrimary,
-      PostsSliceGridPrimarySectionItem,
       PostsSliceGridPrimary,
-      PostsSliceRowPrimarySectionItem,
       PostsSliceRowPrimary,
       PostsSliceVariation,
       PostsSliceHome,
@@ -3948,18 +3690,13 @@ declare module "@prismicio/client" {
       PostsSliceGrid,
       PostsSliceRow,
       QuoteSlice,
-      QuoteSliceDefaultPrimarySectionItem,
       QuoteSliceDefaultPrimary,
       QuoteSliceVariation,
       QuoteSliceDefault,
       SideBySideSlice,
-      SideBySideSliceImagePrimarySectionItem,
       SideBySideSliceImagePrimary,
-      SideBySideSliceVideoPrimarySectionItem,
       SideBySideSliceVideoPrimary,
-      SideBySideSliceQuotePrimarySectionItem,
       SideBySideSliceQuotePrimary,
-      SideBySideSliceClinicPrimarySectionItem,
       SideBySideSliceClinicPrimary,
       SideBySideSliceVariation,
       SideBySideSliceImage,
@@ -3967,7 +3704,6 @@ declare module "@prismicio/client" {
       SideBySideSliceQuote,
       SideBySideSliceClinic,
       StartHereSlice,
-      StartHereSliceDefaultPrimarySectionItem,
       StartHereSliceDefaultPrimaryCardsItem,
       StartHereSliceDefaultPrimary,
       StartHereSliceVariation,

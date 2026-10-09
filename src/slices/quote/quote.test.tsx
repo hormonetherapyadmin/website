@@ -15,18 +15,16 @@ const rich = (value: string) =>
 
 const emptyRich = [] as RichTextField;
 
-function section(): SliceSectionFields[] {
-  return [
-    {
-      small_heading: emptyRich,
-      heading: rich("Peggy's take: what I'm using now"),
-      intro: emptyRich,
-      link: { link_type: "Any" },
-      background: "Dark",
-      space_above: "None",
-      space_below: "None",
-    },
-  ];
+function section(): SliceSectionFields {
+  return {
+    small_heading: emptyRich,
+    heading: rich("Peggy's take: what I'm using now"),
+    intro: emptyRich,
+    link: { link_type: "Any" },
+    background: "Dark",
+    space_above: "None",
+    space_below: "None",
+  };
 }
 
 const clinic: QuoteClinic = {
@@ -52,7 +50,7 @@ describe("Quote", () => {
     return renderToStaticMarkup(
       <Quote
         primary={{
-          section: section(),
+          ...section(),
           quote: rich("I go to sleep faster and stay asleep longer."),
           name,
           text: rich("It’s $199 a month for the first six months."),

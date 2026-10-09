@@ -45,9 +45,9 @@ describe("sectionAnchor", () => {
 });
 
 describe("SliceSection", () => {
-  it("uses medium space above and no header when the group is empty", () => {
+  it("uses medium space above and no header when the fields are empty", () => {
     const html = renderToStaticMarkup(
-      <SliceSection section={[]}>
+      <SliceSection section={{}}>
         <p>Body</p>
       </SliceSection>,
     );
@@ -61,21 +61,19 @@ describe("SliceSection", () => {
   it("renders the shared header and a dark band", () => {
     const html = renderToStaticMarkup(
       <SliceSection
-        section={[
-          fields({
-            small_heading: text("My hormone replacement story"),
-            heading: text("Menopause isn’t a dirty word."),
-            intro: text("I’ll say that again."),
-            link: {
-              link_type: "Web",
-              url: "/blog",
-              text: "All posts",
-            },
-            background: "Dark",
-            space_above: "Large",
-            space_below: "Small",
-          }),
-        ]}
+        section={fields({
+          small_heading: text("My hormone replacement story"),
+          heading: text("Menopause isn’t a dirty word."),
+          intro: text("I’ll say that again."),
+          link: {
+            link_type: "Web",
+            url: "/blog",
+            text: "All posts",
+          },
+          background: "Dark",
+          space_above: "Large",
+          space_below: "Small",
+        })}
       />,
     );
 
@@ -95,7 +93,7 @@ describe("SliceSection", () => {
       <SliceSection
         headingLevel="h1"
         showHeader={false}
-        section={[fields({ heading: text("Hormone Therapy Replacement") })]}
+        section={fields({ heading: text("Hormone Therapy Replacement") })}
       >
         <h1>Hormone Therapy Replacement</h1>
       </SliceSection>,

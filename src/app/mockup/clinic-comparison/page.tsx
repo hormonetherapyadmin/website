@@ -17,20 +17,18 @@ const rich = (value: string) =>
 
 const emptyRich = [] as RichTextField;
 
-function section(): SliceSectionFields[] {
-  return [
-    {
-      small_heading: emptyRich,
-      heading: rich("Eight online HRT clinics, side by side"),
-      intro: rich(
-        "I paid out of pocket with my HSA card, or through my prescription insurance when I could. These are my real costs, not list prices. Yours may differ.",
-      ),
-      link: { link_type: "Any" },
-      background: "Soft",
-      space_above: "None",
-      space_below: "None",
-    },
-  ];
+function section(): SliceSectionFields {
+  return {
+    small_heading: emptyRich,
+    heading: rich("Eight online HRT clinics, side by side"),
+    intro: rich(
+      "I paid out of pocket with my HSA card, or through my prescription insurance when I could. These are my real costs, not list prices. Yours may differ.",
+    ),
+    link: { link_type: "Any" },
+    background: "Soft",
+    space_above: "None",
+    space_below: "None",
+  };
 }
 
 const ROWS: ComparisonClinic[] = CLINICS.map((clinic) => ({
@@ -55,7 +53,7 @@ export default function ClinicComparisonPreview() {
   return (
     <ClinicComparison
       primary={{
-        section: section(),
+        ...section(),
         prices_checked: "2026-09-09",
         button: {
           link_type: "Web",

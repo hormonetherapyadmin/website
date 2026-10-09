@@ -13,19 +13,17 @@ const emptyImage = {} as ImageField;
 
 function section(
   overrides: Partial<SliceSectionFields> = {},
-): SliceSectionFields[] {
-  return [
-    {
-      small_heading: emptyRich,
-      heading: emptyRich,
-      intro: emptyRich,
-      link: emptyLink,
-      background: null,
-      space_above: "None",
-      space_below: null,
-      ...overrides,
-    },
-  ];
+): SliceSectionFields {
+  return {
+    small_heading: emptyRich,
+    heading: emptyRich,
+    intro: emptyRich,
+    link: emptyLink,
+    background: null,
+    space_above: "None",
+    space_below: null,
+    ...overrides,
+  };
 }
 
 function image(url: string, alt: string): ImageField {
@@ -45,7 +43,7 @@ describe("Hero", () => {
       <Hero
         variation="home"
         primary={{
-          section: section({
+          ...section({
             heading: rich("Hormone Therapy Replacement"),
             intro: rich("My goal is to share honest platform reviews."),
           }),
@@ -92,7 +90,7 @@ describe("Hero", () => {
       <Hero
         variation="subpage"
         primary={{
-          section: section({
+          ...section({
             small_heading: rich("Learn"),
             heading: rich("New to hormone therapy"),
             link: {
@@ -109,7 +107,7 @@ describe("Hero", () => {
       <Hero
         variation="subpage"
         primary={{
-          section: section({ heading: rich("Blog") }),
+          ...section({ heading: rich("Blog") }),
           image: emptyImage,
         }}
       />,
@@ -127,7 +125,7 @@ describe("Hero", () => {
       <Hero
         variation="brands"
         primary={{
-          section: section({
+          ...section({
             small_heading: rich("Providers"),
             heading: rich("Trusted providers"),
             link: {
@@ -178,7 +176,7 @@ describe("Hero", () => {
       <Hero
         variation="provider"
         primary={{
-          section: section(),
+          ...section(),
           clinic: { data: clinic },
           voted: rich("Voted best for sleep"),
           quote: rich("I stay asleep longer on this HRT."),

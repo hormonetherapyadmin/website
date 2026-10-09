@@ -24,8 +24,7 @@ export type QuoteClinic = {
   newTab?: boolean;
 };
 
-type QuotePrimary = {
-  section?: readonly SliceSectionFields[] | null;
+type QuotePrimary = Partial<SliceSectionFields> & {
   quote?: RichTextField | null;
   /** Line beside the logo. Empty uses the clinic name. */
   name?: string | null;
@@ -76,19 +75,14 @@ export function Quote({
   primary: QuotePrimary;
   clinic?: QuoteClinic | null;
 }) {
-  const fields = primary.section?.[0];
-  const heading = fields?.heading;
+  const heading = primary.heading;
   const slug = sectionAnchor(heading ? asText(heading) : "");
   const titleId = slug ? `${slug}-title` : undefined;
   const name = quoteName(primary.name, clinic);
   const visitText = clinic?.visitText?.trim() || (name ? `Visit ${name}` : "");
 
   return (
-    <SliceSection
-      section={primary.section}
-      showHeader={false}
-      labelId={titleId}
-    >
+    <SliceSection section={primary} showHeader={false} labelId={titleId}>
       <div className={styles.layout}>
         <RichText
           field={heading}

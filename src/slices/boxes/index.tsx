@@ -34,8 +34,7 @@ type BoxItem = {
   link?: LinkField | null;
 };
 
-type BoxesPrimary = {
-  section?: readonly SliceSectionFields[] | null;
+type BoxesPrimary = Partial<SliceSectionFields> & {
   across?: string | null;
   boxes?: readonly BoxItem[] | null;
 };
@@ -150,12 +149,11 @@ export function Boxes({
     const resolved = resolveBox(box, clinics[index]);
     return resolved ? [resolved] : [];
   });
-  const fields = primary.section?.[0];
-  const titled = Boolean(fields && asText(fields.heading).trim());
+  const titled = Boolean(primary.heading && asText(primary.heading).trim());
   const columns = Math.min(boxesAcross(primary.across), boxes.length);
 
   return (
-    <SliceSection section={primary.section}>
+    <SliceSection section={primary}>
       {boxes.length > 0 ? (
         <ul className={styles.grid} data-cols={columns}>
           {boxes.map((box, index) => (

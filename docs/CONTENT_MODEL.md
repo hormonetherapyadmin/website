@@ -307,8 +307,8 @@ no separate Symptom type.
 
 Keep this intentionally small.
 
-The homepage slices, the shared Section group, and the shared rich text
-component are specified in `docs/SLICE_MODEL.md`. Copy that Section group
+The homepage slices, the shared Section fields, and the shared rich text
+component are specified in `docs/SLICE_MODEL.md`. Copy those Section fields
 and those rich text presets onto later slices.
 
 The post and the blog index do not use slices. A post pulls a

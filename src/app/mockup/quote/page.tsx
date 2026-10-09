@@ -13,25 +13,23 @@ const rich = (value: string) =>
 
 const emptyRich = [] as RichTextField;
 
-function section(): SliceSectionFields[] {
-  return [
-    {
-      small_heading: emptyRich,
-      heading: rich("Peggy’s take: what I’m using now"),
-      intro: emptyRich,
-      link: { link_type: "Any" },
-      background: "Dark",
-      space_above: "None",
-      space_below: "None",
-    },
-  ];
+function section(): SliceSectionFields {
+  return {
+    small_heading: emptyRich,
+    heading: rich("Peggy’s take: what I’m using now"),
+    intro: emptyRich,
+    link: { link_type: "Any" },
+    background: "Dark",
+    space_above: "None",
+    space_below: "None",
+  };
 }
 
 export default function QuotePreview() {
   return (
     <Quote
       primary={{
-        section: section(),
+        ...section(),
         quote: rich(
           "No night sweats, hot flashes or brain fog, and the one big difference I notice with Oestra is my sleep. I go to sleep faster and stay asleep longer on this HRT, more so than any of the others.",
         ),

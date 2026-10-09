@@ -53,8 +53,7 @@ export type SideClinic = {
   newTab?: boolean;
 };
 
-type SideBySidePrimary = {
-  section?: readonly SliceSectionFields[] | null;
+type SideBySidePrimary = Partial<SliceSectionFields> & {
   side?: SelectField<Side> | string | null;
   text?: RichTextField | null;
   button?: readonly LinkField[] | null;
@@ -253,8 +252,7 @@ export function SideBySide({
 }) {
   const layout = choice(variation, SIDE_BY_SIDE_VARIATIONS, "image");
   const side = choice(primary.side, SIDES, "Media left");
-  const fields = primary.section?.[0];
-  const heading = fields?.heading;
+  const heading = primary.heading;
   const slug = sectionAnchor(heading ? asText(heading) : "");
   const titleId = slug ? `${slug}-title` : undefined;
   const showImage =
@@ -265,14 +263,10 @@ export function SideBySide({
   const showClinic = layout === "clinic" && Boolean(clinic?.name);
 
   return (
-    <SliceSection
-      section={primary.section}
-      showHeader={false}
-      labelId={titleId}
-    >
+    <SliceSection section={primary} showHeader={false} labelId={titleId}>
       <header className={styles.head}>
         <RichText
-          field={fields?.small_heading}
+          field={primary.small_heading}
           as="p"
           unstyled
           className={styles.kicker}
@@ -285,7 +279,7 @@ export function SideBySide({
           className={styles.heading}
         />
         <RichText
-          field={fields?.intro}
+          field={primary.intro}
           as="p"
           unstyled
           className={styles.lead}
