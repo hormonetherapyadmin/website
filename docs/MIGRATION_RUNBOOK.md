@@ -145,18 +145,21 @@ migration release. It never publishes the release.
 -   A post already published in Prismic is skipped. `--replace
     <slug,slug>` overwrites it, including any edits made in Prismic.
 -   `migration/state/wix-posts.json` (committed) maps each Wix post id
-    to the Prismic document it created. A later run updates that
-    document instead of creating a duplicate, which also covers a run
-    that stopped partway. The migration release cannot be read through
-    the Content API, so this file is the only record of unpublished
-    imports. Do not delete it.
+    to the Prismic document it created. The migration release cannot be
+    read through the Content API, so this file is the only record of
+    unpublished imports. Do not delete it, and commit it after every
+    `--write`. A later run skips those posts, so edits Peggy makes in
+    the release are safe. Naming a post with `--only` re-imports it over
+    the release copy, which overwrites those edits. After a run that
+    stopped partway, re-import the posts it lists with `--only`.
 -   A photo whose filename (the Wix media id) is already in the media
     library is reused, not uploaded again.
 -   `--write` refuses to send anything while any selected post has a
     problem the mapper cannot handle, such as a link that is not a web
-    address. The report lists review flags (tables, galleries, jump
-    links) for Peggy to check after import, and what the mapper left
-    out on purpose (links Wix made out of sentences).
+    address. The report lists review flags (galleries, jump links,
+    linked photos with no description) for Peggy to check after import,
+    and what the mapper changed on purpose (links Wix made out of
+    sentences, links pointed past a redirect).
 
 Once Peggy edits imported posts in Prismic, do not re-import them. For
 the final sync, export again and import only posts that are new or

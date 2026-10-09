@@ -357,7 +357,16 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
               </div>
               {isFilled.richText(post.data.caption) ? (
                 <figcaption>
-                  <PrismicRichText field={post.data.caption} />
+                  <PrismicRichText
+                    field={post.data.caption}
+                    components={{
+                      hyperlink: ({ node, children }) => (
+                        <PrismicNextLink field={node.data} rel={storyLinkRel}>
+                          {children}
+                        </PrismicNextLink>
+                      ),
+                    }}
+                  />
                 </figcaption>
               ) : null}
             </figure>

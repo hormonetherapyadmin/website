@@ -17,6 +17,8 @@ export function planPost(
   published: ReadonlyMap<string, string>,
   state: ImportState,
   replace: ReadonlySet<string>,
+  /** Posts named on this run. Only these are re-imported over an earlier run. */
+  named: ReadonlySet<string> = new Set(),
 ): PostAction {
   if (post.problems.length) {
     return { action: "skip", reason: post.problems.join("; ") };
@@ -29,16 +31,23 @@ export function planPost(
       : { action: "skip", reason: "already published in Prismic" };
   }
 
-  // Created by a run that did not finish, or not yet published. The
-  // migration release is not readable through the Content API, so the
-  // state file is the only record of it.
+  // Created by an earlier run and not yet published. The migration
+  // release is not readable through the Content API, so the state file
+  // is the only record of it. Peggy may have edited it there, so it is
+  // re-imported only when named.
   const earlier = state[post.sourceId];
   if (earlier) {
-    return {
-      action: "update",
-      prismicId: earlier.prismicId,
-      reason: "earlier run",
-    };
+    return named.has(post.uid)
+      ? {
+          action: "update",
+          prismicId: earlier.prismicId,
+          reason: "earlier run",
+        }
+      : {
+          action: "skip",
+          reason:
+            "already in the migration release. Name it with --only to re-import",
+        };
   }
 
   return { action: "create" };

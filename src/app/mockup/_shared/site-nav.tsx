@@ -187,6 +187,8 @@ export function SiteNav({ items }: { items: NavItem[] }) {
   const fromRight = useRef<number | null>(null);
   const hideTimer = useRef<number | null>(null);
   const exitTimer = useRef<number | null>(null);
+  /** Escape returns focus to the menu button. That focus must not reopen it. */
+  const returningFocus = useRef(false);
   const desktopHover = useDesktopHover();
   const [menuOpen, setMenuOpen] = useState(false);
   const [open, setOpen] = useState<number | null>(null);
@@ -321,7 +323,9 @@ export function SiteNav({ items }: { items: NavItem[] }) {
         open === null ? "[data-menu-toggle]" : `[data-group="${open}"]`;
       hide();
       setMenuOpen(false);
+      returningFocus.current = true;
       navRef.current?.querySelector<HTMLButtonElement>(selector)?.focus();
+      returningFocus.current = false;
     }
 
     document.addEventListener("pointerdown", onPointerDown);
@@ -397,7 +401,7 @@ export function SiteNav({ items }: { items: NavItem[] }) {
                 aria-controls={`${id}-${index}`}
                 data-group={index}
                 onFocus={() => {
-                  if (desktopHover) show(index);
+                  if (desktopHover && !returningFocus.current) show(index);
                 }}
                 onClick={() => {
                   if (desktopHover) return;

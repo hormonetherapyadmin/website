@@ -98,8 +98,9 @@ export function celebrate(
   const canvas = document.createElement("canvas");
   canvas.className = className;
   canvas.setAttribute("aria-hidden", "true");
-  const context = canvas.getContext("2d");
-  if (!context) return () => {};
+  const found = canvas.getContext("2d");
+  if (!found) return () => {};
+  const context = found;
 
   const ratio = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = Math.round(FIELD_WIDTH * ratio);

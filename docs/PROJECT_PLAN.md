@@ -980,10 +980,13 @@ inventory.
     channel. They do not update when a Provider's destination changes;
     a changed affiliate link needs a find-and-replace across posts.
 -   Keep current link behavior (new tab, `nofollow`, `noreferrer`,
-    `noopener`) and add `sponsored`. In post text, a link is affiliate
-    when its host is on the affiliate domain list in
-    `src/lib/affiliate-link.ts`. Wix marked these inconsistently, so its
-    per-link `rel` is not copied.
+    `noopener`) and add `sponsored`. In post text and captions, a link
+    is affiliate when `src/lib/affiliate-link.ts` matches it: an
+    affiliate network host, a partner's referral path (MyMenoRx
+    `/hormonetherapyhub`), an `affid` parameter, an Amazon `tag` or
+    `campaignId`, or Peggy's referral code (`bronson` or `peggy`) in
+    the path or query. Wix marked these inconsistently, so its per-link
+    `rel` is not copied.
 -   No `/go/<provider>` redirect links.
 -   Show the affiliate disclosure next to the first CTA on a page, not
     only in the footer.

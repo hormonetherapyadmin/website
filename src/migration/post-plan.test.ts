@@ -24,13 +24,20 @@ describe("planPost", () => {
     ).toEqual({ action: "update", prismicId: "P1", reason: "replace" });
   });
 
-  it("updates the document an earlier run left in the migration release", () => {
+  it("leaves a post an earlier run put in the migration release", () => {
     const state = { "wix-1": { uid: "oestra-vs-winona", prismicId: "M1" } };
     expect(planPost(post, none, state, new Set())).toEqual({
-      action: "update",
-      prismicId: "M1",
-      reason: "earlier run",
+      action: "skip",
+      reason:
+        "already in the migration release. Name it with --only to re-import",
     });
+  });
+
+  it("re-imports a post from an earlier run when it is named", () => {
+    const state = { "wix-1": { uid: "oestra-vs-winona", prismicId: "M1" } };
+    expect(
+      planPost(post, none, state, new Set(), new Set(["oestra-vs-winona"])),
+    ).toEqual({ action: "update", prismicId: "M1", reason: "earlier run" });
   });
 
   it("prefers the published document over an earlier run", () => {

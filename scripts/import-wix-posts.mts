@@ -3,7 +3,9 @@
 //
 //   node scripts/import-wix-posts.mts                 dry run, every saved post
 //   node scripts/import-wix-posts.mts --write         send them to Prismic
-//   --only <slug,slug>      limit the run to these posts
+//   --only <slug,slug>      limit the run to these posts. A post already in
+//                           the migration release is re-imported only when
+//                           named here, which overwrites edits made there
 //   --replace <slug,slug>   overwrite these published posts, including any
 //                           edits made in Prismic
 //   --export <yyyy-mm-dd>   saved Wix export to read (default: newest)
@@ -211,7 +213,7 @@ const library = await libraryAssets(writeToken);
 
 const plans = posts.map((post) => ({
   post,
-  plan: planPost(post, published, state, replace),
+  plan: planPost(post, published, state, replace, only),
 }));
 const blocked = plans.filter(({ post }) => post.problems.length);
 

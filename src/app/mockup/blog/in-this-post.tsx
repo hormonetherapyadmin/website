@@ -228,8 +228,9 @@ export function InThisPost({
   }, [sections]);
 
   useEffect(() => {
-    const list = listRef.current;
-    if (!list) return;
+    const found = listRef.current;
+    if (!found) return;
+    const list = found;
 
     function revealCurrent() {
       const current = list.querySelector<HTMLElement>('[aria-current="true"]');

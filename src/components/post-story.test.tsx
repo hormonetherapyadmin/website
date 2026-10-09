@@ -226,6 +226,42 @@ describe("PostStory clinic tokens", () => {
     expect(preview).toContain("Add it as item 3 in Tables.");
   });
 
+  it("breaks the line where a cell has two lines", () => {
+    const markup = renderToStaticMarkup(
+      <PostStory
+        field={story("{{table}}")}
+        tables={[
+          {
+            table: {
+              body: {
+                rows: [
+                  {
+                    key: "row",
+                    cells: [
+                      {
+                        key: "cell",
+                        type: "data",
+                        content: [
+                          {
+                            type: "paragraph",
+                            text: "Estradiol (E2)\n(Stronger)",
+                            spans: [],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            } as TableField,
+          },
+        ]}
+      />,
+    );
+
+    expect(markup).toContain("<td>Estradiol (E2)<br/>(Stronger)</td>");
+  });
+
   it("names a missing clinic in preview", () => {
     const markup = renderToStaticMarkup(
       <PostStory
