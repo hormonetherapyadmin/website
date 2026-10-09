@@ -187,6 +187,38 @@ describe("siteNavigationFrom", () => {
     ]);
   });
 
+  it("builds the header button from its label, icon, and link", () => {
+    const navigation = siteNavigationFrom({
+      header_button_label: "Trusted providers",
+      header_button_icon: icon("https://images.prismic.io/shield.png"),
+      header_button_link: web("/trusted-providers", "_blank"),
+    });
+
+    expect(navigation.button).toEqual({
+      label: "Trusted providers",
+      href: "/trusted-providers",
+      icon: "https://images.prismic.io/shield.png",
+      newTab: true,
+    });
+  });
+
+  it("hides the header button when the label or link is blank", () => {
+    expect(
+      siteNavigationFrom({
+        header_button_label: "Trusted providers",
+        header_button_link: empty,
+      }).button,
+    ).toBeUndefined();
+
+    expect(
+      siteNavigationFrom({
+        header_button_label: "  ",
+        header_button_link: web("/trusted-providers"),
+        header_button_icon: icon("https://images.prismic.io/shield.png"),
+      }).button,
+    ).toBeUndefined();
+  });
+
   it("builds footer columns and skips a column with no working links", () => {
     const navigation = siteNavigationFrom({
       footer_columns: [

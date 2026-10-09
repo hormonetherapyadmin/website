@@ -60,11 +60,14 @@ a.box:hover {
 .logo {
   display: grid;
   place-items: center;
-  width: 2rem;
-  height: 2rem;
-  margin-bottom: 0.35rem;
+  box-sizing: border-box;
+  width: 3.25rem;
+  height: 3.25rem;
+  margin-bottom: 0.5rem;
+  padding: 0.45rem;
   overflow: hidden;
-  border-radius: 0.55rem;
+  border-radius: 0.8rem;
+  background: var(--color-background);
 }
 
 .logo img {

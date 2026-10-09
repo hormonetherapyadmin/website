@@ -1,0 +1,135 @@
+{
+  "id": "ribbon",
+  "name": "Ribbon",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "small_heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Small heading",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Heading",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "intro": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Intro",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "link": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Link"
+          },
+          "type": "Link"
+        },
+        "background": {
+          "config": {
+            "default_value": "Transparent",
+            "label": "Background",
+            "options": [
+              "Transparent",
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ],
+            "placeholder": "The color behind the ribbon."
+          },
+          "type": "Select"
+        },
+        "space_above": {
+          "config": {
+            "default_value": "Medium",
+            "label": "Space above",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "space_below": {
+          "config": {
+            "default_value": "None",
+            "label": "Space below",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "title": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Title",
+            "labels": ["superscript"],
+            "placeholder": "Still lining the prices up?",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "content": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Content",
+            "labels": ["highlight", "superscript", "signoff", "note"],
+            "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
+            "placeholder": "The comparison chart includes Midi Health too."
+          },
+          "type": "StructuredText"
+        },
+        "box_background": {
+          "config": {
+            "default_value": "Pink",
+            "label": "Box background",
+            "options": [
+              "Transparent",
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ],
+            "placeholder": "The color of the ribbon. Same choices as Background."
+          },
+          "type": "Select"
+        },
+        "button": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Buttons",
+            "placeholder": "Open the price chart",
+            "repeat": true,
+            "variants": ["Solid", "Ghost"]
+          },
+          "type": "Link"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

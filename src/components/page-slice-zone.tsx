@@ -3,20 +3,24 @@ import { SliceZone, type SliceComponentProps } from "@prismicio/react";
 import type { TokenClinic } from "@/components/content-blocks";
 import type { PageClinic } from "@/lib/page-slices";
 import {
+  brandPromoClinic,
   boxClinic,
   comparisonClinic,
   quoteClinic,
   sideClinic,
 } from "@/lib/page-slices";
+import { BrandPromo } from "@/slices/BrandPromo";
 import { Boxes } from "@/slices/boxes";
 import { ClinicComparison } from "@/slices/clinic_comparison";
 import { Divider } from "@/slices/divider";
 import { Hero, type HeroSlice as HeroProps } from "@/slices/hero";
 import { Posts, type PostCardData } from "@/slices/posts";
 import { Quote } from "@/slices/quote";
+import { Ribbon } from "@/slices/Ribbon";
 import { SideBySide } from "@/slices/side_by_side";
 import { StartHere } from "@/slices/start_here";
 import type {
+  BrandPromoSlice,
   BoxesSlice,
   ClinicComparisonSlice,
   DividerSlice,
@@ -25,6 +29,7 @@ import type {
   PostsSlice,
   ProviderDocument,
   QuoteSlice,
+  RibbonSlice,
   SideBySideSlice,
   StartHereSlice,
 } from "../../prismicio-types";
@@ -175,6 +180,22 @@ function DividerAdapter({ slice }: Props<DividerSlice>) {
   return <Divider primary={slice.primary} />;
 }
 
+function RibbonAdapter({ slice }: Props<RibbonSlice>) {
+  return <Ribbon primary={slice.primary} />;
+}
+
+function BrandPromoAdapter({ slice, context }: Props<BrandPromoSlice>) {
+  const id = linkedId(slice.primary.clinic);
+  const clinic = id ? context.clinics.get(id) : undefined;
+
+  return (
+    <BrandPromo
+      primary={slice.primary}
+      clinic={clinic ? brandPromoClinic(clinic) : null}
+    />
+  );
+}
+
 function BoxesAdapter({ slice, context }: Props<BoxesSlice>) {
   const clinics = slice.primary.boxes.map((row) => {
     const id = linkedId(row.clinic);
@@ -193,7 +214,9 @@ const components = {
   quote: QuoteAdapter,
   side_by_side: SideBySideAdapter,
   divider: DividerAdapter,
+  ribbon: RibbonAdapter,
   boxes: BoxesAdapter,
+  brand_promo: BrandPromoAdapter,
 };
 
 /** Every slice a Page accepts, with the clinics and posts it reads. */

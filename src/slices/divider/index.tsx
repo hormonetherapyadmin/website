@@ -66,7 +66,7 @@ export function Divider({ primary }: { primary: DividerPrimary }) {
   const background = sectionBackground(primary.background);
   const spaceAbove = choice(primary.space_above, SECTION_SPACING, "None");
   const spaceBelow = choice(primary.space_below, SECTION_SPACING, "None");
-  const band = background !== "Cream";
+  const band = background !== "Transparent" && background !== "Cream";
 
   return (
     <div

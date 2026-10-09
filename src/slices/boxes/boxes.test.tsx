@@ -33,6 +33,7 @@ const innerBalance: BoxClinic = {
   name: "Inner Balance",
   logo: { src: "https://images.prismic.io/inner-balance.png" },
   offerCode: "PEGGY10",
+  shortDescription: "Better sleep",
 };
 
 function box(heading: string, overrides = {}) {
@@ -62,6 +63,17 @@ describe("resolveBox", () => {
       logo: { src: innerBalance.logo!.src, alt: "" },
       name: "Inner Balance",
       bottomLine: "PEGGY10",
+    });
+  });
+
+  it("uses the clinic short description when Heading is empty", () => {
+    expect(resolveBox(box(""), innerBalance)).toMatchObject({
+      heading: undefined,
+      shortDescription: "Better sleep",
+      name: "Inner Balance",
+    });
+    expect(resolveBox(box("Improved sleep"), innerBalance)).toMatchObject({
+      shortDescription: undefined,
     });
   });
 
@@ -116,6 +128,17 @@ describe("Boxes", () => {
     expect(html).toContain("No code");
     expect(html).toContain("MyMenopauseRx");
     expect(html).not.toContain("<h3");
+  });
+
+  it("shows the clinic short description as the box heading", () => {
+    const html = renderToStaticMarkup(
+      <Boxes
+        primary={{ ...section(rich("Jump to a clinic")), boxes: [box("")] }}
+        clinics={[innerBalance]}
+      />,
+    );
+
+    expect(html).toMatch(/<h3[^>]*>Better sleep<\/h3>/);
   });
 
   it("never sets more columns than there are boxes", () => {

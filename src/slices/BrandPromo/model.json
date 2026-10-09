@@ -1,0 +1,147 @@
+{
+  "id": "brand_promo",
+  "name": "Brand promo",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "small_heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Small heading",
+            "labels": ["superscript"],
+            "placeholder": "Voted best for",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Heading",
+            "labels": ["superscript"],
+            "placeholder": "Improved sleep",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "intro": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Intro",
+            "labels": ["superscript"],
+            "placeholder": "A short line under the clinic name. Leave blank to hide it.",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "link": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Link"
+          },
+          "type": "Link"
+        },
+        "background": {
+          "config": {
+            "default_value": "Transparent",
+            "label": "Background",
+            "options": [
+              "Transparent",
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ]
+          },
+          "type": "Select"
+        },
+        "space_above": {
+          "config": {
+            "default_value": "Medium",
+            "label": "Space above",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "space_below": {
+          "config": {
+            "default_value": "None",
+            "label": "Space below",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "clinic": {
+          "config": {
+            "customtypes": [
+              {
+                "fields": [
+                  "name",
+                  "logo",
+                  "visit",
+                  "monthly_price",
+                  "price_note",
+                  "formulation",
+                  "insurance",
+                  "note",
+                  "code",
+                  "code_note",
+                  "top_choice_label",
+                  "quote"
+                ],
+                "id": "provider"
+              }
+            ],
+            "label": "Clinic",
+            "select": "document"
+          },
+          "type": "Link"
+        },
+        "quote": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Quote",
+            "labels": ["superscript"],
+            "placeholder": "Leave blank to use the clinic's In my words.",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "place": {
+          "config": {
+            "label": "Place",
+            "placeholder": "1st. Leave blank to hide the badge."
+          },
+          "type": "Text"
+        },
+        "product": {
+          "config": {
+            "label": "Product image",
+            "placeholder": "The jar or bottle beside the price. Describe the product."
+          },
+          "type": "Image"
+        },
+        "links": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Links",
+            "repeat": true
+          },
+          "type": "Link"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

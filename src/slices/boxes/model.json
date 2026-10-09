@@ -47,9 +47,10 @@
         },
         "background": {
           "config": {
-            "default_value": "Cream",
+            "default_value": "Transparent",
             "label": "Background",
             "options": [
+              "Transparent",
               "Cream",
               "Pink",
               "Blue",
@@ -92,7 +93,7 @@
                 "config": {
                   "customtypes": [
                     {
-                      "fields": ["name", "logo", "code"],
+                      "fields": ["name", "logo", "code", "short_description"],
                       "id": "provider"
                     }
                   ],
@@ -113,7 +114,7 @@
                   "allowTargetBlank": true,
                   "label": "Heading",
                   "labels": ["superscript"],
-                  "placeholder": "Improved sleep",
+                  "placeholder": "Empty uses the clinic short description, such as Improved sleep",
                   "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"

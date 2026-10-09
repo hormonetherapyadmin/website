@@ -8,6 +8,7 @@ import {
 import { storyClinicUids, type TokenClinic } from "@/components/content-blocks";
 import { minutesToRead } from "@/lib/post-derived";
 import { tokenClinic, type TokenClinicSource } from "@/lib/token-clinic";
+import type { BrandPromoClinic } from "@/slices/BrandPromo";
 import type { BoxClinic } from "@/slices/boxes";
 import type { ComparisonClinic } from "@/slices/clinic_comparison";
 import type { PostCardData } from "@/slices/posts";
@@ -97,6 +98,9 @@ export function sliceClinicIds(slices: readonly SliceLike[]): string[] {
       case "boxes":
         for (const row of rows(primary.boxes)) add(row.clinic);
         break;
+      case "brand_promo":
+        add(primary.clinic);
+        break;
     }
   }
 
@@ -171,8 +175,33 @@ export function sideClinic(clinic: PageClinic): SideClinic {
   return { ...quoteClinic(clinic), quote: clinic.quote };
 }
 
+export function brandPromoClinic(clinic: PageClinic): BrandPromoClinic {
+  return {
+    uid: clinic.uid,
+    name: clinic.name,
+    logo: clinic.logo,
+    visitHref: clinic.visitHref,
+    visitText: clinic.visitText,
+    newTab: clinic.newTab,
+    monthlyPrice: clinic.monthlyPrice,
+    priceNote: clinic.priceNote,
+    insurance: clinic.insurance,
+    formulation: clinic.formulation,
+    gettingStarted: clinic.gettingStarted,
+    offerCode: clinic.offerCode,
+    offerCopy: clinic.offerCopy,
+    topChoice: clinic.topChoice,
+    quote: clinic.quote,
+  };
+}
+
 export function boxClinic(clinic: PageClinic): BoxClinic {
-  return { name: clinic.name, logo: clinic.logo, offerCode: clinic.offerCode };
+  return {
+    name: clinic.name,
+    logo: clinic.logo,
+    offerCode: clinic.offerCode,
+    shortDescription: clinic.shortDescription,
+  };
 }
 
 export function postCard(document: PostCardSource): PostCardData | null {

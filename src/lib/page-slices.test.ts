@@ -1,6 +1,7 @@
 import type { ImageField, RichTextField } from "@prismicio/client";
 import { describe, expect, it } from "vitest";
 import {
+  boxClinic,
   comparisonClinic,
   gridPage,
   pageClinic,
@@ -75,9 +76,10 @@ describe("sliceClinicIds", () => {
       slice("boxes", {
         boxes: [{ clinic: doc("F") }, { clinic: { link_type: "Any" } }],
       }),
+      slice("brand_promo", { clinic: doc("G") }),
     ];
 
-    expect(sliceClinicIds(slices)).toEqual(["A", "B", "C", "D", "E", "F"]);
+    expect(sliceClinicIds(slices)).toEqual(["A", "B", "C", "D", "E", "F", "G"]);
   });
 });
 
@@ -128,6 +130,15 @@ describe("pageClinic and comparisonClinic", () => {
       note: "Free consults as needed.",
       offerCode: "PEGGY10",
       reviewHref: "/oestra-review",
+    });
+  });
+
+  it("gives a box the logo, code, and short description", () => {
+    expect(boxClinic(pageClinic(provider())!)).toEqual({
+      name: "Inner Balance",
+      logo: { src: "https://images.prismic.io/logo.png" },
+      offerCode: "PEGGY10",
+      shortDescription: "Bioidentical cream by mail.",
     });
   });
 

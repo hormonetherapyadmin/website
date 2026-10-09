@@ -50,9 +50,10 @@
         },
         "background": {
           "config": {
-            "default_value": "Cream",
+            "default_value": "Transparent",
             "label": "Background",
             "options": [
+              "Transparent",
               "Cream",
               "Pink",
               "Blue",
@@ -175,9 +176,10 @@
         },
         "background": {
           "config": {
-            "default_value": "Cream",
+            "default_value": "Transparent",
             "label": "Background",
             "options": [
+              "Transparent",
               "Cream",
               "Pink",
               "Blue",
@@ -298,9 +300,10 @@
         },
         "background": {
           "config": {
-            "default_value": "Cream",
+            "default_value": "Transparent",
             "label": "Background",
             "options": [
+              "Transparent",
               "Cream",
               "Pink",
               "Blue",
@@ -421,9 +424,10 @@
         },
         "background": {
           "config": {
-            "default_value": "Cream",
+            "default_value": "Transparent",
             "label": "Background",
             "options": [
+              "Transparent",
               "Cream",
               "Pink",
               "Blue",

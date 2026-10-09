@@ -10,7 +10,7 @@ describe("Divider", () => {
         primary={{
           line: "Squiggly",
           color: "Accent",
-          background: "Cream",
+          background: "Transparent",
           space_above: "None",
           space_below: "None",
         }}
@@ -22,7 +22,25 @@ describe("Divider", () => {
     expect(html).toContain('aria-hidden="true"');
     expect(html).toContain("mt-0");
     expect(html).toContain("mb-0");
+    expect(html).not.toContain("py-slice");
     expect(html).not.toContain("<h2");
+  });
+
+  it("paints cream without the band padding", () => {
+    const html = renderToStaticMarkup(
+      <Divider
+        primary={{
+          line: "Squiggly",
+          color: "Accent",
+          background: "Cream",
+          space_above: "None",
+          space_below: "None",
+        }}
+      />,
+    );
+
+    expect(html).toContain("bg-background");
+    expect(html).not.toContain("py-slice");
   });
 
   it("draws a straight line on a soft band with the requested gap", () => {

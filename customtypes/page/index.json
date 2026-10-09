@@ -3,16 +3,6 @@
   "id": "page",
   "json": {
     "Main": {
-      "title": {
-        "config": {
-          "allowTargetBlank": true,
-          "label": "Title",
-          "labels": ["superscript"],
-          "placeholder": "The page name. Shown as the page heading when the page does not start with a Hero.",
-          "single": "paragraph,strong,em,hyperlink"
-        },
-        "type": "StructuredText"
-      },
       "uid": {
         "config": {
           "label": "UID"
@@ -45,6 +35,12 @@
             },
             "boxes": {
               "type": "SharedSlice"
+            },
+            "brand_promo": {
+              "type": "SharedSlice"
+            },
+            "ribbon": {
+              "type": "SharedSlice"
             }
           }
         },
@@ -56,7 +52,7 @@
       "meta_title": {
         "config": {
           "label": "Meta title",
-          "placeholder": "Leave empty to use the page title."
+          "placeholder": "Leave empty to use the Hero heading."
         },
         "type": "Text"
       },

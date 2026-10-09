@@ -11,6 +11,7 @@ import { useId } from "react";
 import { RichText } from "@/components/rich-text";
 
 export const SECTION_BACKGROUNDS = [
+  "Transparent",
   "Cream",
   "Pink",
   "Blue",
@@ -50,9 +51,10 @@ const spaceBelowClass: Record<SectionSpacing, string> = {
   Large: "mb-slice-lg",
 };
 
-/** Cream is the page color, so it paints nothing. */
+/** Transparent paints nothing, so the page shows through. */
 export const sectionBackgroundClass: Record<SectionBackground, string> = {
-  Cream: "",
+  Transparent: "",
+  Cream: "bg-background",
   Pink: "bg-card-1",
   Blue: "bg-card-2",
   Yellow: "bg-card-3",
@@ -66,6 +68,7 @@ export const sectionBackgroundClass: Record<SectionBackground, string> = {
  * and for slices that draw their own small heading.
  */
 const kickerColorClass: Record<SectionBackground, string> = {
+  Transparent: "[--section-kicker:var(--color-accent)]",
   Cream: "[--section-kicker:var(--color-accent)]",
   Pink: "[--section-kicker:var(--color-accent)]",
   Blue: "[--section-kicker:var(--color-accent)]",
@@ -86,9 +89,9 @@ function choice<T extends string>(
   return fallback;
 }
 
-/** The Background choice. An empty or retired choice is Cream. */
+/** The Background choice. An empty or retired choice is Transparent. */
 export function sectionBackground(value: string | null | undefined) {
-  return choice(value, SECTION_BACKGROUNDS, "Cream");
+  return choice(value, SECTION_BACKGROUNDS, "Transparent");
 }
 
 /** A heading turned into an element id, such as "Feel like you again." */
@@ -164,7 +167,8 @@ type SliceSectionProps = {
 
 /**
  * Spacing, background, and the shared heading block for every slice.
- * Space above and below are the gap outside the slice. A background
+ * Space above and below are the gap outside the slice. Cream is the
+ * page color, so it paints without padding. Any other background
  * paints the slice and adds a fixed padding inside the color.
  */
 export function SliceSection({
@@ -180,7 +184,7 @@ export function SliceSection({
   const background = sectionBackground(fields?.background);
   const spaceAbove = choice(fields?.space_above, SECTION_SPACING, "Medium");
   const spaceBelow = choice(fields?.space_below, SECTION_SPACING, "None");
-  const band = background !== "Cream";
+  const band = background !== "Transparent" && background !== "Cream";
   const header = showHeader && fields && hasHeader(fields) ? fields : null;
   const anchor = sectionAnchor(title ?? (fields ? asText(fields.heading) : ""));
 

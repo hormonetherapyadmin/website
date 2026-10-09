@@ -51,7 +51,7 @@ function section(heading: string, linkText?: string): SliceSectionFields {
     link: linkText
       ? ({ link_type: "Web", url: "/blog", text: linkText } as LinkField)
       : emptyLink,
-    background: "Cream",
+    background: "Transparent",
     space_above: "Medium",
     space_below: "None",
   };

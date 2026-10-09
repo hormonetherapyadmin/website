@@ -20,7 +20,8 @@
   --color-cta-text: #ffffff;
   --color-focus: #2f5fd0;
   /*
-    Section Background choices (docs/SLICE_MODEL.md): Cream is background,
+    Section Background choices (docs/SLICE_MODEL.md): Transparent paints
+    nothing, Cream is background,
     Pink to Lavender are card-1 to card-4, Raspberry is accent, Navy is
     panel. Tint is the highlight mark and hover wash.
   */

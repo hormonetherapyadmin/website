@@ -405,6 +405,45 @@ export interface NavigationDocumentDataFooterColumnsItem {
  */
 interface NavigationDocumentData {
   /**
+   * Header button label field in *Navigation*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Trusted providers
+   * - **API ID Path**: navigation.header_button_label
+   * - **Tab**: Main menu
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  header_button_label: prismic.KeyTextField;
+
+  /**
+   * Header button icon field in *Navigation*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: Any icon on a transparent background. Shown in the button color.
+   * - **API ID Path**: navigation.header_button_icon
+   * - **Tab**: Main menu
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  header_button_icon: prismic.ImageField<never>;
+
+  /**
+   * Header button link field in *Navigation*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Where the button goes, such as /trusted-providers. Leave the label or this link blank to hide the button.
+   * - **API ID Path**: navigation.header_button_link
+   * - **Tab**: Main menu
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  header_button_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
    * Menu items field in *Navigation*
    *
    * - **Field Type**: Group
@@ -453,23 +492,14 @@ type PageDocumentDataSlicesSlice =
   | QuoteSlice
   | SideBySideSlice
   | DividerSlice
-  | BoxesSlice;
+  | BoxesSlice
+  | BrandPromoSlice
+  | RibbonSlice;
 
 /**
  * Content for Page documents
  */
 interface PageDocumentData {
-  /**
-   * Title field in *Page*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: The page name. Shown as the page heading when the page does not start with a Hero.
-   * - **API ID Path**: page.title
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  title: prismic.RichTextField;
-
   /**
    * Slice Zone field in *Page*
    *
@@ -483,7 +513,7 @@ interface PageDocumentData {
    * Meta title field in *Page*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: Leave empty to use the page title.
+   * - **Placeholder**: Leave empty to use the Hero heading.
    * - **API ID Path**: page.meta_title
    * - **Tab**: SEO & Metadata
    * - **Documentation**: https://prismic.io/docs/fields/text
@@ -1004,7 +1034,7 @@ export interface BoxesSliceDefaultPrimaryBoxesItem {
    * - **Documentation**: https://prismic.io/docs/fields/content-relationship
    */
   clinic: ContentRelationshipFieldWithData<
-    [{ fields: ["name", "logo", "code"]; id: "provider" }]
+    [{ fields: ["name", "logo", "code", "short_description"]; id: "provider" }]
   >;
 
   /**
@@ -1021,7 +1051,7 @@ export interface BoxesSliceDefaultPrimaryBoxesItem {
    * Heading field in *Boxes → Default → Primary → Boxes*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: Improved sleep
+   * - **Placeholder**: Empty uses the clinic short description, such as Improved sleep
    * - **API ID Path**: boxes.default.primary.boxes[].heading
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
@@ -1107,12 +1137,19 @@ export interface BoxesSliceDefaultPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: boxes.default.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -1194,6 +1231,202 @@ type BoxesSliceVariation = BoxesSliceDefault;
 export type BoxesSlice = prismic.SharedSlice<"boxes", BoxesSliceVariation>;
 
 /**
+ * Primary content in *Brand promo → Default → Primary*
+ */
+export interface BrandPromoSliceDefaultPrimary {
+  /**
+   * Small heading field in *Brand promo → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Voted best for
+   * - **API ID Path**: brand_promo.default.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Brand promo → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Improved sleep
+   * - **API ID Path**: brand_promo.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Brand promo → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: A short line under the clinic name. Leave blank to hide it.
+   * - **API ID Path**: brand_promo.default.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Brand promo → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: brand_promo.default.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Brand promo → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Transparent
+   * - **API ID Path**: brand_promo.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Brand promo → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: brand_promo.default.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Brand promo → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: brand_promo.default.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Clinic field in *Brand promo → Default → Primary*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: brand_promo.default.primary.clinic
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  clinic: ContentRelationshipFieldWithData<
+    [
+      {
+        fields: [
+          "name",
+          "logo",
+          "visit",
+          "monthly_price",
+          "price_note",
+          "formulation",
+          "insurance",
+          "note",
+          "code",
+          "code_note",
+          "top_choice_label",
+          "quote",
+        ];
+        id: "provider";
+      },
+    ]
+  >;
+
+  /**
+   * Quote field in *Brand promo → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Leave blank to use the clinic's In my words.
+   * - **API ID Path**: brand_promo.default.primary.quote
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  quote: prismic.RichTextField;
+
+  /**
+   * Place field in *Brand promo → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: 1st. Leave blank to hide the badge.
+   * - **API ID Path**: brand_promo.default.primary.place
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  place: prismic.KeyTextField;
+
+  /**
+   * Product image field in *Brand promo → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: The jar or bottle beside the price. Describe the product.
+   * - **API ID Path**: brand_promo.default.primary.product
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  product: prismic.ImageField<never>;
+
+  /**
+   * Links field in *Brand promo → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: brand_promo.default.primary.links
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  links: prismic.Repeatable<
+    prismic.LinkField<string, string, unknown, prismic.FieldState, never>
+  >;
+}
+
+/**
+ * Default variation for Brand promo Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BrandPromoSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<BrandPromoSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Brand promo*
+ */
+type BrandPromoSliceVariation = BrandPromoSliceDefault;
+
+/**
+ * Brand promo Shared Slice
+ *
+ * - **API ID**: `brand_promo`
+ * - **Description**: *None*
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BrandPromoSlice = prismic.SharedSlice<
+  "brand_promo",
+  BrandPromoSliceVariation
+>;
+
+/**
  * Item in *Clinic comparison → Default → Primary → Clinics*
  */
 export interface ClinicComparisonSliceDefaultPrimaryClinicsItem {
@@ -1267,12 +1500,19 @@ export interface ClinicComparisonSliceDefaultPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: clinic_comparison.default.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -1414,12 +1654,19 @@ export interface DividerSliceDefaultPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: divider.default.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -1573,12 +1820,19 @@ export interface HeroSliceHomePrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: hero.home.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -1753,12 +2007,19 @@ export interface HeroSliceSubpagePrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: hero.subpage.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -1863,12 +2124,19 @@ export interface HeroSliceBrandsPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: hero.brands.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -1973,12 +2241,19 @@ export interface HeroSliceProviderPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: hero.provider.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -2157,12 +2432,19 @@ export interface PostsSliceHomePrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: posts.home.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -2271,12 +2553,19 @@ export interface PostsSliceFeaturedPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: posts.featured.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -2398,12 +2687,19 @@ export interface PostsSliceGridPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: posts.grid.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -2522,12 +2818,19 @@ export interface PostsSliceRowPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: posts.row.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -2651,12 +2954,19 @@ export interface QuoteSliceDefaultPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: quote.default.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -2783,6 +3093,186 @@ type QuoteSliceVariation = QuoteSliceDefault;
 export type QuoteSlice = prismic.SharedSlice<"quote", QuoteSliceVariation>;
 
 /**
+ * Primary content in *Ribbon → Default → Primary*
+ */
+export interface RibbonSliceDefaultPrimary {
+  /**
+   * Small heading field in *Ribbon → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: ribbon.default.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Ribbon → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: ribbon.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Ribbon → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: ribbon.default.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Ribbon → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: ribbon.default.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Ribbon → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: The color behind the ribbon.
+   * - **Default Value**: Transparent
+   * - **API ID Path**: ribbon.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Ribbon → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: ribbon.default.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Ribbon → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: ribbon.default.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Title field in *Ribbon → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Still lining the prices up?
+   * - **API ID Path**: ribbon.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * Content field in *Ribbon → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The comparison chart includes Midi Health too.
+   * - **API ID Path**: ribbon.default.primary.content
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  content: prismic.RichTextField;
+
+  /**
+   * Box background field in *Ribbon → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: The color of the ribbon. Same choices as Background.
+   * - **Default Value**: Pink
+   * - **API ID Path**: ribbon.default.primary.box_background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  box_background: prismic.SelectField<
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
+    "filled"
+  >;
+
+  /**
+   * Buttons field in *Ribbon → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Open the price chart
+   * - **API ID Path**: ribbon.default.primary.button
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  button: prismic.Repeatable<
+    prismic.LinkField<
+      string,
+      string,
+      unknown,
+      prismic.FieldState,
+      "Solid" | "Ghost"
+    >
+  >;
+}
+
+/**
+ * Default variation for Ribbon Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type RibbonSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<RibbonSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Ribbon*
+ */
+type RibbonSliceVariation = RibbonSliceDefault;
+
+/**
+ * Ribbon Shared Slice
+ *
+ * - **API ID**: `ribbon`
+ * - **Description**: *None*
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type RibbonSlice = prismic.SharedSlice<"ribbon", RibbonSliceVariation>;
+
+/**
  * Primary content in *Side by side → Image → Primary*
  */
 export interface SideBySideSliceImagePrimary {
@@ -2831,12 +3321,19 @@ export interface SideBySideSliceImagePrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: side_by_side.image.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -2990,12 +3487,19 @@ export interface SideBySideSliceVideoPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: side_by_side.video.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -3149,12 +3653,19 @@ export interface SideBySideSliceQuotePrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: side_by_side.quote.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -3308,12 +3819,19 @@ export interface SideBySideSliceClinicPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: side_by_side.clinic.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -3533,12 +4051,19 @@ export interface StartHereSliceDefaultPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Cream
+   * - **Default Value**: Transparent
    * - **API ID Path**: start_here.default.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
     "filled"
   >;
 
@@ -3658,6 +4183,10 @@ declare module "@prismicio/client" {
       BoxesSliceDefaultPrimary,
       BoxesSliceVariation,
       BoxesSliceDefault,
+      BrandPromoSlice,
+      BrandPromoSliceDefaultPrimary,
+      BrandPromoSliceVariation,
+      BrandPromoSliceDefault,
       ClinicComparisonSlice,
       ClinicComparisonSliceDefaultPrimaryClinicsItem,
       ClinicComparisonSliceDefaultPrimary,
@@ -3693,6 +4222,10 @@ declare module "@prismicio/client" {
       QuoteSliceDefaultPrimary,
       QuoteSliceVariation,
       QuoteSliceDefault,
+      RibbonSlice,
+      RibbonSliceDefaultPrimary,
+      RibbonSliceVariation,
+      RibbonSliceDefault,
       SideBySideSlice,
       SideBySideSliceImagePrimary,
       SideBySideSliceVideoPrimary,

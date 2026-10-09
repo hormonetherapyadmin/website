@@ -23,6 +23,7 @@ export type BoxClinic = {
   name: string;
   logo?: { src: string };
   offerCode?: string;
+  shortDescription?: string;
 };
 
 type BoxItem = {
@@ -42,6 +43,7 @@ type BoxesPrimary = Partial<SliceSectionFields> & {
 type ResolvedBox = {
   logo?: { src: string; alt: string };
   heading?: RichTextField;
+  shortDescription?: string;
   text?: RichTextField;
   name?: string;
   bottomLine?: string;
@@ -59,18 +61,19 @@ export function boxesAcross(value: string | null | undefined) {
 }
 
 /**
- * What one box shows. A written field wins. An empty Image, Text, or
- * Bottom line uses the clinic's logo, name, or code. A box with nothing
- * to show is left out.
+ * What one box shows. A written field wins. An empty Image, Heading,
+ * Text, or Bottom line uses the clinic's logo, short description, name,
+ * or code. A box with nothing to show is left out.
  */
 export function resolveBox(
   box: BoxItem,
   clinic: BoxClinic | null | undefined,
 ): ResolvedBox | null {
   const heading = isFilled.richText(box.heading) ? box.heading : undefined;
+  const shortDescription = heading ? undefined : text(clinic?.shortDescription);
   const written = isFilled.richText(box.text) ? box.text : undefined;
   const name = written ? undefined : text(clinic?.name);
-  if (!heading && !written && !name) return null;
+  if (!heading && !shortDescription && !written && !name) return null;
 
   const image =
     box.image && isFilled.image(box.image)
@@ -83,6 +86,7 @@ export function resolveBox(
   return {
     logo: image,
     heading,
+    shortDescription,
     text: written,
     name,
     bottomLine: text(box.bottom_line) ?? clinic?.offerCode,
@@ -98,6 +102,8 @@ function BoxBody({
   /** A section heading is above, so each box heading is an `h3`. */
   titled: boolean;
 }) {
+  const Heading = titled ? "h3" : "p";
+
   return (
     <>
       {box.logo ? (
@@ -105,12 +111,16 @@ function BoxBody({
           <Image src={box.logo.src} alt={box.logo.alt} width={64} height={64} />
         </span>
       ) : null}
-      <RichText
-        field={box.heading}
-        as={titled ? "h3" : "p"}
-        unstyled
-        className={styles.heading}
-      />
+      {box.heading ? (
+        <RichText
+          field={box.heading}
+          as={Heading}
+          unstyled
+          className={styles.heading}
+        />
+      ) : box.shortDescription ? (
+        <Heading className={styles.heading}>{box.shortDescription}</Heading>
+      ) : null}
       {box.text ? (
         <RichText field={box.text} as="p" unstyled className={styles.text} />
       ) : box.name ? (

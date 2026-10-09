@@ -31,11 +31,14 @@ function section(
   };
 }
 
-/* The trusted-providers jump band. Codes and labels are from that mockup. */
+/*
+  The trusted-providers jump band. Codes and labels are from that mockup.
+  Each label stands in for the clinic's short description.
+*/
 type Sample = {
   id: string;
   name: string;
-  heading: string;
+  shortDescription: string;
   code?: string;
   bottomLine?: string;
 };
@@ -44,33 +47,43 @@ const CLINIC_BOXES: Sample[] = [
   {
     id: "inner-balance",
     name: "Inner Balance",
-    heading: "Improved sleep",
+    shortDescription: "Improved sleep",
     code: "PEGGY10",
   },
   {
     id: "winona",
     name: "Winona",
-    heading: "No pre-testing",
+    shortDescription: "No pre-testing",
     bottomLine: "15% off",
   },
   {
     id: "joi",
     name: "Joi Women’s Wellness",
-    heading: "Most comprehensive testing",
+    shortDescription: "Most comprehensive testing",
     code: "BRONSON",
   },
-  { id: "musely", name: "Musely", heading: "Most gentle HRT", code: "HTH20" },
+  {
+    id: "musely",
+    name: "Musely",
+    shortDescription: "Most gentle HRT",
+    code: "HTH20",
+  },
   {
     id: "alloy",
     name: "Alloy",
-    heading: "No appointment required",
+    shortDescription: "No appointment required",
     code: "HORMONEHUB10",
   },
-  { id: "effecty", name: "Effecty", heading: "You get a say", code: "PEGGY50" },
+  {
+    id: "effecty",
+    name: "Effecty",
+    shortDescription: "You get a say",
+    code: "PEGGY50",
+  },
   {
     id: "mymenopauserx",
     name: "MyMenopauseRx",
-    heading: "Most insurance-friendly",
+    shortDescription: "Most insurance-friendly",
     bottomLine: "No code",
   },
 ];
@@ -79,12 +92,13 @@ const clinics: BoxClinic[] = CLINIC_BOXES.map((sample) => ({
   name: sample.name,
   logo: { src: `/mockup/logos/${sample.id}.png` },
   offerCode: sample.code,
+  shortDescription: sample.shortDescription,
 }));
 
 const clinicBoxes = CLINIC_BOXES.map((sample) => ({
   clinic: emptyLink,
   image: emptyImage,
-  heading: rich(sample.heading),
+  heading: emptyRich,
   text: emptyRich,
   bottom_line: sample.bottomLine ?? null,
   link: jump(`#${sample.id}`),

@@ -137,6 +137,21 @@ permutations.
 Default implementation should avoid indexable faceted navigation unless
 a specific SEO strategy approves individual facets.
 
+`/search` is always noindex, including when `ALLOW_INDEXING=true`.
+The canonical is `/search`. `?q=` repeats that search for someone with
+the link. It is not a separate indexable URL, and the page has no type
+filter.
+
+## Sitemap
+
+`/sitemap.xml` lists the canonical URL of every published Page and Post
+still set to Index, plus the HTML sitemap at `/sitemap`. It leaves out
+`/search`, mockup routes, and the homepage while `/` is still the
+placeholder. `lastmod` is that document's last publication time in
+Prismic, when one exists. The page at `/sitemap` is built in the app,
+not stored in Prismic, and it also links Home. When indexing is on,
+`robots.txt` points at `/sitemap.xml`.
+
 ## Performance
 
 Core Web Vitals are part of search quality.

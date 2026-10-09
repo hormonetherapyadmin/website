@@ -44,12 +44,14 @@ async function loadPage(uid: string) {
   }
 }
 
-function titleOf(page: PageDocument) {
-  return asText(page.data.title).trim();
+function heroHeading(page: PageDocument) {
+  const first = page.data.slices[0];
+  if (first?.slice_type !== "hero") return "";
+  return asText(first.primary.heading).trim();
 }
 
 function metaTitle(page: PageDocument) {
-  return page.data.meta_title?.trim() || titleOf(page);
+  return page.data.meta_title?.trim() || heroHeading(page);
 }
 
 export async function generateMetadata(
@@ -59,7 +61,7 @@ export async function generateMetadata(
   const page = await loadPage(uid);
   if (!page) return {};
 
-  const title = metaTitle(page);
+  const title = metaTitle(page) || undefined;
   const description = page.data.meta_description?.trim() || undefined;
   const image = isFilled.image(page.data.meta_image)
     ? page.data.meta_image
@@ -127,7 +129,7 @@ export default async function SitePage(props: PageProps<"/[uid]">) {
   const category =
     typeof searchParams.category === "string" ? searchParams.category : null;
 
-  const title = titleOf(page);
+  const title = page.data.meta_title?.trim() ?? "";
   const startsWithHero = slices[0]?.slice_type === "hero";
 
   return (

@@ -23,7 +23,7 @@ function section(heading: string): SliceSectionFields {
     heading: rich(heading),
     intro: emptyRich,
     link: { link_type: "Any" },
-    background: "Cream",
+    background: "Transparent",
     space_above: "None",
     space_below: "None",
   };
@@ -138,6 +138,34 @@ describe("PageSliceZone", () => {
     expect(html).not.toContain("Visit Inner Balance");
   });
 
+  it("fills a brand promo from the clinic and lets the slice quote replace it", () => {
+    const html = render([
+      slice("brand_promo", {
+        ...section("Improved sleep"),
+        small_heading: rich("Voted best for"),
+        clinic: clinicLink,
+        quote: emptyRich,
+        place: "1st",
+        product: {},
+        links: [
+          {
+            link_type: "Web",
+            url: "/post/inner-balance-hrt-review",
+            text: "My review",
+          },
+        ],
+      }),
+    ]);
+
+    expect(html).toContain('id="inner-balance"');
+    expect(html).toContain("Improved sleep");
+    expect(html).toContain("The one I stayed with.");
+    expect(html).toContain("$199");
+    expect(html).toContain("1st");
+    expect(html).toContain('data-placement="brand_promo"');
+    expect(html).toContain("My review");
+  });
+
   it("shows the posts the page loaded", () => {
     const html = render(
       [slice("posts", { ...section("Keep reading"), category: "All" }, "row")],
@@ -156,12 +184,37 @@ describe("PageSliceZone", () => {
     expect(html).toContain('href="/post/oestra-vs-winona"');
   });
 
+  it("renders a Ribbon from the title, content, and buttons", () => {
+    const html = render([
+      slice("ribbon", {
+        ...section(""),
+        heading: emptyRich,
+        title: rich("Still lining the prices up?"),
+        content: rich("The comparison chart includes Midi Health too."),
+        box_background: "Pink",
+        button: [
+          {
+            link_type: "Web",
+            url: "/hrt-price-comparison-chart",
+            text: "Open the price chart",
+            variant: "Solid",
+          },
+        ],
+      }),
+    ]);
+
+    expect(html).toContain("Still lining the prices up?");
+    expect(html).toContain("Midi Health too");
+    expect(html).toContain("Open the price chart");
+    expect(html).toContain('data-box="Pink"');
+  });
+
   it("renders the Divider and Start here as written", () => {
     const html = render([
       slice("divider", {
         line: "Straight",
         color: "Accent",
-        background: "Cream",
+        background: "Transparent",
         space_above: "None",
         space_below: "None",
       }),

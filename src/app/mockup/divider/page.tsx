@@ -10,14 +10,14 @@ const samples = [
   {
     line: "Squiggly",
     color: "Accent",
-    background: "Cream",
+    background: "Transparent",
     space_above: "None",
     space_below: "None",
   },
   {
     line: "Straight",
     color: "Accent",
-    background: "Cream",
+    background: "Transparent",
     space_above: "None",
     space_below: "None",
   },
@@ -31,7 +31,7 @@ const samples = [
   {
     line: "Straight",
     color: "Border",
-    background: "Cream",
+    background: "Transparent",
     space_above: "None",
     space_below: "None",
   },

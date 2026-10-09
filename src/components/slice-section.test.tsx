@@ -120,6 +120,21 @@ describe("SliceSection", () => {
       ),
     ).toContain("[--section-kicker:var(--color-panel-accent)]");
     expect(retired).not.toContain("py-slice");
+    expect(retired).not.toContain("bg-");
+  });
+
+  it("paints a cream band but leaves Transparent unpainted", () => {
+    const cream = renderToStaticMarkup(
+      <SliceSection section={fields({ background: "Cream" })} />,
+    );
+    const transparent = renderToStaticMarkup(
+      <SliceSection section={fields({ background: "Transparent" })} />,
+    );
+
+    expect(cream).toContain("bg-background");
+    expect(cream).not.toContain("py-slice");
+    expect(transparent).not.toContain("bg-");
+    expect(transparent).not.toContain("py-slice");
   });
 
   it("lets the hero render its own heading", () => {

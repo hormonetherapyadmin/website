@@ -17,6 +17,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   useCallback,
   useEffect,
@@ -137,13 +138,47 @@ function LinkMark({ link }: { link: NavLink }) {
   return (
     <span
       className={styles.navIconImage}
-      style={
-        {
-          "--nav-icon": `url("${link.icon.replaceAll('"', "")}")`,
-        } as CSSProperties
-      }
+      style={iconMask(link.icon)}
       aria-hidden="true"
     />
+  );
+}
+
+function iconMask(url: string): CSSProperties {
+  return {
+    "--nav-icon": `url("${url.replaceAll('"', "")}")`,
+  } as CSSProperties;
+}
+
+export function HeaderCta({ link }: { link: NavLink }) {
+  const named =
+    link.icon && link.icon in ICONS
+      ? ICONS[link.icon as NavIconName]
+      : undefined;
+
+  return (
+    <Link
+      href={link.href}
+      className={styles.headerCta}
+      target={link.newTab ? "_blank" : undefined}
+      rel={link.newTab ? "noopener noreferrer" : undefined}
+    >
+      {named ? (
+        <HugeiconsIcon
+          icon={named}
+          size={18}
+          strokeWidth={1.75}
+          aria-hidden="true"
+        />
+      ) : link.icon ? (
+        <span
+          className={styles.headerCtaIcon}
+          style={iconMask(link.icon)}
+          aria-hidden="true"
+        />
+      ) : null}
+      {link.label}
+    </Link>
   );
 }
 
