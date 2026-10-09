@@ -20,15 +20,11 @@ export type HeroClinic = {
   logo?: ImageField | null;
   formulation?: KeyTextField;
   visit?: LinkField | null;
-  display_price?: KeyTextField;
-  display_price_note?: KeyTextField;
+  monthly_price?: number | null;
+  price_note?: KeyTextField;
   top_choice_label?: KeyTextField;
-  offer?: {
-    data?: {
-      code?: KeyTextField;
-      display_copy?: RichTextField | null;
-    } | null;
-  } | null;
+  code?: KeyTextField;
+  code_note?: KeyTextField;
 };
 
 export type HeroClinicLink = {
@@ -76,8 +72,9 @@ function text(value: KeyTextField | null | undefined) {
   return trimmed ? trimmed : undefined;
 }
 
-function priceLabel(value: string) {
-  return value.startsWith("$") ? value : `$${value}`;
+function priceLabel(value: number) {
+  const amount = Number.isInteger(value) ? String(value) : value.toFixed(2);
+  return `$${amount}`;
 }
 
 function Chevron() {
@@ -454,9 +451,13 @@ function ProviderHero({ primary }: { primary: ProviderPrimary }) {
   const name = text(clinic?.name);
   const brand = text(clinic?.formulation) ?? name;
   const kicker = text(clinic?.top_choice_label);
-  const price = text(clinic?.display_price);
-  const priceNote = text(clinic?.display_price_note);
-  const code = text(clinic?.offer?.data?.code);
+  const price =
+    typeof clinic?.monthly_price === "number"
+      ? clinic.monthly_price
+      : undefined;
+  const priceNote = text(clinic?.price_note);
+  const code = text(clinic?.code);
+  const codeNote = text(clinic?.code_note);
   const links = (primary.links ?? []).filter(
     (link) => isFilled.link(link) && link.text,
   );
@@ -518,7 +519,7 @@ function ProviderHero({ primary }: { primary: ProviderPrimary }) {
             </ul>
           ) : null}
         </div>
-        {isFilled.image(primary.product) || price || code ? (
+        {isFilled.image(primary.product) || price || code || codeNote ? (
           <div className={styles.offer}>
             {isFilled.image(primary.product) ? (
               <figure className={styles.productShot}>
@@ -556,15 +557,14 @@ function ProviderHero({ primary }: { primary: ProviderPrimary }) {
                   </PrismicNextLink>
                 </div>
               ) : null}
-              {code ? (
+              {code || codeNote ? (
                 <div className={styles.dealCode}>
-                  <span className={styles.code}>Code {code}</span>
-                  <RichText
-                    field={clinic?.offer?.data?.display_copy}
-                    as="p"
-                    unstyled
-                    className={styles.dealCopy}
-                  />
+                  {code ? (
+                    <span className={styles.code}>Code {code}</span>
+                  ) : null}
+                  {codeNote ? (
+                    <p className={styles.dealCopy}>{codeNote}</p>
+                  ) : null}
                 </div>
               ) : null}
             </aside>

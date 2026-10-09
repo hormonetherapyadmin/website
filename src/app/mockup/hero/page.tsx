@@ -173,19 +173,15 @@ export default function HeroPreview() {
               formulation: "Oestra",
               logo: image("/mockup/logos/inner-balance.png", ""),
               top_choice_label: "My 2026 top choice",
-              display_price: "199",
-              display_price_note: "First six months, then $99.",
+              monthly_price: 199,
+              price_note: "First six months, then $99.",
+              code: "PEGGY10",
+              code_note: "10% off your first order",
               visit: {
                 link_type: "Web",
                 url: "https://example.com",
                 text: "Visit Inner Balance",
                 target: "_blank",
-              },
-              offer: {
-                data: {
-                  code: "PEGGY10",
-                  display_copy: rich("10% off your first order"),
-                },
               },
             },
           },

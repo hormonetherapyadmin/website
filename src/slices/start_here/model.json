@@ -19,6 +19,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Small heading",
+                  "labels": ["superscript"],
                   "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
@@ -27,6 +28,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Heading",
+                  "labels": ["superscript"],
                   "placeholder": "Where should I start?",
                   "single": "paragraph,strong,em,hyperlink"
                 },
@@ -36,6 +38,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Intro",
+                  "labels": ["superscript"],
                   "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
@@ -85,6 +88,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Small heading",
+                  "labels": ["superscript"],
                   "placeholder": "Brand new to this",
                   "single": "paragraph,strong,em,hyperlink"
                 },
@@ -94,6 +98,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Heading",
+                  "labels": ["superscript"],
                   "placeholder": "Is HRT for me?",
                   "single": "paragraph,strong,em,hyperlink"
                 },
@@ -103,6 +108,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Text",
+                  "labels": ["superscript"],
                   "placeholder": "The sentence under the title",
                   "single": "paragraph,strong,em,hyperlink"
                 },

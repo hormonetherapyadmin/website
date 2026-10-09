@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Appointment01Icon,
   Cancel01Icon,
@@ -174,7 +175,7 @@ export default async function InnerBalanceMockup(
           </blockquote>
           <ul className={styles.resourceLinks}>
             <li>
-              <a href={ONE_YEAR}>
+              <Link href={ONE_YEAR}>
                 <HugeiconsIcon
                   icon={News01Icon}
                   size={16}
@@ -182,10 +183,10 @@ export default async function InnerBalanceMockup(
                   aria-hidden="true"
                 />
                 My 1-year review
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/post/inner-balance-hrt-review">
+              <Link href="/post/inner-balance-hrt-review">
                 <HugeiconsIcon
                   icon={News01Icon}
                   size={16}
@@ -193,7 +194,7 @@ export default async function InnerBalanceMockup(
                   aria-hidden="true"
                 />
                 HRT review
-              </a>
+              </Link>
             </li>
             <li>
               <a href={YOUTUBE} target="_blank" rel="noopener noreferrer">

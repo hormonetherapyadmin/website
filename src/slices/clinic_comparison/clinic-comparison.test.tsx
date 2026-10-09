@@ -54,8 +54,7 @@ function clinic(overrides: Partial<ComparisonClinic> = {}): ComparisonClinic {
     href: "https://example.com/winona",
     newTab: true,
     logo: { src: "/mockup/logos/winona.png" },
-    tested: true,
-    bestFor: "Creams, no appointment",
+    shortDescription: "Creams, no appointment",
     monthlyPrice: 89,
     insurance: false,
     formulation: "Topical cream",
@@ -103,7 +102,6 @@ describe("ClinicComparison", () => {
       name: "Midi Health",
       href: undefined,
       newTab: false,
-      tested: false,
       monthlyPrice: 39,
       insurance: true,
       offerCode: undefined,
@@ -145,7 +143,8 @@ describe("ClinicComparison", () => {
     expect(markup).toContain("Read review");
     expect(markup).toContain("Takes insurance");
     expect(markup).toContain("Doesn’t take insurance");
-    expect(markup).toContain("Tested by Peggy. I was a patient here.");
+    expect(markup).toContain("Creams, no appointment");
+    expect(markup).not.toContain("Tested by Peggy");
   });
 
   it("links an affiliate visit and leaves a clinic with no visit as text", () => {

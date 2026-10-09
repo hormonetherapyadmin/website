@@ -5,6 +5,15 @@ const nextConfig: NextConfig = {
   // Matches the live Wix URLs, which have no trailing slash.
   trailingSlash: false,
 
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.prismic.io",
+      },
+    ],
+  },
+
   async headers() {
     if (isIndexingAllowed()) {
       return [];

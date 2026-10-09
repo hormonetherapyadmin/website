@@ -16,6 +16,10 @@ export type TokenClinic = {
   priceNote?: string;
   insurance?: boolean;
   formulation?: string;
+  /** Getting started, the third price-box bullet. */
+  gettingStarted?: string;
+  /** Site page about this clinic. Blank until that page exists. */
+  pageHref?: string;
 };
 
 export type ProviderToken = {
@@ -153,4 +157,20 @@ export function contentPieces(
 
   flush();
   return pieces;
+}
+
+/**
+ * Clinic UIDs for the post sidebar, in the order each clinic's first
+ * token appears. A repeated token stays once. A token in the middle of
+ * a sentence does not count.
+ */
+export function storyClinicUids(
+  field: RichTextField | null | undefined,
+): string[] {
+  const uids: string[] = [];
+  for (const piece of contentPieces(field)) {
+    if (piece.kind !== "token" || uids.includes(piece.uid)) continue;
+    uids.push(piece.uid);
+  }
+  return uids;
 }

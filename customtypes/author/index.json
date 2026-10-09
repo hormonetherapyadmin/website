@@ -1,0 +1,60 @@
+{
+  "format": "custom",
+  "id": "author",
+  "json": {
+    "Main": {
+      "uid": {
+        "config": {
+          "label": "UID"
+        },
+        "type": "UID"
+      },
+      "name": {
+        "config": {
+          "label": "Name",
+          "placeholder": ""
+        },
+        "type": "Text"
+      },
+      "name_title": {
+        "config": {
+          "label": "Name title",
+          "placeholder": ""
+        },
+        "type": "Text"
+      },
+      "about": {
+        "config": {
+          "allowTargetBlank": true,
+          "label": "About",
+          "labels": ["superscript"],
+          "multi": "paragraph,strong,em,hyperlink",
+          "placeholder": ""
+        },
+        "type": "StructuredText"
+      },
+      "profile": {
+        "config": {
+          "constraint": {},
+          "label": "Profile",
+          "thumbnails": []
+        },
+        "type": "Image"
+      },
+      "author_link": {
+        "config": {
+          "allowTargetBlank": true,
+          "allowText": true,
+          "label": "Author link",
+          "placeholder": "",
+          "repeat": false,
+          "select": null
+        },
+        "type": "Link"
+      }
+    }
+  },
+  "label": "Author",
+  "repeatable": true,
+  "status": true
+}

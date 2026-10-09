@@ -19,6 +19,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Small heading",
+                  "labels": ["superscript"],
                   "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
@@ -27,6 +28,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Heading",
+                  "labels": ["superscript"],
                   "placeholder": "Peggy's take: what I'm using now",
                   "single": "paragraph,strong,em,hyperlink"
                 },
@@ -36,6 +38,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Intro",
+                  "labels": ["superscript"],
                   "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
@@ -82,6 +85,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Quote",
+            "labels": ["superscript"],
             "placeholder": "The large sentence.",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -106,6 +110,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Text",
+            "labels": ["superscript"],
             "placeholder": "The note under the name.",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -115,6 +120,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Reminder",
+            "labels": ["superscript"],
             "placeholder": "This is my personal experience, not medical advice.",
             "single": "paragraph,strong,em,hyperlink"
           },

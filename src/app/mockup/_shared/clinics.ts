@@ -5,7 +5,7 @@ export type Clinic = {
   name: string;
   monthly: number;
   priceNote?: string;
-  bestFor: string;
+  shortDescription: string;
   quote: string;
   insurance: boolean;
   formulation: string;
@@ -23,7 +23,7 @@ export const CLINICS: Clinic[] = [
     name: "Inner Balance",
     monthly: 150,
     priceNote: "Average over the first year",
-    bestFor: "Better sleep",
+    shortDescription: "Better sleep",
     quote:
       "Finding a product that treats my symptoms of menopause and helps with sleep was a clear winner for me.",
     insurance: false,
@@ -39,7 +39,7 @@ export const CLINICS: Clinic[] = [
   {
     name: "Winona",
     monthly: 89,
-    bestFor: "Creams, no appointment",
+    shortDescription: "Creams, no appointment",
     quote:
       "I received my first order within 5 days of placing order for the HRT products my clinician recommended.",
     insurance: false,
@@ -53,7 +53,7 @@ export const CLINICS: Clinic[] = [
   {
     name: "Musely",
     monthly: 46,
-    bestFor: "First-timers",
+    shortDescription: "First-timers",
     quote:
       "Bi-Est is considered a gentler form of HRT & a good product for newbies or those who have reservations about HRT.",
     insurance: false,
@@ -66,7 +66,7 @@ export const CLINICS: Clinic[] = [
   {
     name: "Alloy",
     monthly: 75,
-    bestFor: "A simple patch + pill start",
+    shortDescription: "A simple patch + pill start",
     quote:
       "I would describe my experience with Alloy as a pleasant straight-forward experience.",
     insurance: false,
@@ -80,7 +80,7 @@ export const CLINICS: Clinic[] = [
   {
     name: "Joi Women’s Wellness",
     monthly: 233,
-    bestFor: "Labs and real 1:1 time",
+    shortDescription: "Labs and real 1:1 time",
     quote:
       "My 1:1’s were very thorough and I learned something new each time I met with a Joi Clinician.",
     insurance: false,
@@ -95,7 +95,7 @@ export const CLINICS: Clinic[] = [
   {
     name: "Effecty",
     monthly: 140,
-    bestFor: "No hidden fees",
+    shortDescription: "No hidden fees",
     quote:
       "I can share with you first hand, they are not kidding when they say no hidden fees.",
     insurance: false,
@@ -110,7 +110,7 @@ export const CLINICS: Clinic[] = [
     name: "MyMenopauseRx",
     monthly: 39,
     priceNote: "+ $99 one-time consult",
-    bestFor: "Using your insurance",
+    shortDescription: "Using your insurance",
     quote:
       "If you are one who knows you want to use your medical and prescription insurance to start or start-over on HRT, then I highly recommend [MyMenopauseRx].",
     insurance: true,
@@ -125,7 +125,7 @@ export const CLINICS: Clinic[] = [
     name: "Midi Health",
     monthly: 39,
     priceNote: "+ $250 one-time consult",
-    bestFor: "A next-day appointment",
+    shortDescription: "A next-day appointment",
     quote:
       "When I was a new client of Midi Health, I was able to get an appointment the very next business day.",
     insurance: true,

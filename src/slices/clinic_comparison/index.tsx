@@ -19,10 +19,9 @@ export type ComparisonClinic = {
   newTab?: boolean;
   logo?: { src: string };
   monogram?: string;
-  tested?: boolean;
   /** Badge text. The star is part of the layout. */
   topChoice?: string;
-  bestFor?: string;
+  shortDescription?: string;
   monthlyPrice?: number | null;
   priceNote?: string;
   insurance?: boolean;
@@ -88,31 +87,6 @@ function Chevron() {
       aria-hidden="true"
     >
       <path d="m9 6 6 6-6 6" />
-    </svg>
-  );
-}
-
-function TestedIcon() {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      className={styles.testedIcon}
-      aria-hidden="true"
-    >
-      <path
-        d="M12 2l2.17 1.89 2.83-.55.94 2.72 2.72.94-.55 2.83L22 12l-1.89 2.17.55 2.83-2.72.94-.94 2.72-2.83-.55L12 22l-2.17-1.89-2.83.55-.94-2.72-2.72-.94.55-2.83L2 12l1.89-2.17-.55-2.83 2.72-.94.94-2.72 2.83.55z"
-        fill="currentColor"
-      />
-      <path
-        d="M8.5 12.2l2.4 2.4 4.6-4.8"
-        fill="none"
-        stroke="#fff"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
     </svg>
   );
 }
@@ -302,13 +276,13 @@ export function ClinicComparison({
           >
             <table className={styles.table}>
               <caption className="sr-only">
-                What each clinic is best for, what Peggy paid per month,
+                A short description of each clinic, what Peggy paid per month,
                 insurance, typical formulation, and her notes
               </caption>
               <thead>
                 <tr>
                   <th scope="col">Clinic</th>
-                  <th scope="col">Best for</th>
+                  <th scope="col">Description</th>
                   <th scope="col" className={styles.priceHead}>
                     {checked ? (
                       <Tip label={`Checked ${checked}`} describe>
@@ -335,13 +309,6 @@ export function ClinicComparison({
                       <span className={styles.clinic}>
                         <span className={styles.logoWrap}>
                           <Logo clinic={clinic} />
-                          {clinic.tested ? (
-                            <span className={styles.testedSeal}>
-                              <Tip label="Tested by Peggy. I was a patient here.">
-                                <TestedIcon />
-                              </Tip>
-                            </span>
-                          ) : null}
                         </span>
                         <span>
                           <ClinicName clinic={clinic} />
@@ -354,8 +321,10 @@ export function ClinicComparison({
                       </span>
                     </th>
                     <td>
-                      {clinic.bestFor ? (
-                        <span className={styles.bestFor}>{clinic.bestFor}</span>
+                      {clinic.shortDescription ? (
+                        <span className={styles.description}>
+                          {clinic.shortDescription}
+                        </span>
                       ) : null}
                     </td>
                     <td className={styles.priceCell}>

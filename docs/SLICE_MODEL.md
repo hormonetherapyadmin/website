@@ -9,7 +9,7 @@ used to WordPress and is not technical, so each slice is one visible
 section, labels are plain, and a fact she reuses is edited on its own
 document.
 
-The article and the blog index are page types with fields and no slice
+The post and the blog index are page types with fields and no slice
 zone. They are specified below. The provider page and the
 trusted-providers page are not specified yet. They follow the shared
 rules below.
@@ -17,17 +17,15 @@ rules below.
 ## Document kinds
 
 A public page is a Prismic page type. A document other pages read is a
-custom type. The clinic is a custom type, and it still has a public
-page when its URL section is set.
+custom type. The clinic has no public page. A clinic page is a Page.
 
 | Document | Kind | Why |
 | --- | --- | --- |
 | Homepage | Page type, single | The `/` page |
 | Blog | Page type, single | The `/blog` page |
 | Provider | Custom type | The clinic every slice links to. File: `customtypes/provider` |
-| Article | Page type | A blog post. File: `customtypes/article` |
+| Post | Page type | A blog post. File: `customtypes/post` |
 | Provider review, Comparison, Page | Page type | Public pages |
-| Offer | Custom type | A coupon has no page |
 | Callout | Custom type | A reusable box inside a post has no page |
 
 A content relationship points at a document so the page can show that
@@ -44,7 +42,7 @@ Relationship fields can include fields from the linked document, two
 levels deep. They cannot include a slice zone. Facts that another page
 must read live in the static zone, above any slices. A story cannot
 hold a relationship inside a paragraph, so a clinic box in a story uses
-the token described under Article. The token reads the same clinic
+the token described under Post. The token reads the same clinic
 fields a slice would.
 
 ## Shared rules
@@ -116,7 +114,7 @@ Two toolbars share the component:
 | Preset | Allows | Used for |
 | --- | --- | --- |
 | Heading | One block: paragraph, bold, italic, link | Titles, intros, quotes, captions, eyebrows |
-| Content | Many blocks: Heading 2, Heading 3, Heading 4, paragraphs, bold, italic, links, lists, image, video embed, labels | Story body and article body |
+| Content | Many blocks: Heading 2, Heading 3, Heading 4, paragraphs, bold, italic, links, lists, image, video embed, labels | Story body and post body |
 
 Heading 1 is not on the content toolbar. The slice chooses the heading
 tag for a Heading field, so a section title cannot become a second page
@@ -129,7 +127,7 @@ content field's JSON (`labels`), not in the Type Builder. Handle them in
 | Label | Renders as |
 | --- | --- |
 | `highlight` | A phrase that stands out |
-| `superscript` | A source number |
+| `superscript` | A source number. Registered on every rich text field |
 | `signoff` | The large closing line, when the label covers the whole paragraph |
 | `note` | The tint box, when the label covers the whole paragraph |
 
@@ -272,11 +270,10 @@ clinic.
 | Product image | `product` | Image | No | The Oestra jar |
 
 The relationship fetches `name`, `logo`, `formulation`, `visit`,
-`display_price`, `display_price_note`, `top_choice_label`, and the
-offer's `code` and `display_copy`. The price card shows the formulation
-when that field is filled, and the clinic name otherwise. `display_price`
-is the price on the clinic page, such as 199. The comparison chart still
-uses `monthly_price`.
+`monthly_price`, `price_note`, `top_choice_label`, `code`, and
+`code_note`. The price card shows the formulation when
+that field is filled, and the clinic name otherwise. The price is the
+clinic's one monthly price.
 
 ### Start here
 
@@ -324,7 +321,7 @@ links on the blog page.
 | --- | --- | --- | --- |
 | Section | `section` | The shared group | All |
 | Category | `category` | Select: All, Review, Comparison, My experience, HRT 101. Default All | All |
-| Post | `post` | Content relationship to Article, Provider review, and Comparison | Featured |
+| Post | `post` | Content relationship to Post, Provider review, and Comparison | Featured |
 | Posts per page | `count` | Number. Empty means 12 | Grid |
 
 On the blog page, the featured post is left out of the grid. A selected
@@ -333,21 +330,20 @@ Page addresses are `/blog` and `/blog/page/N`. The category tabs do not
 get their own public URL until the indexing decision in
 `docs/SEO_AEO_GEO.md`.
 
-An article's Keep reading uses the row variation. When Related posts is
-filled, the page passes those posts in that order. An empty Related
-posts field uses the three newest.
+A post's Keep reading uses the row variation and three posts. Those
+posts are the newest in the same category, then the newest in any
+category. The current post is left out. There is no Related posts field.
 
-The card reads these fields. Use the same ids on Article, Provider
-review, and Comparison:
+The card reads these fields from a Post. Minutes to read is calculated
+from the story.
 
 | Label | Id | Kind |
 | --- | --- | --- |
 | Title | `title` | Heading rich text |
 | Image | `image` | Image |
-| Excerpt | `excerpt` | Heading rich text |
+| Subtitle | `sub_title` | Heading rich text |
 | Published | `published_date` | Date |
-| Minutes to read | `read_time` | Number |
-| Category | `category` | Select on the article |
+| Category | `category` | Select on the post |
 
 ### Clinic comparison
 
@@ -361,17 +357,18 @@ The section id is the heading, and the hero button scrolls to it.
 | Disclosure | `disclosure` | Link, with display text | No | Affiliate disclosure |
 | Clinics | `clinics` | Repeatable group | Yes | The clinics, in table order |
 
-Each row has one field, `clinic`, a content relationship limited to
-Provider. Help: "Add the clinics in the order they should appear. To
-change a price, a quote, or a coupon, edit that clinic."
+Each row has `clinic`, a content relationship limited to Provider, and
+`review`, the link behind "Read review." Help: "Add the clinics in the
+order they should appear. To change a price, a quote, or a code, edit
+that clinic. Pick the review on this row."
 
 The slice is in `src/slices/clinic_comparison`. The page resolves each
 clinic and passes the fields this table reads.
 
-The columns stay fixed: Clinic, Best for, What I paid per month,
+The columns stay fixed: Clinic, Description, What I paid per month,
 Insurance, Typically prescribed, In my words. The relationship fetches
-the Provider fields in the next section, including `offer.code` and
-`offer.display_copy`.
+the Provider fields in the next section, including `code` and
+`code_note`. The review link is the row's Review field.
 
 ### Quote
 
@@ -435,7 +432,7 @@ the large closing line. A Note label on a whole paragraph is the tint
 box. The story's note is "I am not a medical professional, and this site
 does not provide medical advice or treatment plans." A paragraph can
 start with a clinic token, the same `{{provider:inner-balance:offer}}`
-and `{{provider:inner-balance:facts}}` tokens as the article.
+and `{{provider:inner-balance:facts}}` tokens as the post.
 
 ## Provider, Offer, and Callout
 
@@ -443,26 +440,27 @@ and `{{provider:inner-balance:facts}}` tokens as the article.
 
 Custom type, in `customtypes/provider`. One clinic, one document.
 Peggy fills it in tabs. A tab is a group of fields in the editor.
-Every tab is static, so a slice or a story token can read it. The
-clinic page's slices are not in this type yet.
+Every tab is static, so a slice or a story token can read it.
 
-The UID is the id a story token uses, such as `inner-balance`.
+The UID is the id a story token uses, such as `inner-balance`. A clinic
+has no public page. A clinic page is a Page, and the slices on that
+page point at this document.
 
 Slices point at this document with a content relationship. Each slice
-fills itself from the fields it lists. Monthly price is one field.
-The comparison chart, a facts token, and any later slice that lists
-`monthly_price` all show that same number.
+fills itself from the fields it lists. Price is one field. The
+comparison chart, the clinic price card, a facts token, and any later
+slice that lists `monthly_price` all show that same number.
 
 | Place | Points with | Fills in |
 | --- | --- | --- |
 | Hero, brands | `clinic` | Name, logo |
-| Hero, provider | `clinic` | Name, logo, formulation, visit, display price, display price note, top choice label, offer code, offer copy |
-| Clinic comparison | `clinic` | Name, logo, best for, monthly price, price note, insurance, formulation, quote, extra note, tested seal, top choice label, review, visit, offer code, offer copy |
+| Hero, provider | `clinic` | Name, logo, formulation, visit, price, price note, top choice label, code, code line |
+| Clinic comparison | `clinic` | Name, logo, short description, price, price note, insurance, formulation, quote, getting started, top choice label, visit, code, code line. The review link is on the slice row |
 | Quote | `clinic` | Logo, name, visit. A Name on the slice replaces the clinic name |
 | Side by side, clinic | `clinic` | Logo, name, quote, visit |
-| Article sidebar | `clinic` | Name, logo, review |
-| Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, offer code, offer copy, plus the sentence in that paragraph |
-| Story facts token | `{{provider:uid:facts}}` | Monthly price, price note, insurance, formulation |
+| Post sidebar | `clinic` | Name, logo. The name links to Page when that field is set |
+| Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, code, code line, plus the sentence in that paragraph |
+| Story facts token | `{{provider:uid:facts}}` | Price, price note, insurance, formulation |
 
 #### Profile
 
@@ -473,118 +471,73 @@ this tab.
 | --- | --- | --- | --- |
 | Name | `name` | Text | Yes |
 | Logo | `logo` | Image | Yes |
-| Short description | `short_description` | Heading rich text | No |
-| Best for | `best_for` | Text | No |
-| Official website | `website` | Link, no display text | No |
+| Short description | `short_description` | Text | No |
 | Visit | `visit` | Link, with display text, open in a new tab | No |
-| Personally tested | `personally_tested` | Boolean | Yes |
-| Testing notes | `testing_notes` | Heading rich text | No |
-| Facts checked | `last_verified_date` | Date | No |
+| Page | `page` | Link to a Page document | No |
 | Top choice label | `top_choice_label` | Text | No |
-| Source notes | `source_notes` | Heading rich text | No |
 
-An empty Visit link means the name is not a link. A blank Top choice
-label means no badge. Facts checked is the date the prices and care
-details were last confirmed. Nothing else writes that date.
+Short description is the one line about the clinic. The comparison
+chart's Description column reads it, and so does any other clinic
+summary that needs a short line. An empty Visit link means a name that
+would go to the clinic's site is not a link. Page is the site page
+about this clinic. The sidebar name links there when Page is set, and
+a blank Page leaves that name as text. A blank Top choice label means
+no badge. A clinic on the site is one Peggy has tried. There is no
+tested checkbox.
 
 #### Price
 
-What she paid, and what the clinic page shows.
+The one monthly amount, and the line under it.
 
 | Label | Id | Kind | Example |
 | --- | --- | --- | --- |
-| Monthly price | `monthly_price` | Number | What I paid per month |
-| Price note | `price_note` | Text | Line under the chart price |
-| Display price | `display_price` | Text | 199, on the clinic page |
-| Display price note | `display_price_note` | Text | First six months, then $99. |
-| Consultation fee | `consultation_fee` | Text | No visit, or $150 |
-| Membership fee | `membership_fee` | Text | Blank when there is none |
+| Price | `monthly_price` | Number | What I paid per month |
+| Price note | `price_note` | Text | First six months, then $99. |
+| Typically prescribed | `formulation` | Text | Oestra vaginal cream |
+| Takes insurance | `insurance` | Boolean | No |
+| Getting started | `note` | Text | Free consults as needed. |
+| Code | `code` | Text | PEGGY10. Blank when there is no code. |
+| Code line | `code_note` | Text | 10% off your first order. |
 
-The comparison chart uses Monthly price. The clinic page uses Display
-price.
+The comparison chart and the clinic price card show this same price.
+A step-down, such as $199 then $99, is written in Price note. A consult
+fee goes there too, such as "+ $99 one-time consult."
+
+Typically prescribed, Takes insurance, and Getting started are the
+three bullets in the price box, in that order. The chart also uses
+the first two as columns, and Getting started is the line under the
+quote.
 
 #### Care
 
-How the clinic works. The clinic page reads this tab. The facts token
-reads Formulation and Takes insurance from it, plus the price fields.
+Facts that are not in the price box. A clinic page fact list reads
+this tab.
 
 | Label | Id | Kind |
 | --- | --- | --- |
-| Typically prescribed | `formulation` | Text |
-| Lab requirement | `lab_requirement` | Text |
-| Lab notes | `lab_notes` | Heading rich text |
-| Takes insurance | `insurance` | Boolean |
-| HSA / FSA | `hsa_fsa` | Text |
-| Shipping | `shipping` | Text |
-| Eligibility | `eligibility` | Heading rich text |
+| Labs | `lab_requirement` | Text |
+| HSA / FSA | `hsa_fsa` | Boolean |
 | State availability | `state_availability` | Text |
-| Treatments | `treatments` | Repeatable group |
-| Weight support | `weight_support` | Text |
-
-Each treatment row has one field, `treatment`, a content relationship
-to Treatment.
 
 #### Words
 
-Short lines in Peggy's voice. The long review stays on the Provider
-review document.
+Her one sentence. The long review stays on the Provider review.
 
 | Label | Id | Kind | Homepage use |
 | --- | --- | --- | --- |
 | In my words | `quote` | Heading rich text | The table quote |
-| Extra note | `note` | Heading rich text | The line under the quote |
-| Pros | `pros` | Repeatable group | |
-| Cons | `cons` | Repeatable group | |
 
-Each pro and each con is one Text field, `text`.
-
-#### Offer
-
-| Label | Id | Kind |
-| --- | --- | --- |
-| Offer | `offer` | Content relationship to Offer |
-
-The homepage code line and the story offer box read `code` and
-`display_copy` through this field. The visit address stays on Visit.
-
-#### Links
-
-| Label | Id | Kind |
-| --- | --- | --- |
-| Review | `review` | Content relationship to her review |
-| Related | `related` | Repeatable group |
-
-"Read review" uses a fixed label. Each related row has one field,
-`item`, a content relationship limited to Article, Provider review,
-and Comparison.
-
-#### SEO
-
-Meta title, meta description, and social image. URL section and
-Indexing sit here too. URL section adds "No public page", and that is
-the default. A clinic with no public page stays a document slices can
-link to.
-
-### Offer
-
-Custom type. The full field list is in `docs/CONTENT_MODEL.md`. The
-homepage reads two of them through the clinic:
-
-| Label | Id | Kind | Example |
-| --- | --- | --- | --- |
-| Code | `code` | Text | PEGGY10 |
-| Display copy | `display_copy` | Heading rich text | 10% off your first order |
-
-The visit address stays on the clinic's `visit` link.
+Code and Code line sit on the Price tab. Visit is the only link to the
+clinic. "Read review" is a link on the slice that shows it.
 
 ### Callout
 
-Custom type. A rich text field cannot contain a Provider, an Offer, or a
+Custom type. A rich text field cannot contain a Provider or a
 Callout, so a page that wants one between paragraphs needs a slice. The
-article does not. Its personal note is a field. An offer box in the
-story is a provider token, described under Article.
+post does not. Its personal note is a field. An offer box in the
+story is a provider token, described under Post.
 
-Nothing in the homepage or the article points at a Callout yet. The
+Nothing in the homepage or the post points at a Callout yet. The
 fields stay as specified for a later page:
 
 | Label | Id | Kind |
@@ -593,83 +546,86 @@ fields stay as specified for a later page:
 | Style | `style` | Select: Note or Offer |
 | Text | `text` | Content rich text |
 | Clinic | `clinic` | Content relationship to Provider, optional |
-| Offer | `offer` | Content relationship to Offer, optional |
 
-An Offer box reads the code and the visit link from the linked Offer
-and clinic. The sentence for that spot lives in Text.
+An Offer box reads the code and the visit link from the clinic. The
+sentence for that spot lives in Text.
 
-## Article
+## Post
 
-Repeatable page type, in `customtypes/article`. No slice zone. One Wix
-blog post becomes one Article. The layout is the blog post mockup. The card fields are the
-same ids the Latest posts slice already reads: `title`, `image`,
-`excerpt`, `published_date`, `read_time`, and `category`.
+Repeatable page type, in `customtypes/post`. No slice zone. One Wix
+blog post becomes one Post. The layout is the blog post mockup. The card reads `title`, `image`, `sub_title`, `published_date`, and `category`. Minutes to read is calculated from the story.
 
 Use the page type's SEO tab for the meta title, meta description, and
-social image. An empty meta title uses the post title. An empty social
-image uses Image. An empty meta description uses Excerpt. On the live
-site the meta description and the excerpt are different sentences, so
-migration fills both.
+social image. An empty meta title uses the post title. An empty meta
+description uses the subtitle. An empty social image uses Image. On the
+live site the meta description is its own sentence, so migration fills
+it from the Wix meta description when Wix has one. The Wix excerpt goes
+in Subtitle.
 
-Sampled from the live site in October 2026: the post sitemap lists 142
-posts, the feed lists the latest 20, and 18 posts were read in full.
-Categories are unused. The categories sitemap contains only `/blog`.
-Every sampled post is by Peggy, has a cover image, a read time, and a
-meta description that is not the excerpt. Tags are sparse and messy.
-Confirm `relatedPostIds`, `featured`, and `commentingEnabled` when the
-Wix API is available. The page does not use featured or comments.
+Sampled from the live site in October 2026, then checked against the
+Wix API on 2026-10-08: the post sitemap lists 142 posts, the feed lists
+the latest 20, and 18 posts were read in full. The categories sitemap
+contains only `/blog`. The API also returns five Wix blog categories
+on 42 posts. Those are not the Category select, and migration leaves
+Category empty. Every post has a cover image. One of the 142 excerpts
+matches its meta description, so those stay separate fields. Tags are
+sparse and messy. Migration writes each Wix tag label onto the
+document's Prismic tags. Published is the date on the Wix article, the
+first published date. One hundred twenty posts also have a later last
+published date. That later date and `relatedPostIds` are not stored.
+Comments are turned on in Wix and are not imported. One post is
+featured. Featured, pinned, and comments are not stored. Author is
+left empty. Two posts use a different Wix member id. Those two are
+corrected in Prismic.
 
 ### Fields
 
 | Label | Id | Kind | Required | Comes from |
 | --- | --- | --- | --- | --- |
 | Title | `title` | Heading rich text | Yes | Wix title. The page title and the card |
-| URL section | `url_section` | Select | Yes | Blog post, unless the manifest says otherwise |
-| Excerpt | `excerpt` | Heading rich text | No | Wix excerpt. The card and the feed |
-| Dek | `dek` | Heading rich text | No | Mockup only. Live posts have none |
-| Image | `image` | Image, including its description | Yes | Wix cover |
-| Caption | `caption` | Heading rich text | No | The line under the cover, when that photo has one |
-| Author | `author` | Content relationship to Author | Yes | Peggy |
-| Published | `published_date` | Date | Yes | Wix first published date |
-| Updated | `updated_date` | Date | No | Wix last published date |
-| Minutes to read | `read_time` | Number | Yes | Wix read time, in minutes |
-| Category | `category` | Select | No | Mockup only. Wix posts have no category |
+| Subtitle | `sub_title` | Heading rich text | No | Wix excerpt. The line under the title, and the card |
 | Personal note | `note` | Heading rich text | No | Mockup only. The box above the story |
 | Story | `body` | Content rich text | Yes | Wix rich content |
+| Image | `image` | Image, including its description | Yes | Wix cover |
+| Caption | `caption` | Heading rich text | No | The line under the cover, when that photo has one |
+| Author | `author` | Content relationship to Author | No | Left empty. Empty means Peggy B. Two posts are corrected in Prismic |
+| Published | `published_date` | Date | Yes | The date on the Wix article. Wix first published date |
+| Category | `category` | Select | No | Left empty. Wix blog categories are not this select |
 | Sources | `sources` | Repeatable group | No | Mockup only |
-| Tags | `tags` | Repeatable group | No | Wix tags |
-| Topics | `topics` | Repeatable group | No | Not in Wix. Peggy files the post |
-| Treatments | `treatments` | Repeatable group | No | Not in Wix |
-| Clinics | `clinics` | Repeatable group | No | Not in Wix. The sidebar |
-| Related posts | `related` | Repeatable group | No | Wix related posts, when the API sends them |
 | Canonical | `canonical` | Link, no display text | No | Only when the post should point elsewhere |
-| Indexing | `indexing` | Select | Yes | Index. Change it only to hide a post |
+| Indexing | `indexing` | Boolean | Yes | On. Turn it off only to hide a post |
 
-URL section choices are "Blog post (/post/…)" and "Site page (/…)".
-New posts default to Blog post. The UID is the Wix slug.
+Every post is `/post/<uid>`. There is no URL section field. The UID is
+the Wix slug.
 
 Category choices are Review, Comparison, My experience, and HRT 101.
 Empty means no kicker. These are not Category documents and they are
 not public pages. The `?type=` filter on the blog mockup stays off
 the public site until an indexing decision says otherwise.
 
-Indexing choices are Index and No index. Index is the default. The
+Indexing is on by default. Turn it off only to hide a post. The
 site-wide noindex switch still hides every page until cutover.
 
-Show Updated only when its calendar day differs from Published. Store
-the Wix date either way. Nothing else writes this date. She changes
-it when she revises the story.
-
-Hide Dek, Caption, Personal note, Sources, Tags, and the clinics
-sidebar when those fields are empty. The personal-note label
-"Personal review note" is part of the layout. The field is the
-sentence.
+Hide Subtitle, Caption, Personal note, and Sources when those fields
+are empty. Hide the clinics sidebar when the story names no clinic. The
+personal-note label "Personal review note" is part of the layout. The
+field is the sentence.
 
 Image help: "Describe the photo. This is the text a screen reader
 reads." Caption help: "The line under the photo. It can include a
-link." Excerpt help: "The card and the feed. One or two sentences."
-Minutes to read help: "Change this if the story gets much longer or
-shorter."
+link."
+
+Published is the day the post first went live, the date shown on the
+Wix article. There is no updated date. A later Wix "last published"
+date is not copied. A revision she wants readers to see is written in
+the story.
+
+Minutes to read is not a field. The build counts the words in the
+story, at 250 words a minute, and rounds to the nearest minute. A
+story with any words is at least one minute. A clinic token and
+`{{photos}}` are not counted. Wix tags are the document tags at the top of the post, not a
+group on this type. Public `/blog/tags/…` addresses still need a
+disposition in the URL manifest.
 
 ### Story
 
@@ -691,18 +647,19 @@ and do not repeat the photo.
 | Wix block | Becomes |
 | --- | --- |
 | Paragraph | Paragraph |
-| Heading | Heading 2, 3, or 4. A heading 1 in the story becomes Heading 2 |
+| Heading | Heading 2, 3, or 4. The page title is the only Heading 1. A heading 1, 5, or 6 in the story becomes Heading 2 |
 | Bold, italic | Bold, italic |
-| Underline | The words, without the underline |
+| Underline, text color, font size | The words, as a normal paragraph. A 10px number becomes the superscript label |
 | Link | Link. Keep the full address, including affiliate parameters |
 | Image | Image, then its caption as the next paragraph |
-| Two photos side by side | Two images, each with its caption |
+| Two photos side by side | Two images, each with its caption. See Photo row |
 | Button | A paragraph that is only that link |
 | YouTube or other video | Video embed |
 | List | List |
 | Quote | A paragraph. The story has no quote block |
 | Table | The same words, written out under the heading they sat under, and a migration flag |
 | Empty line used as spacing | Dropped |
+| Divider | Not imported. A horizontal line in the Wix story is left out |
 | File, custom HTML, poll, or code | Not dropped. The migration report lists the post for manual review |
 
 Tables showed up in several of the 18 posts, usually a pricing or lab
@@ -712,6 +669,16 @@ Peggy can check that the grid still reads. A grid that is only one
 clinic's current price and formulation can later be replaced with a
 facts token. A grid that compares several clinics, or lists lab
 markers, stays written out. Those words are not on the clinic.
+
+### Photo row
+
+A paragraph that is only `{{photos}}` places the next two photos side
+by side, in the same row as the mockup. The paragraph under each photo
+is that photo's caption. Bold the first word for a label such as
+Before or After. A photo with no token above it stays full width. One
+photo after the token stays full width, and the token is not shown. A
+heading or another token between the photos ends the row. Import does
+not write the token.
 
 ### Clinic tokens
 
@@ -732,68 +699,64 @@ The middle word is the clinic's UID. The last word is the part.
 
 | Part | Renders | Reads |
 | --- | --- | --- |
-| `offer` | The offer box: logo, name, visit button, code | Profile and Offer. The sentence is the rest of the paragraph. If the paragraph is only the token, the sentence is the offer's display copy |
-| `facts` | One clinic's price, price note, insurance, and formulation | Price and Care |
+| `offer` | The offer box: logo, name, visit button, code | Profile and Price. The sentence is the rest of the paragraph. If the paragraph is only the token, the sentence is the code line |
+| `facts` | One clinic's price, price note, insurance, and formulation | Price |
 
 The token is the first thing in the paragraph. A facts token is the
 whole paragraph. Any other last word is ordinary text. In preview, an
 unknown clinic shows an error where the box would be. On the public
 site that token is removed and the rest of the paragraph stays.
 
-Story help: "To add a clinic's offer, start a paragraph with
-{{provider:inner-balance:offer}} and use that clinic's id. Write your
-sentence after it. {{provider:inner-balance:facts}} adds that clinic's
-price and formulation."
+Story help: "Write the story readers will see."
 
-A token does not add the clinic to the sidebar. The Clinics field does
-that. Another part can be added later by teaching the renderer a new
-word. It reads fields that are already on a tab. The story still has
-no slices.
+The sidebar is not a field. It reads the story. Each clinic appears
+once, in the order of its first token, and the sidebar shows the first
+four. The logo and the name come from that clinic. The name links to
+the clinic's Page field. A blank Page leaves the name as text. A review
+link is written on the slice that shows Read review.
+"Compare all clinics" is part of the layout. A clinic named only in
+ordinary sentences stays out of the sidebar until a token names it.
+Another part can be added later by teaching the renderer a new word.
+It reads fields that are already on a tab. The story still has no
+slices.
 
 ### Groups
 
 Sources. The number is the row order. A superscript in the story links
-to that number.
+to that number, and each source has an arrow back to its superscript.
+The link uses the same hover as a link in the story. A story that ends
+with "Resources:" and a list uses that list when this group is empty.
 
 | Label | Id | Kind | Required | Example |
 | --- | --- | --- | --- | --- |
 | Link | `link` | Link, with display text | Yes | Journal of Clinical and Aesthetic Dermatology |
 | Detail | `detail` | Text | No | PubMed Central |
 
-Tags. One text field, `name`. These are the Wix tags, kept so the
-import does not drop them. They are not Topics, and they are not links.
-Public `/blog/tags/…` addresses still need a disposition in the URL
-manifest. "Filed under" shows the names.
-
-Topics. One field, `topic`, a content relationship to Topic.
-
-Treatments. One field, `treatment`, a content relationship to Treatment.
-
-Clinics. One field, `clinic`, a content relationship to Provider.
-Help: "Add them in the order they should appear. The sidebar shows the
-first four." The logo, the name, and the review link come from the
-clinic. "Compare all clinics" is part of the layout, not a field.
-
-Related posts. One field, `post`, a content relationship limited to
-Article, Provider review, and Comparison. Help: "Add them in order.
-Leave this empty to show the three newest posts." The card reads the
-same fields as Latest posts. The row variation is the layout: its
-heading is "Keep reading" and its link is "All posts." When this field
-is filled, the page passes those posts in this order.
+Keep reading is three posts. The same category comes first, newest
+first. If that is fewer than three, the rest are the newest posts in
+any category. The current post is left out. A post with no category
+uses the newest posts. The row variation is the layout: its heading is
+"Keep reading" and its link is "All posts." There is no Related posts
+field.
 
 ### What the page derives
 
-Breadcrumbs are Home, Blog, and the title. The byline and the author
-block read the Author document: name, photo, and short bio. "Read my
+Breadcrumbs are Home, Blog, and the title. Minutes to read and Keep
+reading are calculated, as above. An empty Author field uses Peggy B.
+The byline and the author block read that document: name, profile,
+and about. "Read my
 whole story" and "How I review" are the about page and the editorial
 standards page. The disclosure line is the site affiliate disclosure.
 Share has no fields.
 
 ### Wix fields this page does not store
 
-Commenting, featured, pinned, language, pricing plan, and the Wix
-member id. Author replaces the member. Category is assigned here, not
-imported. Keyword meta tags are not copied.
+Comments, featured, pinned, language, pricing plan, and the Wix
+member id. Author is left empty. Category is left empty. Keyword meta
+tags are not copied. The date on the Wix article is Published. The
+later last published date and the Wix related-post list are not
+stored. The Wix excerpt is Subtitle. Tag labels are the document tags.
+Read time and Keep reading are calculated.
 
 ## Blog
 
@@ -801,9 +764,9 @@ Single page type for `/blog`. No slice zone. The path is `/blog`, the
 same way the homepage path is `/`. It does not use URL section.
 
 The post grid, the category filter, and the page numbers are not
-fields. The grid is every Article whose URL section is Blog post,
-newest first. The first post is the large card. Page addresses stay
-`/blog` and `/blog/page/N`.
+fields. The grid is every Post, newest first. The first post is the
+large card. Page addresses stay `/blog` and `/blog/page/N`. Each post
+is `/post/<uid>`.
 
 Use the SEO tab for the meta title, meta description, and social
 image. The live meta title is "Blog Posts and information on

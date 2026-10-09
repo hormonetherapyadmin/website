@@ -38,7 +38,7 @@ fields, and the rich text rules are specified in `docs/SLICE_MODEL.md`.
 
 The blog index is one single page type at `/blog`. It has no slices.
 The title, dek, topic links, and the telehealth reasons at the bottom
-of the live page are fields. The post grid is every Article, newest
+of the live page are fields. The post grid is every Post, newest
 first. Field ids are in `docs/SLICE_MODEL.md`.
 
 ### Providers Landing
@@ -63,17 +63,19 @@ Canonical disclosure content that can be linked/reused.
 
 ### Author
 
+Custom type, `customtypes/author`. One person, one document.
+
 Fields:
 
--   Name
 -   UID
--   Photo
--   Short bio
--   Long bio
--   Role descriptor
--   Experience/timeline content
--   Social links if applicable
--   SEO fields
+-   Name
+-   Name title — a short line under the name, on the byline and the
+    author card
+-   About
+-   Profile
+
+Peggy B. is the author document. A post with an empty Author field
+uses her. Choose another author only when the post is not hers.
 
 Do not create credential fields that imply medical expertise unless
 actually applicable.
@@ -90,17 +92,20 @@ in tabs. A tab is a group of fields. The model is in that file.
 
 Tabs:
 
--   Profile — name, logo, description, visit link, tested status
--   Price — what she paid, and the price the clinic page shows
--   Care — formulation, labs, insurance, shipping, eligibility, states
--   Words — her short quote, pros, and cons
--   Offer — the coupon
--   Links — her review, and related posts
--   SEO — public page fields. "No public page" is the default
+-   Profile — name, logo, short description, visit link, page link
+-   Price — the monthly price, the three price-box lines, and the coupon code
+-   Care — labs, HSA, states
+-   Words — her short quote
+
+A clinic has no public page and no SEO tab. A clinic page is a Page.
+Slices on that page point at the clinic. Visit is the only link to the
+clinic's own site. Page is a link to the site page about this clinic,
+and it stays blank until that page exists. The sidebar name uses Page.
+A review link is written on the slice that shows it.
 
 Field ids are in `docs/SLICE_MODEL.md`. The long review stays on the
 Provider review. A story inserts a clinic with a token such as
-`{{provider:inner-balance:offer}}`, which reads the Profile and Offer
+`{{provider:inner-balance:offer}}`, which reads the Profile and Price
 tabs.
 
 ### Provider Review
@@ -115,7 +120,6 @@ Fields:
 -   Published date
 -   Updated date
 -   Summary/verdict
--   Personally tested declaration
 -   Review sections/slices
 -   Pros/cons if editorially specific
 -   Related comparisons
@@ -126,10 +130,10 @@ Fields:
 -   Canonical override only when required
 -   Indexability control with safe default
 
-### Article
+### Post
 
-One Wix blog post becomes one Article. The page type is
-`customtypes/article`. It has no slice zone. The story is one rich
+One Wix blog post becomes one Post. The page type is
+`customtypes/post`. It has no slice zone. The story is one rich
 text field. Field ids, the Wix mapping, and the pieces the mockup
 adds are in `docs/SLICE_MODEL.md`.
 
@@ -137,30 +141,25 @@ Fields:
 
 -   Title
 -   UID
--   URL section (see Public Path Strategy)
--   Excerpt
--   Dek
+-   Subtitle (`sub_title`, the line under the title and the card; the Wix excerpt)
+-   Personal note
+-   Story
 -   Image
 -   Caption
 -   Author
 -   Published
--   Updated
--   Minutes to read
 -   Category (a select on the post, not a Category document)
--   Personal note
--   Story
 -   Sources
--   Tags (the Wix tags, kept as labels)
--   Topic references
--   Treatment references
--   Provider references
--   Related posts
 -   SEO title, SEO description, and social image (the page type's SEO tab)
 -   Canonical override only when required
 -   Indexability control with safe default
 
-The card reads Title, Image, Excerpt, Published, Minutes to read, and
-Category. Those ids match the Latest posts slice.
+The card reads Title, Image, Subtitle, Published, Category, and the
+minutes to read. Clinics in the sidebar come from provider tokens in
+the story. A paragraph that is only `{{photos}}` places the next two
+photos side by side. Minutes to read, Keep reading, and the document
+tags are derived. Published is the original publish date. There is no updated
+date. Migration writes the Wix excerpt into Subtitle.
 
 ### Comparison
 
@@ -200,35 +199,15 @@ practical.
 
 ### Category
 
-The article's Category field is a select: Review, Comparison, My
-experience, or HRT 101. Wix posts have no categories. Do not create
-Category documents for those four labels, and do not give them public
-pages, until an indexing decision says the blog filter should be a
-real URL.
+The post's Category field is a select: Review, Comparison, My
+experience, or HRT 101. Wix blog categories are a different list and
+are not copied onto this select. Migration leaves Category empty. Do
+not create Category documents for those four labels, and do not give
+them public pages, until an indexing decision says the blog filter
+should be a real URL.
 
 Use a Category document only where it provides a meaningful editorial
 taxonomy of its own. Avoid duplicating Topic semantics.
-
-### Offer
-
-Suggested fields:
-
--   Name/internal label
--   Provider reference
--   Display copy
--   Coupon code
--   Affiliate destination
--   Terms/notes
--   Active
--   Start/end date if applicable
--   Last verified date
-
-Do not silently fall back from an expired offer to an unrelated
-destination without product approval.
-
-The homepage comparison reads `code` and `display_copy` through the
-provider. The visit address used on the homepage lives on the provider's
-`visit` link. See `docs/SLICE_MODEL.md`.
 
 ### Callout
 
@@ -283,7 +262,7 @@ The homepage slices, the shared Section group, and the shared rich text
 component are specified in `docs/SLICE_MODEL.md`. Copy that Section group
 and those rich text presets onto later slices.
 
-The article and the blog index do not use slices. A post pulls a
+The post and the blog index do not use slices. A post pulls a
 clinic's offer or facts into the story with a provider token. Review,
 provider, and trusted-providers slices are not specified yet.
 Candidates:
@@ -315,7 +294,7 @@ Candidates:
 Trim overlapping candidates before building them (for example Provider
 Card / Provider Grid / Provider Comparison / Comparison Table, and
 Affiliate CTA / Offer Callout). The homepage clinic comparison is the
-comparison slice. An article inserts a clinic offer with a provider
+comparison slice. A post inserts a clinic offer with a provider
 token. It does not insert a Callout.
 
 Before adding a new slice, ask whether an existing slice can represent
@@ -333,27 +312,30 @@ paths.
 Rule:
 
 -   UID is the Wix slug, unchanged (typos included).
--   Every routable editorial type (Article, Provider Review,
-    Comparison, Page, and Provider/Treatment/Topic when they have a
-    public page) has a required **URL section** select field:
+-   A Post is always `/post/<uid>`. It has no URL section field.
+-   A Clinic has no public URL. A clinic page is a Page, and the slices
+    on that page point at the clinic.
+-   Every other routable editorial type (Provider Review, Comparison,
+    Page, and Treatment/Topic when they have a public page)
+    has a required **URL section** select field:
     -   "Blog post (/post/…)" → `/post/<uid>` (default)
     -   "Site page (/…)" → `/<uid>`
--   The public path is always section + UID. There is no free-text
-    path field.
+-   The public path is always section + UID, except for a Post,
+    whose section is fixed. There is no free-text path field.
 -   Prismic only guarantees UID uniqueness within one type, so the
     build fails if two documents of any type resolve to the same path.
 
-Migration populates UID and URL section from the URL manifest.
+Migration populates UID, and URL section where that field exists, from
+the URL manifest.
 
 ## Freshness
 
-Provider facts should expose a `last_verified_date`.
+The comparison chart has a Prices checked date. That is the day the
+prices in that chart were confirmed. A clinic does not store its own
+checked date.
 
-The UI should make freshness visible where useful, especially on
-reviews/comparisons/pricing.
-
-Do not automatically update this date when unrelated editorial fields
-change.
+Do not automatically update the chart date when unrelated editorial
+fields change.
 
 ## Relationships
 
@@ -361,15 +343,17 @@ Preferred graph:
 
 -   Review -\> Provider
 -   Comparison -\> Providers
--   Article -\> Topics/Treatments/Providers
--   Article -\> related Article, Provider Review, and Comparison
--   Provider -\> Offer
--   Callout -\> Provider and Offer
--   Homepage slices -\> Provider, Article, Provider Review, and Comparison
+-   Clinics in the sidebar come from provider tokens in the story, in the order each clinic is first named. The name links to the clinic's Page field. A blank Page leaves the name as text.
+-   Clinic -\> Page. The clinic stores which site page is about it. Slices on that page still point back at the clinic for its facts.
+-   Keep reading is the newest posts in the same category, then the newest posts in any category. It is not a field.
+-   Callout -\> Provider
+-   Homepage slices -\> Provider, Post, Provider Review, and Comparison
 -   All editorial documents -\> Author
 -   A story token looks up a Provider by its UID. That lookup is not a
     content relationship.
 -   Landing pages -\> curated document references as needed
 
 Avoid circular authoring dependencies that make migration or editing
-fragile.
+fragile. The clinic's Page field and the slices on that page are the
+one accepted pair: the clinic names its page, and the page names the
+clinic.

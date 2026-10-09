@@ -19,6 +19,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Small heading",
+                  "labels": ["superscript"],
                   "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
@@ -27,6 +28,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Heading",
+                  "labels": ["superscript"],
                   "placeholder": "Eight online HRT clinics, side by side",
                   "single": "paragraph,strong,em,hyperlink"
                 },
@@ -36,6 +38,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Intro",
+                  "labels": ["superscript"],
                   "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"
@@ -109,6 +112,15 @@
                   "customtypes": ["provider"],
                   "label": "Clinic",
                   "select": "document"
+                },
+                "type": "Link"
+              },
+              "review": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "label": "Review",
+                  "placeholder": "Read review. This page chooses the review."
                 },
                 "type": "Link"
               }

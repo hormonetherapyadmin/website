@@ -3,8 +3,8 @@
 import ClinicComparison from "./clinic_comparison";
 import Divider from "./divider";
 import Hero from "./hero";
-import Quote from "./quote";
 import Posts from "./posts";
+import Quote from "./quote";
 import SideBySide from "./side_by_side";
 import StartHere from "./start_here";
 
@@ -12,8 +12,8 @@ export const components = {
   clinic_comparison: ClinicComparison,
   divider: Divider,
   hero: Hero,
-  quote: Quote,
   posts: Posts,
+  quote: Quote,
   side_by_side: SideBySide,
   start_here: StartHere,
 };

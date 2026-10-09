@@ -349,9 +349,9 @@ export default async function BlogPostMockup(
             <p>
               Looking back, HRT wasn’t the only major change I made during this
               period—but it was definitely the catalyst. The{" "}
-              <a href="/post/bioidentical-hormone-reviews-my-story">
+              <Link href="/post/bioidentical-hormone-reviews-my-story">
                 positive impact that hormone therapy
-              </a>{" "}
+              </Link>{" "}
               had on my mind, body, and overall well-being helped me feel better
               than I had in years. That renewed energy empowered me to lose 40
               pounds, which you can clearly see in the close-up photos above
@@ -398,9 +398,9 @@ export default async function BlogPostMockup(
               </AffiliateLink>
               , everything changed. That was the breakthrough moment for
               smoothing out the{" "}
-              <a href="/post/musely-eye-serum-review-can-it-fix-menopausal-dark-circles-wrinkles">
+              <Link href="/post/musely-eye-serum-review-can-it-fix-menopausal-dark-circles-wrinkles">
                 fine lines and crow’s feet
-              </a>{" "}
+              </Link>{" "}
               that naturally creep up as we age.
             </p>
 
@@ -556,7 +556,7 @@ export default async function BlogPostMockup(
               />
               <div>
                 <h2 id="author-title" className={styles.authorName}>
-                  Written by Peggy B.
+                  Peggy B.
                 </h2>
                 <p>
                   An experienced HRT patient reviewer. Not a doctor. I began my
@@ -580,9 +580,17 @@ export default async function BlogPostMockup(
             <Share />
             <InThisPost sections={SECTIONS} />
             <section aria-labelledby="rail-clinics">
-              <p id="rail-clinics" className={styles.railHeading}>
-                Clinics
-              </p>
+              <div className={styles.railClinicsHead}>
+                <p id="rail-clinics" className={styles.railHeading}>
+                  Clinics
+                </p>
+                <a
+                  href="/hrt-price-comparison-chart"
+                  className={styles.railLink}
+                >
+                  Compare all clinics
+                </a>
+              </div>
               <ul className={styles.mentioned}>
                 {MENTIONED.slice(0, RAIL_CLINIC_LIMIT)
                   .map(clinicNamed)
@@ -596,14 +604,12 @@ export default async function BlogPostMockup(
                     </li>
                   ))}
               </ul>
-              <a href="/hrt-price-comparison-chart" className={styles.railLink}>
-                Compare all clinics
-              </a>
             </section>
           </aside>
         </div>
       </article>
 
+      <div className={shared.divider} aria-hidden="true" />
       <section className={styles.related} aria-labelledby="related-title">
         <div className={shared.sectionHead}>
           <h2 id="related-title">Keep reading</h2>
