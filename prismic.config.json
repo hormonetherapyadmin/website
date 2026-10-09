@@ -2,12 +2,16 @@
   "repositoryName": "1shr96di",
   "routes": [
     {
-      "type": "post",
-      "path": "/post/:uid"
-    },
-    {
       "type": "homepage",
       "path": "/"
+    },
+    {
+      "type": "page",
+      "path": "/:uid"
+    },
+    {
+      "type": "post",
+      "path": "/post/:uid"
     }
   ]
 }

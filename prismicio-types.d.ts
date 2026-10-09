@@ -25,8 +25,7 @@ type PickContentRelationshipFieldData<
         prismic.CustomTypeModelFetchContentRelationshipLevel1
       > as TSubRelationship["id"]
     ]: ContentRelationshipFieldWithData<TSubRelationship["customtypes"], TLang>;
-  } & {
-    // Group
+  } & { // Group
     [
       TGroup in Extract<
         TRelationship["fields"][number],
@@ -38,8 +37,7 @@ type PickContentRelationshipFieldData<
           PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
         >
       : never;
-  } & {
-    // Other fields
+  } & { // Other fields
     [
       TFieldKey in Extract<TRelationship["fields"][number], string>
     ]: TFieldKey extends keyof TData ? TData[TFieldKey] : never;
@@ -249,6 +247,311 @@ export type HomepageDocument<Lang extends string = string> =
   >;
 
 /**
+ * Item in *Navigation → Menu items → Menu links*
+ */
+export interface NavigationDocumentDataMainItemsLinksItem {
+  /**
+   * Label field in *Navigation → Menu items → Menu links*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: What readers see. Leave blank to use the clinic name.
+   * - **API ID Path**: navigation.main_items[].links[].label
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  label: prismic.KeyTextField;
+
+  /**
+   * Link field in *Navigation → Menu items → Menu links*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: The page this opens.
+   * - **API ID Path**: navigation.main_items[].links[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Clinic field in *Navigation → Menu items → Menu links*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: Optional. Uses this clinic's name and logo, and updates when the clinic changes.
+   * - **API ID Path**: navigation.main_items[].links[].clinic
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  clinic: prismic.ContentRelationshipField<"provider">;
+
+  /**
+   * Column heading field in *Navigation → Menu items → Menu links*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Leave blank for the first column. A new heading starts the next column, such as My reviews.
+   * - **API ID Path**: navigation.main_items[].links[].column_heading
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  column_heading: prismic.KeyTextField;
+
+  /**
+   * Icon field in *Navigation → Menu items → Menu links*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: Any icon on a transparent background. Shown in raspberry.
+   * - **API ID Path**: navigation.main_items[].links[].icon
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  icon: prismic.ImageField<never>;
+}
+
+/**
+ * Item in *Navigation → Menu items*
+ */
+export interface NavigationDocumentDataMainItemsItem {
+  /**
+   * Label field in *Navigation → Menu items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: HRT 101
+   * - **API ID Path**: navigation.main_items[].label
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  label: prismic.KeyTextField;
+
+  /**
+   * Link field in *Navigation → Menu items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Leave blank when this item opens a menu. Otherwise where it goes, such as /blog.
+   * - **API ID Path**: navigation.main_items[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Menu links field in *Navigation → Menu items*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: navigation.main_items[].links[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  links: prismic.NestedGroupField<
+    Simplify<NavigationDocumentDataMainItemsLinksItem>
+  >;
+}
+
+/**
+ * Item in *Navigation → Footer columns → Links*
+ */
+export interface NavigationDocumentDataFooterColumnsLinksItem {
+  /**
+   * Label field in *Navigation → Footer columns → Links*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: What readers see. Leave blank to use the clinic name.
+   * - **API ID Path**: navigation.footer_columns[].links[].label
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  label: prismic.KeyTextField;
+
+  /**
+   * Link field in *Navigation → Footer columns → Links*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: The page this opens.
+   * - **API ID Path**: navigation.footer_columns[].links[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Clinic field in *Navigation → Footer columns → Links*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: Optional. Uses this clinic's name, and updates when the clinic changes.
+   * - **API ID Path**: navigation.footer_columns[].links[].clinic
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  clinic: prismic.ContentRelationshipField<"provider">;
+}
+
+/**
+ * Item in *Navigation → Footer columns*
+ */
+export interface NavigationDocumentDataFooterColumnsItem {
+  /**
+   * Heading field in *Navigation → Footer columns*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: HRT 101
+   * - **API ID Path**: navigation.footer_columns[].heading
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  heading: prismic.KeyTextField;
+
+  /**
+   * Links field in *Navigation → Footer columns*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: navigation.footer_columns[].links[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  links: prismic.NestedGroupField<
+    Simplify<NavigationDocumentDataFooterColumnsLinksItem>
+  >;
+}
+
+/**
+ * Content for Navigation documents
+ */
+interface NavigationDocumentData {
+  /**
+   * Menu items field in *Navigation*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: navigation.main_items[]
+   * - **Tab**: Main menu
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  main_items: prismic.GroupField<
+    Simplify<NavigationDocumentDataMainItemsItem>
+  >; /**
+   * Footer columns field in *Navigation*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: navigation.footer_columns[]
+   * - **Tab**: Footer
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  footer_columns: prismic.GroupField<
+    Simplify<NavigationDocumentDataFooterColumnsItem>
+  >;
+}
+
+/**
+ * Navigation document from Prismic
+ *
+ * - **API ID**: `navigation`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type NavigationDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<NavigationDocumentData>,
+    "navigation",
+    Lang
+  >;
+
+type PageDocumentDataSlicesSlice =
+  | HeroSlice
+  | StartHereSlice
+  | PostsSlice
+  | ClinicComparisonSlice
+  | QuoteSlice
+  | SideBySideSlice
+  | DividerSlice;
+
+/**
+ * Content for Page documents
+ */
+interface PageDocumentData {
+  /**
+   * Title field in *Page*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The page name. Shown as the page heading when the page does not start with a Hero.
+   * - **API ID Path**: page.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * Slice Zone field in *Page*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: page.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<PageDocumentDataSlicesSlice>; /**
+   * Meta title field in *Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Leave empty to use the page title.
+   * - **API ID Path**: page.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta description field in *Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: The sentence search results show under the title.
+   * - **API ID Path**: page.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Social image field in *Page*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: page.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+
+  /**
+   * Indexing field in *Page*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: page.indexing
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  indexing: prismic.BooleanField;
+}
+
+/**
+ * Page document from Prismic
+ *
+ * - **API ID**: `page`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type PageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
+
+/**
+ * Item in *Blog post → Tables*
+ */
+export interface PostDocumentDataTablesItem {
+  /**
+   * Table field in *Blog post → Tables*
+   *
+   * - **Field Type**: Table
+   * - **Placeholder**: *None*
+   * - **API ID Path**: post.tables[].table
+   * - **Documentation**: https://prismic.io/docs/fields/table
+   */
+  table: prismic.TableField;
+}
+
+/**
  * Item in *Blog post → Sources*
  */
 export interface PostDocumentDataSourcesItem {
@@ -276,21 +579,6 @@ export interface PostDocumentDataSourcesItem {
 /**
  * Content for Blog post documents
  */
-/**
- * Item in *Blog post → Tables*
- */
-export interface PostDocumentDataTablesItem {
-  /**
-   * Table field in *Blog post → Tables*
-   *
-   * - **Field Type**: Table
-   * - **Placeholder**: *None*
-   * - **API ID Path**: post.tables[].table
-   * - **Documentation**: https://prismic.io/docs/fields/table
-   */
-  table: prismic.TableField;
-}
-
 interface PostDocumentData {
   /**
    * Title field in *Blog post*
@@ -541,13 +829,13 @@ interface ProviderDocumentData {
   /**
    * Page field in *Clinic*
    *
-   * - **Field Type**: Link
+   * - **Field Type**: Content Relationship
    * - **Placeholder**: The site page about this clinic. Leave blank until that page exists.
    * - **API ID Path**: provider.page
    * - **Tab**: Profile
-   * - **Documentation**: https://prismic.io/docs/fields/link
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
    */
-  page: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  page: prismic.ContentRelationshipField<"page">;
 
   /**
    * Top choice label field in *Clinic*
@@ -558,9 +846,7 @@ interface ProviderDocumentData {
    * - **Tab**: Profile
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
-  top_choice_label: prismic.KeyTextField;
-
-  /**
+  top_choice_label: prismic.KeyTextField; /**
    * Price field in *Clinic*
    *
    * - **Field Type**: Number
@@ -586,23 +872,12 @@ interface ProviderDocumentData {
    * Typically prescribed field in *Clinic*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: *None*
+   * - **Placeholder**: First bullet in the price box. Oestra vaginal cream.
    * - **API ID Path**: provider.formulation
    * - **Tab**: Price
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   formulation: prismic.KeyTextField;
-
-  /**
-   * Labs field in *Clinic*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: None, or $150 labs up front.
-   * - **API ID Path**: provider.lab_requirement
-   * - **Tab**: Care
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  lab_requirement: prismic.KeyTextField;
 
   /**
    * Takes insurance field in *Clinic*
@@ -617,33 +892,10 @@ interface ProviderDocumentData {
   insurance: prismic.BooleanField;
 
   /**
-   * HSA / FSA field in *Clinic*
-   *
-   * - **Field Type**: Boolean
-   * - **Placeholder**: *None*
-   * - **Default Value**: false
-   * - **API ID Path**: provider.hsa_fsa
-   * - **Tab**: Care
-   * - **Documentation**: https://prismic.io/docs/fields/boolean
-   */
-  hsa_fsa: prismic.BooleanField;
-
-  /**
-   * State availability field in *Clinic*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: All 50 states
-   * - **API ID Path**: provider.state_availability
-   * - **Tab**: Care
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  state_availability: prismic.KeyTextField;
-
-  /**
    * Getting started field in *Clinic*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: No visit. Shown under the quote and on the clinic facts.
+   * - **Placeholder**: Third bullet in the price box. No visit.
    * - **API ID Path**: provider.note
    * - **Tab**: Price
    * - **Documentation**: https://prismic.io/docs/fields/text
@@ -670,9 +922,39 @@ interface ProviderDocumentData {
    * - **Tab**: Price
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
-  code_note: prismic.KeyTextField;
+  code_note: prismic.KeyTextField; /**
+   * Labs field in *Clinic*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: None, or $150 labs up front.
+   * - **API ID Path**: provider.lab_requirement
+   * - **Tab**: Care
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  lab_requirement: prismic.KeyTextField;
 
   /**
+   * HSA / FSA field in *Clinic*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: provider.hsa_fsa
+   * - **Tab**: Care
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  hsa_fsa: prismic.BooleanField;
+
+  /**
+   * State availability field in *Clinic*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: All 50 states
+   * - **API ID Path**: provider.state_availability
+   * - **Tab**: Care
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  state_availability: prismic.KeyTextField; /**
    * In my words field in *Clinic*
    *
    * - **Field Type**: Rich Text
@@ -700,63 +982,11 @@ export type ProviderDocument<Lang extends string = string> =
     Lang
   >;
 
-/**
- * Menu link in *Navigation → Main menu → Menu items → Menu links*,
- * and in *Navigation → Footer → Footer columns → Links*
- */
-export interface NavigationMenuLink {
-  label: prismic.KeyTextField;
-  link: prismic.LinkField;
-  clinic: prismic.ContentRelationshipField<"provider">;
-  column_heading: prismic.KeyTextField;
-  icon: prismic.ImageField;
-}
-
-export interface NavigationMenuItem {
-  label: prismic.KeyTextField;
-  link: prismic.LinkField;
-  links: prismic.NestedGroupField<NavigationMenuLink>;
-}
-
-export interface NavigationFooterLink {
-  label: prismic.KeyTextField;
-  link: prismic.LinkField;
-  clinic: prismic.ContentRelationshipField<"provider">;
-}
-
-export interface NavigationFooterColumn {
-  heading: prismic.KeyTextField;
-  links: prismic.NestedGroupField<NavigationFooterLink>;
-}
-
-/**
- * Content for Navigation documents
- */
-interface NavigationDocumentData {
-  main_items: prismic.GroupField<NavigationMenuItem>;
-  footer_columns: prismic.GroupField<NavigationFooterColumn>;
-}
-
-/**
- * Navigation document from Prismic
- *
- * - **API ID**: `navigation`
- * - **Repeatable**: `false`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type NavigationDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<
-    Simplify<NavigationDocumentData>,
-    "navigation",
-    Lang
-  >;
-
 export type AllDocumentTypes =
   | AuthorDocument
   | HomepageDocument
   | NavigationDocument
+  | PageDocument
   | PostDocument
   | ProviderDocument;
 
@@ -3434,13 +3664,16 @@ declare module "@prismicio/client" {
       AuthorDocumentData,
       HomepageDocument,
       HomepageDocumentData,
+      HomepageDocumentDataSlicesSlice,
       NavigationDocument,
       NavigationDocumentData,
-      NavigationMenuItem,
-      NavigationMenuLink,
-      NavigationFooterColumn,
-      NavigationFooterLink,
-      HomepageDocumentDataSlicesSlice,
+      NavigationDocumentDataMainItemsLinksItem,
+      NavigationDocumentDataMainItemsItem,
+      NavigationDocumentDataFooterColumnsLinksItem,
+      NavigationDocumentDataFooterColumnsItem,
+      PageDocument,
+      PageDocumentData,
+      PageDocumentDataSlicesSlice,
       PostDocument,
       PostDocumentData,
       PostDocumentDataTablesItem,
