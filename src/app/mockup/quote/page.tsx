@@ -49,7 +49,6 @@ export default function QuotePreview() {
         logo: { src: "/mockup/logos/inner-balance.png" },
         visitHref: "#affiliate-link",
         visitText: "Visit Inner Balance",
-        newTab: true,
       }}
     />
   );

@@ -202,4 +202,36 @@ describe("Hero", () => {
     expect(html).toContain("Visit Inner Balance");
     expect(html).not.toContain("<img");
   });
+
+  it("marks the visit button as an affiliate link even when the new-tab box is off", () => {
+    const html = renderToStaticMarkup(
+      <Hero
+        variation="provider"
+        primary={{
+          ...section(),
+          clinic: {
+            data: {
+              name: "Inner Balance",
+              monthly_price: 199,
+              visit: {
+                link_type: "Web",
+                url: "https://innerbalance.example/?ref=peggy",
+                text: "Visit Inner Balance",
+              },
+            },
+          },
+          voted: emptyRich,
+          quote: emptyRich,
+          product: emptyImage,
+        }}
+      />,
+    );
+
+    expect(html).toContain('href="https://innerbalance.example/?ref=peggy"');
+    expect(html).toContain('target="_blank"');
+    expect(html).toContain('rel="sponsored nofollow noopener noreferrer"');
+    expect(html).toContain('data-provider="Inner Balance"');
+    expect(html).toContain('data-placement="provider_hero"');
+    expect(html).toContain("(affiliate link, opens in a new tab)");
+  });
 });

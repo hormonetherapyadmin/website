@@ -44,7 +44,6 @@ const clinic: PageClinic = {
   name: "Inner Balance",
   visitHref: "https://example.com/inner-balance?ref=peggy",
   visitText: "Visit Inner Balance",
-  newTab: true,
   monthlyPrice: 199,
   formulation: "Oestra vaginal cream",
   quote: "The one I stayed with.",

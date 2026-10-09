@@ -163,7 +163,8 @@ Those values are data, not writing.
 
 A button or text link is one link field with display text turned on. The
 words and the destination are the same field. "Open in a new tab" is the
-field's checkbox, used on affiliate visit links.
+field's checkbox. A clinic's Visit link is the exception: every visit
+button opens it in a new tab with the affiliate `rel`, checked or not.
 
 A list of links with no other fields is a repeatable link. Benefit links
 and topic links are this.
@@ -409,10 +410,14 @@ goes. On trusted providers that is a jump link such as `#inner-balance`.
 
 #### Provider
 
-The top of a clinic page. The title is the clinic's name. The kicker is
-Section Small heading when that is filled, otherwise the clinic's Top
-choice label. The price, visit button, logo, and coupon come from the
-clinic.
+The top of a clinic page. The title is the clinic's name, and Section
+Heading only when the clinic has no name. An empty Meta title, the
+search result, and the sitemap entry use that same title, never the
+kicker. The kicker is Section Small heading when that is filled,
+otherwise the clinic's Top choice label. The price, visit button, logo,
+and coupon come from the clinic. The visit button sits on the price
+card, which shows only when the clinic has a price or a code, or the
+slice has a Product image.
 
 | Label | Id | Kind | Required | Mockup |
 | --- | --- | --- | --- | --- |
@@ -977,7 +982,7 @@ and Ribbon. A slice added to the library later is connected to Page too.
 | --- | --- | --- | --- | --- |
 | UID | `uid` | UID | Yes | The Wix slug |
 | Slices | `slices` | Slice zone | No | Every shared slice |
-| Meta title | `meta_title` | Text | No | Empty uses the Hero heading. Also the `h1` when the first slice is not a Hero |
+| Meta title | `meta_title` | Text | No | Empty uses the Hero title, which is the clinic's name on a provider Hero. Also the `h1` when the first slice is not a Hero |
 | Meta description | `meta_description` | Text | No | Empty leaves the description off |
 | Social image | `meta_image` | Image | No | 2400 × 1260 |
 | Indexing | `indexing` | Boolean | Yes | On. Turn it off only to hide a page |

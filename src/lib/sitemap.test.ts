@@ -19,7 +19,7 @@ describe("page and post links", () => {
         url: "/trusted-providers",
         last_publication_date: "2026-10-01T12:00:00.000Z",
         data: {
-          title: rich("Trusted providers"),
+          meta_title: "Trusted providers",
           indexing: true,
         },
       }),
@@ -31,13 +31,41 @@ describe("page and post links", () => {
     });
   });
 
+  it("lists a provider hero page under its clinic's name", () => {
+    expect(
+      pageSitemapLink(
+        {
+          id: "page-ib",
+          uid: "inner-balance",
+          url: "/inner-balance",
+          data: {
+            meta_title: null,
+            indexing: true,
+            slices: [
+              {
+                slice_type: "hero",
+                variation: "provider",
+                primary: {
+                  small_heading: rich("Voted best for"),
+                  heading: [],
+                  clinic: { link_type: "Document", id: "clinic-ib" },
+                },
+              },
+            ],
+          },
+        },
+        "Inner Balance",
+      ),
+    ).toMatchObject({ title: "Inner Balance", path: "/inner-balance" });
+  });
+
   it("drops a page set to noindex and a page on a reserved route", () => {
     expect(
       pageSitemapLink({
         id: "hidden",
         uid: "private",
         url: "/private",
-        data: { title: rich("Private"), indexing: false },
+        data: { meta_title: "Private", indexing: false },
       }),
     ).toBeNull();
     expect(
@@ -45,7 +73,7 @@ describe("page and post links", () => {
         id: "search",
         uid: "search",
         url: "/search",
-        data: { title: rich("Search"), indexing: true },
+        data: { meta_title: "Search", indexing: true },
       }),
     ).toBeNull();
     expect(
@@ -53,7 +81,7 @@ describe("page and post links", () => {
         id: "sitemap",
         uid: "sitemap",
         url: "/sitemap",
-        data: { title: rich("Sitemap"), indexing: true },
+        data: { meta_title: "Sitemap", indexing: true },
       }),
     ).toBeNull();
   });

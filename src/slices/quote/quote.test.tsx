@@ -32,7 +32,6 @@ const clinic: QuoteClinic = {
   logo: { src: "/mockup/logos/inner-balance.png" },
   visitHref: "https://example.com/inner-balance",
   visitText: "Visit Inner Balance",
-  newTab: true,
 };
 
 describe("quoteName", () => {

@@ -34,7 +34,6 @@ function section(): SliceSectionFields {
 const ROWS: ComparisonClinic[] = CLINICS.map((clinic) => ({
   name: clinic.name,
   href: clinic.isAffiliate ? "#affiliate-link" : undefined,
-  newTab: clinic.isAffiliate,
   logo: clinic.logo ? { src: clinic.logo } : undefined,
   monogram: clinic.monogram,
   topChoice: clinic.topPick ? "My 2026 top choice" : undefined,

@@ -3,16 +3,10 @@
  * The browser filters this catalog as you type. See docs/CONTENT_MODEL.md.
  */
 
-const TEXT_LIMIT = 2000;
+import { heroTitle } from "@/lib/page-title";
+import { APP_ROUTE_UIDS } from "@/lib/site";
 
-const RESERVED_PATHS = new Set([
-  "/search",
-  "/sitemap",
-  "/post",
-  "/blog",
-  "/api",
-  "/mockup",
-]);
+const TEXT_LIMIT = 2000;
 
 const SKIP_KEYS = new Set([
   "url",
@@ -121,10 +115,14 @@ export function groupResults(
   return groups;
 }
 
+/**
+ * A Page's search entry, also its sitemap entry. The title is the page's
+ * `h1`. A provider Hero's `h1` is the clinic name, so pass the name of the
+ * clinic that Hero points at.
+ */
 export function pageSearchHit(
   page: SearchSource & {
     data: {
-      title?: unknown;
       meta_title?: string | null;
       meta_description?: string | null;
       meta_image?: unknown;
@@ -132,13 +130,14 @@ export function pageSearchHit(
       slices?: unknown;
     };
   },
+  heroClinicName?: string | null,
 ): SearchHit | null {
   if (page.data.indexing === false) return null;
 
   const title =
-    richText(page.data.title) ||
-    sliceTitle(page.data.slices) ||
+    heroTitle(page.data.slices, heroClinicName) ||
     page.data.meta_title?.trim() ||
+    sliceHeading(page.data.slices) ||
     "";
   const href = publicPath(page.url, page.uid ? `/${page.uid}` : "");
   if (!title || !href) return null;
@@ -230,7 +229,7 @@ function titleRank(title: string, words: string[]) {
 function publicPath(url: string | null | undefined, fallback: string) {
   const path = (url || fallback).split(/[?#]/)[0];
   if (!path.startsWith("/") || path.startsWith("//")) return null;
-  if (RESERVED_PATHS.has(path)) return null;
+  if (APP_ROUTE_UIDS.has(path.slice(1))) return null;
   return path;
 }
 
@@ -292,14 +291,15 @@ function isRichBlock(value: unknown): value is { text: string } {
   );
 }
 
-function sliceTitle(slices: unknown) {
+/** The first section heading, for a page with no Hero and no Meta title. */
+function sliceHeading(slices: unknown) {
   if (!Array.isArray(slices)) return "";
   for (const slice of slices) {
     if (!slice || typeof slice !== "object" || !("primary" in slice)) continue;
     const primary = slice.primary;
     if (!primary || typeof primary !== "object") continue;
     const fields = primary as Record<string, unknown>;
-    for (const key of ["heading", "title", "small_heading"]) {
+    for (const key of ["heading", "title"]) {
       const text = richText(fields[key]);
       if (text) return text;
     }

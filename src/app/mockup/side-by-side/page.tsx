@@ -194,7 +194,6 @@ export default function SideBySidePreview() {
                 logo: inner.logo ? { src: inner.logo } : undefined,
                 quote: inner.quote,
                 visitHref: "#affiliate-link",
-                newTab: true,
               }
             : null
         }

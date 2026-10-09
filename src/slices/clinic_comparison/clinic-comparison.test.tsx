@@ -50,7 +50,6 @@ function clinic(overrides: Partial<ComparisonClinic> = {}): ComparisonClinic {
   return {
     name: "Winona",
     href: "https://example.com/winona",
-    newTab: true,
     logo: { src: "/mockup/logos/winona.png" },
     shortDescription: "Creams, no appointment",
     monthlyPrice: 89,
@@ -99,7 +98,6 @@ describe("ClinicComparison", () => {
     clinic({
       name: "Midi Health",
       href: undefined,
-      newTab: false,
       monthlyPrice: 39,
       insurance: true,
       offerCode: undefined,

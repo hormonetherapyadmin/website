@@ -146,7 +146,6 @@ export function comparisonClinic(
   return {
     name: clinic.name,
     href: clinic.visitHref,
-    newTab: clinic.newTab,
     logo: clinic.logo,
     topChoice: clinic.topChoice,
     shortDescription: clinic.shortDescription,
@@ -167,7 +166,6 @@ export function quoteClinic(clinic: PageClinic): QuoteClinic {
     logo: clinic.logo,
     visitHref: clinic.visitHref,
     visitText: clinic.visitText,
-    newTab: clinic.newTab,
   };
 }
 
@@ -182,7 +180,6 @@ export function brandPromoClinic(clinic: PageClinic): BrandPromoClinic {
     logo: clinic.logo,
     visitHref: clinic.visitHref,
     visitText: clinic.visitText,
-    newTab: clinic.newTab,
     monthlyPrice: clinic.monthlyPrice,
     priceNote: clinic.priceNote,
     insurance: clinic.insurance,

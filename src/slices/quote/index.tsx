@@ -12,6 +12,7 @@ import {
   sectionAnchor,
   type SliceSectionFields,
 } from "@/components/slice-section";
+import { visitLinkProps } from "@/lib/affiliate-link";
 import styles from "./quote.module.css";
 
 /** The clinic this band points at. The page reads it off the Provider. */
@@ -21,7 +22,6 @@ export type QuoteClinic = {
   visitHref?: string;
   /** Display text on the visit link, such as "Visit Inner Balance". */
   visitText?: string;
-  newTab?: boolean;
 };
 
 type QuotePrimary = Partial<SliceSectionFields> & {
@@ -33,8 +33,6 @@ type QuotePrimary = Partial<SliceSectionFields> & {
   reminder?: RichTextField | null;
   review_button?: LinkField | null;
 };
-
-const AFFILIATE_REL = "sponsored nofollow noopener noreferrer";
 
 function Chevron() {
   return (
@@ -138,19 +136,14 @@ export function Quote({
                 <a
                   href={clinic.visitHref}
                   className={styles.visit}
-                  target={clinic.newTab ? "_blank" : undefined}
-                  rel={clinic.newTab ? AFFILIATE_REL : undefined}
-                  data-provider={clinic.name}
-                  data-placement="quote"
+                  {...visitLinkProps(clinic.name, "quote")}
                 >
                   {visitText}
                   <Chevron />
-                  {clinic.newTab ? (
-                    <span className="sr-only">
-                      {" "}
-                      (affiliate link, opens in a new tab)
-                    </span>
-                  ) : null}
+                  <span className="sr-only">
+                    {" "}
+                    (affiliate link, opens in a new tab)
+                  </span>
                 </a>
               ) : null}
             </div>

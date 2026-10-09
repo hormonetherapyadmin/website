@@ -4,6 +4,20 @@
 
 export const AFFILIATE_REL = "sponsored nofollow noopener noreferrer";
 
+/**
+ * A clinic's Visit link is its affiliate link. Every designed visit CTA
+ * opens it in a new tab with the affiliate rel, whatever the field's
+ * "Open in a new tab" checkbox says.
+ */
+export function visitLinkProps(provider: string, placement: string) {
+  return {
+    target: "_blank",
+    rel: AFFILIATE_REL,
+    "data-provider": provider,
+    "data-placement": placement,
+  } as const;
+}
+
 /** Affiliate network and short-link hosts. Any link through them is paid. */
 const NETWORK_HOSTS = [
   "pxf.io",

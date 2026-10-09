@@ -34,6 +34,12 @@ objective is preservation; optimization follows.
 -   Affiliate links use `rel="sponsored nofollow noopener noreferrer"`
     and open in a new tab. This keeps the live site's behavior and
     adds `sponsored`, as Google asks for affiliate links.
+-   A clinic's Visit link is its affiliate link. Every designed visit
+    CTA (provider Hero, Brand promo, Quote, Side by side, Clinic
+    comparison, story offer and facts) sets that rel, the new tab, and
+    `data-provider` and `data-placement` itself, through
+    `visitLinkProps` in `src/lib/affiliate-link.ts`. The Visit field's
+    "Open in a new tab" checkbox does not change this.
 
 ## Content Preservation
 

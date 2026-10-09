@@ -17,6 +17,7 @@ import {
   sectionAnchor,
   type SliceSectionFields,
 } from "@/components/slice-section";
+import { visitLinkProps } from "@/lib/affiliate-link";
 import styles from "./side-by-side.module.css";
 
 export const SIDES = ["Media left", "Media right"] as const;
@@ -50,7 +51,6 @@ export type SideClinic = {
   quote?: string;
   visitHref?: string;
   visitText?: string;
-  newTab?: boolean;
 };
 
 type SideBySidePrimary = Partial<SliceSectionFields> & {
@@ -64,8 +64,6 @@ type SideBySidePrimary = Partial<SliceSectionFields> & {
   attribution?: string | null;
   clinic?: LinkField | null;
 };
-
-const AFFILIATE_REL = "sponsored nofollow noopener noreferrer";
 
 function choice<T extends string>(
   value: string | null | undefined,
@@ -209,19 +207,11 @@ function ClinicCard({ clinic }: { clinic: SideClinic }) {
         <a
           href={clinic.visitHref}
           className={styles.visit}
-          target={clinic.newTab ? "_blank" : undefined}
-          rel={clinic.newTab ? AFFILIATE_REL : undefined}
-          data-provider={clinic.name}
-          data-placement="side_by_side"
+          {...visitLinkProps(clinic.name, "side_by_side")}
         >
           {visit}
           <Chevron />
-          {clinic.newTab ? (
-            <span className="sr-only">
-              {" "}
-              (affiliate link, opens in a new tab)
-            </span>
-          ) : null}
+          <span className="sr-only"> (affiliate link, opens in a new tab)</span>
         </a>
       ) : null}
     </div>

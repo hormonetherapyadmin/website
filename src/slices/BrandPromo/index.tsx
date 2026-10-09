@@ -14,6 +14,7 @@ import {
   SliceSection,
   type SliceSectionFields,
 } from "@/components/slice-section";
+import { visitLinkProps } from "@/lib/affiliate-link";
 import styles from "./brand-promo.module.css";
 
 /** The clinic this card points at. The page reads it off the Provider. */
@@ -23,7 +24,6 @@ export type BrandPromoClinic = {
   logo?: { src: string };
   visitHref?: string;
   visitText?: string;
-  newTab?: boolean;
   monthlyPrice?: number | null;
   priceNote?: string;
   insurance?: boolean;
@@ -43,8 +43,6 @@ type BrandPromoPrimary = Partial<SliceSectionFields> & {
   product?: ImageField | null;
   links?: readonly LinkField[] | null;
 };
-
-const AFFILIATE_REL = "sponsored nofollow noopener noreferrer";
 
 function text(value: string | null | undefined) {
   const trimmed = value?.trim();
@@ -297,19 +295,14 @@ export function BrandPromo({
                 <a
                   href={clinic.visitHref}
                   className={styles.brand}
-                  target={clinic.newTab ? "_blank" : undefined}
-                  rel={clinic.newTab ? AFFILIATE_REL : undefined}
-                  data-provider={name}
-                  data-placement="brand_promo"
+                  {...visitLinkProps(name, "brand_promo")}
                 >
                   <Logo clinic={clinic} />
                   <span>{name}</span>
-                  {clinic.newTab ? (
-                    <span className="sr-only">
-                      {" "}
-                      (affiliate link, opens in a new tab)
-                    </span>
-                  ) : null}
+                  <span className="sr-only">
+                    {" "}
+                    (affiliate link, opens in a new tab)
+                  </span>
                 </a>
               ) : (
                 <span className={styles.brand}>
@@ -390,19 +383,14 @@ export function BrandPromo({
                     <a
                       href={clinic.visitHref}
                       className={styles.visit}
-                      target={clinic.newTab ? "_blank" : undefined}
-                      rel={clinic.newTab ? AFFILIATE_REL : undefined}
-                      data-provider={name}
-                      data-placement="brand_promo"
+                      {...visitLinkProps(name ?? "", "brand_promo")}
                     >
                       {visitText}
                       <Chevron />
-                      {clinic.newTab ? (
-                        <span className="sr-only">
-                          {" "}
-                          (affiliate link, opens in a new tab)
-                        </span>
-                      ) : null}
+                      <span className="sr-only">
+                        {" "}
+                        (affiliate link, opens in a new tab)
+                      </span>
                     </a>
                   </div>
                 ) : null}

@@ -5,7 +5,9 @@
 
 import type { MetadataRoute } from "next";
 import { createClient } from "@/prismicio";
+import { heroClinicId } from "@/lib/page-title";
 import { pageSearchHit, postSearchHit } from "@/lib/search";
+import { loadHeroClinicNames } from "@/lib/search-catalog";
 import { SITE_URL } from "@/lib/site";
 
 export const SITEMAP_PATH = "/sitemap";
@@ -30,8 +32,11 @@ type PostDoc = Parameters<typeof postSearchHit>[0] & {
   last_publication_date?: string | null;
 };
 
-export function pageSitemapLink(page: PageDoc): SitemapLink | null {
-  const hit = pageSearchHit(page);
+export function pageSitemapLink(
+  page: PageDoc,
+  heroClinicName?: string | null,
+): SitemapLink | null {
+  const hit = pageSearchHit(page, heroClinicName);
   if (!hit) return null;
   return {
     group: "page",
@@ -87,10 +92,12 @@ export async function loadSitemapLinks(): Promise<SitemapLink[]> {
     client.getAllByType("page"),
     client.getAllByType("post"),
   ]);
+  const clinicNames = await loadHeroClinicNames(client, pages);
 
   return [
     ...pages.flatMap((page) => {
-      const link = pageSitemapLink(page);
+      const id = heroClinicId(page.data.slices);
+      const link = pageSitemapLink(page, id && clinicNames.get(id));
       return link ? [link] : [];
     }),
     ...posts.flatMap((post) => {

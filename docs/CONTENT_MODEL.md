@@ -395,8 +395,12 @@ Rule:
     -   "Site page (/…)" → `/<uid>`
 -   The public path is always section + UID, except for a Post and
     a Page, whose section is fixed. There is no free-text path field.
--   A route the app already defines (`/post`, `/blog`, `/api`,
-    `/mockup`, `/search`, `/sitemap`) wins over a Page with that UID, so that Page never shows.
+-   A route the app already defines (`/post`, `/api`, `/mockup`,
+    `/search`, `/sitemap`) wins over a Page with that UID, so that Page
+    never shows and search and the sitemap leave it out. The list is
+    `APP_ROUTE_UIDS` in `src/lib/site.ts`. `/blog` is not on it until
+    the blog index route exists; until then a Page with UID `blog` is
+    `/blog`, and it is listed like any other Page.
 -   Prismic only guarantees UID uniqueness within one type, so the
     build fails if two documents of any type resolve to the same path.
 

@@ -13,6 +13,7 @@ import {
   SliceSection,
   type SliceSectionFields,
 } from "@/components/slice-section";
+import { visitLinkProps } from "@/lib/affiliate-link";
 import styles from "./hero.module.css";
 
 export type HeroClinic = {
@@ -449,6 +450,12 @@ function ProviderHero({ primary }: { primary: ProviderPrimary }) {
   const priceNote = text(clinic?.price_note);
   const code = text(clinic?.code);
   const codeNote = text(clinic?.code_note);
+  const visitHref =
+    clinic?.visit &&
+    isFilled.link(clinic.visit) &&
+    clinic.visit.link_type === "Web"
+      ? clinic.visit.url
+      : undefined;
   const links = (primary.links ?? []).filter(
     (link) => isFilled.link(link) && link.text,
   );
@@ -538,14 +545,20 @@ function ProviderHero({ primary }: { primary: ProviderPrimary }) {
                   ) : null}
                 </p>
               ) : null}
-              {clinic?.visit && isFilled.link(clinic.visit) ? (
+              {visitHref ? (
                 <div className={styles.dealActions}>
-                  <PrismicNextLink
-                    field={clinic.visit}
+                  <a
+                    href={visitHref}
                     className={styles.button}
+                    {...visitLinkProps(name ?? "", "provider_hero")}
                   >
-                    {clinic.visit.text || (name ? `Visit ${name}` : "Visit")}
-                  </PrismicNextLink>
+                    {text(clinic?.visit?.text) ??
+                      (name ? `Visit ${name}` : "Visit")}
+                    <span className="sr-only">
+                      {" "}
+                      (affiliate link, opens in a new tab)
+                    </span>
+                  </a>
                 </div>
               ) : null}
               {code || codeNote ? (

@@ -42,7 +42,6 @@ const clinic: BrandPromoClinic = {
   logo: { src: "/mockup/logos/inner-balance.png" },
   visitHref: "https://example.com/inner-balance?ref=peggy",
   visitText: "Visit Inner Balance",
-  newTab: true,
   monthlyPrice: 199,
   priceNote: "First six months, then $99.",
   insurance: false,
@@ -106,6 +105,11 @@ describe("BrandPromo", () => {
       'href="https://example.com/inner-balance?ref=peggy"',
     );
     expect(html).toContain('rel="sponsored nofollow noopener noreferrer"');
+    expect(html).toContain('target="_blank"');
+    expect(html).toContain('data-placement="brand_promo"');
+    expect(html).not.toMatch(
+      /<a [^>]*href="https:\/\/example[^>]*rel="noreferrer"/,
+    );
   });
 
   it("lets the slice quote replace the clinic's words and hides an empty place", () => {

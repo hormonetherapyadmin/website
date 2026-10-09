@@ -23,7 +23,7 @@ import {
   type ProviderToken,
   type TokenClinic,
 } from "@/components/content-blocks";
-import { AFFILIATE_REL, storyLinkRel } from "@/lib/affiliate-link";
+import { storyLinkRel, visitLinkProps } from "@/lib/affiliate-link";
 import { headingAnchors, type HeadingAnchor } from "@/lib/post-headings";
 import { storySegments, type PhotoCell } from "@/lib/story-segments";
 import shared from "@/app/mockup/_shared/mockup.module.css";
@@ -272,18 +272,13 @@ function ClinicActions({
         <a
           href={clinic.visitHref}
           className={shared.buttonPrimary}
-          target={clinic.newTab ? "_blank" : undefined}
-          rel={clinic.newTab ? AFFILIATE_REL : undefined}
-          data-provider={clinic.name}
-          data-placement={placement}
+          {...visitLinkProps(clinic.name, placement)}
         >
           {visit}
-          {clinic.newTab ? (
-            <span className={shared.srOnly}>
-              {" "}
-              (affiliate link, opens in a new tab)
-            </span>
-          ) : null}
+          <span className={shared.srOnly}>
+            {" "}
+            (affiliate link, opens in a new tab)
+          </span>
         </a>
       ) : (
         <span>{clinic.name}</span>

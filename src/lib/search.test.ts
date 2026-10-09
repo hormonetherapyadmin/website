@@ -58,12 +58,15 @@ describe("pageSearchHit and postSearchHit", () => {
         uid: "alloy-review-page",
         url: "/alloy-review-page",
         data: {
-          title: rich("Alloy review"),
+          meta_title: "Alloy review",
           meta_description: "What I paid, and what I stayed for.",
           meta_image: image("https://images.prismic.io/social.jpg"),
           indexing: true,
           slices: [
-            { primary: { image: image("https://images.prismic.io/hero.jpg") } },
+            {
+              slice_type: "side_by_side",
+              primary: { image: image("https://images.prismic.io/hero.jpg") },
+            },
           ],
         },
       }),
@@ -84,9 +87,15 @@ describe("pageSearchHit and postSearchHit", () => {
         uid: "trusted-providers",
         url: "/trusted-providers",
         data: {
-          title: [],
+          meta_title: null,
           indexing: true,
-          slices: [{ primary: { heading: rich("Trusted providers") } }],
+          slices: [
+            {
+              slice_type: "hero",
+              variation: "brands",
+              primary: { heading: rich("Trusted providers") },
+            },
+          ],
         },
       }),
     ).toMatchObject({
@@ -96,9 +105,49 @@ describe("pageSearchHit and postSearchHit", () => {
     });
   });
 
+  it("titles a provider hero page with the clinic name, not the kicker", () => {
+    const page = {
+      id: "ib",
+      uid: "inner-balance",
+      url: "/inner-balance",
+      data: {
+        meta_title: "",
+        indexing: true,
+        slices: [
+          {
+            slice_type: "hero",
+            variation: "provider",
+            primary: {
+              small_heading: rich("Voted best for"),
+              heading: [],
+              clinic: { link_type: "Document", id: "clinic-ib" },
+            },
+          },
+        ],
+      },
+    };
+
+    expect(pageSearchHit(page, "Inner Balance")).toMatchObject({
+      title: "Inner Balance",
+      href: "/inner-balance",
+    });
+    expect(pageSearchHit(page)).toBeNull();
+  });
+
+  it("lists a Page at /blog, which no app route owns yet", () => {
+    expect(
+      pageSearchHit({
+        id: "blog",
+        uid: "blog",
+        url: "/blog",
+        data: { meta_title: "Blog", indexing: true },
+      }),
+    ).toMatchObject({ href: "/blog" });
+  });
+
   it("drops a page that is not indexed, has no title, or uses a reserved path", () => {
     const data = {
-      title: rich("Search"),
+      meta_title: "Search",
       meta_description: null,
       indexing: true,
     };
@@ -115,11 +164,14 @@ describe("pageSearchHit and postSearchHit", () => {
         id: "blank",
         uid: "blank",
         url: "/blank",
-        data: { ...data, title: [] },
+        data: { ...data, meta_title: "" },
       }),
     ).toBeNull();
     expect(
       pageSearchHit({ id: "search", uid: "search", url: "/search", data }),
+    ).toBeNull();
+    expect(
+      pageSearchHit({ id: "post", uid: "post", url: "/post", data }),
     ).toBeNull();
   });
 

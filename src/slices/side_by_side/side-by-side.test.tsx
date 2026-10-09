@@ -49,7 +49,6 @@ const clinic: TokenClinic = {
   logo: { src: "/mockup/logos/inner-balance.png" },
   visitHref: "https://example.com/inner-balance",
   visitText: "Visit Inner Balance",
-  newTab: true,
   offerCode: "PEGGY",
   monthlyPrice: 150,
   insurance: false,
@@ -154,7 +153,6 @@ describe("SideBySide", () => {
           quote:
             "Finding a product that treats my symptoms was a clear winner.",
           visitHref: "https://example.com/inner-balance",
-          newTab: true,
         }}
       />,
     );

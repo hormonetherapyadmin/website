@@ -1,9 +1,4 @@
-import {
-  asText,
-  isFilled,
-  NotFoundError,
-  ParsingError,
-} from "@prismicio/client";
+import { isFilled, NotFoundError, ParsingError } from "@prismicio/client";
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
@@ -18,7 +13,8 @@ import {
   sliceTokenUids,
   type PageClinic,
 } from "@/lib/page-slices";
-import { SITE_NAME } from "@/lib/site";
+import { heroClinicId, heroTitle } from "@/lib/page-title";
+import { APP_ROUTE_UIDS, SITE_NAME } from "@/lib/site";
 import { tokenClinic } from "@/lib/token-clinic";
 import { createClient } from "@/prismicio";
 import type {
@@ -29,6 +25,7 @@ import type {
 import { MockupShell } from "../mockup/_shared/mockup-shell";
 
 async function loadPage(uid: string) {
+  if (APP_ROUTE_UIDS.has(uid)) return null;
   try {
     return await createClient().getByUID("page", uid);
   } catch (error) {
@@ -44,14 +41,12 @@ async function loadPage(uid: string) {
   }
 }
 
-function heroHeading(page: PageDocument) {
-  const first = page.data.slices[0];
-  if (first?.slice_type !== "hero") return "";
-  return asText(first.primary.heading).trim();
-}
-
-function metaTitle(page: PageDocument) {
-  return page.data.meta_title?.trim() || heroHeading(page);
+/** The published clinic a provider Hero at the top names. */
+async function heroClinicName(page: PageDocument) {
+  const id = heroClinicId(page.data.slices);
+  if (!id) return undefined;
+  const [clinic] = await createClient().getAllByIDs<ProviderDocument>([id]);
+  return clinic?.type === "provider" ? clinic.data.name : undefined;
 }
 
 export async function generateMetadata(
@@ -61,7 +56,10 @@ export async function generateMetadata(
   const page = await loadPage(uid);
   if (!page) return {};
 
-  const title = metaTitle(page) || undefined;
+  const title =
+    page.data.meta_title?.trim() ||
+    heroTitle(page.data.slices, await heroClinicName(page)) ||
+    undefined;
   const description = page.data.meta_description?.trim() || undefined;
   const image = isFilled.image(page.data.meta_image)
     ? page.data.meta_image

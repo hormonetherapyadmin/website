@@ -118,7 +118,6 @@ describe("pageClinic and comparisonClinic", () => {
     ).toEqual({
       name: "Inner Balance",
       href: "https://example.com/inner-balance?ref=peggy",
-      newTab: true,
       logo: { src: "https://images.prismic.io/logo.png" },
       topChoice: "My 2026 top choice",
       shortDescription: "Bioidentical cream by mail.",

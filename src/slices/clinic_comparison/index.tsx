@@ -7,6 +7,7 @@ import {
   sectionAnchor,
   type SliceSectionFields,
 } from "@/components/slice-section";
+import { AFFILIATE_REL, visitLinkProps } from "@/lib/affiliate-link";
 import styles from "./clinic-comparison.module.css";
 import { Tip } from "./tip";
 
@@ -15,8 +16,6 @@ export type ComparisonClinic = {
   name: string;
   /** Visit link. Empty means the name is not a link. */
   href?: string;
-  /** Visit opens in a new tab. */
-  newTab?: boolean;
   logo?: { src: string };
   monogram?: string;
   /** Badge text. The star is part of the layout. */
@@ -38,8 +37,6 @@ type ClinicComparisonPrimary = Partial<SliceSectionFields> & {
   button?: LinkField | null;
   disclosure?: LinkField | null;
 };
-
-const AFFILIATE_REL = "sponsored nofollow noopener noreferrer";
 
 export function formatCheckedDate(iso: string | null | undefined) {
   if (!iso) return "";
@@ -159,15 +156,10 @@ function ClinicName({ clinic }: { clinic: ComparisonClinic }) {
     <a
       href={clinic.href}
       className={styles.clinicName}
-      target={clinic.newTab ? "_blank" : undefined}
-      rel={clinic.newTab ? AFFILIATE_REL : undefined}
-      data-provider={clinic.name}
-      data-placement="homepage_comparison"
+      {...visitLinkProps(clinic.name, "homepage_comparison")}
     >
       {clinic.name}
-      {clinic.newTab ? (
-        <span className="sr-only"> (affiliate link, opens in a new tab)</span>
-      ) : null}
+      <span className="sr-only"> (affiliate link, opens in a new tab)</span>
     </a>
   );
 }
@@ -189,8 +181,8 @@ function Logo({ clinic }: { clinic: ComparisonClinic }) {
       className={styles.logoTile}
       tabIndex={-1}
       aria-hidden="true"
-      target={clinic.newTab ? "_blank" : undefined}
-      rel={clinic.newTab ? AFFILIATE_REL : undefined}
+      target="_blank"
+      rel={AFFILIATE_REL}
     >
       {image}
     </a>
