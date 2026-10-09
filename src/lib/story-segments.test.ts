@@ -55,6 +55,36 @@ describe("storySegments", () => {
     });
   });
 
+  it("places a table token between the paragraphs around it", () => {
+    const segments = storySegments([
+      paragraph("Before the grid."),
+      paragraph("{{table}}"),
+      paragraph("After the grid."),
+    ] as RichTextField);
+
+    expect(segments).toEqual([
+      { kind: "rich", field: [paragraph("Before the grid.")] },
+      { kind: "table", number: 1 },
+      { kind: "rich", field: [paragraph("After the grid.")] },
+    ]);
+  });
+
+  it("numbers table tokens from the Tables group", () => {
+    const segments = storySegments([
+      paragraph("{{table1}}"),
+      paragraph("{{table2}}"),
+      paragraph(" {{table12}} "),
+      paragraph("{{table0}}"),
+    ] as RichTextField);
+
+    expect(segments).toEqual([
+      { kind: "table", number: 1 },
+      { kind: "table", number: 2 },
+      { kind: "table", number: 12 },
+      { kind: "rich", field: [paragraph("{{table0}}")] },
+    ]);
+  });
+
   it("keeps a single photo full width and hides the token", () => {
     const only = image("One portrait");
     const segments = storySegments([

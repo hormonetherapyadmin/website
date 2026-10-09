@@ -1,0 +1,139 @@
+{
+  "format": "custom",
+  "id": "navigation",
+  "json": {
+    "Main menu": {
+      "main_items": {
+        "config": {
+          "fields": {
+            "label": {
+              "config": {
+                "label": "Label",
+                "placeholder": "HRT 101"
+              },
+              "type": "Text"
+            },
+            "link": {
+              "config": {
+                "allowTargetBlank": true,
+                "label": "Link",
+                "placeholder": "Leave blank when this item opens a menu. Otherwise where it goes, such as /blog.",
+                "repeat": false,
+                "select": null
+              },
+              "type": "Link"
+            },
+            "links": {
+              "config": {
+                "fields": {
+                  "label": {
+                    "config": {
+                      "label": "Label",
+                      "placeholder": "What readers see. Leave blank to use the clinic name."
+                    },
+                    "type": "Text"
+                  },
+                  "link": {
+                    "config": {
+                      "allowTargetBlank": true,
+                      "label": "Link",
+                      "placeholder": "The page this opens.",
+                      "repeat": false,
+                      "select": null
+                    },
+                    "type": "Link"
+                  },
+                  "clinic": {
+                    "config": {
+                      "customtypes": ["provider"],
+                      "label": "Clinic",
+                      "placeholder": "Optional. Uses this clinic's name and logo, and updates when the clinic changes.",
+                      "select": "document"
+                    },
+                    "type": "Link"
+                  },
+                  "column_heading": {
+                    "config": {
+                      "label": "Column heading",
+                      "placeholder": "Leave blank for the first column. A new heading starts the next column, such as My reviews."
+                    },
+                    "type": "Text"
+                  },
+                  "icon": {
+                    "config": {
+                      "label": "Icon",
+                      "placeholder": "Any icon on a transparent background. Shown in raspberry."
+                    },
+                    "type": "Image"
+                  }
+                },
+                "label": "Menu links",
+                "repeat": true
+              },
+              "type": "Group"
+            }
+          },
+          "label": "Menu items",
+          "repeat": true
+        },
+        "type": "Group"
+      }
+    },
+    "Footer": {
+      "footer_columns": {
+        "config": {
+          "fields": {
+            "heading": {
+              "config": {
+                "label": "Heading",
+                "placeholder": "HRT 101"
+              },
+              "type": "Text"
+            },
+            "links": {
+              "config": {
+                "fields": {
+                  "label": {
+                    "config": {
+                      "label": "Label",
+                      "placeholder": "What readers see. Leave blank to use the clinic name."
+                    },
+                    "type": "Text"
+                  },
+                  "link": {
+                    "config": {
+                      "allowTargetBlank": true,
+                      "label": "Link",
+                      "placeholder": "The page this opens.",
+                      "repeat": false,
+                      "select": null
+                    },
+                    "type": "Link"
+                  },
+                  "clinic": {
+                    "config": {
+                      "customtypes": ["provider"],
+                      "label": "Clinic",
+                      "placeholder": "Optional. Uses this clinic's name, and updates when the clinic changes.",
+                      "select": "document"
+                    },
+                    "type": "Link"
+                  }
+                },
+                "label": "Links",
+                "repeat": true
+              },
+              "type": "Group"
+            }
+          },
+          "label": "Footer columns",
+          "repeat": true
+        },
+        "type": "Group"
+      }
+    }
+  },
+  "label": "Navigation",
+  "repeatable": false,
+  "status": true
+}

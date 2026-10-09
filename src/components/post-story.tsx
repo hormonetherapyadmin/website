@@ -8,9 +8,14 @@ import {
   isFilled,
   type EmbedField,
   type RichTextField,
+  type TableField,
 } from "@prismicio/client";
 import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
-import { PrismicRichText, type RichTextComponents } from "@prismicio/react";
+import {
+  PrismicRichText,
+  PrismicTable,
+  type RichTextComponents,
+} from "@prismicio/react";
 import Image from "next/image";
 import { isValidElement, type ReactNode } from "react";
 import {
@@ -18,12 +23,11 @@ import {
   type ProviderToken,
   type TokenClinic,
 } from "@/components/content-blocks";
+import { AFFILIATE_REL, storyLinkRel } from "@/lib/affiliate-link";
 import { headingAnchors, type HeadingAnchor } from "@/lib/post-headings";
 import { storySegments, type PhotoCell } from "@/lib/story-segments";
 import shared from "@/app/mockup/_shared/mockup.module.css";
 import styles from "@/app/mockup/blog/blog.module.css";
-
-const AFFILIATE_REL = "sponsored nofollow noopener noreferrer";
 
 const VIDEO_PROVIDERS = new Set(["YouTube", "Vimeo"]);
 
@@ -113,6 +117,56 @@ export function SourceReference({
   );
 }
 
+function StoryTable({
+  field,
+  number,
+  preview,
+}: {
+  field: TableField | null | undefined;
+  number: number;
+  preview: boolean;
+}) {
+  if (!isFilled.table(field)) {
+    if (!preview) return null;
+    return (
+      <p className={styles.tableMissing}>
+        {number === 1
+          ? "This story asks for a table. Add one in Tables."
+          : `This story asks for table ${number}. Add it as item ${number} in Tables.`}
+      </p>
+    );
+  }
+
+  return (
+    <PrismicTable
+      field={field}
+      components={{
+        table: ({ children }) => (
+          <div className={styles.tableBlock}>
+            <p className={styles.tableHint} aria-hidden="true">
+              Swipe to see more →
+            </p>
+            <div
+              className={styles.tableScroll}
+              role="region"
+              aria-label={number === 1 ? "Table" : `Table ${number}`}
+              tabIndex={0}
+            >
+              <table>{children}</table>
+            </div>
+          </div>
+        ),
+        paragraph: ({ children }) => <>{children}</>,
+        hyperlink: ({ node, children }) => (
+          <PrismicNextLink field={node.data} rel={storyLinkRel}>
+            {children}
+          </PrismicNextLink>
+        ),
+      }}
+    />
+  );
+}
+
 function StoryImage({
   image,
   sizes,
@@ -125,7 +179,11 @@ function StoryImage({
   );
 
   if (image.linkTo && isFilled.link(image.linkTo)) {
-    return <PrismicNextLink field={image.linkTo}>{picture}</PrismicNextLink>;
+    return (
+      <PrismicNextLink field={image.linkTo} rel={storyLinkRel}>
+        {picture}
+      </PrismicNextLink>
+    );
   }
 
   return picture;
@@ -144,7 +202,9 @@ function PhotoCaption({
       components={{
         paragraph: ({ children }) => <p>{children}</p>,
         hyperlink: ({ node, children }) => (
-          <PrismicNextLink field={node.data}>{children}</PrismicNextLink>
+          <PrismicNextLink field={node.data} rel={storyLinkRel}>
+            {children}
+          </PrismicNextLink>
         ),
         label: ({ node, children }) => (
           <StoryLabel label={node.data.label} sourceId={sourceId}>
@@ -393,7 +453,9 @@ function RichChunk({
       return <p>{children}</p>;
     },
     hyperlink: ({ node, children }) => (
-      <PrismicNextLink field={node.data}>{children}</PrismicNextLink>
+      <PrismicNextLink field={node.data} rel={storyLinkRel}>
+        {children}
+      </PrismicNextLink>
     ),
     label: ({ node, children }) => (
       <StoryLabel label={node.data.label} sourceId={sourceId}>
@@ -422,7 +484,9 @@ const inlineComponents = (
   oListItem: ({ children }) => <>{children}</>,
   paragraph: ({ children }) => <>{children}</>,
   hyperlink: ({ node, children }) => (
-    <PrismicNextLink field={node.data}>{children}</PrismicNextLink>
+    <PrismicNextLink field={node.data} rel={storyLinkRel}>
+      {children}
+    </PrismicNextLink>
   ),
   label: ({ node, children }) => (
     <StoryLabel label={node.data.label} sourceId={sourceId}>
@@ -434,14 +498,17 @@ const inlineComponents = (
 /** The story, in the blog post type. Heading ids match the rail. */
 export function PostStory({
   field,
+  tables = [],
   promoteResources = false,
   clinics,
   tokens = "public",
 }: {
   field: RichTextField;
+  /** The Tables group, in order. */
+  tables?: readonly { table?: TableField | null }[];
   promoteResources?: boolean;
   clinics?: readonly TokenClinic[];
-  /** Preview names a missing clinic. The public page drops the token. */
+  /** Preview names a missing clinic or an empty table. The public page drops the token. */
   tokens?: "preview" | "public";
 }) {
   const anchors = headingAnchors(field);
@@ -455,6 +522,17 @@ export function PostStory({
   }
 
   return storySegments(field, { promoteResources }).map((segment, index) => {
+    if (segment.kind === "table") {
+      return (
+        <StoryTable
+          key={index}
+          field={tables[segment.number - 1]?.table}
+          number={segment.number}
+          preview={tokens === "preview"}
+        />
+      );
+    }
+
     if (segment.kind === "photos") {
       return <PhotoRow key={index} cells={segment.cells} sourceId={sourceId} />;
     }

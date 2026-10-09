@@ -131,6 +131,40 @@ Prismic import must:
 
 Use dry-run/validation modes where feasible.
 
+### Blog posts
+
+`scripts/export-wix-blog.mjs` saves the Wix posts under
+`migration/raw/<date>/blog/`. `scripts/import-wix-posts.mts` maps them
+with `src/migration/wix-post.ts` and sends them to the Prismic
+migration release. It never publishes the release.
+
+-   `node scripts/import-wix-posts.mts` is a dry run. It writes a report
+    to `migration/reports/` (not committed) and changes nothing.
+-   `--write` sends the posts. `--only <slug,slug>` limits the run.
+    `--export <date>` picks an older export.
+-   A post already published in Prismic is skipped. `--replace
+    <slug,slug>` overwrites it, including any edits made in Prismic.
+-   `migration/state/wix-posts.json` (committed) maps each Wix post id
+    to the Prismic document it created. The migration release cannot be
+    read through the Content API, so this file is the only record of
+    unpublished imports. Do not delete it, and commit it after every
+    `--write`. A later run skips those posts, so edits Peggy makes in
+    the release are safe. Naming a post with `--only` re-imports it over
+    the release copy, which overwrites those edits. After a run that
+    stopped partway, re-import the posts it lists with `--only`.
+-   A photo whose filename (the Wix media id) is already in the media
+    library is reused, not uploaded again.
+-   `--write` refuses to send anything while any selected post has a
+    problem the mapper cannot handle, such as a link that is not a web
+    address. The report lists review flags (galleries, jump links,
+    linked photos with no description) for Peggy to check after import,
+    and what the mapper changed on purpose (links Wix made out of
+    sentences, links pointed past a redirect).
+
+Once Peggy edits imported posts in Prismic, do not re-import them. For
+the final sync, export again and import only posts that are new or
+changed in Wix since the last export, using `--only`.
+
 ## URL Manifest
 
 No production cutover until every crawled public URL has a disposition.
@@ -144,6 +178,133 @@ For redirects, validate:
 -   single hop
 -   no loops
 -   internal links use destination directly
+
+### Wix redirects to recreate in Prismic
+
+The complete list from Wix → SEO → URL Redirect Manager (owner
+screenshot, 2026-10-09), with destinations approved by the owner the
+same day, plus the dead addresses below. The Redirect type is built on
+the branch after the blog migration. Then create one Redirect document
+per row (see `docs/CONTENT_MODEL.md`), all `301 permanent`.
+
+`src/migration/wix-redirects.ts` holds the same list. Change both
+together. The post importer uses it to point links in posts straight
+at the destination, so imported posts never link to a redirect.
+
+Every row is a single hop. Each destination exists on Wix today except
+`/trusted-providers`, a new address for the trusted providers page.
+Each destination must also exist on the new site before cutover, or
+the build fails.
+
+| From | To | Reason |
+| --- | --- | --- |
+| `/copy-of-hrt-doctors` | `/hrt-doctors-review-costs-services` | Old copy of the HRT Doctors page. `/hrt-doctors` does not exist |
+| `/copy-of-joi-women-s-wellness` | `/hrt-doctors-review-costs-services` | Wix chained this through `/general-8/…` and `/tipstofindprovider/…`. Goes straight to the page it names |
+| `/copy-of-men-s-hrt` | `/hair-loss` | Wix redirect |
+| `/copy-of-midi-health` | `/mymenopauserx` | Wix redirect |
+| `/copy-of-pricing-insurance` | `/ishrtforme` | Wix redirect |
+| `/copy-of-providers` | `/formuations` | Wix redirect |
+| `/copy-of-trusted-providers` | `/trusted-providers` | Not in Wix. The live trusted providers page moves to a new address (owner decision, 2026-10-09) |
+| `/copy-of-winona` | `/musely` | Wix redirect |
+| `/copy-of-winona-review-page` | `/winona-review-page` | Old copy of the Winona review. Wix pointed at `/evernow-review-page`, a 404 |
+| `/costandformunlations` | `/costandinsurance` | Wix redirect |
+| `/trustedproviders` | `/trusted-providers` | Not in Wix. A 404 on Wix that 23 blog links point to, the page's intended address |
+| `/general-8` | `/tipstofindprovider` | Wix redirect |
+| `/general-8/hrt-doctors-review-costs-services` | `/hrt-doctors-review-costs-services` | Old folder path of the HRT Doctors page |
+| `/general-8/winona-plans-costs-insurance-accapted` | `/winona-review-page` | Old folder path of the Winona page |
+| `/tipstofindprovider/hrt-doctors-review-costs-services` | `/hrt-doctors-review-costs-services` | Wix redirect target. Wix shows the tips page at any path under it |
+| `/tipstofindprovider/winona-plans-costs-insurance-accapted` | `/winona-review-page` | Wix redirect target. Wix shows the tips page at any path under it |
+| `/home` | `/` | Wix redirect |
+| `/hrt-semiglutide` | `/` | Misspelling. Wix pointed at `/hrt-semaglutide`, a 404 |
+| `/hrt-semaglutide` | `/` | Not in Wix. A 404 on Wix that blog posts link to |
+| `/semaglutide-comparison-chart` | `/skincare` | Wix redirect |
+| `/services-1` | `/joiwommenswellness` | Wix redirect |
+| `/winona-plans-costs-insurance-accapted` | `/winona-review-page` | Wix redirect |
+
+Notes:
+
+-   The two `/tipstofindprovider/…` rows are not in Wix. They were Wix
+    redirect targets, and Wix serves the tips page at any path under
+    `/tipstofindprovider` with 200 and a self-canonical, so those
+    addresses may have links. The new site has no nested pages.
+-   Keep the slugs exactly as written, typos included (`accapted`,
+    `formuations`, `joiwommenswellness`, `costandformunlations`).
+
+### Dead post addresses
+
+Blog posts link to these `/post/…` addresses. Each was a 404 on the
+live site on 2026-10-09 with no Wix redirect. The owner approved
+sending all of them to `/blog` (2026-10-09). Add each as a Redirect,
+`/post/…` → `/blog`. The importer also sends any link to a post that
+is not in the Wix export to `/blog`, and lists it in the report.
+
+| Dead address | Linked from |
+| --- | --- |
+| `/post/signs-that-you-need-hormone-replacement-therapy` | 3 posts |
+| `/post/heart-health-and-bioidentical-hormones` | 3 posts |
+| `/post/hormone-replacement-benefits-your-brain` | 3 posts |
+| `/post/what-are-bioidentical-hormones-made-of` | 3 posts |
+| `/post/bioidentical-estrogen-and-progesterone` | 2 posts |
+| `/post/estrogen` | 2 posts |
+| `/post/the-benefits-of-hormone-replacement-therapy-for-bone-health-during-menopause` | 1 post |
+| `/post/can-hormone-replacement-help-with-hair-loss` | 1 post |
+| `/post/hormone-replacement-therapy-cost` | 1 post |
+| `/post/shopping-for-online-hormone-replacement-therapy-hrt` | 1 post |
+
+### Site pages that blog posts link to
+
+Not redirects yet. Decide these with the site page migration.
+
+-   `/home-1` is live on Wix (200) but missing from its sitemap. 18
+    links in blog posts go to it. It needs a URL decision.
+-   The importer writes site links in lowercase, so `/FAQ` and `/Home`
+    (404 on Wix) reach `/faq` and `/`.
+
+### Posts to finish by hand after import
+
+From the 2026-10-08 export. The import report lists the same flags.
+
+Tables. The importer moves each of the 24 Wix tables into the post's
+Tables group and leaves a `{{table}}`, `{{table2}}`, … line where it
+sat (see `docs/SLICE_MODEL.md`). Nothing to rebuild, except:
+
+-   `/post/alloy-vs-musely-estrogen-creams-patches-tablets-compared`
+    is already live in Prismic and is not re-imported. Its story has a
+    `{{table}}` line with no table (empty on 2026-10-09), so readers
+    see no table. Peggy adds it as the first item in Tables.
+-   Check the two posts with more than one table:
+    `beyond-basic-hormone-labs-why-i-use-joi-blokes-for-comprehensive-testing`
+    (3) and `is-it-perimenopause-5-signs-you-shouldn-t-wait-for-your-period-to-stop`
+    (2).
+
+Gallery. The only Wix gallery is a 4-photo collage in
+[`/post/effecty-hormone-replacement-therapy-review`](https://www.hormonetherapyhub.com/post/effecty-hormone-replacement-therapy-review).
+It imports as four full-width photos. No gallery piece will be built
+(owner decision, 2026-10-09). Peggy redesigns those photos within the
+story, for example with `{{photos}}` rows.
+
+Jump links. `/post/musely-sleep-well-cream-review-ingredients-fix-menopause-sleep`
+keeps the words of its in-page links, without the links.
+
+Photo descriptions. Wix has no alt text on 125 of 142 covers and 129
+story photos. Nothing reliable can fill them: Wix filenames are often
+`image.png` or a hash, and the post title on the cover repeats the
+heading. They import with no description and render as decorative.
+Peggy adds descriptions in Prismic over time, starting with the most
+visited posts. Two exceptions:
+
+-   A linked photo with no description takes its caption as the
+    description, because a screen reader names the link with it.
+-   These posts have a linked photo with neither, so the link has no
+    name. Peggy describes those photos:
+    `winona-hormone-replacement-therapy-review-updated-2025-new-products-and-prices`,
+    `who-is-mymenopauserx`, `alloy-m4-face-cream-review`,
+    `pandia-health-review-of-process-products-and-cost`,
+    `mymenopauserx-review`, `midi-health-vs-winona-hrt`,
+    `my-alloy-vs-join-midi-hrt`, `winona-hrt-cost`,
+    `winona-estrogen-cream-vs-estradiol-patch`,
+    `winona-vaginal-estrogen-cream`, and
+    `winona-vs-alloy-hormone-replacement-side-by-side-comparison`.
 
 ## Media
 

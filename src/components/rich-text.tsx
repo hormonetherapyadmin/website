@@ -6,6 +6,7 @@ import {
 import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 import { PrismicRichText, type RichTextComponents } from "@prismicio/react";
 import type { ReactNode } from "react";
+import { storyLinkRel } from "@/lib/affiliate-link";
 
 const VIDEO_PROVIDERS = new Set(["YouTube", "Vimeo"]);
 
@@ -105,7 +106,7 @@ const contentComponents: RichTextComponents = {
     <ol className="mb-4 list-decimal ps-6 last:mb-0">{children}</ol>
   ),
   hyperlink: ({ node, children }) => (
-    <PrismicNextLink field={node.data} className={linkClass}>
+    <PrismicNextLink field={node.data} className={linkClass} rel={storyLinkRel}>
       {children}
     </PrismicNextLink>
   ),
@@ -125,7 +126,9 @@ const contentComponents: RichTextComponents = {
     return (
       <figure className="my-6">
         {node.linkTo && isFilled.link(node.linkTo) ? (
-          <PrismicNextLink field={node.linkTo}>{image}</PrismicNextLink>
+          <PrismicNextLink field={node.linkTo} rel={storyLinkRel}>
+            {image}
+          </PrismicNextLink>
         ) : (
           image
         )}

@@ -909,6 +909,9 @@ inventory.
     checks the shared secret and expires the `prismic` tag. Edits are
     live on the next request, without a rebuild.
 -   New documents render on first request and are then cached.
+-   Local development does not cache Prismic responses. The webhook
+    does not reach localhost, and a cached miss would keep a just
+    published document off the page.
 -   Preview uses Prismic preview with Next.js draft mode (Phase 2).
 
 ### URLs
@@ -970,9 +973,20 @@ inventory.
 
 ### Affiliate links
 
--   Destinations come only from Provider and Offer documents.
+-   Designed CTAs (visit buttons, offer boxes, coupon codes) read their
+    destination from Provider and Offer documents.
+-   Affiliate links written in post text are kept exactly as Peggy wrote
+    them, including tracking parameters. Posts are her main affiliate
+    channel. They do not update when a Provider's destination changes;
+    a changed affiliate link needs a find-and-replace across posts.
 -   Keep current link behavior (new tab, `nofollow`, `noreferrer`,
-    `noopener`) and add `sponsored`.
+    `noopener`) and add `sponsored`. In post text and captions, a link
+    is affiliate when `src/lib/affiliate-link.ts` matches it: an
+    affiliate network host, a partner's referral path (MyMenoRx
+    `/hormonetherapyhub`), an `affid` parameter, an Amazon `tag` or
+    `campaignId`, or Peggy's referral code (`bronson` or `peggy`) in
+    the path or query. Wix marked these inconsistently, so its per-link
+    `rel` is not copied.
 -   No `/go/<provider>` redirect links.
 -   Show the affiliate disclosure next to the first CTA on a page, not
     only in the footer.

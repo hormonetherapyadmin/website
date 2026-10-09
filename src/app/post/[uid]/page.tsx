@@ -21,6 +21,7 @@ import {
   PostStory,
   SourceReference,
 } from "@/components/post-story";
+import { storyLinkRel } from "@/lib/affiliate-link";
 import { resolveAuthorId } from "@/lib/author";
 import { isIndexingAllowed } from "@/lib/env";
 import { headingAnchors } from "@/lib/post-headings";
@@ -356,7 +357,16 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
               </div>
               {isFilled.richText(post.data.caption) ? (
                 <figcaption>
-                  <PrismicRichText field={post.data.caption} />
+                  <PrismicRichText
+                    field={post.data.caption}
+                    components={{
+                      hyperlink: ({ node, children }) => (
+                        <PrismicNextLink field={node.data} rel={storyLinkRel}>
+                          {children}
+                        </PrismicNextLink>
+                      ),
+                    }}
+                  />
                 </figcaption>
               ) : null}
             </figure>
@@ -376,7 +386,7 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
                     components={{
                       paragraph: ({ children }) => <>{children}</>,
                       hyperlink: ({ node, children }) => (
-                        <PrismicNextLink field={node.data}>
+                        <PrismicNextLink field={node.data} rel={storyLinkRel}>
                           {children}
                         </PrismicNextLink>
                       ),
@@ -388,6 +398,7 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
 
             <PostStory
               field={post.data.body}
+              tables={post.data.tables}
               promoteResources={sources.length === 0}
               clinics={clinics}
               tokens={draft.isEnabled ? "preview" : "public"}

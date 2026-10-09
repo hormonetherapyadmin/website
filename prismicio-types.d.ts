@@ -276,6 +276,21 @@ export interface PostDocumentDataSourcesItem {
 /**
  * Content for Blog post documents
  */
+/**
+ * Item in *Blog post → Tables*
+ */
+export interface PostDocumentDataTablesItem {
+  /**
+   * Table field in *Blog post → Tables*
+   *
+   * - **Field Type**: Table
+   * - **Placeholder**: *None*
+   * - **API ID Path**: post.tables[].table
+   * - **Documentation**: https://prismic.io/docs/fields/table
+   */
+  table: prismic.TableField;
+}
+
 interface PostDocumentData {
   /**
    * Title field in *Blog post*
@@ -336,12 +351,23 @@ interface PostDocumentData {
    * Story field in *Blog post*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: Write the story readers will see.
+   * - **Placeholder**: Write the story readers will see. A line that is only {{table}} shows the first table from Tables there, {{table2}} the second, and so on.
    * - **API ID Path**: post.body
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   body: prismic.RichTextField;
+
+  /**
+   * Tables field in *Blog post*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: post.tables[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  tables: prismic.GroupField<Simplify<PostDocumentDataTablesItem>>;
 
   /**
    * Author field in *Blog post*
@@ -674,8 +700,65 @@ export type ProviderDocument<Lang extends string = string> =
     Lang
   >;
 
+/**
+ * Menu link in *Navigation → Main menu → Menu items → Menu links*,
+ * and in *Navigation → Footer → Footer columns → Links*
+ */
+export interface NavigationMenuLink {
+  label: prismic.KeyTextField;
+  link: prismic.LinkField;
+  clinic: prismic.ContentRelationshipField<"provider">;
+  column_heading: prismic.KeyTextField;
+  icon: prismic.ImageField;
+}
+
+export interface NavigationMenuItem {
+  label: prismic.KeyTextField;
+  link: prismic.LinkField;
+  links: prismic.NestedGroupField<NavigationMenuLink>;
+}
+
+export interface NavigationFooterLink {
+  label: prismic.KeyTextField;
+  link: prismic.LinkField;
+  clinic: prismic.ContentRelationshipField<"provider">;
+}
+
+export interface NavigationFooterColumn {
+  heading: prismic.KeyTextField;
+  links: prismic.NestedGroupField<NavigationFooterLink>;
+}
+
+/**
+ * Content for Navigation documents
+ */
+interface NavigationDocumentData {
+  main_items: prismic.GroupField<NavigationMenuItem>;
+  footer_columns: prismic.GroupField<NavigationFooterColumn>;
+}
+
+/**
+ * Navigation document from Prismic
+ *
+ * - **API ID**: `navigation`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type NavigationDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<NavigationDocumentData>,
+    "navigation",
+    Lang
+  >;
+
 export type AllDocumentTypes =
-  AuthorDocument | HomepageDocument | PostDocument | ProviderDocument;
+  | AuthorDocument
+  | HomepageDocument
+  | NavigationDocument
+  | PostDocument
+  | ProviderDocument;
 
 /**
  * Item in *Clinic comparison → Default → Primary → Section*
@@ -3351,9 +3434,16 @@ declare module "@prismicio/client" {
       AuthorDocumentData,
       HomepageDocument,
       HomepageDocumentData,
+      NavigationDocument,
+      NavigationDocumentData,
+      NavigationMenuItem,
+      NavigationMenuLink,
+      NavigationFooterColumn,
+      NavigationFooterLink,
       HomepageDocumentDataSlicesSlice,
       PostDocument,
       PostDocumentData,
+      PostDocumentDataTablesItem,
       PostDocumentDataSourcesItem,
       ProviderDocument,
       ProviderDocumentData,

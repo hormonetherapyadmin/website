@@ -4,7 +4,7 @@ import type { RichTextField } from "@prismicio/client";
 export const WORDS_PER_MINUTE = 250;
 
 const STORY_TOKEN =
-  /\{\{provider:[a-z0-9-]+:(?:offer|facts)\}\}|\{\{photos\}\}/g;
+  /\{\{provider:[a-z0-9-]+:(?:offer|facts)\}\}|\{\{photos\}\}|\{\{table\}\}/g;
 
 /** Words in the story. A clinic token is not a word the reader speaks. */
 export function storyWordCount(
