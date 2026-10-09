@@ -19,7 +19,11 @@
   --color-cta-hover: #7d1b39;
   --color-cta-text: #ffffff;
   --color-focus: #2f5fd0;
-  /* Section backgrounds from docs/SLICE_MODEL.md. Highlight and Dark. */
+  /*
+    Section Background choices (docs/SLICE_MODEL.md): Cream is background,
+    Pink to Lavender are card-1 to card-4, Raspberry is accent, Navy is
+    panel. Tint is the highlight mark and hover wash.
+  */
   --color-tint: #f5e0e5;
   --color-panel: #182033;
   --color-panel-text: #eef0f5;

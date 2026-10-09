@@ -28,7 +28,7 @@ function section(): SliceSectionFields {
     heading: rich("Eight online HRT clinics, side by side"),
     intro: rich("These are my real costs, not list prices."),
     link: { link_type: "Any" },
-    background: "Soft",
+    background: "Blue",
     space_above: "None",
     space_below: "None",
   };

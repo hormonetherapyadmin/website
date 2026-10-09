@@ -1107,12 +1107,12 @@ export interface BoxesSliceDefaultPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: boxes.default.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 
@@ -1267,12 +1267,12 @@ export interface ClinicComparisonSliceDefaultPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: clinic_comparison.default.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 
@@ -1414,12 +1414,12 @@ export interface DividerSliceDefaultPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: divider.default.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 
@@ -1573,12 +1573,12 @@ export interface HeroSliceHomePrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: hero.home.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 
@@ -1753,12 +1753,12 @@ export interface HeroSliceSubpagePrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: hero.subpage.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 
@@ -1863,12 +1863,12 @@ export interface HeroSliceBrandsPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: hero.brands.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 
@@ -1973,12 +1973,12 @@ export interface HeroSliceProviderPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: hero.provider.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 
@@ -2157,12 +2157,12 @@ export interface PostsSliceHomePrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: posts.home.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 
@@ -2271,12 +2271,12 @@ export interface PostsSliceFeaturedPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: posts.featured.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 
@@ -2398,12 +2398,12 @@ export interface PostsSliceGridPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: posts.grid.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 
@@ -2522,12 +2522,12 @@ export interface PostsSliceRowPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: posts.row.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 
@@ -2651,12 +2651,12 @@ export interface QuoteSliceDefaultPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: quote.default.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 
@@ -2831,12 +2831,12 @@ export interface SideBySideSliceImagePrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: side_by_side.image.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 
@@ -2990,12 +2990,12 @@ export interface SideBySideSliceVideoPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: side_by_side.video.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 
@@ -3149,12 +3149,12 @@ export interface SideBySideSliceQuotePrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: side_by_side.quote.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 
@@ -3308,12 +3308,12 @@ export interface SideBySideSliceClinicPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: side_by_side.clinic.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 
@@ -3533,12 +3533,12 @@ export interface StartHereSliceDefaultPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: Same as the page
+   * - **Default Value**: Cream
    * - **API ID Path**: start_here.default.primary.background
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   background: prismic.SelectField<
-    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "Cream" | "Pink" | "Blue" | "Yellow" | "Lavender" | "Raspberry" | "Navy",
     "filled"
   >;
 

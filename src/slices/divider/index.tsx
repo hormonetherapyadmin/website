@@ -1,7 +1,8 @@
 import type { SelectField } from "@prismicio/client";
 import {
-  SECTION_BACKGROUNDS,
   SECTION_SPACING,
+  sectionBackground,
+  sectionBackgroundClass,
   type SectionBackground,
   type SectionSpacing,
 } from "@/components/slice-section";
@@ -47,13 +48,6 @@ const spaceBelowClass: Record<SectionSpacing, string> = {
   Large: "mb-slice-lg",
 };
 
-const backgroundClass: Record<SectionBackground, string> = {
-  "Same as the page": "",
-  Soft: "bg-surface",
-  Highlight: "bg-tint",
-  Dark: "bg-panel",
-};
-
 function choice<T extends string>(
   value: string | null | undefined,
   allowed: readonly T[],
@@ -69,14 +63,10 @@ function choice<T extends string>(
 export function Divider({ primary }: { primary: DividerPrimary }) {
   const line = choice(primary.line, LINES, "Squiggly");
   const color = choice(primary.color, COLORS, "Accent");
-  const background = choice(
-    primary.background,
-    SECTION_BACKGROUNDS,
-    "Same as the page",
-  );
+  const background = sectionBackground(primary.background);
   const spaceAbove = choice(primary.space_above, SECTION_SPACING, "None");
   const spaceBelow = choice(primary.space_below, SECTION_SPACING, "None");
-  const band = background !== "Same as the page";
+  const band = background !== "Cream";
 
   return (
     <div
@@ -84,7 +74,7 @@ export function Divider({ primary }: { primary: DividerPrimary }) {
       className={[
         spaceAboveClass[spaceAbove],
         spaceBelowClass[spaceBelow],
-        backgroundClass[background],
+        sectionBackgroundClass[background],
       ]
         .filter(Boolean)
         .join(" ")}

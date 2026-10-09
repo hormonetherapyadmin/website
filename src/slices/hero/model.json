@@ -50,9 +50,17 @@
         },
         "background": {
           "config": {
-            "default_value": "Same as the page",
+            "default_value": "Cream",
             "label": "Background",
-            "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+            "options": [
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ]
           },
           "type": "Select"
         },
@@ -186,9 +194,17 @@
         },
         "background": {
           "config": {
-            "default_value": "Same as the page",
+            "default_value": "Cream",
             "label": "Background",
-            "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+            "options": [
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ]
           },
           "type": "Select"
         },
@@ -264,9 +280,17 @@
         },
         "background": {
           "config": {
-            "default_value": "Same as the page",
+            "default_value": "Cream",
             "label": "Background",
-            "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+            "options": [
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ]
           },
           "type": "Select"
         },
@@ -361,9 +385,17 @@
         },
         "background": {
           "config": {
-            "default_value": "Same as the page",
+            "default_value": "Cream",
             "label": "Background",
-            "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+            "options": [
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ]
           },
           "type": "Select"
         },

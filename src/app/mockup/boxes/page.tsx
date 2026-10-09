@@ -117,7 +117,7 @@ export default function BoxesPreview() {
         primary={{
           ...section({
             heading: rich("Default: five across, written by hand"),
-            background: "Soft",
+            background: "Blue",
           }),
           across: null,
           boxes: customBoxes,

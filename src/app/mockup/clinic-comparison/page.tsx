@@ -25,7 +25,7 @@ function section(): SliceSectionFields {
       "I paid out of pocket with my HSA card, or through my prescription insurance when I could. These are my real costs, not list prices. Yours may differ.",
     ),
     link: { link_type: "Any" },
-    background: "Soft",
+    background: "Blue",
     space_above: "None",
     space_below: "None",
   };

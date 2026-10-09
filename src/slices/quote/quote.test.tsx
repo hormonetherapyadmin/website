@@ -21,7 +21,7 @@ function section(): SliceSectionFields {
     heading: rich("Peggy's take: what I'm using now"),
     intro: emptyRich,
     link: { link_type: "Any" },
-    background: "Dark",
+    background: "Navy",
     space_above: "None",
     space_below: "None",
   };

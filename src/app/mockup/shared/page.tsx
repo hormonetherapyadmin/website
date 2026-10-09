@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { RichTextField } from "@prismicio/client";
 import { RichText } from "@/components/rich-text";
 import {
+  SECTION_BACKGROUNDS,
   SliceSection,
   type SliceSectionFields,
 } from "@/components/slice-section";
@@ -78,19 +79,33 @@ export default function SharedComponentsPreview() {
           intro: text(
             "I paid out of pocket with my HSA card, or through my prescription insurance when I could.",
           ),
-          background: "Soft",
+          background: "Blue",
         })}
       />
       <SliceSection
         section={section({
           small_heading: text("Peggy’s take"),
           heading: text("What I’m using now"),
-          background: "Dark",
+          background: "Navy",
           space_above: "None",
         })}
       >
         <RichText field={story} />
       </SliceSection>
+      {SECTION_BACKGROUNDS.map((background) => (
+        <SliceSection
+          key={background}
+          section={section({
+            small_heading: text("Background"),
+            heading: text(background),
+            link: { link_type: "Web", url: "/blog", text: "All posts" },
+            background,
+            space_above: "None",
+          })}
+        >
+          <RichText field={story} />
+        </SliceSection>
+      ))}
     </>
   );
 }

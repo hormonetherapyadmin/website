@@ -23,7 +23,7 @@ function section(heading: string): SliceSectionFields {
     heading: rich(heading),
     intro: emptyRich,
     link: { link_type: "Any" },
-    background: "Same as the page",
+    background: "Cream",
     space_above: "None",
     space_below: "None",
   };
@@ -161,7 +161,7 @@ describe("PageSliceZone", () => {
       slice("divider", {
         line: "Straight",
         color: "Accent",
-        background: "Same as the page",
+        background: "Cream",
         space_above: "None",
         space_below: "None",
       }),

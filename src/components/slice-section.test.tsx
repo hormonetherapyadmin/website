@@ -70,7 +70,7 @@ describe("SliceSection", () => {
             url: "/blog",
             text: "All posts",
           },
-          background: "Dark",
+          background: "Navy",
           space_above: "Large",
           space_below: "Small",
         })}
@@ -86,6 +86,40 @@ describe("SliceSection", () => {
     expect(html).toContain("Menopause isn’t a dirty word.");
     expect(html).toContain("All posts");
     expect(html).toContain('href="/blog"');
+  });
+
+  it("paints the color choices and sets the small heading color", () => {
+    const pink = renderToStaticMarkup(
+      <SliceSection section={fields({ background: "Pink" })} />,
+    );
+    const raspberry = renderToStaticMarkup(
+      <SliceSection
+        section={fields({
+          small_heading: text("Providers"),
+          heading: text("Trusted providers"),
+          background: "Raspberry",
+        })}
+      />,
+    );
+    const retired = renderToStaticMarkup(
+      <SliceSection
+        section={fields({
+          background: "Soft" as SliceSectionFields["background"],
+        })}
+      />,
+    );
+
+    expect(pink).toContain("bg-card-1");
+    expect(pink).toContain("py-slice");
+    expect(raspberry).toContain("bg-accent text-panel-text");
+    expect(pink).toContain("[--section-kicker:var(--color-accent)]");
+    expect(raspberry).toContain("[--section-kicker:var(--color-card-2)]");
+    expect(
+      renderToStaticMarkup(
+        <SliceSection section={fields({ background: "Navy" })} />,
+      ),
+    ).toContain("[--section-kicker:var(--color-panel-accent)]");
+    expect(retired).not.toContain("py-slice");
   });
 
   it("lets the hero render its own heading", () => {

@@ -10,7 +10,7 @@ describe("Divider", () => {
         primary={{
           line: "Squiggly",
           color: "Accent",
-          background: "Same as the page",
+          background: "Cream",
           space_above: "None",
           space_below: "None",
         }}
@@ -31,7 +31,7 @@ describe("Divider", () => {
         primary={{
           line: "Straight",
           color: "Border",
-          background: "Soft",
+          background: "Blue",
           space_above: "Large",
           space_below: "Small",
         }}
@@ -40,7 +40,7 @@ describe("Divider", () => {
 
     expect(html).toContain(styles.straight);
     expect(html).toContain(styles.border);
-    expect(html).toContain("bg-surface");
+    expect(html).toContain("bg-card-2");
     expect(html).toContain("py-slice");
     expect(html).toContain("mt-slice-lg");
     expect(html).toContain("mb-slice-sm");

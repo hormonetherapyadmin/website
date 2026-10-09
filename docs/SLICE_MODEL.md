@@ -67,7 +67,7 @@ instead. The Divider has only Background, Space above, and Space below.
 | Heading | `heading` | Heading rich text | Empty |
 | Intro | `intro` | Heading rich text | Empty |
 | Link | `link` | Link, with display text | Empty |
-| Background | `background` | Select | Same as the page |
+| Background | `background` | Select | Cream |
 | Space above | `space_above` | Select | Medium |
 | Space below | `space_below` | Select | None |
 
@@ -79,15 +79,31 @@ The Hero slice renders Heading as the page title (`h1`). Every other
 slice renders it as a section heading (`h2`). A card title is an `h3`.
 The small heading is a line above the title. She does not pick the level.
 
-**Background** choices map to site color tokens:
+**Background** choices are the site colors, by name. Each maps to a
+color token:
 
-- Same as the page
-- Soft, the comparison band (`surface`)
-- Highlight (`tint`)
-- Dark, the quote band (`panel`)
+- Cream, the page color (`background`). The default. It paints nothing
+  and adds no inner padding
+- Pink (`card-1`)
+- Blue (`card-2`)
+- Yellow (`card-3`)
+- Lavender (`card-4`)
+- Raspberry (`accent`)
+- Navy, the quote band (`panel`)
 
-A Dark section uses light text. These are token names, so a later palette
-change updates every section. Do not use a free color picker.
+The four pastels are the Start here card colors. Raspberry and Navy use
+light text. The small heading is raspberry on Cream and the pastels,
+light blue (`card-2`) on Raspberry, and pink (`panel-accent`) on Navy.
+Slices that draw their own small heading (Hero, Side by side, Quote)
+follow the same rule. A later palette
+change to a token updates every section that uses it. A brand change
+that makes a name wrong, such as a new accent that is not raspberry,
+renames the choice, and pages that stored the old name fall back to
+Cream until they are set again. Do not use a free color picker.
+
+Pieces a slice draws in raspberry, such as a hero button or kicker, are
+not changed on a Raspberry band. Use Raspberry for writing and quotes.
+A card keeps its own color on any band.
 
 **Space above** and **Space below** are the gap outside the slice. Both
 are None, Small, Medium, or Large. The gap between two slices is set by
@@ -170,7 +186,7 @@ not add a gap until she asks for one.
 | --- | --- | --- | --- |
 | Line | `line` | Select | Squiggly |
 | Color | `color` | Select | Accent |
-| Background | `background` | Select | Same as the page |
+| Background | `background` | Select | Cream |
 | Space above | `space_above` | Select | None |
 | Space below | `space_below` | Select | None |
 
@@ -426,7 +442,7 @@ the Provider fields in the next section, including `code` and
 ### Quote
 
 Section Heading in the mockup is "Peggy's take: what I'm using now."
-Background is Dark.
+Background is Navy.
 
 The slice is in `src/slices/quote`. The page resolves the clinic.
 

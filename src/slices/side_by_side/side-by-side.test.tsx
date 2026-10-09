@@ -30,7 +30,7 @@ function section(): SliceSectionFields {
     heading: rich("Menopause isn’t a dirty word."),
     intro: rich("I’ll say that again."),
     link: { link_type: "Any" },
-    background: "Same as the page",
+    background: "Cream",
     space_above: "None",
     space_below: "None",
   };

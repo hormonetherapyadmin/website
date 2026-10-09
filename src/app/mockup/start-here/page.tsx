@@ -61,7 +61,7 @@ function section(): SliceSectionFields {
     heading: rich("Where should I start?"),
     intro: emptyRich,
     link: emptyLink,
-    background: "Same as the page",
+    background: "Cream",
     space_above: "Medium",
     space_below: "None",
   };

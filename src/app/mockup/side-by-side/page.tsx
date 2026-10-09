@@ -55,7 +55,7 @@ function section(
     heading: rich(heading),
     intro: intro ? rich(intro) : emptyRich,
     link: { link_type: "Any" },
-    background: "Same as the page",
+    background: "Cream",
     space_above: "Medium",
     space_below: "None",
   };

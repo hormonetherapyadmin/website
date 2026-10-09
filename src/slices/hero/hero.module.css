@@ -42,7 +42,7 @@
   font-weight: 700;
   letter-spacing: 0;
   line-height: 1.4;
-  color: var(--color-accent);
+  color: var(--section-kicker, var(--color-accent));
 }
 
 .homeKicker {

@@ -11,10 +11,13 @@ import { useId } from "react";
 import { RichText } from "@/components/rich-text";
 
 export const SECTION_BACKGROUNDS = [
-  "Same as the page",
-  "Soft",
-  "Highlight",
-  "Dark",
+  "Cream",
+  "Pink",
+  "Blue",
+  "Yellow",
+  "Lavender",
+  "Raspberry",
+  "Navy",
 ] as const;
 
 export const SECTION_SPACING = ["None", "Small", "Medium", "Large"] as const;
@@ -47,11 +50,29 @@ const spaceBelowClass: Record<SectionSpacing, string> = {
   Large: "mb-slice-lg",
 };
 
-const backgroundClass: Record<SectionBackground, string> = {
-  "Same as the page": "",
-  Soft: "bg-surface",
-  Highlight: "bg-tint",
-  Dark: "bg-panel text-panel-text",
+/** Cream is the page color, so it paints nothing. */
+export const sectionBackgroundClass: Record<SectionBackground, string> = {
+  Cream: "",
+  Pink: "bg-card-1",
+  Blue: "bg-card-2",
+  Yellow: "bg-card-3",
+  Lavender: "bg-card-4",
+  Raspberry: "bg-accent text-panel-text",
+  Navy: "bg-panel text-panel-text",
+};
+
+/**
+ * Sets --section-kicker, the small heading color, for the shared header
+ * and for slices that draw their own small heading.
+ */
+const kickerColorClass: Record<SectionBackground, string> = {
+  Cream: "[--section-kicker:var(--color-accent)]",
+  Pink: "[--section-kicker:var(--color-accent)]",
+  Blue: "[--section-kicker:var(--color-accent)]",
+  Yellow: "[--section-kicker:var(--color-accent)]",
+  Lavender: "[--section-kicker:var(--color-accent)]",
+  Raspberry: "[--section-kicker:var(--color-card-2)]",
+  Navy: "[--section-kicker:var(--color-panel-accent)]",
 };
 
 function choice<T extends string>(
@@ -63,6 +84,11 @@ function choice<T extends string>(
     if (option === value) return option;
   }
   return fallback;
+}
+
+/** The Background choice. An empty or retired choice is Cream. */
+export function sectionBackground(value: string | null | undefined) {
+  return choice(value, SECTION_BACKGROUNDS, "Cream");
 }
 
 /** A heading turned into an element id, such as "Feel like you again." */
@@ -151,14 +177,10 @@ export function SliceSection({
 }: SliceSectionProps) {
   const headingId = useId();
   const fields = section ?? undefined;
-  const background = choice(
-    fields?.background,
-    SECTION_BACKGROUNDS,
-    "Same as the page",
-  );
+  const background = sectionBackground(fields?.background);
   const spaceAbove = choice(fields?.space_above, SECTION_SPACING, "Medium");
   const spaceBelow = choice(fields?.space_below, SECTION_SPACING, "None");
-  const band = background !== "Same as the page";
+  const band = background !== "Cream";
   const header = showHeader && fields && hasHeader(fields) ? fields : null;
   const anchor = sectionAnchor(title ?? (fields ? asText(fields.heading) : ""));
 
@@ -172,7 +194,8 @@ export function SliceSection({
       className={[
         spaceAboveClass[spaceAbove],
         spaceBelowClass[spaceBelow],
-        backgroundClass[background],
+        sectionBackgroundClass[background],
+        kickerColorClass[background],
       ]
         .filter(Boolean)
         .join(" ")}
@@ -190,10 +213,7 @@ export function SliceSection({
             <RichText
               field={header.small_heading}
               as="p"
-              className={[
-                "mb-3 text-sm font-bold",
-                background === "Dark" ? "text-panel-text" : "text-accent",
-              ].join(" ")}
+              className="mb-3 text-sm font-bold text-(color:--section-kicker)"
             />
             <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
               {isFilled.richText(header.heading) ? (
