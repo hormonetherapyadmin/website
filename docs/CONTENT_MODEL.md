@@ -35,10 +35,12 @@ column. The page is still linked, and the header stays on the
 learn-and-compare path.
 
 Each menu link has a label, a link, an optional clinic, an optional
-column heading, and an optional icon. Leave the label blank to use the
-clinic name. A clinic also supplies its logo, so the clinic name is not
-hard-coded in the component. Links stay in the order she adds them. A
-new column starts when the column heading changes. The first column
+column heading, and an optional icon image. Leave the label blank to
+use the clinic name. A clinic also supplies its logo, in the clinic's
+own colors. The icon is any image she uploads. The header colors it
+raspberry, so a transparent background is what reads as an icon. Links
+stay in the order she adds them. A new column starts when the column
+heading changes. The first column
 can have a heading too, such as "Compare & choose", with "My reviews"
 on the clinic links.
 
@@ -55,7 +57,9 @@ wordmark is on the left, the menu is centered, and the right side is a
 search icon plus one button. Search links to `/search`. The button
 says "Trusted providers" and, in this design preview, links to
 `/mockup/trusted-providers`. The live page is
-`/copy-of-trusted-providers`. There is no stronger single call to
+`/copy-of-trusted-providers`. On the new site it moves to
+`/trusted-providers`, and the old address redirects there (owner
+decision, 2026-10-09; see `docs/MIGRATION_RUNBOOK.md`). There is no stronger single call to
 action yet: that page is the compare step, and the homepage already
 sends people there. A header button Peggy can retarget would be a new
 field.
@@ -184,7 +188,7 @@ Fields:
 -   Subtitle (`sub_title`, the line under the title and the card; the Wix excerpt)
 -   Personal note
 -   Story
--   Table (the grid for a `{{table}}` line in the story)
+-   Tables (repeatable; item 1 fills the `{{table}}` line in the story, item 2 `{{table2}}`, and so on)
 -   Image
 -   Caption
 -   Author

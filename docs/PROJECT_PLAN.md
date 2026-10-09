@@ -973,9 +973,17 @@ inventory.
 
 ### Affiliate links
 
--   Destinations come only from Provider and Offer documents.
+-   Designed CTAs (visit buttons, offer boxes, coupon codes) read their
+    destination from Provider and Offer documents.
+-   Affiliate links written in post text are kept exactly as Peggy wrote
+    them, including tracking parameters. Posts are her main affiliate
+    channel. They do not update when a Provider's destination changes;
+    a changed affiliate link needs a find-and-replace across posts.
 -   Keep current link behavior (new tab, `nofollow`, `noreferrer`,
-    `noopener`) and add `sponsored`.
+    `noopener`) and add `sponsored`. In post text, a link is affiliate
+    when its host is on the affiliate domain list in
+    `src/lib/affiliate-link.ts`. Wix marked these inconsistently, so its
+    per-link `rel` is not copied.
 -   No `/go/<provider>` redirect links.
 -   Show the affiliate disclosure next to the first CTA on a page, not
     only in the footer.

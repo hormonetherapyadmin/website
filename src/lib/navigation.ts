@@ -28,7 +28,8 @@ export type NavIconName = (typeof NAV_ICON_OPTIONS)[number];
 export type NavLink = {
   label: string;
   href: string;
-  icon?: NavIconName;
+  /** Uploaded icon URL, or a design-preview icon name. */
+  icon?: string;
   logo?: string;
   monogram?: string;
   newTab?: boolean;
@@ -61,7 +62,7 @@ export type NavigationMenuLink = {
   link: LinkField;
   clinic?: ContentRelationshipField;
   column_heading?: string | null;
-  icon?: string | null;
+  icon?: ImageField | null;
 };
 
 export type NavigationMenuItem = {
@@ -76,10 +77,6 @@ export type NavigationFooterColumn = {
 };
 
 type BuiltLink = NavLink & { columnHeading?: string };
-
-function isNavIcon(value: string | null | undefined): value is NavIconName {
-  return NAV_ICON_OPTIONS.some((option) => option === value);
-}
 
 function text(value: string | null | undefined) {
   const trimmed = value?.trim();
@@ -137,7 +134,10 @@ function menuLink(item: NavigationMenuLink): BuiltLink | null {
   if (opensNewTab(item.link)) built.newTab = true;
   if (logo) built.logo = logo;
   else if (clinic?.linked) built.monogram = monogram(label);
-  else if (isNavIcon(item.icon)) built.icon = item.icon;
+  else {
+    const icon = imageUrl(item.icon);
+    if (icon) built.icon = icon;
+  }
   return built;
 }
 

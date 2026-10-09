@@ -120,12 +120,28 @@ function LinkMark({ link }: { link: NavLink }) {
   }
 
   if (!link.icon) return null;
+  const named =
+    link.icon in ICONS ? ICONS[link.icon as NavIconName] : undefined;
+  if (named) {
+    return (
+      <HugeiconsIcon
+        icon={named}
+        size={20}
+        strokeWidth={1.75}
+        className={styles.navIcon}
+        aria-hidden="true"
+      />
+    );
+  }
+
   return (
-    <HugeiconsIcon
-      icon={ICONS[link.icon]}
-      size={20}
-      strokeWidth={1.75}
-      className={styles.navIcon}
+    <span
+      className={styles.navIconImage}
+      style={
+        {
+          "--nav-icon": `url("${link.icon.replaceAll('"', "")}")`,
+        } as CSSProperties
+      }
       aria-hidden="true"
     />
   );

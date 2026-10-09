@@ -154,7 +154,7 @@ describe("PostStory clinic tokens", () => {
     } as TableField;
 
     const markup = renderToStaticMarkup(
-      <PostStory field={story("{{table}}")} table={table} />,
+      <PostStory field={story("{{table}}")} tables={[{ table }]} />,
     );
 
     expect(markup).toContain("<table>");
@@ -175,7 +175,55 @@ describe("PostStory clinic tokens", () => {
 
     expect(hidden).not.toContain("{{table}}");
     expect(hidden).not.toContain("<table>");
-    expect(preview).toContain("Add one in the Table field.");
+    expect(preview).toContain("Add one in Tables.");
+  });
+
+  it("places each numbered table where its line is", () => {
+    const grid = (word: string) =>
+      ({
+        body: {
+          rows: [
+            {
+              key: word,
+              cells: [
+                {
+                  key: word,
+                  type: "data" as const,
+                  content: [
+                    { type: "paragraph" as const, text: word, spans: [] },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      }) as TableField;
+    const field = [
+      ...story("{{table2}}"),
+      ...story("Between."),
+      ...story("{{table}}"),
+      ...story("{{table3}}"),
+    ] as RichTextField;
+
+    const markup = renderToStaticMarkup(
+      <PostStory
+        field={field}
+        tables={[{ table: grid("First") }, { table: grid("Second") }]}
+      />,
+    );
+    const preview = renderToStaticMarkup(
+      <PostStory
+        field={field}
+        tables={[{ table: grid("First") }, { table: grid("Second") }]}
+        tokens="preview"
+      />,
+    );
+
+    expect(markup.indexOf("Second")).toBeLessThan(markup.indexOf("Between."));
+    expect(markup.indexOf("Between.")).toBeLessThan(markup.indexOf("First"));
+    expect(markup).toContain('aria-label="Table 2"');
+    expect(markup).not.toContain("{{table");
+    expect(preview).toContain("Add it as item 3 in Tables.");
   });
 
   it("names a missing clinic in preview", () => {
@@ -188,5 +236,69 @@ describe("PostStory clinic tokens", () => {
     );
 
     expect(markup).toContain("No clinic with id missing.");
+  });
+});
+
+describe("PostStory links", () => {
+  const anchor = (markup: string, href: string) =>
+    markup.match(new RegExp(`<a [^>]*href="${href}"[^>]*>`))?.[0] ?? "";
+  const link = (url: string) => ({
+    start: 0,
+    end: 4,
+    type: "hyperlink" as const,
+    data: { link_type: "Web" as const, url, target: "_blank" },
+  });
+
+  it("marks an affiliate link as sponsored and leaves a source link alone", () => {
+    const markup = renderToStaticMarkup(
+      <PostStory
+        field={[
+          {
+            type: "paragraph",
+            text: "Winona",
+            spans: [link("https://winona.pxf.io/XYkMZ3")],
+          },
+          {
+            type: "paragraph",
+            text: "FDA says",
+            spans: [link("https://www.fda.gov/drugs")],
+          },
+        ]}
+      />,
+    );
+
+    expect(anchor(markup, "https://winona.pxf.io/XYkMZ3")).toContain(
+      'rel="sponsored nofollow noopener noreferrer"',
+    );
+    expect(anchor(markup, "https://www.fda.gov/drugs")).toContain(
+      'rel="noreferrer"',
+    );
+  });
+
+  it("marks a photo that links to an affiliate", () => {
+    const markup = renderToStaticMarkup(
+      <PostStory
+        field={[
+          {
+            type: "image",
+            id: "photo",
+            url: "https://images.prismic.io/1shr96di/photo.jpg?auto=format",
+            alt: "Musely cream",
+            copyright: null,
+            dimensions: { width: 800, height: 600 },
+            edit: { x: 0, y: 0, zoom: 1, background: "transparent" },
+            linkTo: {
+              link_type: "Web",
+              url: "https://musely.pxf.io/xJvrWA",
+              target: "_blank",
+            },
+          },
+        ]}
+      />,
+    );
+
+    expect(anchor(markup, "https://musely.pxf.io/xJvrWA")).toContain(
+      'rel="sponsored nofollow noopener noreferrer"',
+    );
   });
 });

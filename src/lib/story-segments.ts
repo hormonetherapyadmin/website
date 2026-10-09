@@ -12,20 +12,28 @@ export type PhotoCell = {
 export type StorySegment =
   | { kind: "rich"; field: RichTextField }
   | { kind: "photos"; cells: [PhotoCell, PhotoCell] }
-  | { kind: "table" }
+  /** Position in the Tables group. {{table}} is 1, {{table2}} is 2. */
+  | { kind: "table"; number: number }
   | { kind: "sources"; items: StoryBlock[] };
 
 const PHOTO_ROW = /^\{\{photos\}\}$/;
-const TABLE_TOKEN = /^\{\{table\}\}$/;
+const TABLE_TOKEN = /^\{\{table([1-9]\d*)?\}\}$/;
 
 /** A paragraph that is only the side-by-side photo token. */
 export function isPhotoRowToken(text: string) {
   return PHOTO_ROW.test(text.trim());
 }
 
-/** A paragraph that is only the table token. */
+/** The table a paragraph asks for, or null when it is not a table token. */
+export function tableTokenNumber(text: string): number | null {
+  const match = TABLE_TOKEN.exec(text.trim());
+  if (!match) return null;
+  return match[1] ? Number(match[1]) : 1;
+}
+
+/** A paragraph that is only a table token. */
 export function isTableToken(text: string) {
-  return TABLE_TOKEN.test(text.trim());
+  return tableTokenNumber(text) !== null;
 }
 
 function paragraphText(block: StoryBlock) {
@@ -120,9 +128,10 @@ export function storySegments(
   let index = 0;
   while (index < field.length) {
     const text = paragraphText(field[index]);
-    if (text !== null && isTableToken(text)) {
+    const tableNumber = text === null ? null : tableTokenNumber(text);
+    if (tableNumber !== null) {
       flush();
-      segments.push({ kind: "table" });
+      segments.push({ kind: "table", number: tableNumber });
       index += 1;
       continue;
     }

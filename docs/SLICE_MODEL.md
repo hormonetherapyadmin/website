@@ -570,7 +570,10 @@ on 42 posts. Those are not the Category select, and migration leaves
 Category empty. Every post has a cover image. One of the 142 excerpts
 matches its meta description, so those stay separate fields. Tags are
 sparse and messy. Migration writes each Wix tag label onto the
-document's Prismic tags. Published is the date on the Wix article, the
+document's Prismic tags, once per post when two differ only in
+capitals. Across posts the Wix capitals stay as they are, so Prismic
+lists pairs such as `Inner Balance` and `inner balance` (9 pairs in
+the 2026-10-08 export). Published is the date on the Wix article, the
 first published date. One hundred twenty posts also have a later last
 published date. That later date and `relatedPostIds` are not stored.
 Comments are turned on in Wix and are not imported. One post is
@@ -586,7 +589,7 @@ corrected in Prismic.
 | Subtitle | `sub_title` | Heading rich text | No | Wix excerpt. The line under the title, and the card |
 | Personal note | `note` | Heading rich text | No | Mockup only. The box above the story |
 | Story | `body` | Content rich text | Yes | Wix rich content |
-| Table | `table` | Table | No | Filled in Prismic. A `{{table}}` line in the story shows it |
+| Tables | `tables` | Repeatable group of one Table field (`table`) | No | A `{{table}}` line in the story shows the first item, `{{table2}}` the second, and so on |
 | Image | `image` | Image, including its description | Yes | Wix cover |
 | Caption | `caption` | Heading rich text | No | The line under the cover, when that photo has one |
 | Author | `author` | Content relationship to Author | No | Left empty. Empty means Peggy B. Two posts are corrected in Prismic |
@@ -643,7 +646,9 @@ A photo in the story has a description and can be a link. Prismic
 calls the other line on that photo Copyright, so the caption is not
 stored there. The caption is the paragraph under the photo. If the
 first photo is the same file as Image, move its caption into Caption
-and do not repeat the photo.
+and do not repeat the photo. The cover is not a link. A link Wix had
+on that first photo is not kept (81 posts in the 2026-10-08 export,
+17 of them affiliate links). Approved by the owner on 2026-10-09.
 
 | Wix block | Becomes |
 | --- | --- |
@@ -651,29 +656,34 @@ and do not repeat the photo.
 | Heading | Heading 2, 3, or 4. The page title is the only Heading 1. A heading 1, 5, or 6 in the story becomes Heading 2 |
 | Bold, italic | Bold, italic |
 | Underline, text color, font size | The words, as a normal paragraph. A 10px number becomes the superscript label |
-| Link | Link. Keep the full address, including affiliate parameters |
-| Image | Image, then its caption as the next paragraph |
+| Link | Link. Keep the full address, including affiliate parameters. A link Wix saved without `https://` (such as `winona.pxf.io/daBV57`) gets it. A link that is still not a web address stops the import |
+| Jump link to a spot in the same post | The words, without the link, and a migration flag |
+| Link Wix made out of a sentence ("product. It" → `http://product.It`) | The words, without the link. Listed under "changes" in the migration report. Approved by the owner on 2026-10-09 |
+| Image | Image, then its caption as the next paragraph. A link on the photo stays on the photo. A linked photo with no description takes its caption as the description |
+| Link to this site | The `www` address in lowercase. A redirected address goes straight to its destination, and a post that no longer exists goes to `/blog` (see `docs/MIGRATION_RUNBOOK.md`) |
 | Two photos side by side | Two images, each with its caption. See Photo row |
 | Button | A paragraph that is only that link |
 | YouTube or other video | Video embed |
 | List | List |
 | Quote | A paragraph. The story has no quote block |
-| Table | The same words, written out under the heading they sat under, and a migration flag. Peggy can replace that writing with a `{{table}}` line and fill the Table field |
+| Table | The next item in Tables, and a `{{table}}`, `{{table2}}`, … line where it sat. A first row that is all bold becomes the header row. A blank line inside a cell becomes a line break |
+| Gallery | Its photos, full width, one after another, and a migration flag. There is no gallery piece (owner decision, 2026-10-09) |
 | Empty line used as spacing | Dropped |
 | Divider | Not imported. A horizontal line in the Wix story is left out |
 | File, custom HTML, poll, or code | Not dropped. The migration report lists the post for manual review |
 
-Tables showed up in several of the 18 posts, usually a pricing or lab
-grid in the middle of the story. One rich text field cannot hold a
-table. Writing the cells out keeps the words. The flag is there so
-Peggy can check that the grid still reads. She replaces that writing
-with a line that is only `{{table}}` and builds the grid in the Table
-field. Mark the first row as the header. Repeat a name that spans
-several rows, because a cell cannot merge. A second grid in the same
-post is not supported. A grid that is only one clinic's current price
+Tables show up in 21 of the 142 Wix posts (24 tables), usually a
+pricing or lab grid in the middle of the story. One rich text field
+cannot hold a table, so each grid is an item in Tables and a line that
+is only its token places it. `{{table}}` (or `{{table1}}`) is the
+first item, `{{table2}}` the second. A token with no matching item is
+hidden on the public site and named in preview. To add a grid by hand,
+add an item to Tables and the matching line to the story. Mark the
+first row as the header. Repeat a name that spans several rows,
+because a cell cannot merge. A grid that is only one clinic's current price
 and formulation can later be replaced with a facts token. A grid that
-compares several clinics, or lists lab markers, stays in the Table
-field. Those words are not on the clinic.
+compares several clinics, or lists lab markers, stays in Tables.
+Those words are not on the clinic.
 
 ### Photo row
 
@@ -712,7 +722,7 @@ whole paragraph. Any other last word is ordinary text. In preview, an
 unknown clinic shows an error where the box would be. On the public
 site that token is removed and the rest of the paragraph stays.
 
-Story help: "Write the story readers will see. A line that is only {{table}} shows the Table field there."
+Story help: "Write the story readers will see. A line that is only {{table}} shows the first table from Tables there, {{table2}} the second, and so on."
 
 The sidebar is not a field. It reads the story. Each clinic appears
 once, in the order of its first token, and the sidebar shows the first

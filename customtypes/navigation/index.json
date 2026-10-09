@@ -62,24 +62,9 @@
                   "icon": {
                     "config": {
                       "label": "Icon",
-                      "options": [
-                        "Question",
-                        "Medicine",
-                        "Wallet",
-                        "Test tube",
-                        "Person",
-                        "Chat",
-                        "Scale",
-                        "Moon",
-                        "Hair",
-                        "Drop",
-                        "Chart",
-                        "Idea",
-                        "Shield"
-                      ],
-                      "placeholder": "Optional. A clinic uses its logo instead."
+                      "placeholder": "Any icon on a transparent background. Shown in raspberry."
                     },
-                    "type": "Select"
+                    "type": "Image"
                   }
                 },
                 "label": "Menu links",

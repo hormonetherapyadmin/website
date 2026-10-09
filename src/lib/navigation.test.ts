@@ -1,4 +1,4 @@
-import type { LinkField } from "@prismicio/client";
+import type { ImageField, LinkField } from "@prismicio/client";
 import { describe, expect, it } from "vitest";
 import { siteNavigationFrom, type NavigationMenuLink } from "./navigation";
 
@@ -6,6 +6,17 @@ const empty = { link_type: "Any" } as LinkField;
 
 function web(url: string, target?: string): LinkField {
   return { link_type: "Web", url, target };
+}
+
+function icon(url: string): ImageField {
+  return {
+    id: url,
+    url,
+    alt: null,
+    copyright: null,
+    dimensions: { width: 20, height: 20 },
+    edit: { x: 0, y: 0, zoom: 1, background: "transparent" },
+  };
 }
 
 function link(
@@ -58,14 +69,14 @@ describe("siteNavigationFrom", () => {
           link: empty,
           links: [
             link("Price comparison chart", "/hrt-price-comparison-chart", {
-              icon: "Chart",
+              icon: icon("https://images.prismic.io/chart.png"),
             }),
             link("Trusted providers", "/mockup/trusted-providers", {
-              icon: "Shield",
+              icon: icon("https://images.prismic.io/shield.png"),
             }),
             link("Winona", "/winona-review-page", {
               column_heading: "My reviews",
-              icon: "Chart",
+              icon: icon("https://images.prismic.io/winona-icon.png"),
             }),
             link("Alloy", "/alloy-review-page", {
               column_heading: "My reviews",
@@ -84,12 +95,12 @@ describe("siteNavigationFrom", () => {
               {
                 label: "Price comparison chart",
                 href: "/hrt-price-comparison-chart",
-                icon: "Chart",
+                icon: "https://images.prismic.io/chart.png",
               },
               {
                 label: "Trusted providers",
                 href: "/mockup/trusted-providers",
-                icon: "Shield",
+                icon: "https://images.prismic.io/shield.png",
               },
             ],
           },
@@ -99,7 +110,7 @@ describe("siteNavigationFrom", () => {
               {
                 label: "Winona",
                 href: "/winona-review-page",
-                icon: "Chart",
+                icon: "https://images.prismic.io/winona-icon.png",
               },
               { label: "Alloy", href: "/alloy-review-page" },
             ],
@@ -134,7 +145,7 @@ describe("siteNavigationFrom", () => {
             link(null, "/inner-balance", { clinic }),
             link("My Inner Balance notes", "/inner-balance", {
               clinic,
-              icon: "Shield",
+              icon: icon("https://images.prismic.io/shield.png"),
             }),
             link(null, "/winona", {
               clinic: {

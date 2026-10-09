@@ -276,6 +276,21 @@ export interface PostDocumentDataSourcesItem {
 /**
  * Content for Blog post documents
  */
+/**
+ * Item in *Blog post → Tables*
+ */
+export interface PostDocumentDataTablesItem {
+  /**
+   * Table field in *Blog post → Tables*
+   *
+   * - **Field Type**: Table
+   * - **Placeholder**: *None*
+   * - **API ID Path**: post.tables[].table
+   * - **Documentation**: https://prismic.io/docs/fields/table
+   */
+  table: prismic.TableField;
+}
+
 interface PostDocumentData {
   /**
    * Title field in *Blog post*
@@ -336,7 +351,7 @@ interface PostDocumentData {
    * Story field in *Blog post*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: Write the story readers will see. A line that is only {{table}} shows the Table field there.
+   * - **Placeholder**: Write the story readers will see. A line that is only {{table}} shows the first table from Tables there, {{table2}} the second, and so on.
    * - **API ID Path**: post.body
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
@@ -344,15 +359,15 @@ interface PostDocumentData {
   body: prismic.RichTextField;
 
   /**
-   * Table field in *Blog post*
+   * Tables field in *Blog post*
    *
-   * - **Field Type**: Table
+   * - **Field Type**: Group
    * - **Placeholder**: *None*
-   * - **API ID Path**: post.table
+   * - **API ID Path**: post.tables[]
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/table
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
    */
-  table: prismic.TableField;
+  tables: prismic.GroupField<Simplify<PostDocumentDataTablesItem>>;
 
   /**
    * Author field in *Blog post*
@@ -694,21 +709,7 @@ export interface NavigationMenuLink {
   link: prismic.LinkField;
   clinic: prismic.ContentRelationshipField<"provider">;
   column_heading: prismic.KeyTextField;
-  icon: prismic.SelectField<
-    | "Question"
-    | "Medicine"
-    | "Wallet"
-    | "Test tube"
-    | "Person"
-    | "Chat"
-    | "Scale"
-    | "Moon"
-    | "Hair"
-    | "Drop"
-    | "Chart"
-    | "Idea"
-    | "Shield"
-  >;
+  icon: prismic.ImageField;
 }
 
 export interface NavigationMenuItem {
@@ -3442,6 +3443,7 @@ declare module "@prismicio/client" {
       HomepageDocumentDataSlicesSlice,
       PostDocument,
       PostDocumentData,
+      PostDocumentDataTablesItem,
       PostDocumentDataSourcesItem,
       ProviderDocument,
       ProviderDocumentData,
