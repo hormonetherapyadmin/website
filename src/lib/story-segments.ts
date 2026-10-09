@@ -12,13 +12,20 @@ export type PhotoCell = {
 export type StorySegment =
   | { kind: "rich"; field: RichTextField }
   | { kind: "photos"; cells: [PhotoCell, PhotoCell] }
+  | { kind: "table" }
   | { kind: "sources"; items: StoryBlock[] };
 
 const PHOTO_ROW = /^\{\{photos\}\}$/;
+const TABLE_TOKEN = /^\{\{table\}\}$/;
 
 /** A paragraph that is only the side-by-side photo token. */
 export function isPhotoRowToken(text: string) {
   return PHOTO_ROW.test(text.trim());
+}
+
+/** A paragraph that is only the table token. */
+export function isTableToken(text: string) {
+  return TABLE_TOKEN.test(text.trim());
 }
 
 function paragraphText(block: StoryBlock) {
@@ -42,6 +49,7 @@ function isCaption(block: StoryBlock) {
   const text = paragraphText(block);
   if (text === null || text.trim() === "") return false;
   if (isPhotoRowToken(text)) return false;
+  if (isTableToken(text)) return false;
   if (parseProviderToken(text)) return false;
   return true;
 }
@@ -112,6 +120,13 @@ export function storySegments(
   let index = 0;
   while (index < field.length) {
     const text = paragraphText(field[index]);
+    if (text !== null && isTableToken(text)) {
+      flush();
+      segments.push({ kind: "table" });
+      index += 1;
+      continue;
+    }
+
     if (text !== null && isPhotoRowToken(text)) {
       flush();
       index += 1;

@@ -64,9 +64,15 @@
           "label": "Story",
           "labels": ["highlight", "superscript"],
           "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
-          "placeholder": "Write the story readers will see."
+          "placeholder": "Write the story readers will see. A line that is only {{table}} shows the Table field there."
         },
         "type": "StructuredText"
+      },
+      "table": {
+        "config": {
+          "label": "Table"
+        },
+        "type": "Table"
       },
       "author": {
         "config": {

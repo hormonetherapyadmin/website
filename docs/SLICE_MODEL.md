@@ -586,6 +586,7 @@ corrected in Prismic.
 | Subtitle | `sub_title` | Heading rich text | No | Wix excerpt. The line under the title, and the card |
 | Personal note | `note` | Heading rich text | No | Mockup only. The box above the story |
 | Story | `body` | Content rich text | Yes | Wix rich content |
+| Table | `table` | Table | No | Filled in Prismic. A `{{table}}` line in the story shows it |
 | Image | `image` | Image, including its description | Yes | Wix cover |
 | Caption | `caption` | Heading rich text | No | The line under the cover, when that photo has one |
 | Author | `author` | Content relationship to Author | No | Left empty. Empty means Peggy B. Two posts are corrected in Prismic |
@@ -657,7 +658,7 @@ and do not repeat the photo.
 | YouTube or other video | Video embed |
 | List | List |
 | Quote | A paragraph. The story has no quote block |
-| Table | The same words, written out under the heading they sat under, and a migration flag |
+| Table | The same words, written out under the heading they sat under, and a migration flag. Peggy can replace that writing with a `{{table}}` line and fill the Table field |
 | Empty line used as spacing | Dropped |
 | Divider | Not imported. A horizontal line in the Wix story is left out |
 | File, custom HTML, poll, or code | Not dropped. The migration report lists the post for manual review |
@@ -665,10 +666,14 @@ and do not repeat the photo.
 Tables showed up in several of the 18 posts, usually a pricing or lab
 grid in the middle of the story. One rich text field cannot hold a
 table. Writing the cells out keeps the words. The flag is there so
-Peggy can check that the grid still reads. A grid that is only one
-clinic's current price and formulation can later be replaced with a
-facts token. A grid that compares several clinics, or lists lab
-markers, stays written out. Those words are not on the clinic.
+Peggy can check that the grid still reads. She replaces that writing
+with a line that is only `{{table}}` and builds the grid in the Table
+field. Mark the first row as the header. Repeat a name that spans
+several rows, because a cell cannot merge. A second grid in the same
+post is not supported. A grid that is only one clinic's current price
+and formulation can later be replaced with a facts token. A grid that
+compares several clinics, or lists lab markers, stays in the Table
+field. Those words are not on the clinic.
 
 ### Photo row
 
@@ -707,7 +712,7 @@ whole paragraph. Any other last word is ordinary text. In preview, an
 unknown clinic shows an error where the box would be. On the public
 site that token is removed and the rest of the paragraph stays.
 
-Story help: "Write the story readers will see."
+Story help: "Write the story readers will see. A line that is only {{table}} shows the Table field there."
 
 The sidebar is not a field. It reads the story. Each clinic appears
 once, in the order of its first token, and the sidebar shows the first

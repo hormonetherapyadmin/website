@@ -1,23 +1,11 @@
 import type { ReactNode } from "react";
+import { ShieldCheckIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Besley, Figtree, Newsreader, Young_Serif } from "next/font/google";
-import {
-  BubbleChatQuestionIcon,
-  ChartBarBigIcon,
-  DropletIcon,
-  HairDryerIcon,
-  Idea01Icon,
-  ManIcon,
-  Medicine02Icon,
-  Moon02Icon,
-  ShieldCheckIcon,
-  TestTube01Icon,
-  UserQuestion01Icon,
-  Wallet01Icon,
-  WeightScaleIcon,
-} from "@hugeicons/core-free-icons";
+import { loadSiteNavigation } from "@/lib/navigation";
 import styles from "./mockup.module.css";
-import { CLINICS } from "./clinics";
-import { SiteNav, type NavItem, type NavLink } from "./site-nav";
+import { FALLBACK_FOOTER, FALLBACK_NAV } from "./nav-fallback";
+import { SiteNav } from "./site-nav";
 
 /*
   Header, footer, and option switcher shared by the design mockups.
@@ -84,106 +72,6 @@ function pick<T extends string>(
     : fallback;
 }
 
-const HRT_101_LINKS: NavLink[] = [
-  { label: "Is HRT for me?", href: "/ishrtforme", icon: UserQuestion01Icon },
-  { label: "Formulations", href: "/formuations", icon: Medicine02Icon },
-  {
-    label: "Cost & insurance",
-    href: "/costandinsurance",
-    icon: Wallet01Icon,
-  },
-  {
-    label: "Test kits",
-    href: "/trackersandtesting",
-    icon: TestTube01Icon,
-  },
-  { label: "Men’s HRT", href: "/men-s-hrt", icon: ManIcon },
-  { label: "FAQ", href: "/faq", icon: BubbleChatQuestionIcon },
-];
-
-const SYMPTOM_LINKS: NavLink[] = [
-  {
-    label: "Weight & HRT",
-    href: "/copy-of-weight-gain",
-    icon: WeightScaleIcon,
-  },
-  { label: "Sleep", href: "/sleep", icon: Moon02Icon },
-  { label: "Hair loss", href: "/hair-loss", icon: HairDryerIcon },
-  { label: "Rx face creams", href: "/skincare", icon: DropletIcon },
-];
-
-const COMPARE_LINKS: NavLink[] = [
-  {
-    label: "Price comparison chart",
-    href: "/hrt-price-comparison-chart",
-    icon: ChartBarBigIcon,
-  },
-  {
-    label: "Tips to find a provider",
-    href: "/tipstofindprovider",
-    icon: Idea01Icon,
-  },
-  {
-    label: "Trusted providers",
-    href: "/mockup/trusted-providers",
-    icon: ShieldCheckIcon,
-  },
-];
-
-const FOOTER_COLUMNS = [
-  { heading: "HRT 101", links: HRT_101_LINKS },
-  { heading: "Symptoms", links: SYMPTOM_LINKS },
-  { heading: "Providers", links: COMPARE_LINKS },
-  {
-    heading: "About",
-    links: [
-      { label: "About Peggy", href: "/about" },
-      { label: "How I review", href: "#" },
-      { label: "Affiliate disclosure", href: DISCLOSURE_HREF },
-      { label: "Blog", href: "/blog" },
-    ],
-  },
-];
-
-const NAV: NavItem[] = [
-  {
-    label: "HRT 101",
-    columns: [
-      {
-        links: HRT_101_LINKS,
-      },
-    ],
-  },
-  {
-    label: "Symptoms",
-    columns: [
-      {
-        links: SYMPTOM_LINKS,
-      },
-    ],
-  },
-  {
-    label: "Providers",
-    columns: [
-      {
-        heading: "Compare & choose",
-        links: COMPARE_LINKS,
-      },
-      {
-        heading: "My reviews",
-        links: CLINICS.map((clinic) => ({
-          label: clinic.name,
-          href: clinic.reviewHref,
-          logo: clinic.logo,
-          monogram: clinic.monogram,
-        })),
-      },
-    ],
-  },
-  { label: "Blog", href: "/blog" },
-  { label: "About", href: "/about" },
-];
-
 function SearchIcon() {
   return (
     <svg
@@ -203,13 +91,16 @@ function SearchIcon() {
   );
 }
 
-export function MockupShell({
+export async function MockupShell({
   searchParams,
   children,
 }: {
   searchParams: SearchParams;
   children: ReactNode;
 }) {
+  const published = await loadSiteNavigation();
+  const main = published ? published.main : FALLBACK_NAV;
+  const footer = published ? published.footer : FALLBACK_FOOTER;
   const palette = pick<PaletteKey>(searchParams.palette, PALETTES, "raspberry");
   const serif = pick<SerifKey>(searchParams.serif, SERIFS, "besley");
 
@@ -229,14 +120,21 @@ export function MockupShell({
         <a href="#" className={styles.wordmark}>
           Hormone Therapy Hub
         </a>
-        <SiteNav items={NAV} />
-        <form role="search" action="/search" className={styles.search}>
-          <label htmlFor="site-search" className={styles.srOnly}>
-            Search the site
-          </label>
-          <SearchIcon />
-          <input id="site-search" type="search" name="q" placeholder="Search" />
-        </form>
+        <SiteNav items={main} />
+        <div className={styles.headerActions}>
+          <a href="/search" className={styles.searchLink} aria-label="Search">
+            <SearchIcon />
+          </a>
+          <a href="/mockup/trusted-providers" className={styles.headerCta}>
+            <HugeiconsIcon
+              icon={ShieldCheckIcon}
+              size={18}
+              strokeWidth={1.75}
+              aria-hidden="true"
+            />
+            Trusted providers
+          </a>
+        </div>
       </header>
 
       {children}
@@ -257,13 +155,19 @@ export function MockupShell({
               </a>
             </div>
             <nav aria-label="Footer" className={styles.footerNav}>
-              {FOOTER_COLUMNS.map((column) => (
+              {footer.map((column) => (
                 <div key={column.heading}>
                   <h2 className={styles.footerHeading}>{column.heading}</h2>
                   <ul>
                     {column.links.map((link) => (
-                      <li key={link.href}>
-                        <a href={link.href}>{link.label}</a>
+                      <li key={`${link.href}:${link.label}`}>
+                        <a
+                          href={link.href}
+                          target={link.newTab ? "_blank" : undefined}
+                          rel={link.newTab ? "noopener noreferrer" : undefined}
+                        >
+                          {link.label}
+                        </a>
                       </li>
                     ))}
                   </ul>

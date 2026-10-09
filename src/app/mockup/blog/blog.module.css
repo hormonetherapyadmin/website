@@ -200,6 +200,7 @@
   overflow: hidden;
   border-radius: 2.25rem;
   background: var(--tint);
+  box-shadow: 0 8px 20px -2px rgb(48 32 24 / 0.32);
 }
 
 .heroImage img {
@@ -216,6 +217,7 @@
   font-size: 0.9rem;
   line-height: 1.5;
   color: var(--muted);
+  text-align: center;
 }
 
 .heroFigure figcaption p {
@@ -224,7 +226,20 @@
 
 .heroFigure figcaption a {
   font-weight: 600;
-  color: var(--text) !important;
+  color: var(--accent);
+  text-decoration: none;
+  background-image: linear-gradient(var(--tint), var(--tint));
+  background-repeat: no-repeat;
+  background-position: 0 0.85em;
+  background-size: 0 0.42em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size 160ms ease;
+}
+
+.heroFigure figcaption a:hover,
+.heroFigure figcaption a:focus-visible {
+  background-size: 100% 0.42em;
 }
 
 /* Article body and rail */
@@ -240,6 +255,7 @@
 }
 
 .body {
+  min-width: 0;
   font-size: 1.3rem;
   line-height: 1.7;
 }
@@ -334,8 +350,133 @@
 }
 
 .body p a:hover,
-.body p a:focus-visible {
+.body p a:focus-visible,
+.tableScroll a:hover,
+.tableScroll a:focus-visible {
   background-size: 100% 0.42em;
+}
+
+.tableBlock {
+  margin: 2.5rem 0;
+}
+
+.tableHint {
+  display: none;
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.tableScroll {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  border-radius: 1.5rem;
+  background: var(--bg);
+  box-shadow: 0 24px 48px -32px rgba(0, 0, 0, 0.45);
+}
+
+.tableScroll:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.tableScroll table {
+  width: 100%;
+  min-width: 48rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.tableScroll thead th,
+.tableScroll table:not(:has(thead)) tbody tr:first-child > * {
+  padding: 1rem 1.1rem;
+  background: var(--panel);
+  color: var(--panel-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: start;
+  white-space: nowrap;
+  border-bottom: 0;
+}
+
+.tableScroll table:not(:has(thead)) tbody tr:first-child a {
+  color: inherit;
+  background-image: none;
+}
+
+.tableScroll tbody th,
+.tableScroll td {
+  padding: 1.1rem;
+  background: #fff;
+  border-bottom: 1px solid var(--rule);
+  text-align: start;
+  vertical-align: middle;
+}
+
+.tableScroll tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.tableScroll thead th:first-child,
+.tableScroll tbody th:first-child,
+.tableScroll tbody td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 8.5rem;
+  padding-left: 1.5rem;
+}
+
+.tableScroll thead th:first-child,
+.tableScroll table:not(:has(thead)) tbody tr:first-child > :first-child {
+  z-index: 2;
+  padding-left: 1.5rem;
+  background: var(--panel);
+}
+
+.tableScroll thead th:last-child,
+.tableScroll td:last-child,
+.tableScroll tbody th:last-child {
+  padding-right: 1.5rem;
+}
+
+.tableScroll a {
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  background-image: linear-gradient(var(--tint), var(--tint));
+  background-repeat: no-repeat;
+  background-position: 0 0.85em;
+  background-size: 0 0.42em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size 160ms ease;
+}
+
+.tableMissing {
+  margin: 2.5rem 0;
+  color: var(--muted);
+}
+
+@media (max-width: 960px) {
+  .tableHint {
+    display: block;
+  }
+
+  .tableScroll thead th:first-child,
+  .tableScroll tbody th:first-child,
+  .tableScroll tbody td:first-child,
+  .tableScroll table:not(:has(thead)) tbody tr:first-child > :first-child {
+    width: 9.75rem;
+    min-width: 9.75rem;
+    max-width: 9.75rem;
+    padding-inline: 1.15rem;
+    box-shadow: 10px 0 14px -14px rgba(0, 0, 0, 0.5);
+  }
 }
 
 .body .ref a,
@@ -671,18 +812,37 @@
   position: sticky;
   top: 1.5rem;
   align-self: start;
-  display: grid;
-  gap: 1.75rem;
-  padding: 1.25rem 1.25rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 3rem);
+  max-height: calc(100dvh - 3rem);
+  padding: 1.05rem 1.1rem 1.15rem;
   border: 1px solid var(--rule);
   border-radius: 1.5rem;
   background: #fff;
   font-size: 1rem;
 }
 
+.rail > * {
+  flex: none;
+}
+
 .rail > * + * {
-  padding-top: 1.5rem;
+  margin-top: 0.95rem;
+  padding-top: 0.95rem;
   border-top: 1px solid var(--rule);
+}
+
+.shareRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem 0.85rem;
+}
+
+.shareRow .railHeading {
+  margin: 0;
 }
 
 .shareList {
@@ -720,6 +880,37 @@
   outline-offset: 2px;
 }
 
+.shareList button.shareCopied {
+  border-color: var(--accent);
+  background: var(--tint);
+  color: var(--accent);
+  animation: sharePop 280ms ease;
+}
+
+.shareList button.shareCopied:hover {
+  border-color: var(--accent);
+  background: var(--tint);
+  color: var(--accent);
+}
+
+@keyframes sharePop {
+  0% {
+    transform: scale(0.92);
+  }
+  55% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shareList button.shareCopied {
+    animation: none;
+  }
+}
+
 .srOnly {
   position: absolute;
   width: 1px;
@@ -741,26 +932,181 @@
   color: var(--muted);
 }
 
+.toc {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.tocHead {
+  margin-bottom: 0.35rem;
+}
+
+.tocHead .railHeading {
+  margin: 0;
+}
+
 .toc ol {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-height: 0;
   margin: 0;
   padding: 0;
+  overflow-y: auto;
   list-style: none;
+  scroll-padding-block: 0.2rem;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule) transparent;
+}
+
+.tocBody {
+  display: grid;
+  flex: 1 1 auto;
+  grid-template-columns: 1.35rem minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  column-gap: 0.35rem;
+  row-gap: 0.55rem;
+  min-height: 0;
+}
+
+.tocRail {
+  position: relative;
+  z-index: 2;
+  grid-column: 1;
+  grid-row: 1 / -1;
+  display: grid;
+  grid-template-rows: subgrid;
+  justify-items: center;
+  overflow: visible;
+}
+
+.tocMeter {
+  position: absolute;
+  z-index: 0;
+  top: 0.45rem;
+  left: 50%;
+  width: 16px;
+  height: 0;
+  margin: 0;
+  overflow: visible;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.tocMeterTrack,
+.tocMeterFill {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.75;
+}
+
+.tocMeterTrack {
+  stroke: var(--rule);
+}
+
+.tocMeterFill {
+  stroke: var(--navy, var(--panel));
+  transition: stroke-dashoffset 720ms cubic-bezier(0.22, 1.35, 0.32, 1);
+}
+
+.tocList {
+  position: relative;
+  z-index: 1;
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.tocBadge {
+  anchor-name: --toc-end;
+  position: relative;
+  z-index: 2;
+  grid-row: 2;
+  align-self: center;
+  justify-self: center;
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 2px solid var(--rule);
+  border-radius: 50%;
+  background: #fff;
+}
+
+.toc[data-done="true"] .tocBadge {
+  border-color: var(--navy, var(--panel));
+  background: var(--navy, var(--panel));
+}
+
+.tocFinishCopy {
+  position: relative;
+  z-index: 1;
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: start;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.45rem 0.7rem;
+  border-radius: 0.7rem;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.tocFinishCopy strong {
+  color: var(--text);
+  font-size: 0.88rem;
+}
+
+.toc[data-done="true"] .tocFinishCopy {
+  background: var(--tint);
+}
+
+.toc ol::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+.toc ol::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: var(--rule);
+}
+
+.tocHasMore .tocList::after {
+  content: "";
+  position: absolute;
+  right: 0.45rem;
+  bottom: 0;
+  left: 0;
+  height: 1.5rem;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, #fff 72%);
 }
 
 .toc a {
   display: block;
-  padding: 0.7rem 0;
-  border-bottom: 1px solid var(--rule);
+  padding: 0.28rem 0.4rem;
+  border-radius: 0.55rem;
+  color: var(--muted);
+  font-size: 0.95rem;
   line-height: 1.35;
   text-decoration: none;
+  transition: color 720ms cubic-bezier(0.22, 1.35, 0.32, 1);
 }
 
-.toc li:last-child a {
-  padding-bottom: 0;
-  border-bottom: 0;
+.tocLabel {
+  min-width: 0;
 }
 
-.toc a span,
+.toc a .tocLabel span,
 .mentioned a,
 .railLink {
   background-image: linear-gradient(var(--tint), var(--tint));
@@ -772,8 +1118,8 @@
   transition: background-size 160ms ease;
 }
 
-.toc a:hover span,
-.toc a:focus-visible span,
+.toc a:hover .tocLabel span,
+.toc a:focus-visible .tocLabel span,
 .mentioned a:hover,
 .mentioned a:focus-visible,
 .railLink:hover,
@@ -781,8 +1127,8 @@
   background-size: 100% 0.42em;
 }
 
-.toc a[aria-current="true"] {
-  color: var(--accent);
+.toc a[data-arrived="true"] {
+  color: var(--navy, var(--panel));
 }
 
 .toc a:focus-visible {
@@ -920,13 +1266,19 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .tocMeterFill,
+  .toc a {
+    transition: none;
+  }
+
   .card:hover img,
   .featuredCard:hover img {
     transform: none;
   }
 
   .body p a,
-  .toc a span,
+  .tableScroll a,
+  .toc a .tocLabel span,
   .mentioned a,
   .railLink,
   .card h3 a,
@@ -1137,7 +1489,7 @@
 @media (max-width: 960px) {
   .articleHead,
   .articleGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .heroFigure {
@@ -1222,5 +1574,17 @@
   .offerCallout,
   .facts {
     flex-direction: column;
+  }
+}
+
+.confetti {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media print {
+  .confetti {
+    display: none;
   }
 }

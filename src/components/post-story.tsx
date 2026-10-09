@@ -8,9 +8,14 @@ import {
   isFilled,
   type EmbedField,
   type RichTextField,
+  type TableField,
 } from "@prismicio/client";
 import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
-import { PrismicRichText, type RichTextComponents } from "@prismicio/react";
+import {
+  PrismicRichText,
+  PrismicTable,
+  type RichTextComponents,
+} from "@prismicio/react";
 import Image from "next/image";
 import { isValidElement, type ReactNode } from "react";
 import {
@@ -110,6 +115,50 @@ export function SourceReference({
         <span className={styles.srOnly}>Back to text</span>
       </a>
     </li>
+  );
+}
+
+function StoryTable({
+  field,
+  preview,
+}: {
+  field: TableField | null | undefined;
+  preview: boolean;
+}) {
+  if (!isFilled.table(field)) {
+    if (!preview) return null;
+    return (
+      <p className={styles.tableMissing}>
+        This story asks for a table. Add one in the Table field.
+      </p>
+    );
+  }
+
+  return (
+    <PrismicTable
+      field={field}
+      components={{
+        table: ({ children }) => (
+          <div className={styles.tableBlock}>
+            <p className={styles.tableHint} aria-hidden="true">
+              Swipe to see more →
+            </p>
+            <div
+              className={styles.tableScroll}
+              role="region"
+              aria-label="Table"
+              tabIndex={0}
+            >
+              <table>{children}</table>
+            </div>
+          </div>
+        ),
+        paragraph: ({ children }) => <>{children}</>,
+        hyperlink: ({ node, children }) => (
+          <PrismicNextLink field={node.data}>{children}</PrismicNextLink>
+        ),
+      }}
+    />
   );
 }
 
@@ -434,14 +483,16 @@ const inlineComponents = (
 /** The story, in the blog post type. Heading ids match the rail. */
 export function PostStory({
   field,
+  table,
   promoteResources = false,
   clinics,
   tokens = "public",
 }: {
   field: RichTextField;
+  table?: TableField | null;
   promoteResources?: boolean;
   clinics?: readonly TokenClinic[];
-  /** Preview names a missing clinic. The public page drops the token. */
+  /** Preview names a missing clinic or an empty table. The public page drops the token. */
   tokens?: "preview" | "public";
 }) {
   const anchors = headingAnchors(field);
@@ -455,6 +506,12 @@ export function PostStory({
   }
 
   return storySegments(field, { promoteResources }).map((segment, index) => {
+    if (segment.kind === "table") {
+      return (
+        <StoryTable key={index} field={table} preview={tokens === "preview"} />
+      );
+    }
+
     if (segment.kind === "photos") {
       return <PhotoRow key={index} cells={segment.cells} sourceId={sourceId} />;
     }

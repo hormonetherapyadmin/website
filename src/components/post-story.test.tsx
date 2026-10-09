@@ -1,4 +1,4 @@
-import type { RichTextField } from "@prismicio/client";
+import type { RichTextField, TableField } from "@prismicio/client";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import type { TokenClinic } from "./content-blocks";
@@ -101,6 +101,81 @@ describe("PostStory clinic tokens", () => {
 
     expect(markup).toContain('<h2 id="first-section" tabindex="-1">');
     expect(markup).toContain('<h2 id="second-section" tabindex="-1">');
+  });
+
+  it("renders a table token as a table and keeps a link in a cell", () => {
+    const table = {
+      head: {
+        rows: [
+          {
+            key: "head",
+            cells: [
+              {
+                key: "provider",
+                type: "header" as const,
+                content: [
+                  { type: "paragraph" as const, text: "Provider", spans: [] },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      body: {
+        rows: [
+          {
+            key: "alloy",
+            cells: [
+              {
+                key: "name",
+                type: "data" as const,
+                content: [
+                  {
+                    type: "paragraph" as const,
+                    text: "Alloy",
+                    spans: [
+                      {
+                        start: 0,
+                        end: 5,
+                        type: "hyperlink" as const,
+                        data: {
+                          link_type: "Web" as const,
+                          url: "https://example.com/alloy",
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    } as TableField;
+
+    const markup = renderToStaticMarkup(
+      <PostStory field={story("{{table}}")} table={table} />,
+    );
+
+    expect(markup).toContain("<table>");
+    expect(markup).toContain("<th");
+    expect(markup).toContain("Provider");
+    expect(markup).toContain('href="https://example.com/alloy"');
+    expect(markup).toContain("Alloy");
+    expect(markup).not.toContain("{{table}}");
+  });
+
+  it("hides an empty table on the public page and names it in preview", () => {
+    const hidden = renderToStaticMarkup(
+      <PostStory field={story("{{table}}")} />,
+    );
+    const preview = renderToStaticMarkup(
+      <PostStory field={story("{{table}}")} tokens="preview" />,
+    );
+
+    expect(hidden).not.toContain("{{table}}");
+    expect(hidden).not.toContain("<table>");
+    expect(preview).toContain("Add one in the Table field.");
   });
 
   it("names a missing clinic in preview", () => {

@@ -55,6 +55,20 @@ describe("storySegments", () => {
     });
   });
 
+  it("places a table token between the paragraphs around it", () => {
+    const segments = storySegments([
+      paragraph("Before the grid."),
+      paragraph("{{table}}"),
+      paragraph("After the grid."),
+    ] as RichTextField);
+
+    expect(segments).toEqual([
+      { kind: "rich", field: [paragraph("Before the grid.")] },
+      { kind: "table" },
+      { kind: "rich", field: [paragraph("After the grid.")] },
+    ]);
+  });
+
   it("keeps a single photo full width and hides the token", () => {
     const only = image("One portrait");
     const segments = storySegments([

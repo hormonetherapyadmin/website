@@ -6,9 +6,10 @@ import {
   Linkedin02Icon,
   NewTwitterIcon,
   PrinterIcon,
+  Tick02Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./blog.module.css";
 
 /*
@@ -61,19 +62,27 @@ export function Share({
   title?: string;
 } = {}) {
   const [copied, setCopied] = useState(false);
+  const copiedTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimer.current) window.clearTimeout(copiedTimer.current);
+    };
+  }, []);
 
   async function copyLink() {
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
+      if (copiedTimer.current) window.clearTimeout(copiedTimer.current);
+      copiedTimer.current = window.setTimeout(() => setCopied(false), 2000);
     } catch {
       setCopied(false);
     }
   }
 
   return (
-    <section aria-labelledby="share-title">
+    <section aria-labelledby="share-title" className={styles.shareRow}>
       <h2 id="share-title" className={styles.railHeading}>
         Share
       </h2>
@@ -91,8 +100,13 @@ export function Share({
           </li>
         ))}
         <li>
-          <button type="button" onClick={copyLink} aria-label="Copy link">
-            <ShareIcon icon={Link02Icon} />
+          <button
+            type="button"
+            onClick={copyLink}
+            className={copied ? styles.shareCopied : undefined}
+            aria-label={copied ? "Link copied" : "Copy link"}
+          >
+            <ShareIcon icon={copied ? Tick02Icon : Link02Icon} />
           </button>
         </li>
         <li>

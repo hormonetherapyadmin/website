@@ -909,6 +909,9 @@ inventory.
     checks the shared secret and expires the `prismic` tag. Edits are
     live on the next request, without a rebuild.
 -   New documents render on first request and are then cached.
+-   Local development does not cache Prismic responses. The webhook
+    does not reach localhost, and a cached miss would keep a just
+    published document off the page.
 -   Preview uses Prismic preview with Next.js draft mode (Phase 2).
 
 ### URLs

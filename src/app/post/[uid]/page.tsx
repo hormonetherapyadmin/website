@@ -388,6 +388,7 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
 
             <PostStory
               field={post.data.body}
+              table={post.data.table}
               promoteResources={sources.length === 0}
               clinics={clinics}
               tokens={draft.isEnabled ? "preview" : "public"}
