@@ -10,9 +10,9 @@ section, labels are plain, and a fact she reuses is edited on its own
 document.
 
 The post and the blog index are page types with fields and no slice
-zone. They are specified below. The provider page and the
-trusted-providers page are not specified yet. They follow the shared
-rules below.
+zone. They are specified below. A site page, such as the provider page
+or the trusted-providers page, is a Page built from the shared slices.
+Page is specified at the end of this file.
 
 ## Document kinds
 
@@ -25,7 +25,8 @@ custom type. The clinic has no public page. A clinic page is a Page.
 | Blog | Page type, single | The `/blog` page |
 | Provider | Custom type | The clinic every slice links to. File: `customtypes/provider` |
 | Post | Page type | A blog post. File: `customtypes/post` |
-| Provider review, Comparison, Page | Page type | Public pages |
+| Page | Page type | A site page at `/<uid>`. File: `customtypes/page` |
+| Provider review, Comparison | Page type | Public pages |
 | Callout | Custom type | A reusable box inside a post has no page |
 
 A content relationship points at a document so the page can show that
@@ -176,6 +177,57 @@ Line is Squiggly or Straight. Those are the two rules in the mockups.
 Color is Accent, Soft, Border, or Text. Soft is the lighter accent used
 by the homepage wave. Accent, Border, and Text use those color tokens.
 There is no free color picker.
+
+### Boxes
+
+A row of small boxes, in `src/slices/boxes`. Each box is a clinic or
+is written by hand. On trusted providers it is the jump band under the
+hero, and each box goes to that clinic's section lower on the page.
+
+| Label | Id | Kind | Default |
+| --- | --- | --- | --- |
+| Boxes across | `across` | Select: 2, 3, 4, 5, 6, 7 | 5 |
+| Boxes | `boxes` | Repeatable group | Empty |
+
+Each box:
+
+| Label | Id | Kind | Required | Trusted providers |
+| --- | --- | --- | --- | --- |
+| Clinic | `clinic` | Content relationship to Provider | No | Inner Balance |
+| Image | `image` | Image | No | Empty, so the clinic logo |
+| Heading | `heading` | Heading rich text | No | Improved sleep |
+| Text | `text` | Heading rich text | No | Empty, so the clinic name |
+| Bottom line | `bottom_line` | Text | No | Empty, so the code PEGGY10. Winona's is "15% off" |
+| Link | `link` | Link, no display text | No | `#inner-balance` |
+
+A written field wins. An empty Image, Text, or Bottom line uses the
+clinic's logo, name, or code. A box with no clinic is written by hand.
+A box with no heading, no text, and no clinic name is hidden. A clinic
+with no code and an empty Bottom line shows no bottom line, so write
+"No code" when the box should say it. The relationship fetches `name`,
+`logo`, and `code`.
+
+The whole box is the link. A box with an empty Link is not clickable.
+A jump link is `#` and the id of a section lower on the page, made from
+that section's title by the Section id rule. A Provider hero titled
+Inner Balance is `#inner-balance`.
+
+Boxes across is the most boxes in one row. When there are fewer boxes,
+they share the row. A short last row starts on the left. Narrower
+screens use fewer boxes per row:
+
+| Boxes in the row | Over 1100px | 961–1100px | 641–960px | 640px and under |
+| --- | --- | --- | --- | --- |
+| 7 | 7 | 4 | 4 | 2 |
+| 6 | 6 | 3 | 3 | 2 |
+| 5 | 5 | 3 | 3 | 2 |
+| 4 | 4 | 4 | 2 | 2 |
+| 3 | 3 | 3 | 3 | 2 |
+| 2 | 2 | 2 | 2 | 2 |
+
+A box heading is an `h3` when Section Heading is filled. Without a
+section heading it is a paragraph, so a jump band does not add
+headings to the page outline.
 
 ## Homepage
 
@@ -458,6 +510,7 @@ slice that lists `monthly_price` all show that same number.
 | Clinic comparison | `clinic` | Name, logo, short description, price, price note, insurance, formulation, quote, getting started, top choice label, visit, code, code line. The review link is on the slice row |
 | Quote | `clinic` | Logo, name, visit. A Name on the slice replaces the clinic name |
 | Side by side, clinic | `clinic` | Logo, name, quote, visit |
+| Boxes | `clinic` on each box | Logo, name, code. A written Image, Text, or Bottom line replaces it |
 | Post sidebar | `clinic` | Name, logo. The name links to Page when that field is set |
 | Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, code, code line, plus the sentence in that paragraph |
 | Story facts token | `{{provider:uid:facts}}` | Price, price note, insurance, formulation |
@@ -805,3 +858,42 @@ Each reason:
 | Icon | `icon` | Select | Yes | Clock, Lock, Medicine, Wallet, or Location |
 
 The five reasons are the copy at the bottom of the live `/blog` page.
+
+## Page
+
+Repeatable page type, in `customtypes/page`. One site page, such as
+`/inner-balance` or `/copy-of-trusted-providers`. Every Page is
+`/<uid>`. There is no URL section field. The UID is the Wix slug,
+unchanged.
+
+The slice zone accepts every shared slice: Hero, Start here, Posts,
+Clinic comparison, Quote, Side by side, Divider, and Boxes. A slice added to
+the library later is connected to Page too.
+
+| Label | Id | Kind | Required | Notes |
+| --- | --- | --- | --- | --- |
+| Title | `title` | Heading rich text | Yes | The page name. The `h1` when the first slice is not a Hero |
+| UID | `uid` | UID | Yes | The Wix slug |
+| Slices | `slices` | Slice zone | No | Every shared slice |
+| Meta title | `meta_title` | Text | No | Empty uses Title |
+| Meta description | `meta_description` | Text | No | Empty leaves the description off |
+| Social image | `meta_image` | Image | No | 2400 × 1260 |
+| Indexing | `indexing` | Boolean | Yes | On. Turn it off only to hide a page |
+
+The Hero heading is the page title on the page. A page whose first
+slice is not a Hero shows Title as the `h1` above the slices. A second
+Hero lower on the page is a second `h1`, so a page uses one Hero, at the
+top.
+
+The canonical is `/<uid>`. Indexing is on by default. The site-wide
+noindex switch still hides every page until cutover.
+
+The page reads what its slices point at before it renders. A slice does
+not fetch. A clinic a slice names is read from the published Clinic, by
+the fields each slice lists under Provider. An unpublished clinic is
+left out of the chart, and a Quote or Side by side without one shows
+its writing only. A clinic token in Side by side writing reads the same
+fields as a story token. Posts loads every Post only when the page has
+a Posts slice. Featured shows the post it points at, or the newest.
+Grid reads `?page=` and `?category=` from the address. Those addresses
+keep the page's canonical.

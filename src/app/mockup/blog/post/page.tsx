@@ -203,7 +203,7 @@ export default async function BlogPostMockup(
             <Link href="/">Home</Link>
           </li>
           <li>
-            <a href="/blog">Blog</a>
+            <Link href="/blog">Blog</Link>
           </li>
           <li aria-current="page">{POST.title}</li>
         </ol>
@@ -242,7 +242,7 @@ export default async function BlogPostMockup(
               changed for my skin between age 52 and 59.
             </p>
             <div className={styles.byline}>
-              <a href="/about" className={styles.bylineAuthor}>
+              <Link href="/about" className={styles.bylineAuthor}>
                 <Image
                   src="/mockup/peggy-portrait.jpg"
                   alt=""
@@ -251,7 +251,7 @@ export default async function BlogPostMockup(
                   className={styles.avatar}
                 />
                 <span className={styles.bylineName}>Peggy B.</span>
-              </a>
+              </Link>
             </div>
           </div>
           <figure className={styles.heroFigure}>
@@ -268,9 +268,9 @@ export default async function BlogPostMockup(
               Many Telehealth HRT Platforms now also offer Skincare for both
               face and body in addition to systemic (whole body) Hormone
               Replacement Therapy Options.{" "}
-              <a href="/hrt-price-comparison-chart">
+              <Link href="/hrt-price-comparison-chart">
                 Telehealth HRT price comparison chart
-              </a>
+              </Link>
             </figcaption>
           </figure>
         </header>
@@ -292,9 +292,9 @@ export default async function BlogPostMockup(
 
             <p>
               This blog is a personal reflection of my seven years on{" "}
-              <a href="/mockup/trusted-providers">
+              <Link href="/mockup/trusted-providers">
                 Menopause Hormone Replacement Therapy.
-              </a>{" "}
+              </Link>{" "}
               For the first five years, I relied solely on systemic, whole-body
               HRT. It all started to troches that melt under your tongue. Then I
               tried topical estrogen/progesterone creams that you rub on your
@@ -390,9 +390,9 @@ export default async function BlogPostMockup(
             </p>
             <p>
               Not every product was a home run, though. When{" "}
-              <a href="/alloy-review-page">Alloy</a> released their M4 Estriol
-              Eye Cream, I gave it a try, but to be completely candid, I didn’t
-              see a noticeable difference. However, when I switched to{" "}
+              <Link href="/alloy-review-page">Alloy</Link> released their M4
+              Estriol Eye Cream, I gave it a try, but to be completely candid, I
+              didn’t see a noticeable difference. However, when I switched to{" "}
               <AffiliateLink clinic={musely} placement="article_inline">
                 Musely’s prescription-grade eye serum
               </AffiliateLink>
@@ -420,12 +420,12 @@ export default async function BlogPostMockup(
             </p>
             <p>
               That’s when my HRT clinician at{" "}
-              <a href="/joiwommenswellness">Joi Women’s Wellness</a> suggested a
-              GLP-1. I remember thinking, “Wait, is that something that they
-              would agree to write a prescription for?” Combining a GLP-1 with
-              HRT turned out to be the ultimate game-changer. While the GLP-1
-              unlocked effortless weight loss, hormone therapy and great skin
-              care protected my skin and collagen.
+              <Link href="/joiwommenswellness">Joi Women’s Wellness</Link>{" "}
+              suggested a GLP-1. I remember thinking, “Wait, is that something
+              that they would agree to write a prescription for?” Combining a
+              GLP-1 with HRT turned out to be the ultimate game-changer. While
+              the GLP-1 unlocked effortless weight loss, hormone therapy and
+              great skin care protected my skin and collagen.
             </p>
             <p>
               Pairing HRT with a GLP-1 is honestly one of the best health
@@ -565,7 +565,7 @@ export default async function BlogPostMockup(
                   different HRT telehealth providers.
                 </p>
                 <p className={styles.authorLinks}>
-                  <a href="/about">Read my whole story</a>
+                  <Link href="/about">Read my whole story</Link>
                   <a href="#">How I review</a>
                 </p>
               </div>
@@ -584,12 +584,12 @@ export default async function BlogPostMockup(
                 <p id="rail-clinics" className={styles.railHeading}>
                   Clinics
                 </p>
-                <a
+                <Link
                   href="/hrt-price-comparison-chart"
                   className={styles.railLink}
                 >
                   Compare all clinics
-                </a>
+                </Link>
               </div>
               <ul className={styles.mentioned}>
                 {MENTIONED.slice(0, RAIL_CLINIC_LIMIT)
@@ -613,7 +613,7 @@ export default async function BlogPostMockup(
       <section className={styles.related} aria-labelledby="related-title">
         <div className={shared.sectionHead}>
           <h2 id="related-title">Keep reading</h2>
-          <a href="/blog" className={shared.headLink}>
+          <Link href="/blog" className={shared.headLink}>
             All posts
             <svg
               width={16}
@@ -628,7 +628,7 @@ export default async function BlogPostMockup(
             >
               <path d="m9 6 6 6-6 6" />
             </svg>
-          </a>
+          </Link>
         </div>
         <div className={styles.cardGrid}>
           {RELATED.map((post) => (

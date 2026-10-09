@@ -25,7 +25,8 @@ type PickContentRelationshipFieldData<
         prismic.CustomTypeModelFetchContentRelationshipLevel1
       > as TSubRelationship["id"]
     ]: ContentRelationshipFieldWithData<TSubRelationship["customtypes"], TLang>;
-  } & { // Group
+  } & {
+    // Group
     [
       TGroup in Extract<
         TRelationship["fields"][number],
@@ -37,7 +38,8 @@ type PickContentRelationshipFieldData<
           PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
         >
       : never;
-  } & { // Other fields
+  } & {
+    // Other fields
     [
       TFieldKey in Extract<TRelationship["fields"][number], string>
     ]: TFieldKey extends keyof TData ? TData[TFieldKey] : never;
@@ -452,7 +454,8 @@ type PageDocumentDataSlicesSlice =
   | ClinicComparisonSlice
   | QuoteSlice
   | SideBySideSlice
-  | DividerSlice;
+  | DividerSlice
+  | BoxesSlice;
 
 /**
  * Content for Page documents
@@ -989,6 +992,223 @@ export type AllDocumentTypes =
   | PageDocument
   | PostDocument
   | ProviderDocument;
+
+/**
+ * Item in *Boxes → Default → Primary → Section*
+ */
+export interface BoxesSliceDefaultPrimarySectionItem {
+  /**
+   * Small heading field in *Boxes → Default → Primary → Section*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: boxes.default.primary.section[].small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Boxes → Default → Primary → Section*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: boxes.default.primary.section[].heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Boxes → Default → Primary → Section*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: boxes.default.primary.section[].intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Boxes → Default → Primary → Section*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: boxes.default.primary.section[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Boxes → Default → Primary → Section*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Same as the page
+   * - **API ID Path**: boxes.default.primary.section[].background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Same as the page" | "Soft" | "Highlight" | "Dark",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Boxes → Default → Primary → Section*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: boxes.default.primary.section[].space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Boxes → Default → Primary → Section*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: boxes.default.primary.section[].space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+}
+
+/**
+ * Item in *Boxes → Default → Primary → Boxes*
+ */
+export interface BoxesSliceDefaultPrimaryBoxesItem {
+  /**
+   * Clinic field in *Boxes → Default → Primary → Boxes*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: boxes.default.primary.boxes[].clinic
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  clinic: ContentRelationshipFieldWithData<
+    [{ fields: ["name", "logo", "code"]; id: "provider" }]
+  >;
+
+  /**
+   * Image field in *Boxes → Default → Primary → Boxes*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: Empty uses the clinic logo
+   * - **API ID Path**: boxes.default.primary.boxes[].image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Heading field in *Boxes → Default → Primary → Boxes*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Improved sleep
+   * - **API ID Path**: boxes.default.primary.boxes[].heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Text field in *Boxes → Default → Primary → Boxes*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Empty uses the clinic name
+   * - **API ID Path**: boxes.default.primary.boxes[].text
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  text: prismic.RichTextField;
+
+  /**
+   * Bottom line field in *Boxes → Default → Primary → Boxes*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Empty uses the clinic code, such as PEGGY10
+   * - **API ID Path**: boxes.default.primary.boxes[].bottom_line
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  bottom_line: prismic.KeyTextField;
+
+  /**
+   * Link field in *Boxes → Default → Primary → Boxes*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: boxes.default.primary.boxes[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Primary content in *Boxes → Default → Primary*
+ */
+export interface BoxesSliceDefaultPrimary {
+  /**
+   * Section field in *Boxes → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: boxes.default.primary.section[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  section: prismic.GroupField<Simplify<BoxesSliceDefaultPrimarySectionItem>>;
+
+  /**
+   * Boxes across field in *Boxes → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: 5
+   * - **API ID Path**: boxes.default.primary.across
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  across: prismic.SelectField<"2" | "3" | "4" | "5" | "6" | "7", "filled">;
+
+  /**
+   * Boxes field in *Boxes → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: boxes.default.primary.boxes[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  boxes: prismic.GroupField<Simplify<BoxesSliceDefaultPrimaryBoxesItem>>;
+}
+
+/**
+ * Default variation for Boxes Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BoxesSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<BoxesSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Boxes*
+ */
+type BoxesSliceVariation = BoxesSliceDefault;
+
+/**
+ * Boxes Shared Slice
+ *
+ * - **API ID**: `boxes`
+ * - **Description**: *None*
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BoxesSlice = prismic.SharedSlice<"boxes", BoxesSliceVariation>;
 
 /**
  * Item in *Clinic comparison → Default → Primary → Section*
@@ -3681,6 +3901,12 @@ declare module "@prismicio/client" {
       ProviderDocument,
       ProviderDocumentData,
       AllDocumentTypes,
+      BoxesSlice,
+      BoxesSliceDefaultPrimarySectionItem,
+      BoxesSliceDefaultPrimaryBoxesItem,
+      BoxesSliceDefaultPrimary,
+      BoxesSliceVariation,
+      BoxesSliceDefault,
       ClinicComparisonSlice,
       ClinicComparisonSliceDefaultPrimarySectionItem,
       ClinicComparisonSliceDefaultPrimaryClinicsItem,

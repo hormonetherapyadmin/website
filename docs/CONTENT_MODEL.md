@@ -270,12 +270,16 @@ one-off Wix pages found in the inventory.
 
 -   Title
 -   UID
--   URL section
--   Body slices
+-   Body slices (every shared slice)
 -   SEO title
 -   SEO description
 -   Social image
 -   Indexability control with safe default
+
+The page type is `customtypes/page`. Every Page is `/<uid>`, the same
+way every Post is `/post/<uid>`. It has no URL section field. The UID
+is the Wix slug, unchanged, such as `copy-of-trusted-providers` or
+`inner-balance`. Fields and rendering are in `docs/SLICE_MODEL.md`.
 
 ### Redirect
 
@@ -308,9 +312,9 @@ component are specified in `docs/SLICE_MODEL.md`. Copy that Section group
 and those rich text presets onto later slices.
 
 The post and the blog index do not use slices. A post pulls a
-clinic's offer or facts into the story with a provider token. Review,
-provider, and trusted-providers slices are not specified yet.
-Candidates:
+clinic's offer or facts into the story with a provider token. The
+trusted-providers jump band is the Boxes slice. Review slices are not
+specified yet. Candidates:
 
 -   Rich Text
 -   Image + Text
@@ -358,15 +362,18 @@ Rule:
 
 -   UID is the Wix slug, unchanged (typos included).
 -   A Post is always `/post/<uid>`. It has no URL section field.
+-   A Page is always `/<uid>`. It has no URL section field.
 -   A Clinic has no public URL. A clinic page is a Page, and the slices
     on that page point at the clinic.
 -   Every other routable editorial type (Provider Review, Comparison,
-    Page, and Treatment/Topic when they have a public page)
+    and Treatment/Topic when they have a public page)
     has a required **URL section** select field:
     -   "Blog post (/post/…)" → `/post/<uid>` (default)
     -   "Site page (/…)" → `/<uid>`
--   The public path is always section + UID, except for a Post,
-    whose section is fixed. There is no free-text path field.
+-   The public path is always section + UID, except for a Post and
+    a Page, whose section is fixed. There is no free-text path field.
+-   A route the app already defines (`/post`, `/blog`, `/api`,
+    `/mockup`) wins over a Page with that UID, so that Page never shows.
 -   Prismic only guarantees UID uniqueness within one type, so the
     build fails if two documents of any type resolve to the same path.
 

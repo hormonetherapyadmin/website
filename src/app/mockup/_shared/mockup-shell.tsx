@@ -6,6 +6,7 @@ import { loadSiteNavigation } from "@/lib/navigation";
 import styles from "./mockup.module.css";
 import { FALLBACK_FOOTER, FALLBACK_NAV } from "./nav-fallback";
 import { SiteNav } from "./site-nav";
+import Link from "next/link";
 
 /*
   Header, footer, and option switcher shared by the design mockups.
@@ -122,10 +123,14 @@ export async function MockupShell({
         </a>
         <SiteNav items={main} />
         <div className={styles.headerActions}>
-          <a href="/search" className={styles.searchLink} aria-label="Search">
+          <Link
+            href="/search"
+            className={styles.searchLink}
+            aria-label="Search"
+          >
             <SearchIcon />
-          </a>
-          <a href="/mockup/trusted-providers" className={styles.headerCta}>
+          </Link>
+          <Link href="/mockup/trusted-providers" className={styles.headerCta}>
             <HugeiconsIcon
               icon={ShieldCheckIcon}
               size={18}
@@ -133,7 +138,7 @@ export async function MockupShell({
               aria-hidden="true"
             />
             Trusted providers
-          </a>
+          </Link>
         </div>
       </header>
 

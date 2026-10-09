@@ -42,6 +42,9 @@
             },
             "divider": {
               "type": "SharedSlice"
+            },
+            "boxes": {
+              "type": "SharedSlice"
             }
           }
         },

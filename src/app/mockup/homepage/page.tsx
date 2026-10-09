@@ -170,10 +170,10 @@ export default async function HomepageMockup(
             <a href="#compare" className={styles.buttonPrimary}>
               See what each clinic cost me
             </a>
-            <a href="/ishrtforme" className={styles.buttonText}>
+            <Link href="/ishrtforme" className={styles.buttonText}>
               New to HRT? Start here
               <ChevronRightIcon />
-            </a>
+            </Link>
           </div>
           <ul className={styles.facts} aria-label="About this site">
             {[
@@ -250,10 +250,10 @@ export default async function HomepageMockup(
       <section className={styles.recent} aria-labelledby="recent-title">
         <div className={styles.sectionHead}>
           <h2 id="recent-title">Latest reviews and posts</h2>
-          <a href="/blog" className={styles.headLink}>
+          <Link href="/blog" className={styles.headLink}>
             All posts
             <ChevronRightIcon />
-          </a>
+          </Link>
         </div>
         <div className={styles.recentGrid}>
           {POSTS.slice(0, 5).map((post, index) => (
@@ -284,9 +284,12 @@ export default async function HomepageMockup(
             insurance when I could. These are my real costs, not list prices.
             Yours may differ.
           </p>
-          <a href="/mockup/trusted-providers" className={styles.buttonPrimary}>
+          <Link
+            href="/mockup/trusted-providers"
+            className={styles.buttonPrimary}
+          >
             Trusted providers
-          </a>
+          </Link>
           <a href={DISCLOSURE_HREF} className={styles.disclosureLink}>
             Affiliate disclosure
             <ChevronRightIcon />
@@ -538,7 +541,7 @@ export default async function HomepageMockup(
                 virtual consultation quality and out-of-pocket pricing,
                 insurance coverage and shipping reliability across patches,
                 topical creams, troches, injections and oral options.{" "}
-                <a href="/blog">See my HRT Reviews.</a>
+                <Link href="/blog">See my HRT Reviews.</Link>
               </p>
             </div>
             <p className={styles.signoff}>
@@ -549,9 +552,9 @@ export default async function HomepageMockup(
               I am not a medical professional, and this site does not provide
               medical advice or treatment plans.
             </p>
-            <a href="/about" className={styles.buttonPrimary}>
+            <Link href="/about" className={styles.buttonPrimary}>
               Read my whole story
-            </a>
+            </Link>
           </div>
         </div>
       </section>

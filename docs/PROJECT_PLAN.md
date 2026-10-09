@@ -919,7 +919,9 @@ inventory.
 -   Keep the `www` host, no trailing slash (`trailingSlash: false`),
     and lowercase Wix slugs exactly as they are, typos included.
 -   Each editorial document's UID is its Wix slug. A Post is always
-    `/post/<uid>` and has no URL section field. Every other routable
+    `/post/<uid>` and has no URL section field. A Page (a site page
+    such as `/inner-balance`) is always `/<uid>` and has no URL
+    section field either. Every other routable
     editorial type has a required "URL section" field that chooses
     between "Blog post (/post/…)" and "Site page (/…)". The public
     path is the section plus the UID. New content of those types
