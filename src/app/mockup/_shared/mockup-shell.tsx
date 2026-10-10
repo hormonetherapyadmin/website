@@ -184,7 +184,7 @@ export async function MockupShell({
           <div className={styles.footerBottom}>
             <p>
               © 2026 Hormone Therapy Hub · Columbus, Ohio ·{" "}
-              <a href="/sitemap">Sitemap</a>
+              <Link href="/sitemap">Sitemap</Link>
             </p>
             <nav aria-label="Mockup options" className={styles.explorer}>
               <span className={styles.explorerGroup}>
