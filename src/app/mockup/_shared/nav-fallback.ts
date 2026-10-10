@@ -40,6 +40,12 @@ const COMPARE_LINKS: NavLink[] = [
   },
 ];
 
+export const FALLBACK_HEADER_BUTTON: NavLink = {
+  label: "Trusted providers",
+  href: "/mockup/trusted-providers",
+  icon: "Shield",
+};
+
 export const FALLBACK_NAV: NavItem[] = [
   { label: "HRT 101", columns: [{ links: HRT_101_LINKS }] },
   { label: "Symptoms", columns: [{ links: SYMPTOM_LINKS }] },

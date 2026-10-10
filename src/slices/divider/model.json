@@ -30,9 +30,18 @@
         },
         "background": {
           "config": {
-            "default_value": "Same as the page",
+            "default_value": "Transparent",
             "label": "Background",
-            "options": ["Same as the page", "Soft", "Highlight", "Dark"]
+            "options": [
+              "Transparent",
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ]
           },
           "type": "Select"
         },

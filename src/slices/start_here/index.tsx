@@ -24,8 +24,7 @@ type StartCard = {
   icon: SelectField<IconName>;
 };
 
-type StartHerePrimary = {
-  section?: readonly SliceSectionFields[] | null;
+type StartHerePrimary = Partial<SliceSectionFields> & {
   cards?: readonly StartCard[] | null;
 };
 
@@ -151,7 +150,7 @@ export function StartHere({ primary }: { primary: StartHerePrimary }) {
   const rows = cardRows(cards);
 
   return (
-    <SliceSection section={primary.section}>
+    <SliceSection section={primary}>
       {rows.length > 0 ? (
         <div className={styles.rows}>
           {rows.map((row, rowIndex) => {

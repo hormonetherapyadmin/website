@@ -919,7 +919,9 @@ inventory.
 -   Keep the `www` host, no trailing slash (`trailingSlash: false`),
     and lowercase Wix slugs exactly as they are, typos included.
 -   Each editorial document's UID is its Wix slug. A Post is always
-    `/post/<uid>` and has no URL section field. Every other routable
+    `/post/<uid>` and has no URL section field. A Page (a site page
+    such as `/inner-balance`) is always `/<uid>` and has no URL
+    section field either. Every other routable
     editorial type has a required "URL section" field that chooses
     between "Blog post (/post/…)" and "Site page (/…)". The public
     path is the section plus the UID. New content of those types
@@ -958,12 +960,23 @@ inventory.
     including AI crawlers (GPTBot, OAI-SearchBot, ClaudeBot,
     PerplexityBot, Google-Extended). Netlify firewall/bot settings must
     not block them.
+-   `/search` stays `noindex` even when indexing is enabled. A query
+    is `?q=` on that address and is not its own page. The canonical
+    is `/search`.
+-   `/sitemap.xml` lists published Pages and Posts still set to Index,
+    plus the HTML sitemap at `/sitemap`. It omits `/search` and the
+    placeholder homepage. When indexing is on, `robots.txt` names that
+    file.
+-   `/sitemap` is the HTML sitemap. It is an app route, not a Prismic
+    document. It is indexable when indexing is on, and it also links
+    Home.
 
 ### Speed
 
 -   Server Components by default. Client code is limited to the
-    mobile menu, one shared delegated click listener for CTA tracking,
-    and the offer copy-code button.
+    mobile menu, the search page (it filters the server-sent catalog
+    as you type, and does not fetch again), one shared delegated click
+    listener for CTA tracking, and the offer copy-code button.
 -   Images through Prismic's image CDN (`PrismicNextImage`) with
     explicit dimensions.
 -   No font is loaded until brand fonts arrive; system font stacks

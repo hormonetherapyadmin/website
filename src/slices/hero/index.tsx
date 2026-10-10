@@ -13,6 +13,7 @@ import {
   SliceSection,
   type SliceSectionFields,
 } from "@/components/slice-section";
+import { visitLinkProps } from "@/lib/affiliate-link";
 import styles from "./hero.module.css";
 
 export type HeroClinic = {
@@ -31,8 +32,7 @@ export type HeroClinicLink = {
   data?: HeroClinic | null;
 } | null;
 
-type HomePrimary = {
-  section?: readonly SliceSectionFields[] | null;
+type HomePrimary = Partial<SliceSectionFields> & {
   tagline: RichTextField;
   benefits?: readonly LinkField[] | null;
   button?: readonly LinkField[] | null;
@@ -42,18 +42,15 @@ type HomePrimary = {
   caption: RichTextField;
 };
 
-type SubpagePrimary = {
-  section?: readonly SliceSectionFields[] | null;
+type SubpagePrimary = Partial<SliceSectionFields> & {
   image: ImageField;
 };
 
-type BrandsPrimary = {
-  section?: readonly SliceSectionFields[] | null;
+type BrandsPrimary = Partial<SliceSectionFields> & {
   clinics?: readonly { clinic: HeroClinicLink; link: LinkField }[] | null;
 };
 
-type ProviderPrimary = {
-  section?: readonly SliceSectionFields[] | null;
+type ProviderPrimary = Partial<SliceSectionFields> & {
   clinic: HeroClinicLink;
   voted: RichTextField;
   quote: RichTextField;
@@ -235,7 +232,6 @@ function logoRows<T>(items: readonly T[]) {
 }
 
 function HomeHero({ primary }: { primary: HomePrimary }) {
-  const section = primary.section?.[0];
   const benefits = (primary.benefits ?? []).filter(
     (benefit) => isFilled.link(benefit) && benefit.text,
   );
@@ -247,14 +243,14 @@ function HomeHero({ primary }: { primary: HomePrimary }) {
 
   return (
     <SliceSection
-      section={primary.section}
+      section={primary}
       showHeader={false}
       title={asText(primary.tagline)}
     >
       <div className={styles.home}>
         <div>
           <RichText
-            field={section?.heading}
+            field={primary.heading}
             as="h1"
             unstyled
             className={`${styles.kicker} ${styles.homeKicker}`}
@@ -277,7 +273,7 @@ function HomeHero({ primary }: { primary: HomePrimary }) {
             </ul>
           ) : null}
           <RichText
-            field={section?.intro}
+            field={primary.intro}
             as="p"
             unstyled
             className={styles.dek}
@@ -370,23 +366,23 @@ function ClinicLogo({
   );
 }
 
-function TitleCopy({ section }: { section?: SliceSectionFields }) {
+function TitleCopy({ section }: { section: Partial<SliceSectionFields> }) {
   return (
     <div>
       <RichText
-        field={section?.small_heading}
+        field={section.small_heading}
         as="p"
         unstyled
         className={styles.kicker}
       />
       <RichText
-        field={section?.heading}
+        field={section.heading}
         as="h1"
         unstyled
         className={`${styles.display} ${styles.subpageTitle}`}
       />
-      <RichText field={section?.intro} as="p" unstyled className={styles.dek} />
-      {section ? (
+      <RichText field={section.intro} as="p" unstyled className={styles.dek} />
+      {section.link && isFilled.link(section.link) && section.link.text ? (
         <div className={styles.subpageLinks}>
           <TextLink field={section.link} />
         </div>
@@ -396,12 +392,10 @@ function TitleCopy({ section }: { section?: SliceSectionFields }) {
 }
 
 function SubpageHero({ primary }: { primary: SubpagePrimary }) {
-  const section = primary.section?.[0];
-
   return (
-    <SliceSection section={primary.section} showHeader={false}>
+    <SliceSection section={primary} showHeader={false}>
       <div className={styles.subpage}>
-        <TitleCopy section={section} />
+        <TitleCopy section={primary} />
         {isFilled.image(primary.image) ? (
           <figure className={styles.figure}>
             <div className={styles.photo}>
@@ -418,13 +412,12 @@ function SubpageHero({ primary }: { primary: SubpagePrimary }) {
 }
 
 function BrandsHero({ primary }: { primary: BrandsPrimary }) {
-  const section = primary.section?.[0];
   const clinics = primary.clinics ?? [];
 
   return (
-    <SliceSection section={primary.section} showHeader={false}>
+    <SliceSection section={primary} showHeader={false}>
       <div className={styles.brands}>
-        <TitleCopy section={section} />
+        <TitleCopy section={primary} />
         {clinics.length > 0 ? (
           <nav className={styles.floatCluster} aria-label="Clinics">
             {logoRows(clinics).map((row, rowIndex) => (
@@ -446,7 +439,6 @@ function BrandsHero({ primary }: { primary: BrandsPrimary }) {
 }
 
 function ProviderHero({ primary }: { primary: ProviderPrimary }) {
-  const section = primary.section?.[0];
   const clinic = primary.clinic?.data;
   const name = text(clinic?.name);
   const brand = text(clinic?.formulation) ?? name;
@@ -458,21 +450,27 @@ function ProviderHero({ primary }: { primary: ProviderPrimary }) {
   const priceNote = text(clinic?.price_note);
   const code = text(clinic?.code);
   const codeNote = text(clinic?.code_note);
+  const visitHref =
+    clinic?.visit &&
+    isFilled.link(clinic.visit) &&
+    clinic.visit.link_type === "Web"
+      ? clinic.visit.url
+      : undefined;
   const links = (primary.links ?? []).filter(
     (link) => isFilled.link(link) && link.text,
   );
 
   return (
     <SliceSection
-      section={primary.section}
+      section={primary}
       showHeader={false}
-      title={name ?? asText(section?.heading)}
+      title={name ?? asText(primary.heading)}
     >
       <div className={styles.provider}>
         <div>
-          {isFilled.richText(section?.small_heading) ? (
+          {isFilled.richText(primary.small_heading) ? (
             <RichText
-              field={section?.small_heading}
+              field={primary.small_heading}
               as="p"
               unstyled
               className={styles.kicker}
@@ -486,7 +484,7 @@ function ProviderHero({ primary }: { primary: ProviderPrimary }) {
             </h1>
           ) : (
             <RichText
-              field={section?.heading}
+              field={primary.heading}
               as="h1"
               unstyled
               className={`${styles.display} ${styles.providerTitle}`}
@@ -547,14 +545,20 @@ function ProviderHero({ primary }: { primary: ProviderPrimary }) {
                   ) : null}
                 </p>
               ) : null}
-              {clinic?.visit && isFilled.link(clinic.visit) ? (
+              {visitHref ? (
                 <div className={styles.dealActions}>
-                  <PrismicNextLink
-                    field={clinic.visit}
+                  <a
+                    href={visitHref}
                     className={styles.button}
+                    {...visitLinkProps(name ?? "", "provider_hero")}
                   >
-                    {clinic.visit.text || (name ? `Visit ${name}` : "Visit")}
-                  </PrismicNextLink>
+                    {text(clinic?.visit?.text) ??
+                      (name ? `Visit ${name}` : "Visit")}
+                    <span className="sr-only">
+                      {" "}
+                      (affiliate link, opens in a new tab)
+                    </span>
+                  </a>
                 </div>
               ) : null}
               {code || codeNote ? (

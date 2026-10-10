@@ -20,19 +20,16 @@
 .subpage {
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   gap: clamp(2rem, 5vw, 4.5rem);
-  padding-block: clamp(1.75rem, 4vw, 3rem);
 }
 
 .brands {
   grid-template-columns: minmax(0, 1fr) auto;
   gap: clamp(2rem, 5vw, 4.5rem);
-  padding-block: clamp(1.75rem, 4vw, 3rem);
 }
 
 .provider {
   grid-template-columns: minmax(0, 1fr) auto;
   gap: clamp(2rem, 4vw, 3.5rem);
-  padding-block: clamp(1.75rem, 4vw, 3rem) clamp(2.5rem, 5vw, 4rem);
 }
 
 .kicker {
@@ -42,7 +39,7 @@
   font-weight: 700;
   letter-spacing: 0;
   line-height: 1.4;
-  color: var(--color-accent);
+  color: var(--section-kicker, var(--color-accent));
 }
 
 .homeKicker {
@@ -279,23 +276,21 @@
   place-items: center;
   width: 4.75rem;
   height: 4.75rem;
-  overflow: hidden;
+  padding: 0.7rem;
   border-radius: 1.15rem;
-  background: var(--color-background);
+  background: var(--color-paper);
   box-shadow: 0 16px 32px -18px rgb(20 16 12 / 55%);
   text-decoration: none;
 }
 
 .floatLogoImage {
   position: relative;
-  width: 72%;
-  height: 72%;
-  overflow: hidden;
-  border-radius: 0.7rem;
+  width: 100%;
+  height: 100%;
 }
 
 .floatLogoImage img {
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .monogram {

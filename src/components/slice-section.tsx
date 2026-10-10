@@ -11,10 +11,14 @@ import { useId } from "react";
 import { RichText } from "@/components/rich-text";
 
 export const SECTION_BACKGROUNDS = [
-  "Same as the page",
-  "Soft",
-  "Highlight",
-  "Dark",
+  "Transparent",
+  "Cream",
+  "Pink",
+  "Blue",
+  "Yellow",
+  "Lavender",
+  "Raspberry",
+  "Navy",
 ] as const;
 
 export const SECTION_SPACING = ["None", "Small", "Medium", "Large"] as const;
@@ -22,7 +26,7 @@ export const SECTION_SPACING = ["None", "Small", "Medium", "Large"] as const;
 export type SectionBackground = (typeof SECTION_BACKGROUNDS)[number];
 export type SectionSpacing = (typeof SECTION_SPACING)[number];
 
-/** The non-repeatable `section` group copied onto every slice. */
+/** The Section fields copied onto every slice, beside its own fields. */
 export type SliceSectionFields = {
   small_heading: RichTextField;
   heading: RichTextField;
@@ -47,11 +51,31 @@ const spaceBelowClass: Record<SectionSpacing, string> = {
   Large: "mb-slice-lg",
 };
 
-const backgroundClass: Record<SectionBackground, string> = {
-  "Same as the page": "",
-  Soft: "bg-surface",
-  Highlight: "bg-tint",
-  Dark: "bg-panel text-panel-text",
+/** Transparent paints nothing, so the page shows through. */
+export const sectionBackgroundClass: Record<SectionBackground, string> = {
+  Transparent: "",
+  Cream: "bg-background",
+  Pink: "bg-card-1",
+  Blue: "bg-card-2",
+  Yellow: "bg-card-3",
+  Lavender: "bg-card-4",
+  Raspberry: "bg-accent text-panel-text",
+  Navy: "bg-panel text-panel-text",
+};
+
+/**
+ * Sets --section-kicker, the small heading color, for the shared header
+ * and for slices that draw their own small heading.
+ */
+const kickerColorClass: Record<SectionBackground, string> = {
+  Transparent: "[--section-kicker:var(--color-accent)]",
+  Cream: "[--section-kicker:var(--color-accent)]",
+  Pink: "[--section-kicker:var(--color-accent)]",
+  Blue: "[--section-kicker:var(--color-accent)]",
+  Yellow: "[--section-kicker:var(--color-accent)]",
+  Lavender: "[--section-kicker:var(--color-accent)]",
+  Raspberry: "[--section-kicker:var(--color-card-2)]",
+  Navy: "[--section-kicker:var(--color-panel-accent)]",
 };
 
 function choice<T extends string>(
@@ -63,6 +87,11 @@ function choice<T extends string>(
     if (option === value) return option;
   }
   return fallback;
+}
+
+/** The Background choice. An empty or retired choice is Transparent. */
+export function sectionBackground(value: string | null | undefined) {
+  return choice(value, SECTION_BACKGROUNDS, "Transparent");
 }
 
 /** A heading turned into an element id, such as "Feel like you again." */
@@ -80,7 +109,7 @@ export function sectionAnchor(value: string | null | undefined) {
   return id;
 }
 
-function hasHeader(fields: SliceSectionFields) {
+function hasHeader(fields: Partial<SliceSectionFields>) {
   return (
     isFilled.richText(fields.small_heading) ||
     isFilled.richText(fields.heading) ||
@@ -89,8 +118,8 @@ function hasHeader(fields: SliceSectionFields) {
   );
 }
 
-function SectionLink({ field }: { field: LinkField }) {
-  if (!isFilled.link(field) || !field.text) return null;
+function SectionLink({ field }: { field: LinkField | null | undefined }) {
+  if (!field || !isFilled.link(field) || !field.text) return null;
 
   return (
     <PrismicNextLink
@@ -117,8 +146,8 @@ function SectionLink({ field }: { field: LinkField }) {
 }
 
 type SliceSectionProps = {
-  /** The slice's `section` group. The first item is the only one used. */
-  section?: readonly SliceSectionFields[] | null;
+  /** The slice's fields. Only the Section fields are read. */
+  section?: Partial<SliceSectionFields> | null;
   /** Hero passes `h1`. Every other slice uses `h2`. */
   headingLevel?: "h1" | "h2";
   /** Hero lays the heading out itself and hides this header. */
@@ -138,7 +167,8 @@ type SliceSectionProps = {
 
 /**
  * Spacing, background, and the shared heading block for every slice.
- * Space above and below are the gap outside the slice. A background
+ * Space above and below are the gap outside the slice. Cream is the
+ * page color, so it paints without padding. Any other background
  * paints the slice and adds a fixed padding inside the color.
  */
 export function SliceSection({
@@ -150,15 +180,11 @@ export function SliceSection({
   children,
 }: SliceSectionProps) {
   const headingId = useId();
-  const fields = section?.[0];
-  const background = choice(
-    fields?.background,
-    SECTION_BACKGROUNDS,
-    "Same as the page",
-  );
+  const fields = section ?? undefined;
+  const background = sectionBackground(fields?.background);
   const spaceAbove = choice(fields?.space_above, SECTION_SPACING, "Medium");
   const spaceBelow = choice(fields?.space_below, SECTION_SPACING, "None");
-  const band = background !== "Same as the page";
+  const band = background !== "Transparent" && background !== "Cream";
   const header = showHeader && fields && hasHeader(fields) ? fields : null;
   const anchor = sectionAnchor(title ?? (fields ? asText(fields.heading) : ""));
 
@@ -172,7 +198,8 @@ export function SliceSection({
       className={[
         spaceAboveClass[spaceAbove],
         spaceBelowClass[spaceBelow],
-        backgroundClass[background],
+        sectionBackgroundClass[background],
+        kickerColorClass[background],
       ]
         .filter(Boolean)
         .join(" ")}
@@ -190,10 +217,7 @@ export function SliceSection({
             <RichText
               field={header.small_heading}
               as="p"
-              className={[
-                "mb-3 text-sm font-bold",
-                background === "Dark" ? "text-panel-text" : "text-accent",
-              ].join(" ")}
+              className="mb-3 text-sm font-bold text-(color:--section-kicker)"
             />
             <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
               {isFilled.richText(header.heading) ? (

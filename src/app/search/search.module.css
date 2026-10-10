@@ -1,0 +1,322 @@
+.wrap {
+  width: min(100%, var(--container-wrap));
+  margin-inline: auto;
+  padding: clamp(2.75rem, 6vw, 4.5rem) var(--spacing-gutter)
+    clamp(4rem, 8vw, 6.5rem);
+  color: var(--color-text);
+}
+
+.heading {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(3rem, 7vw, 4.5rem);
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+
+.form {
+  max-width: 40rem;
+  margin: 1.75rem auto 0;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.3rem 0.35rem 0.3rem 1.1rem;
+  border: 1.5px solid var(--color-text);
+  border-radius: 999px;
+  background: var(--color-paper);
+}
+
+.field:focus-within {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent);
+}
+
+.iconLabel {
+  display: grid;
+  flex: none;
+  place-items: center;
+  color: var(--color-text-muted);
+  cursor: text;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  padding: 0.75rem 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.input:focus-visible {
+  outline: none;
+}
+
+.input::-webkit-search-decoration,
+.input::-webkit-search-cancel-button,
+.input::-webkit-search-results-button {
+  display: none;
+}
+
+.clear {
+  flex: none;
+  margin-right: 0.2rem;
+  padding: 0.45rem 0.85rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.clear:hover {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.status {
+  max-width: 40rem;
+  margin: 1.6rem auto 0;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.term {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.hint {
+  margin: 0.4rem 0 0;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: 3.25rem;
+  width: min(100%, var(--container-content));
+  margin: 3rem auto 0;
+}
+
+.groupTitle {
+  margin: 0 0 1.15rem;
+  font-size: clamp(1.7rem, 2.4vw, 2.15rem);
+}
+
+.count {
+  color: var(--color-text-muted);
+  font-family: var(--sans, var(--font-body));
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.grid {
+  --rule-gap: 3rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: var(--rule-gap);
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--color-text);
+  list-style: none;
+}
+
+.grid > li {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* The rule sits in the gap, so it does not make one photo narrower. */
+.grid > li:nth-child(3n + 2)::before,
+.grid > li:nth-child(3n)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: calc(100% + var(--rule-gap) / 2);
+  border-left: 1px solid var(--color-border);
+  pointer-events: none;
+}
+
+.grid > li:nth-child(3n + 2)::after,
+.grid > li:nth-child(3n)::after {
+  content: "";
+  position: absolute;
+  right: 100%;
+  bottom: -1px;
+  width: var(--rule-gap);
+  border-bottom: 1px solid var(--color-border);
+  pointer-events: none;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.5rem 0 1.75rem;
+}
+
+.media {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 1.1rem;
+  border-radius: 1.25rem;
+  background: var(--color-tint);
+  aspect-ratio: 16 / 10;
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  transition: transform 300ms ease;
+}
+
+.card:hover .photo,
+.card:focus-visible .photo {
+  transform: scale(1.03);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.15em;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.meta time {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+}
+
+.kind {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.title {
+  margin: 0.5rem 0 0.6rem;
+  font-size: 1.3rem;
+  text-wrap: balance;
+}
+
+.title a {
+  text-decoration: none;
+  background-image: linear-gradient(var(--color-tint), var(--color-tint));
+  background-repeat: no-repeat;
+  background-position: 0 0.87em;
+  background-size: 0 0.42em;
+  box-decoration-break: clone;
+  transition: background-size 160ms ease;
+}
+
+.title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.card:hover .title a,
+.title a:focus-visible {
+  background-size: 100% 0.42em;
+}
+
+.excerpt {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover .photo,
+  .card:focus-visible .photo {
+    transform: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .grid > li:nth-child(3n)::before,
+  .grid > li:nth-child(3n)::after,
+  .grid > li:nth-child(3n + 1)::before,
+  .grid > li:nth-child(3n + 1)::after {
+    content: none;
+  }
+
+  .grid > li:nth-child(even)::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: calc(100% + var(--rule-gap) / 2);
+    border-left: 1px solid var(--color-border);
+    pointer-events: none;
+  }
+
+  .grid > li:nth-child(even)::after {
+    content: "";
+    position: absolute;
+    right: 100%;
+    bottom: -1px;
+    width: var(--rule-gap);
+    border-bottom: 1px solid var(--color-border);
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+
+  .grid > li:nth-child(n)::before,
+  .grid > li:nth-child(n)::after {
+    content: none;
+  }
+
+  .field {
+    padding-left: 0.9rem;
+  }
+}

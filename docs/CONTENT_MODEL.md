@@ -52,17 +52,36 @@ This singleton nests one group (the links inside an item or a column).
 Prismic allows one level of nesting. Slices still do not nest groups.
 See `docs/SLICE_MODEL.md`.
 
-The header chrome around that menu is not a Navigation field. The
-wordmark is on the left, the menu is centered, and the right side is a
-search icon plus one button. Search links to `/search`. The button
-says "Trusted providers" and, in this design preview, links to
-`/mockup/trusted-providers`. The live page is
+The wordmark is on the left, the menu is centered, and the right side is
+a search icon plus one button. Search links to `/search` and is not a
+Navigation field.
+
+The button is three fields at the top of **Main menu**: **Header button
+label**, **Header button icon**, and **Header button link**. Leave the
+label or the link blank and the button is hidden. The icon is optional.
+It is any image on a transparent background, shown in the button color.
+Until a Navigation document exists, the button says "Trusted providers"
+and links to `/mockup/trusted-providers`. The live page is
 `/copy-of-trusted-providers`. On the new site it moves to
 `/trusted-providers`, and the old address redirects there (owner
-decision, 2026-10-09; see `docs/MIGRATION_RUNBOOK.md`). There is no stronger single call to
-action yet: that page is the compare step, and the homepage already
-sends people there. A header button Peggy can retarget would be a new
-field.
+decision, 2026-10-09; see `docs/MIGRATION_RUNBOOK.md`). There is no
+stronger single call to action yet: that page is the compare step, and
+the homepage already sends people there.
+
+`/search` is an app route, not a Prismic document. It lists published
+Pages and Posts that are still set to Index. Pages come first, then
+blog posts, as cards. The list filters as you type. A shared search is
+`?q=` on that same address, and `/search` is always noindex (see
+`docs/SEO_AEO_GEO.md`). A match looks at the title, the subtitle or
+meta description, the post category, and the opening of the page or
+story (the first 2,000 characters). The homepage is left out while
+`/` is still the placeholder. A clinic is left out because a clinic
+has no public page.
+
+`/sitemap` is an app route, not a Prismic document. It lists those same
+Pages and Posts, plus Home. `/sitemap.xml` lists the Pages, the Posts,
+and `/sitemap`. Home stays out of the XML file while `/` is still the
+placeholder, and `/search` stays out of both.
 
 The conceptual list in `docs/PROJECT_PLAN.md` (Treatments, Reviews,
 Compare, and the rest) is the product direction, not the menu. The
@@ -268,14 +287,19 @@ General site pages that are not articles, reviews, or comparisons,
 such as Privacy Policy, Terms, Contact, Medical Disclosures, and
 one-off Wix pages found in the inventory.
 
--   Title
 -   UID
--   URL section
--   Body slices
--   SEO title
+-   Body slices (every shared slice)
+-   SEO title. The Hero heading is the page heading. Leave the SEO
+    title empty to use that heading. A page with no Hero shows the SEO
+    title as the heading.
 -   SEO description
 -   Social image
 -   Indexability control with safe default
+
+The page type is `customtypes/page`. Every Page is `/<uid>`, the same
+way every Post is `/post/<uid>`. It has no URL section field. The UID
+is the Wix slug, unchanged, such as `copy-of-trusted-providers` or
+`inner-balance`. Fields and rendering are in `docs/SLICE_MODEL.md`.
 
 ### Redirect
 
@@ -303,14 +327,15 @@ no separate Symptom type.
 
 Keep this intentionally small.
 
-The homepage slices, the shared Section group, and the shared rich text
-component are specified in `docs/SLICE_MODEL.md`. Copy that Section group
+The homepage slices, the shared Section fields, and the shared rich text
+component are specified in `docs/SLICE_MODEL.md`. Copy those Section fields
 and those rich text presets onto later slices.
 
 The post and the blog index do not use slices. A post pulls a
-clinic's offer or facts into the story with a provider token. Review,
-provider, and trusted-providers slices are not specified yet.
-Candidates:
+clinic's offer or facts into the story with a provider token. The
+trusted-providers jump band is the Boxes slice. Each clinic card
+under that band is its own Brand promo slice. Review slices are not
+specified yet. Candidates:
 
 -   Rich Text
 -   Image + Text
@@ -339,8 +364,10 @@ Candidates:
 Trim overlapping candidates before building them (for example Provider
 Card / Provider Grid / Provider Comparison / Comparison Table, and
 Affiliate CTA / Offer Callout). The homepage clinic comparison is the
-comparison slice. A post inserts a clinic offer with a provider
-token. It does not insert a Callout.
+comparison slice. The trusted-providers clinic card is the Brand promo
+slice. The trusted-providers close band is the Ribbon slice. A post
+inserts a clinic offer with a provider token. It does not insert a
+Callout.
 
 Before adding a new slice, ask whether an existing slice can represent
 the editorial intent cleanly. Avoid variants that differ only
@@ -358,15 +385,22 @@ Rule:
 
 -   UID is the Wix slug, unchanged (typos included).
 -   A Post is always `/post/<uid>`. It has no URL section field.
+-   A Page is always `/<uid>`. It has no URL section field.
 -   A Clinic has no public URL. A clinic page is a Page, and the slices
     on that page point at the clinic.
 -   Every other routable editorial type (Provider Review, Comparison,
-    Page, and Treatment/Topic when they have a public page)
+    and Treatment/Topic when they have a public page)
     has a required **URL section** select field:
     -   "Blog post (/post/…)" → `/post/<uid>` (default)
     -   "Site page (/…)" → `/<uid>`
--   The public path is always section + UID, except for a Post,
-    whose section is fixed. There is no free-text path field.
+-   The public path is always section + UID, except for a Post and
+    a Page, whose section is fixed. There is no free-text path field.
+-   A route the app already defines (`/post`, `/api`, `/mockup`,
+    `/search`, `/sitemap`) wins over a Page with that UID, so that Page
+    never shows and search and the sitemap leave it out. The list is
+    `APP_ROUTE_UIDS` in `src/lib/site.ts`. `/blog` is not on it until
+    the blog index route exists; until then a Page with UID `blog` is
+    `/blog`, and it is listed like any other Page.
 -   Prismic only guarantees UID uniqueness within one type, so the
     build fails if two documents of any type resolve to the same path.
 

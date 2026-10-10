@@ -17,6 +17,7 @@ import shared from "../_shared/mockup.module.css";
 import { AFFILIATE_REL, MockupShell } from "../_shared/mockup-shell";
 import { PostCard, postAt } from "../_shared/posts";
 import styles from "./providers.module.css";
+import Link from "next/link";
 
 /*
   Trusted-providers design mockup for the live URL /copy-of-trusted-providers.
@@ -437,7 +438,7 @@ export default async function TrustedProvidersMockup(
       <nav className={styles.crumbs} aria-label="Breadcrumb">
         <ol>
           <li>
-            <a href="/mockup/homepage">Home</a>
+            <Link href="/mockup/homepage">Home</Link>
           </li>
           <li aria-current="page">Trusted providers</li>
         </ol>
@@ -453,10 +454,13 @@ export default async function TrustedProvidersMockup(
             doctor, and these visit links pay me a commission.
           </p>
           <div className={styles.heroLinks}>
-            <a href="/hrt-price-comparison-chart" className={shared.buttonText}>
+            <Link
+              href="/hrt-price-comparison-chart"
+              className={shared.buttonText}
+            >
               Full price chart
               <Chevron />
-            </a>
+            </Link>
           </div>
         </div>
         <nav className={styles.floatCluster} aria-label="Clinics">
@@ -716,16 +720,16 @@ export default async function TrustedProvidersMockup(
             </p>
           </div>
           <div className={styles.closeActions}>
-            <a
+            <Link
               href="/hrt-price-comparison-chart"
               className={shared.buttonPrimary}
             >
               Open the price chart
-            </a>
-            <a href="/tipstofindprovider" className={shared.buttonText}>
+            </Link>
+            <Link href="/tipstofindprovider" className={shared.buttonText}>
               Tips for choosing
               <Chevron />
-            </a>
+            </Link>
           </div>
         </div>
       </section>

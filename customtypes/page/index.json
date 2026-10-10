@@ -1,0 +1,91 @@
+{
+  "format": "page",
+  "id": "page",
+  "json": {
+    "Main": {
+      "uid": {
+        "config": {
+          "label": "UID"
+        },
+        "type": "UID"
+      },
+      "slices": {
+        "config": {
+          "choices": {
+            "hero": {
+              "type": "SharedSlice"
+            },
+            "start_here": {
+              "type": "SharedSlice"
+            },
+            "posts": {
+              "type": "SharedSlice"
+            },
+            "clinic_comparison": {
+              "type": "SharedSlice"
+            },
+            "quote": {
+              "type": "SharedSlice"
+            },
+            "side_by_side": {
+              "type": "SharedSlice"
+            },
+            "divider": {
+              "type": "SharedSlice"
+            },
+            "boxes": {
+              "type": "SharedSlice"
+            },
+            "brand_promo": {
+              "type": "SharedSlice"
+            },
+            "ribbon": {
+              "type": "SharedSlice"
+            }
+          }
+        },
+        "fieldset": "Slice Zone",
+        "type": "Slices"
+      }
+    },
+    "SEO & Metadata": {
+      "meta_title": {
+        "config": {
+          "label": "Meta title",
+          "placeholder": "Leave empty to use the Hero heading."
+        },
+        "type": "Text"
+      },
+      "meta_description": {
+        "config": {
+          "label": "Meta description",
+          "placeholder": "The sentence search results show under the title."
+        },
+        "type": "Text"
+      },
+      "meta_image": {
+        "config": {
+          "constraint": {
+            "height": 1260,
+            "width": 2400
+          },
+          "label": "Social image",
+          "thumbnails": []
+        },
+        "type": "Image"
+      },
+      "indexing": {
+        "config": {
+          "default_value": true,
+          "label": "Indexing",
+          "placeholder_false": "No index",
+          "placeholder_true": "Index"
+        },
+        "type": "Boolean"
+      }
+    }
+  },
+  "label": "Page",
+  "repeatable": true,
+  "status": true
+}

@@ -34,6 +34,12 @@ objective is preservation; optimization follows.
 -   Affiliate links use `rel="sponsored nofollow noopener noreferrer"`
     and open in a new tab. This keeps the live site's behavior and
     adds `sponsored`, as Google asks for affiliate links.
+-   A clinic's Visit link is its affiliate link. Every designed visit
+    CTA (provider Hero, Brand promo, Quote, Side by side, Clinic
+    comparison, story offer and facts) sets that rel, the new tab, and
+    `data-provider` and `data-placement` itself, through
+    `visitLinkProps` in `src/lib/affiliate-link.ts`. The Visit field's
+    "Open in a new tab" checkbox does not change this.
 
 ## Content Preservation
 
@@ -136,6 +142,21 @@ permutations.
 
 Default implementation should avoid indexable faceted navigation unless
 a specific SEO strategy approves individual facets.
+
+`/search` is always noindex, including when `ALLOW_INDEXING=true`.
+The canonical is `/search`. `?q=` repeats that search for someone with
+the link. It is not a separate indexable URL, and the page has no type
+filter.
+
+## Sitemap
+
+`/sitemap.xml` lists the canonical URL of every published Page and Post
+still set to Index, plus the HTML sitemap at `/sitemap`. It leaves out
+`/search`, mockup routes, and the homepage while `/` is still the
+placeholder. `lastmod` is that document's last publication time in
+Prismic, when one exists. The page at `/sitemap` is built in the app,
+not stored in Prismic, and it also links Home. When indexing is on,
+`robots.txt` points at `/sitemap.xml`.
 
 ## Performance
 

@@ -17,26 +17,23 @@ const rich = (value: string) =>
 
 const emptyRich = [] as RichTextField;
 
-function section(): SliceSectionFields[] {
-  return [
-    {
-      small_heading: emptyRich,
-      heading: rich("Eight online HRT clinics, side by side"),
-      intro: rich(
-        "I paid out of pocket with my HSA card, or through my prescription insurance when I could. These are my real costs, not list prices. Yours may differ.",
-      ),
-      link: { link_type: "Any" },
-      background: "Soft",
-      space_above: "None",
-      space_below: "None",
-    },
-  ];
+function section(): SliceSectionFields {
+  return {
+    small_heading: emptyRich,
+    heading: rich("Eight online HRT clinics, side by side"),
+    intro: rich(
+      "I paid out of pocket with my HSA card, or through my prescription insurance when I could. These are my real costs, not list prices. Yours may differ.",
+    ),
+    link: { link_type: "Any" },
+    background: "Blue",
+    space_above: "None",
+    space_below: "None",
+  };
 }
 
 const ROWS: ComparisonClinic[] = CLINICS.map((clinic) => ({
   name: clinic.name,
   href: clinic.isAffiliate ? "#affiliate-link" : undefined,
-  newTab: clinic.isAffiliate,
   logo: clinic.logo ? { src: clinic.logo } : undefined,
   monogram: clinic.monogram,
   topChoice: clinic.topPick ? "My 2026 top choice" : undefined,
@@ -55,7 +52,7 @@ export default function ClinicComparisonPreview() {
   return (
     <ClinicComparison
       primary={{
-        section: section(),
+        ...section(),
         prices_checked: "2026-09-09",
         button: {
           link_type: "Web",

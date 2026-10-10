@@ -10,18 +10,16 @@ const rich = (value: string) =>
 const emptyRich = [] as RichTextField;
 const emptyLink = { link_type: "Any" } as LinkField;
 
-function section(): SliceSectionFields[] {
-  return [
-    {
-      small_heading: emptyRich,
-      heading: rich("Where should I start?"),
-      intro: emptyRich,
-      link: emptyLink,
-      background: null,
-      space_above: "None",
-      space_below: null,
-    },
-  ];
+function section(): SliceSectionFields {
+  return {
+    small_heading: emptyRich,
+    heading: rich("Where should I start?"),
+    intro: emptyRich,
+    link: emptyLink,
+    background: null,
+    space_above: "None",
+    space_below: null,
+  };
 }
 
 function card(title: string, href = `/${title}`) {
@@ -61,7 +59,7 @@ describe("StartHere", () => {
     const html = renderToStaticMarkup(
       <StartHere
         primary={{
-          section: section(),
+          ...section(),
           cards: [card("Is HRT for me?", "/ishrtforme")],
         }}
       />,
@@ -80,7 +78,7 @@ describe("StartHere", () => {
     const html = renderToStaticMarkup(
       <StartHere
         primary={{
-          section: section(),
+          ...section(),
           cards: [
             card("One"),
             card("Two"),

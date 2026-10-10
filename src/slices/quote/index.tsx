@@ -12,6 +12,7 @@ import {
   sectionAnchor,
   type SliceSectionFields,
 } from "@/components/slice-section";
+import { visitLinkProps } from "@/lib/affiliate-link";
 import styles from "./quote.module.css";
 
 /** The clinic this band points at. The page reads it off the Provider. */
@@ -21,11 +22,9 @@ export type QuoteClinic = {
   visitHref?: string;
   /** Display text on the visit link, such as "Visit Inner Balance". */
   visitText?: string;
-  newTab?: boolean;
 };
 
-type QuotePrimary = {
-  section?: readonly SliceSectionFields[] | null;
+type QuotePrimary = Partial<SliceSectionFields> & {
   quote?: RichTextField | null;
   /** Line beside the logo. Empty uses the clinic name. */
   name?: string | null;
@@ -34,8 +33,6 @@ type QuotePrimary = {
   reminder?: RichTextField | null;
   review_button?: LinkField | null;
 };
-
-const AFFILIATE_REL = "sponsored nofollow noopener noreferrer";
 
 function Chevron() {
   return (
@@ -76,19 +73,14 @@ export function Quote({
   primary: QuotePrimary;
   clinic?: QuoteClinic | null;
 }) {
-  const fields = primary.section?.[0];
-  const heading = fields?.heading;
+  const heading = primary.heading;
   const slug = sectionAnchor(heading ? asText(heading) : "");
   const titleId = slug ? `${slug}-title` : undefined;
   const name = quoteName(primary.name, clinic);
   const visitText = clinic?.visitText?.trim() || (name ? `Visit ${name}` : "");
 
   return (
-    <SliceSection
-      section={primary.section}
-      showHeader={false}
-      labelId={titleId}
-    >
+    <SliceSection section={primary} showHeader={false} labelId={titleId}>
       <div className={styles.layout}>
         <RichText
           field={heading}
@@ -144,19 +136,14 @@ export function Quote({
                 <a
                   href={clinic.visitHref}
                   className={styles.visit}
-                  target={clinic.newTab ? "_blank" : undefined}
-                  rel={clinic.newTab ? AFFILIATE_REL : undefined}
-                  data-provider={clinic.name}
-                  data-placement="quote"
+                  {...visitLinkProps(clinic.name, "quote")}
                 >
                   {visitText}
                   <Chevron />
-                  {clinic.newTab ? (
-                    <span className="sr-only">
-                      {" "}
-                      (affiliate link, opens in a new tab)
-                    </span>
-                  ) : null}
+                  <span className="sr-only">
+                    {" "}
+                    (affiliate link, opens in a new tab)
+                  </span>
                 </a>
               ) : null}
             </div>

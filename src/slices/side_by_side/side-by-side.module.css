@@ -5,7 +5,7 @@
 
 .kicker {
   margin: 0 0 0.9rem;
-  color: var(--color-accent);
+  color: var(--section-kicker, var(--color-accent));
   font-size: 0.95rem;
   font-weight: 700;
 }

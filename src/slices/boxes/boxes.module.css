@@ -1,0 +1,130 @@
+/*
+  Layout copied from the jump band on the trusted-providers mockup.
+  data-cols is Boxes across, or fewer when there are fewer boxes.
+*/
+
+.grid {
+  --cols: 5;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.grid[data-cols="1"] {
+  --cols: 1;
+}
+
+.grid[data-cols="2"] {
+  --cols: 2;
+}
+
+.grid[data-cols="3"] {
+  --cols: 3;
+}
+
+.grid[data-cols="4"] {
+  --cols: 4;
+}
+
+.grid[data-cols="6"] {
+  --cols: 6;
+}
+
+.grid[data-cols="7"] {
+  --cols: 7;
+}
+
+.grid > li {
+  min-width: 0;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  height: 100%;
+  padding: 0.9rem 0.85rem 1rem;
+  border-radius: var(--radius-card);
+  background: var(--color-paper);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+a.box:hover {
+  background: var(--color-tint);
+}
+
+.logo {
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 3.25rem;
+  height: 3.25rem;
+  margin-bottom: 0.5rem;
+  padding: 0.45rem;
+  overflow: hidden;
+  border-radius: 0.8rem;
+  background: var(--color-background);
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.text {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.bottomLine {
+  margin: auto 0 0;
+  padding-top: 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--color-accent);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1100px) {
+  .grid[data-cols="5"],
+  .grid[data-cols="6"] {
+    --cols: 3;
+  }
+
+  .grid[data-cols="7"] {
+    --cols: 4;
+  }
+}
+
+@media (max-width: 960px) {
+  .grid[data-cols="4"] {
+    --cols: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .grid[data-cols] {
+    --cols: 2;
+  }
+
+  .grid[data-cols="1"] {
+    --cols: 1;
+  }
+}

@@ -41,8 +41,7 @@ export type PostCardData = {
   category?: string;
 };
 
-type PostsPrimary = {
-  section?: readonly SliceSectionFields[] | null;
+type PostsPrimary = Partial<SliceSectionFields> & {
   category?: SelectField<PostCategoryOption> | string | null;
   /** Featured only. The page resolves this link and passes `featured`. */
   post?: LinkField | null;
@@ -436,7 +435,7 @@ export function Posts({
     pageHref ?? ((next: number) => postPageHref(next, viewing));
 
   return (
-    <SliceSection section={primary.section}>
+    <SliceSection section={primary}>
       {layout === "grid" && locked === "All" ? (
         <Tabs active={viewing} hrefFor={categoryHref} />
       ) : null}

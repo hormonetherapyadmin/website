@@ -9,7 +9,6 @@ export type TokenClinic = {
   logo?: { src: string };
   visitHref?: string;
   visitText?: string;
-  newTab?: boolean;
   offerCode?: string;
   offerCopy?: string;
   monthlyPrice?: number | null;

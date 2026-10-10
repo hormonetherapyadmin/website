@@ -55,6 +55,8 @@ export type FooterColumn = {
 export type SiteNavigation = {
   main: NavItem[];
   footer: FooterColumn[];
+  /** Top-right header button. Absent when the label or link is blank. */
+  button?: NavLink;
 };
 
 export type NavigationMenuLink = {
@@ -179,10 +181,29 @@ function footerLinks(links: readonly NavigationMenuLink[] | null | undefined) {
   return items;
 }
 
+function headerButtonFrom(data: {
+  header_button_label?: string | null;
+  header_button_icon?: ImageField | null;
+  header_button_link?: LinkField | null;
+}): NavLink | undefined {
+  const label = text(data.header_button_label);
+  const href = hrefOf(data.header_button_link);
+  if (!label || !href) return undefined;
+
+  const button: NavLink = { label, href };
+  if (opensNewTab(data.header_button_link)) button.newTab = true;
+  const icon = imageUrl(data.header_button_icon);
+  if (icon) button.icon = icon;
+  return button;
+}
+
 /** The header and footer menus Peggy edits on the Navigation document. */
 export function siteNavigationFrom(data: {
   main_items?: readonly NavigationMenuItem[] | null;
   footer_columns?: readonly NavigationFooterColumn[] | null;
+  header_button_label?: string | null;
+  header_button_icon?: ImageField | null;
+  header_button_link?: LinkField | null;
 }): SiteNavigation {
   const main: NavItem[] = [];
 
@@ -211,7 +232,8 @@ export function siteNavigationFrom(data: {
     footer.push({ heading, links });
   }
 
-  return { main, footer };
+  const button = headerButtonFrom(data);
+  return button ? { main, footer, button } : { main, footer };
 }
 
 /**

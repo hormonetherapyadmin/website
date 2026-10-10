@@ -43,20 +43,18 @@ function categoryFrom(value: string | undefined): PostCategoryOption {
   return "All";
 }
 
-function section(heading: string, linkText?: string): SliceSectionFields[] {
-  return [
-    {
-      small_heading: emptyRich,
-      heading: heading ? rich(heading) : emptyRich,
-      intro: emptyRich,
-      link: linkText
-        ? ({ link_type: "Web", url: "/blog", text: linkText } as LinkField)
-        : emptyLink,
-      background: "Same as the page",
-      space_above: "Medium",
-      space_below: "None",
-    },
-  ];
+function section(heading: string, linkText?: string): SliceSectionFields {
+  return {
+    small_heading: emptyRich,
+    heading: heading ? rich(heading) : emptyRich,
+    intro: emptyRich,
+    link: linkText
+      ? ({ link_type: "Web", url: "/blog", text: linkText } as LinkField)
+      : emptyLink,
+    background: "Transparent",
+    space_above: "Medium",
+    space_below: "None",
+  };
 }
 
 function gridHeading(category: PostCategoryOption) {
@@ -84,7 +82,7 @@ export default async function PostsPreview(props: {
       <Posts
         variation="home"
         primary={{
-          section: section("Latest reviews and posts", "All posts"),
+          ...section("Latest reviews and posts", "All posts"),
           category: "All",
         }}
         posts={CARDS}
@@ -96,14 +94,14 @@ export default async function PostsPreview(props: {
       {category === "All" ? (
         <Posts
           variation="featured"
-          primary={{ section: section(""), category: "All" }}
+          primary={{ ...section(""), category: "All" }}
           posts={CARDS}
         />
       ) : null}
       <Posts
         variation="grid"
         primary={{
-          section: section(gridHeading(category)),
+          ...section(gridHeading(category)),
           category: "All",
           count: 6,
         }}
@@ -118,7 +116,7 @@ export default async function PostsPreview(props: {
       </p>
       <Posts
         variation="featured"
-        primary={{ section: section(""), category: "All" }}
+        primary={{ ...section(""), category: "All" }}
         posts={CARDS}
         featured={PINNED}
       />
@@ -129,7 +127,7 @@ export default async function PostsPreview(props: {
       <Posts
         variation="row"
         primary={{
-          section: section("Keep reading", "All posts"),
+          ...section("Keep reading", "All posts"),
           category: "All",
         }}
         posts={CARDS}

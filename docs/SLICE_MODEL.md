@@ -10,9 +10,9 @@ section, labels are plain, and a fact she reuses is edited on its own
 document.
 
 The post and the blog index are page types with fields and no slice
-zone. They are specified below. The provider page and the
-trusted-providers page are not specified yet. They follow the shared
-rules below.
+zone. They are specified below. A site page, such as the provider page
+or the trusted-providers page, is a Page built from the shared slices.
+Page is specified at the end of this file.
 
 ## Document kinds
 
@@ -25,7 +25,8 @@ custom type. The clinic has no public page. A clinic page is a Page.
 | Blog | Page type, single | The `/blog` page |
 | Provider | Custom type | The clinic every slice links to. File: `customtypes/provider` |
 | Post | Page type | A blog post. File: `customtypes/post` |
-| Provider review, Comparison, Page | Page type | Public pages |
+| Page | Page type | A site page at `/<uid>`. File: `customtypes/page` |
+| Provider review, Comparison | Page type | Public pages |
 | Callout | Custom type | A reusable box inside a post has no page |
 
 A content relationship points at a document so the page can show that
@@ -54,10 +55,11 @@ slice. One component reads them. The section wrapper is
 
 ### Section
 
-Every slice except the Divider starts with a non-repeatable group named
-`section`, labeled **Section**. Groups cannot contain other groups, so
-the slice's own repeatable groups sit beside it. The Divider lists
-Background, Space above, and Space below on the slice itself.
+Every slice except the Divider starts with these seven fields, directly
+on the slice and before its own fields. They are not in a group. In the
+Page Builder even a non-repeatable group starts empty, and she has to
+add an item before she can type a heading, so the fields stay open
+instead. The Divider has only Background, Space above, and Space below.
 
 | Label | Id | Kind | Default |
 | --- | --- | --- | --- |
@@ -65,7 +67,7 @@ Background, Space above, and Space below on the slice itself.
 | Heading | `heading` | Heading rich text | Empty |
 | Intro | `intro` | Heading rich text | Empty |
 | Link | `link` | Link, with display text | Empty |
-| Background | `background` | Select | Same as the page |
+| Background | `background` | Select | Transparent |
 | Space above | `space_above` | Select | Medium |
 | Space below | `space_below` | Select | None |
 
@@ -77,21 +79,42 @@ The Hero slice renders Heading as the page title (`h1`). Every other
 slice renders it as a section heading (`h2`). A card title is an `h3`.
 The small heading is a line above the title. She does not pick the level.
 
-**Background** choices map to site color tokens:
+**Background** choices are the site colors, by name. Each maps to a
+color token:
 
-- Same as the page
-- Soft, the comparison band (`surface`)
-- Highlight (`tint`)
-- Dark, the quote band (`panel`)
+- Transparent, the default. It paints nothing and adds no inner
+  padding, so the slice sits on the page, which is cream
+- Cream, the page color (`background`). It paints that color and adds
+  no inner padding, so Space above and Space below are the only gap.
+  A cream slice between two other colors is a cream band
+- Pink (`card-1`)
+- Blue (`card-2`)
+- Yellow (`card-3`)
+- Lavender (`card-4`)
+- Raspberry (`accent`)
+- Navy, the quote band (`panel`)
 
-A Dark section uses light text. These are token names, so a later palette
-change updates every section. Do not use a free color picker.
+The four pastels are the Start here card colors. Raspberry and Navy use
+light text. The small heading is raspberry on Transparent, Cream, and
+the pastels,
+light blue (`card-2`) on Raspberry, and pink (`panel-accent`) on Navy.
+Slices that draw their own small heading (Hero, Side by side, Quote,
+Brand promo) follow the same rule. A later palette
+change to a token updates every section that uses it. A brand change
+that makes a name wrong, such as a new accent that is not raspberry,
+renames the choice, and pages that stored the old name fall back to
+Transparent until they are set again. Do not use a free color picker.
+
+Pieces a slice draws in raspberry, other than the small heading, are
+not changed on a Raspberry band. A hero button is one example. Use Raspberry for writing and quotes.
+A card keeps its own color on any band.
 
 **Space above** and **Space below** are the gap outside the slice. Both
 are None, Small, Medium, or Large. The gap between two slices is set by
-the lower slice's Space above. A background paints the slice itself and
-keeps a fixed padding inside the color. That inner padding is not a
-field.
+the lower slice's Space above. Transparent and Cream add no inner
+padding. Pink, Blue, Yellow, Lavender, Raspberry, and Navy paint the
+slice and keep a fixed padding inside the color. That inner padding is
+not a field.
 
 **Section id.** Every section gets an id from its title, so a button on the
 same page can scroll to it. "Feel like you again." becomes
@@ -140,7 +163,8 @@ Those values are data, not writing.
 
 A button or text link is one link field with display text turned on. The
 words and the destination are the same field. "Open in a new tab" is the
-field's checkbox, used on affiliate visit links.
+field's checkbox. A clinic's Visit link is the exception: every visit
+button opens it in a new tab with the affiliate `rel`, checked or not.
 
 A list of links with no other fields is a repeatable link. Benefit links
 and topic links are this.
@@ -159,7 +183,7 @@ posts is a repeatable group with one content relationship in each row.
 
 ### Divider
 
-A line between slices. It does not use the Section group. Background,
+A line between slices. It does not use the Section header. Background,
 Space above, and Space below are fields on the slice, with the same
 choices as Section. Both spacing fields default to None, so the line does
 not add a gap until she asks for one.
@@ -168,7 +192,7 @@ not add a gap until she asks for one.
 | --- | --- | --- | --- |
 | Line | `line` | Select | Squiggly |
 | Color | `color` | Select | Accent |
-| Background | `background` | Select | Same as the page |
+| Background | `background` | Select | Transparent |
 | Space above | `space_above` | Select | None |
 | Space below | `space_below` | Select | None |
 
@@ -176,6 +200,133 @@ Line is Squiggly or Straight. Those are the two rules in the mockups.
 Color is Accent, Soft, Border, or Text. Soft is the lighter accent used
 by the homepage wave. Accent, Border, and Text use those color tokens.
 There is no free color picker.
+
+### Boxes
+
+A row of small boxes, in `src/slices/boxes`. Each box is a clinic or
+is written by hand. On trusted providers it is the jump band under the
+hero, and each box goes to that clinic's section lower on the page.
+
+| Label | Id | Kind | Default |
+| --- | --- | --- | --- |
+| Boxes across | `across` | Select: 2, 3, 4, 5, 6, 7 | 5 |
+| Boxes | `boxes` | Repeatable group | Empty |
+
+Each box:
+
+| Label | Id | Kind | Required | Trusted providers |
+| --- | --- | --- | --- | --- |
+| Clinic | `clinic` | Content relationship to Provider | No | Inner Balance |
+| Image | `image` | Image | No | Empty, so the clinic logo |
+| Heading | `heading` | Heading rich text | No | Empty, so the short description, such as Improved sleep |
+| Text | `text` | Heading rich text | No | Empty, so the clinic name |
+| Bottom line | `bottom_line` | Text | No | Empty, so the code PEGGY10. Winona's is "15% off" |
+| Link | `link` | Link, no display text | No | `#inner-balance` |
+
+A written field wins. An empty Image, Heading, Text, or Bottom line
+uses the clinic's logo, short description, name, or code. A box with
+no clinic is written by hand. A box with no heading, no short
+description, no text, and no clinic name is hidden. A clinic
+with no code and an empty Bottom line shows no bottom line, so write
+"No code" when the box should say it. The relationship fetches `name`,
+`logo`, `code`, and `short_description`.
+
+The whole box is the link. A box with an empty Link is not clickable.
+A jump link is `#` and the id of a section lower on the page, made from
+that section's title by the Section id rule. A Provider hero titled
+Inner Balance is `#inner-balance`.
+
+Boxes across is the most boxes in one row. When there are fewer boxes,
+they share the row. A short last row starts on the left. Narrower
+screens use fewer boxes per row:
+
+| Boxes in the row | Over 1100px | 961–1100px | 641–960px | 640px and under |
+| --- | --- | --- | --- | --- |
+| 7 | 7 | 4 | 4 | 2 |
+| 6 | 6 | 3 | 3 | 2 |
+| 5 | 5 | 3 | 3 | 2 |
+| 4 | 4 | 4 | 2 | 2 |
+| 3 | 3 | 3 | 3 | 2 |
+| 2 | 2 | 2 | 2 | 2 |
+
+A box heading is an `h3` when Section Heading is filled. Without a
+section heading it is a paragraph, so a jump band does not add
+headings to the page outline.
+
+### Brand promo
+
+One clinic card, in `src/slices/BrandPromo`. Trusted providers stacks
+one slice per clinic. The featured card is this slice with Background
+Navy and Place filled in. Each card under it is the same slice on a
+transparent background, with Place left blank.
+
+The slice lays out Small heading, Heading, and Intro itself. Small
+heading is "Voted best for". Heading is the specialty, such as
+"Improved sleep", and it is an `h2`. Intro is a short line under the
+clinic name, such as Effecty's "Choose a consult or not, and choose
+patch or gel." Leave Intro blank to hide it. The section Link is not
+shown. The section id is the clinic's UID, so a Boxes jump link of
+`#inner-balance` lands on this card.
+
+| Label | Id | Kind | Required | Trusted providers |
+| --- | --- | --- | --- | --- |
+| Clinic | `clinic` | Content relationship to Provider | Yes | Inner Balance |
+| Quote | `quote` | Heading rich text | No | Blank uses the clinic's In my words. Write a sentence here when this card should say something else. |
+| Place | `place` | Text | No | 1st. Blank hides the badge. |
+| Product image | `product` | Image | No | The Oestra jar. The description is the alt text. |
+| Links | `links` | Repeatable link, with display text | No | Products & pricing, My review, Watch my review |
+
+The relationship fetches `name`, `logo`, `visit`, `monthly_price`,
+`price_note`, `formulation`, `insurance`, `note`, `code`, `code_note`,
+`top_choice_label`, and `quote`.
+
+The logo, the name, the price, the three price-box lines, the visit
+button, and the coupon come from the clinic. A filled Quote replaces
+the clinic's In my words. Place, such as "1st", shows the badge, and
+the words beside it are the clinic's Top choice label. A clinic with
+a code shows "Code PEGGY10" and the code line under it. A clinic with
+no code shows the code line alone, such as Winona's "15% off your
+first order". A YouTube or Vimeo link gets a play icon. Any other
+link gets a tag icon. Set Space above and Space below to None on the
+directory cards so they stack. Navy and Raspberry use the light text
+and the light visit button.
+
+### Ribbon
+
+The close band from the trusted-providers mockup, in `src/slices/Ribbon`.
+A rounded box sits on the section. Title and content are on the left.
+Buttons are on the right, in the order she adds them.
+
+Section is the seven shared fields. Background is the color behind the
+box. Leave Small heading, Heading, Intro, and Link empty for the
+template, which has no header above the box. Heading, when she fills
+it, is the header above the box. Title is the line inside the box.
+
+Box background uses the same choices as Background. The default is
+Pink, the template. An empty choice is Pink. A retired color name falls
+back to Transparent, the same rule as Background. Navy and Raspberry
+use light text inside the box. A transparent box paints nothing, so its
+text follows the section: light on Navy or Raspberry, dark on the
+others. The filled button stays the raspberry button on every color.
+
+The corner wave is the color behind the box. It is hidden when the box
+is transparent, or when the box and the band are the same color. Cream
+and Transparent are the same page color, so a cream box on a
+transparent band has no wave.
+
+| Label | Id | Kind | Required | Template |
+| --- | --- | --- | --- | --- |
+| Section | The seven Section fields | Shared, open on the slice | | Background is the color behind the box. Default Transparent |
+| Title | `title` | Heading rich text | No | Still lining the prices up? |
+| Content | `content` | Content rich text | No | The comparison chart includes Midi Health too. |
+| Box background | `box_background` | Select. Same choices as Background. Default Pink | No | Pink |
+| Buttons | `button` | Repeatable link, with display text and a style | No | Solid: Open the price chart. Ghost: Tips for choosing |
+
+Title is an `h2`, and the section id, when Section Heading is empty.
+Under a Section Heading it is an `h3`. Solid is the filled button.
+Ghost is the text button, with an arrow. A button with no words is
+hidden. An empty title, content, and button list hides the box. The
+section header can still show.
 
 ## Homepage
 
@@ -196,8 +347,11 @@ Each slice below lists only its own fields. Section is on all of them.
 ### Hero
 
 One slice, four variations. Each variation includes the shared Section
-group and lays the heading out itself. Section supplies the spacing and
-background. The homepage section id comes from the tagline.
+fields and lays the heading out itself. Section supplies the spacing and
+background. The homepage section id comes from the tagline. The homepage
+variation also keeps the mockup's vertical padding, and Space above and
+Space below add to it. The subpage, brands, and provider variations do
+not, so those fields are the whole gap.
 
 #### Home
 
@@ -256,10 +410,14 @@ goes. On trusted providers that is a jump link such as `#inner-balance`.
 
 #### Provider
 
-The top of a clinic page. The title is the clinic's name. The kicker is
-Section Small heading when that is filled, otherwise the clinic's Top
-choice label. The price, visit button, logo, and coupon come from the
-clinic.
+The top of a clinic page. The title is the clinic's name, and Section
+Heading only when the clinic has no name. An empty Meta title, the
+search result, and the sitemap entry use that same title, never the
+kicker. The kicker is Section Small heading when that is filled,
+otherwise the clinic's Top choice label. The price, visit button, logo,
+and coupon come from the clinic. The visit button sits on the price
+card, which shows only when the clinic has a price or a code, or the
+slice has a Product image.
 
 | Label | Id | Kind | Required | Mockup |
 | --- | --- | --- | --- | --- |
@@ -319,7 +477,7 @@ links on the blog page.
 
 | Label | Id | Kind | Variations |
 | --- | --- | --- | --- |
-| Section | `section` | The shared group | All |
+| Section | The seven Section fields | Shared, open on the slice | All |
 | Category | `category` | Select: All, Review, Comparison, My experience, HRT 101. Default All | All |
 | Post | `post` | Content relationship to Post, Provider review, and Comparison | Featured |
 | Posts per page | `count` | Number. Empty means 12 | Grid |
@@ -373,7 +531,7 @@ the Provider fields in the next section, including `code` and
 ### Quote
 
 Section Heading in the mockup is "Peggy's take: what I'm using now."
-Background is Dark.
+Background is Navy.
 
 The slice is in `src/slices/quote`. The page resolves the clinic.
 
@@ -416,7 +574,7 @@ On a narrow screen the media stacks above the writing either way.
 
 | Label | Id | Kind | Variations |
 | --- | --- | --- | --- |
-| Section | `section` | The shared group | All |
+| Section | The seven Section fields | Shared, open on the slice | All |
 | Side | `side` | Select: Media left, Media right. Default Media left | All |
 | Text | `text` | Content rich text | All |
 | Buttons | `button` | Repeatable link, with display text and a style | All |
@@ -458,6 +616,8 @@ slice that lists `monthly_price` all show that same number.
 | Clinic comparison | `clinic` | Name, logo, short description, price, price note, insurance, formulation, quote, getting started, top choice label, visit, code, code line. The review link is on the slice row |
 | Quote | `clinic` | Logo, name, visit. A Name on the slice replaces the clinic name |
 | Side by side, clinic | `clinic` | Logo, name, quote, visit |
+| Boxes | `clinic` on each box | Logo, short description, name, code. A written Image, Heading, Text, or Bottom line replaces it |
+| Brand promo | `clinic` | Name, logo, visit, price, price note, formulation, insurance, getting started, code, code line, top choice label, quote. A written Quote replaces the clinic quote. Place, the product photo, and the links are on the slice |
 | Post sidebar | `clinic` | Name, logo. The name links to Page when that field is set |
 | Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, code, code line, plus the sentence in that paragraph |
 | Story facts token | `{{provider:uid:facts}}` | Price, price note, insurance, formulation |
@@ -477,8 +637,9 @@ this tab.
 | Top choice label | `top_choice_label` | Text | No |
 
 Short description is the one line about the clinic. The comparison
-chart's Description column reads it, and so does any other clinic
-summary that needs a short line. An empty Visit link means a name that
+chart's Description column reads it, a Boxes box with an empty Heading
+shows it, and so does any other clinic summary that needs a short
+line. An empty Visit link means a name that
 would go to the clinic's site is not a link. Page is the site page
 about this clinic. The sidebar name links there when Page is set, and
 a blank Page leaves that name as text. A blank Top choice label means
@@ -805,3 +966,41 @@ Each reason:
 | Icon | `icon` | Select | Yes | Clock, Lock, Medicine, Wallet, or Location |
 
 The five reasons are the copy at the bottom of the live `/blog` page.
+
+## Page
+
+Repeatable page type, in `customtypes/page`. One site page, such as
+`/inner-balance` or `/copy-of-trusted-providers`. Every Page is
+`/<uid>`. There is no URL section field. The UID is the Wix slug,
+unchanged.
+
+The slice zone accepts every shared slice: Hero, Start here, Posts,
+Clinic comparison, Quote, Side by side, Divider, Boxes, Brand promo,
+and Ribbon. A slice added to the library later is connected to Page too.
+
+| Label | Id | Kind | Required | Notes |
+| --- | --- | --- | --- | --- |
+| UID | `uid` | UID | Yes | The Wix slug |
+| Slices | `slices` | Slice zone | No | Every shared slice |
+| Meta title | `meta_title` | Text | No | Empty uses the Hero title, which is the clinic's name on a provider Hero. Also the `h1` when the first slice is not a Hero |
+| Meta description | `meta_description` | Text | No | Empty leaves the description off |
+| Social image | `meta_image` | Image | No | 2400 × 1260 |
+| Indexing | `indexing` | Boolean | Yes | On. Turn it off only to hide a page |
+
+The Hero heading is the page title on the page. A page whose first
+slice is not a Hero shows the SEO title as the `h1` above the slices. A
+second Hero lower on the page is a second `h1`, so a page uses one Hero,
+at the top.
+
+The canonical is `/<uid>`. Indexing is on by default. The site-wide
+noindex switch still hides every page until cutover.
+
+The page reads what its slices point at before it renders. A slice does
+not fetch. A clinic a slice names is read from the published Clinic, by
+the fields each slice lists under Provider. An unpublished clinic is
+left out of the chart, and a Quote or Side by side without one shows
+its writing only. A clinic token in Side by side writing reads the same
+fields as a story token. Posts loads every Post only when the page has
+a Posts slice. Featured shows the post it points at, or the newest.
+Grid reads `?page=` and `?category=` from the address. Those addresses
+keep the page's canonical.

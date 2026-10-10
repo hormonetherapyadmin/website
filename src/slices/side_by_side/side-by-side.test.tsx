@@ -24,18 +24,16 @@ const labeled = (value: string, label: "signoff" | "note") =>
     },
   ] as RichTextField;
 
-function section(): SliceSectionFields[] {
-  return [
-    {
-      small_heading: rich("My hormone replacement story"),
-      heading: rich("Menopause isn’t a dirty word."),
-      intro: rich("I’ll say that again."),
-      link: { link_type: "Any" },
-      background: "Same as the page",
-      space_above: "None",
-      space_below: "None",
-    },
-  ];
+function section(): SliceSectionFields {
+  return {
+    small_heading: rich("My hormone replacement story"),
+    heading: rich("Menopause isn’t a dirty word."),
+    intro: rich("I’ll say that again."),
+    link: { link_type: "Any" },
+    background: "Transparent",
+    space_above: "None",
+    space_below: "None",
+  };
 }
 
 const button = {
@@ -51,7 +49,6 @@ const clinic: TokenClinic = {
   logo: { src: "/mockup/logos/inner-balance.png" },
   visitHref: "https://example.com/inner-balance",
   visitText: "Visit Inner Balance",
-  newTab: true,
   offerCode: "PEGGY",
   monthlyPrice: 150,
   insurance: false,
@@ -64,7 +61,7 @@ describe("SideBySide", () => {
       <SideBySide
         variation="image"
         primary={{
-          section: section(),
+          ...section(),
           side: "Media left",
           text: [
             ...rich("I’ve personally tested more than 9 providers."),
@@ -120,7 +117,7 @@ describe("SideBySide", () => {
     const markup = renderToStaticMarkup(
       <SideBySide
         variation="image"
-        primary={{ section: section(), side: "Media right", text: rich("Hi.") }}
+        primary={{ ...section(), side: "Media right", text: rich("Hi.") }}
         image={{ src: "/photo.jpg", alt: "Peggy" }}
       />,
     );
@@ -132,7 +129,7 @@ describe("SideBySide", () => {
       <SideBySide
         variation="quote"
         primary={{
-          section: section(),
+          ...section(),
           text: rich("Why this line stayed with me."),
           quote: rich("Menopause isn’t something to be ashamed of."),
           attribution: "Peggy",
@@ -149,14 +146,13 @@ describe("SideBySide", () => {
     const markup = renderToStaticMarkup(
       <SideBySide
         variation="clinic"
-        primary={{ section: section(), text: rich("What I use now.") }}
+        primary={{ ...section(), text: rich("What I use now.") }}
         clinic={{
           name: "Inner Balance",
           logo: { src: "/mockup/logos/inner-balance.png" },
           quote:
             "Finding a product that treats my symptoms was a clear winner.",
           visitHref: "https://example.com/inner-balance",
-          newTab: true,
         }}
       />,
     );
@@ -171,7 +167,7 @@ describe("SideBySide", () => {
     const markup = renderToStaticMarkup(
       <SideBySide
         variation="video"
-        primary={{ section: section(), text: rich("Watch with me.") }}
+        primary={{ ...section(), text: rich("Watch with me.") }}
         video={{
           html: '<iframe src="https://www.youtube.com/embed/example"></iframe>',
         }}
@@ -185,7 +181,7 @@ describe("SideBySide", () => {
     const markup = renderToStaticMarkup(
       <SideBySide
         variation="video"
-        primary={{ section: section(), text: rich("Watch with me.") }}
+        primary={{ ...section(), text: rich("Watch with me.") }}
         video={{ url: "https://example.com/watch", title: "My HRT story" }}
       />,
     );

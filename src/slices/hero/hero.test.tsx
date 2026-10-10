@@ -13,19 +13,17 @@ const emptyImage = {} as ImageField;
 
 function section(
   overrides: Partial<SliceSectionFields> = {},
-): SliceSectionFields[] {
-  return [
-    {
-      small_heading: emptyRich,
-      heading: emptyRich,
-      intro: emptyRich,
-      link: emptyLink,
-      background: null,
-      space_above: "None",
-      space_below: null,
-      ...overrides,
-    },
-  ];
+): SliceSectionFields {
+  return {
+    small_heading: emptyRich,
+    heading: emptyRich,
+    intro: emptyRich,
+    link: emptyLink,
+    background: null,
+    space_above: "None",
+    space_below: null,
+    ...overrides,
+  };
 }
 
 function image(url: string, alt: string): ImageField {
@@ -45,7 +43,7 @@ describe("Hero", () => {
       <Hero
         variation="home"
         primary={{
-          section: section({
+          ...section({
             heading: rich("Hormone Therapy Replacement"),
             intro: rich("My goal is to share honest platform reviews."),
           }),
@@ -92,7 +90,7 @@ describe("Hero", () => {
       <Hero
         variation="subpage"
         primary={{
-          section: section({
+          ...section({
             small_heading: rich("Learn"),
             heading: rich("New to hormone therapy"),
             link: {
@@ -109,7 +107,7 @@ describe("Hero", () => {
       <Hero
         variation="subpage"
         primary={{
-          section: section({ heading: rich("Blog") }),
+          ...section({ heading: rich("Blog") }),
           image: emptyImage,
         }}
       />,
@@ -127,7 +125,7 @@ describe("Hero", () => {
       <Hero
         variation="brands"
         primary={{
-          section: section({
+          ...section({
             small_heading: rich("Providers"),
             heading: rich("Trusted providers"),
             link: {
@@ -178,7 +176,7 @@ describe("Hero", () => {
       <Hero
         variation="provider"
         primary={{
-          section: section(),
+          ...section(),
           clinic: { data: clinic },
           voted: rich("Voted best for sleep"),
           quote: rich("I stay asleep longer on this HRT."),
@@ -203,5 +201,37 @@ describe("Hero", () => {
     expect(html).toContain("Code PEGGY10");
     expect(html).toContain("Visit Inner Balance");
     expect(html).not.toContain("<img");
+  });
+
+  it("marks the visit button as an affiliate link even when the new-tab box is off", () => {
+    const html = renderToStaticMarkup(
+      <Hero
+        variation="provider"
+        primary={{
+          ...section(),
+          clinic: {
+            data: {
+              name: "Inner Balance",
+              monthly_price: 199,
+              visit: {
+                link_type: "Web",
+                url: "https://innerbalance.example/?ref=peggy",
+                text: "Visit Inner Balance",
+              },
+            },
+          },
+          voted: emptyRich,
+          quote: emptyRich,
+          product: emptyImage,
+        }}
+      />,
+    );
+
+    expect(html).toContain('href="https://innerbalance.example/?ref=peggy"');
+    expect(html).toContain('target="_blank"');
+    expect(html).toContain('rel="sponsored nofollow noopener noreferrer"');
+    expect(html).toContain('data-provider="Inner Balance"');
+    expect(html).toContain('data-placement="provider_hero"');
+    expect(html).toContain("(affiliate link, opens in a new tab)");
   });
 });

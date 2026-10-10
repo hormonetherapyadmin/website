@@ -45,9 +45,9 @@ describe("sectionAnchor", () => {
 });
 
 describe("SliceSection", () => {
-  it("uses medium space above and no header when the group is empty", () => {
+  it("uses medium space above and no header when the fields are empty", () => {
     const html = renderToStaticMarkup(
-      <SliceSection section={[]}>
+      <SliceSection section={{}}>
         <p>Body</p>
       </SliceSection>,
     );
@@ -61,21 +61,19 @@ describe("SliceSection", () => {
   it("renders the shared header and a dark band", () => {
     const html = renderToStaticMarkup(
       <SliceSection
-        section={[
-          fields({
-            small_heading: text("My hormone replacement story"),
-            heading: text("Menopause isn’t a dirty word."),
-            intro: text("I’ll say that again."),
-            link: {
-              link_type: "Web",
-              url: "/blog",
-              text: "All posts",
-            },
-            background: "Dark",
-            space_above: "Large",
-            space_below: "Small",
-          }),
-        ]}
+        section={fields({
+          small_heading: text("My hormone replacement story"),
+          heading: text("Menopause isn’t a dirty word."),
+          intro: text("I’ll say that again."),
+          link: {
+            link_type: "Web",
+            url: "/blog",
+            text: "All posts",
+          },
+          background: "Navy",
+          space_above: "Large",
+          space_below: "Small",
+        })}
       />,
     );
 
@@ -90,12 +88,61 @@ describe("SliceSection", () => {
     expect(html).toContain('href="/blog"');
   });
 
+  it("paints the color choices and sets the small heading color", () => {
+    const pink = renderToStaticMarkup(
+      <SliceSection section={fields({ background: "Pink" })} />,
+    );
+    const raspberry = renderToStaticMarkup(
+      <SliceSection
+        section={fields({
+          small_heading: text("Providers"),
+          heading: text("Trusted providers"),
+          background: "Raspberry",
+        })}
+      />,
+    );
+    const retired = renderToStaticMarkup(
+      <SliceSection
+        section={fields({
+          background: "Soft" as SliceSectionFields["background"],
+        })}
+      />,
+    );
+
+    expect(pink).toContain("bg-card-1");
+    expect(pink).toContain("py-slice");
+    expect(raspberry).toContain("bg-accent text-panel-text");
+    expect(pink).toContain("[--section-kicker:var(--color-accent)]");
+    expect(raspberry).toContain("[--section-kicker:var(--color-card-2)]");
+    expect(
+      renderToStaticMarkup(
+        <SliceSection section={fields({ background: "Navy" })} />,
+      ),
+    ).toContain("[--section-kicker:var(--color-panel-accent)]");
+    expect(retired).not.toContain("py-slice");
+    expect(retired).not.toContain("bg-");
+  });
+
+  it("paints a cream band but leaves Transparent unpainted", () => {
+    const cream = renderToStaticMarkup(
+      <SliceSection section={fields({ background: "Cream" })} />,
+    );
+    const transparent = renderToStaticMarkup(
+      <SliceSection section={fields({ background: "Transparent" })} />,
+    );
+
+    expect(cream).toContain("bg-background");
+    expect(cream).not.toContain("py-slice");
+    expect(transparent).not.toContain("bg-");
+    expect(transparent).not.toContain("py-slice");
+  });
+
   it("lets the hero render its own heading", () => {
     const html = renderToStaticMarkup(
       <SliceSection
         headingLevel="h1"
         showHeader={false}
-        section={[fields({ heading: text("Hormone Therapy Replacement") })]}
+        section={fields({ heading: text("Hormone Therapy Replacement") })}
       >
         <h1>Hormone Therapy Replacement</h1>
       </SliceSection>,

@@ -32,19 +32,17 @@ function image(
 
 function section(
   overrides: Partial<SliceSectionFields> = {},
-): SliceSectionFields[] {
-  return [
-    {
-      small_heading: emptyRich,
-      heading: emptyRich,
-      intro: emptyRich,
-      link: emptyLink,
-      background: null,
-      space_above: "None",
-      space_below: null,
-      ...overrides,
-    },
-  ];
+): SliceSectionFields {
+  return {
+    small_heading: emptyRich,
+    heading: emptyRich,
+    intro: emptyRich,
+    link: emptyLink,
+    background: null,
+    space_above: "None",
+    space_below: null,
+    ...overrides,
+  };
 }
 
 const logos = [
@@ -63,7 +61,7 @@ export default function HeroPreview() {
       <Hero
         variation="home"
         primary={{
-          section: section({
+          ...section({
             heading: rich("Hormone Therapy Replacement"),
             intro: rich(
               "My goal is to share honest platform reviews, pricing breakdowns, and practical patient insights so you can have more informed, confident conversations with your own prescribing doctor.",
@@ -121,7 +119,7 @@ export default function HeroPreview() {
       <Hero
         variation="subpage"
         primary={{
-          section: section({
+          ...section({
             small_heading: rich("Learn"),
             heading: rich("New to hormone therapy"),
             intro: rich(
@@ -144,7 +142,7 @@ export default function HeroPreview() {
       <Hero
         variation="brands"
         primary={{
-          section: section({
+          ...section({
             small_heading: rich("Providers"),
             heading: rich("Trusted providers"),
             intro: rich(
@@ -166,7 +164,7 @@ export default function HeroPreview() {
       <Hero
         variation="provider"
         primary={{
-          section: section(),
+          ...section(),
           clinic: {
             data: {
               name: "Inner Balance",

@@ -55,18 +55,16 @@ const SAMPLES = [
   },
 ];
 
-function section(): SliceSectionFields[] {
-  return [
-    {
-      small_heading: emptyRich,
-      heading: rich("Where should I start?"),
-      intro: emptyRich,
-      link: emptyLink,
-      background: "Same as the page",
-      space_above: "Medium",
-      space_below: "None",
-    },
-  ];
+function section(): SliceSectionFields {
+  return {
+    small_heading: emptyRich,
+    heading: rich("Where should I start?"),
+    intro: emptyRich,
+    link: emptyLink,
+    background: "Transparent",
+    space_above: "Medium",
+    space_below: "None",
+  };
 }
 
 function cards(count: number) {
@@ -87,7 +85,7 @@ export default function StartHerePreview() {
           <p className="mx-auto w-full max-w-wrap px-gutter pt-10 text-sm text-text-muted">
             {count} {count === 1 ? "card" : "cards"}
           </p>
-          <StartHere primary={{ section: section(), cards: cards(count) }} />
+          <StartHere primary={{ ...section(), cards: cards(count) }} />
         </div>
       ))}
     </main>

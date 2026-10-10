@@ -11,6 +11,7 @@ import shared from "../_shared/mockup.module.css";
 import { MockupShell } from "../_shared/mockup-shell";
 import { POSTS, POST_KINDS, PostCard } from "../_shared/posts";
 import styles from "./blog.module.css";
+import Link from "next/link";
 
 /*
   All-posts design mockup. Posts are the 13 most recent from the live Wix
@@ -140,9 +141,9 @@ export default async function BlogMockup(props: PageProps<"/mockup/blog">) {
               </a>
             </li>
             <li>
-              <a href="/blog/page/2" className={styles.nextPage}>
+              <Link href="/blog/page/2" className={styles.nextPage}>
                 Older posts
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>

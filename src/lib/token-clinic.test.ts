@@ -37,7 +37,6 @@ describe("tokenClinic", () => {
       logo: { src: "https://images.prismic.io/logo.png" },
       visitHref: "https://example.com/inner-balance",
       visitText: undefined,
-      newTab: true,
       offerCode: "PEGGY10",
       offerCopy: "10% off your first order.",
       monthlyPrice: 199,

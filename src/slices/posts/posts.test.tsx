@@ -22,18 +22,16 @@ const rich = (value: string) =>
 
 const emptyRich = [] as RichTextField;
 
-function section(heading: string): SliceSectionFields[] {
-  return [
-    {
-      small_heading: emptyRich,
-      heading: heading ? rich(heading) : emptyRich,
-      intro: emptyRich,
-      link: { link_type: "Any" },
-      background: null,
-      space_above: "None",
-      space_below: null,
-    },
-  ];
+function section(heading: string): SliceSectionFields {
+  return {
+    small_heading: emptyRich,
+    heading: heading ? rich(heading) : emptyRich,
+    intro: emptyRich,
+    link: { link_type: "Any" },
+    background: null,
+    space_above: "None",
+    space_below: null,
+  };
 }
 
 function post(
@@ -118,7 +116,7 @@ describe("Posts", () => {
     const html = renderToStaticMarkup(
       <Posts
         variation="home"
-        primary={{ section: section("Latest") }}
+        primary={{ ...section("Latest") }}
         posts={POSTS}
       />,
     );
@@ -138,7 +136,7 @@ describe("Posts", () => {
     const html = renderToStaticMarkup(
       <Posts
         variation="featured"
-        primary={{ section: section(""), category: "All" }}
+        primary={{ ...section(""), category: "All" }}
         posts={POSTS}
         featured={post("Pinned comparison", "2020-01-01", "Comparison")}
       />,
@@ -152,7 +150,7 @@ describe("Posts", () => {
     const html = renderToStaticMarkup(
       <Posts
         variation="grid"
-        primary={{ section: section("More posts"), category: "All", count: 2 }}
+        primary={{ ...section("More posts"), category: "All", count: 2 }}
         posts={POSTS}
         page={1}
       />,
@@ -170,7 +168,7 @@ describe("Posts", () => {
     const html = renderToStaticMarkup(
       <Posts
         variation="grid"
-        primary={{ section: section("Reviews"), category: "Review" }}
+        primary={{ ...section("Reviews"), category: "Review" }}
         posts={POSTS}
         activeCategory="Comparison"
       />,
@@ -185,7 +183,7 @@ describe("Posts", () => {
     const html = renderToStaticMarkup(
       <Posts
         variation="row"
-        primary={{ section: section("Keep reading"), category: "HRT 101" }}
+        primary={{ ...section("Keep reading"), category: "HRT 101" }}
         posts={POSTS.filter((item) => item.category !== "HRT 101")}
       />,
     );

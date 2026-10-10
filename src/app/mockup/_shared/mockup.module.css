@@ -247,6 +247,15 @@
   background: var(--cta-hover);
 }
 
+.headerCtaIcon {
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  background-color: currentColor;
+  -webkit-mask: var(--nav-icon) center / contain no-repeat;
+  mask: var(--nav-icon) center / contain no-repeat;
+}
+
 .nav ul {
   margin: 0;
   padding: 0;
@@ -1670,6 +1679,12 @@ a.clinicName:focus-visible {
 .footerBottom > p {
   margin: 0;
   opacity: 0.8;
+}
+
+.footerBottom > p a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 .footer .explorer {

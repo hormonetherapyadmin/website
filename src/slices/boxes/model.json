@@ -1,0 +1,154 @@
+{
+  "id": "boxes",
+  "name": "Boxes",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "small_heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Small heading",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Heading",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "intro": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Intro",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "link": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Link"
+          },
+          "type": "Link"
+        },
+        "background": {
+          "config": {
+            "default_value": "Transparent",
+            "label": "Background",
+            "options": [
+              "Transparent",
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ]
+          },
+          "type": "Select"
+        },
+        "space_above": {
+          "config": {
+            "default_value": "Medium",
+            "label": "Space above",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "space_below": {
+          "config": {
+            "default_value": "None",
+            "label": "Space below",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "across": {
+          "config": {
+            "default_value": "5",
+            "label": "Boxes across",
+            "options": ["2", "3", "4", "5", "6", "7"]
+          },
+          "type": "Select"
+        },
+        "boxes": {
+          "config": {
+            "fields": {
+              "clinic": {
+                "config": {
+                  "customtypes": [
+                    {
+                      "fields": ["name", "logo", "code", "short_description"],
+                      "id": "provider"
+                    }
+                  ],
+                  "label": "Clinic",
+                  "select": "document"
+                },
+                "type": "Link"
+              },
+              "image": {
+                "config": {
+                  "label": "Image",
+                  "placeholder": "Empty uses the clinic logo"
+                },
+                "type": "Image"
+              },
+              "heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Heading",
+                  "labels": ["superscript"],
+                  "placeholder": "Empty uses the clinic short description, such as Improved sleep",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "text": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Text",
+                  "labels": ["superscript"],
+                  "placeholder": "Empty uses the clinic name",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "bottom_line": {
+                "config": {
+                  "label": "Bottom line",
+                  "placeholder": "Empty uses the clinic code, such as PEGGY10"
+                },
+                "type": "Text"
+              },
+              "link": {
+                "config": {
+                  "label": "Link"
+                },
+                "type": "Link"
+              }
+            },
+            "label": "Boxes"
+          },
+          "type": "Group"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

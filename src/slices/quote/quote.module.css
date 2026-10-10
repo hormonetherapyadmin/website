@@ -11,7 +11,7 @@
 .kicker {
   grid-area: kicker;
   margin: 0;
-  color: var(--color-panel-accent);
+  color: var(--section-kicker, var(--color-panel-accent));
   font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 700;

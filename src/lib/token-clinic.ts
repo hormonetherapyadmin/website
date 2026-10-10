@@ -58,7 +58,6 @@ export function tokenClinic(document: TokenClinicSource): TokenClinic | null {
     logo: isFilled.image(logo) && logo.url ? { src: logo.url } : undefined,
     visitHref: linked?.url,
     visitText: linked ? text(linked.text) : undefined,
-    newTab: linked?.target === "_blank",
     offerCode: couponCode(document.data.code),
     offerCopy: text(document.data.code_note),
     monthlyPrice: document.data.monthly_price,

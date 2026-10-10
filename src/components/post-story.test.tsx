@@ -9,7 +9,6 @@ const clinic: TokenClinic = {
   name: "Inner Balance",
   logo: { src: "/logos/inner-balance.png" },
   visitHref: "https://example.com/inner-balance",
-  newTab: true,
   offerCode: "PEGGY10",
   offerCopy: "10% off your first order.",
   monthlyPrice: 199,

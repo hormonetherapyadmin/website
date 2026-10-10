@@ -7,6 +7,7 @@ import {
   sectionAnchor,
   type SliceSectionFields,
 } from "@/components/slice-section";
+import { AFFILIATE_REL, visitLinkProps } from "@/lib/affiliate-link";
 import styles from "./clinic-comparison.module.css";
 import { Tip } from "./tip";
 
@@ -15,8 +16,6 @@ export type ComparisonClinic = {
   name: string;
   /** Visit link. Empty means the name is not a link. */
   href?: string;
-  /** Visit opens in a new tab. */
-  newTab?: boolean;
   logo?: { src: string };
   monogram?: string;
   /** Badge text. The star is part of the layout. */
@@ -32,15 +31,12 @@ export type ComparisonClinic = {
   reviewHref?: string;
 };
 
-type ClinicComparisonPrimary = {
-  section?: readonly SliceSectionFields[] | null;
+type ClinicComparisonPrimary = Partial<SliceSectionFields> & {
   /** `YYYY-MM-DD`. Shown beside "What I paid per month". */
   prices_checked?: string | null;
   button?: LinkField | null;
   disclosure?: LinkField | null;
 };
-
-const AFFILIATE_REL = "sponsored nofollow noopener noreferrer";
 
 export function formatCheckedDate(iso: string | null | undefined) {
   if (!iso) return "";
@@ -160,15 +156,10 @@ function ClinicName({ clinic }: { clinic: ComparisonClinic }) {
     <a
       href={clinic.href}
       className={styles.clinicName}
-      target={clinic.newTab ? "_blank" : undefined}
-      rel={clinic.newTab ? AFFILIATE_REL : undefined}
-      data-provider={clinic.name}
-      data-placement="homepage_comparison"
+      {...visitLinkProps(clinic.name, "homepage_comparison")}
     >
       {clinic.name}
-      {clinic.newTab ? (
-        <span className="sr-only"> (affiliate link, opens in a new tab)</span>
-      ) : null}
+      <span className="sr-only"> (affiliate link, opens in a new tab)</span>
     </a>
   );
 }
@@ -190,8 +181,8 @@ function Logo({ clinic }: { clinic: ComparisonClinic }) {
       className={styles.logoTile}
       tabIndex={-1}
       aria-hidden="true"
-      target={clinic.newTab ? "_blank" : undefined}
-      rel={clinic.newTab ? AFFILIATE_REL : undefined}
+      target="_blank"
+      rel={AFFILIATE_REL}
     >
       {image}
     </a>
@@ -227,8 +218,7 @@ export function ClinicComparison({
   primary: ClinicComparisonPrimary;
   clinics?: readonly ComparisonClinic[];
 }) {
-  const fields = primary.section?.[0];
-  const heading = fields?.heading;
+  const heading = primary.heading;
   const slug = sectionAnchor(heading ? asText(heading) : "");
   const titleId = slug ? `${slug}-title` : undefined;
   const checked = formatCheckedDate(primary.prices_checked);
@@ -236,11 +226,7 @@ export function ClinicComparison({
   const max = maxMonthly(rows);
 
   return (
-    <SliceSection
-      section={primary.section}
-      showHeader={false}
-      labelId={titleId}
-    >
+    <SliceSection section={primary} showHeader={false} labelId={titleId}>
       <div className={styles.head}>
         <RichText
           field={heading}
@@ -250,7 +236,7 @@ export function ClinicComparison({
           className={styles.heading}
         />
         <RichText
-          field={fields?.intro}
+          field={primary.intro}
           as="p"
           unstyled
           className={styles.intro}

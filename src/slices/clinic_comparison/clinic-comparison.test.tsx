@@ -22,18 +22,16 @@ const rich = (value: string) =>
 
 const emptyRich = [] as RichTextField;
 
-function section(): SliceSectionFields[] {
-  return [
-    {
-      small_heading: emptyRich,
-      heading: rich("Eight online HRT clinics, side by side"),
-      intro: rich("These are my real costs, not list prices."),
-      link: { link_type: "Any" },
-      background: "Soft",
-      space_above: "None",
-      space_below: "None",
-    },
-  ];
+function section(): SliceSectionFields {
+  return {
+    small_heading: emptyRich,
+    heading: rich("Eight online HRT clinics, side by side"),
+    intro: rich("These are my real costs, not list prices."),
+    link: { link_type: "Any" },
+    background: "Blue",
+    space_above: "None",
+    space_below: "None",
+  };
 }
 
 const button = {
@@ -52,7 +50,6 @@ function clinic(overrides: Partial<ComparisonClinic> = {}): ComparisonClinic {
   return {
     name: "Winona",
     href: "https://example.com/winona",
-    newTab: true,
     logo: { src: "/mockup/logos/winona.png" },
     shortDescription: "Creams, no appointment",
     monthlyPrice: 89,
@@ -101,7 +98,6 @@ describe("ClinicComparison", () => {
     clinic({
       name: "Midi Health",
       href: undefined,
-      newTab: false,
       monthlyPrice: 39,
       insurance: true,
       offerCode: undefined,
@@ -112,7 +108,7 @@ describe("ClinicComparison", () => {
     return renderToStaticMarkup(
       <ClinicComparison
         primary={{
-          section: section(),
+          ...section(),
           prices_checked: "2026-09-09",
           button,
           disclosure,
@@ -158,7 +154,7 @@ describe("ClinicComparison", () => {
 
   it("renders no table when there are no clinics", () => {
     const markup = renderToStaticMarkup(
-      <ClinicComparison primary={{ section: section() }} clinics={[]} />,
+      <ClinicComparison primary={{ ...section() }} clinics={[]} />,
     );
     expect(markup).toContain("Eight online HRT clinics, side by side");
     expect(markup).not.toContain("<table");

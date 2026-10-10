@@ -18,6 +18,9 @@ describe("robots", () => {
 
   it("allows all crawlers, including AI crawlers, when ALLOW_INDEXING is 'true'", () => {
     vi.stubEnv("ALLOW_INDEXING", "true");
-    expect(robots().rules).toEqual({ userAgent: "*", allow: "/" });
+    expect(robots()).toEqual({
+      rules: { userAgent: "*", allow: "/" },
+      sitemap: "https://www.hormonetherapyhub.com/sitemap.xml",
+    });
   });
 });

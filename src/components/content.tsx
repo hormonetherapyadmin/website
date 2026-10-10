@@ -1,5 +1,6 @@
 import type { RichTextField } from "@prismicio/client";
 import Image from "next/image";
+import { visitLinkProps } from "@/lib/affiliate-link";
 import {
   contentPieces,
   type TokenClinic,
@@ -7,8 +8,6 @@ import {
 } from "./content-blocks";
 import styles from "./content.module.css";
 import { RichText } from "./rich-text";
-
-const AFFILIATE_REL = "sponsored nofollow noopener noreferrer";
 
 function money(value: number) {
   return Number.isInteger(value) ? `$${value}` : `$${value.toFixed(2)}`;
@@ -39,18 +38,13 @@ function Offer({
           <a
             href={clinic.visitHref}
             className={styles.offerName}
-            target={clinic.newTab ? "_blank" : undefined}
-            rel={clinic.newTab ? AFFILIATE_REL : undefined}
-            data-provider={clinic.name}
-            data-placement="story_offer"
+            {...visitLinkProps(clinic.name, "story_offer")}
           >
             {clinic.name}
-            {clinic.newTab ? (
-              <span className="sr-only">
-                {" "}
-                (affiliate link, opens in a new tab)
-              </span>
-            ) : null}
+            <span className="sr-only">
+              {" "}
+              (affiliate link, opens in a new tab)
+            </span>
           </a>
         ) : (
           <span className={styles.offerName}>{clinic.name}</span>

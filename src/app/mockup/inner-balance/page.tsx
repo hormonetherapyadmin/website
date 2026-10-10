@@ -151,10 +151,10 @@ export default async function InnerBalanceMockup(
       <nav className={styles.crumbs} aria-label="Breadcrumb">
         <ol>
           <li>
-            <a href="/mockup/homepage">Home</a>
+            <Link href="/mockup/homepage">Home</Link>
           </li>
           <li>
-            <a href="/mockup/trusted-providers">Trusted providers</a>
+            <Link href="/mockup/trusted-providers">Trusted providers</Link>
           </li>
           <li aria-current="page">Inner Balance</li>
         </ol>
@@ -308,7 +308,7 @@ export default async function InnerBalanceMockup(
             <p className={styles.average}>
               On my comparison chart I list this as $150 a month, the average
               over the first year.{" "}
-              <a href="/mockup/homepage#compare">See the chart</a>
+              <Link href="/mockup/homepage#compare">See the chart</Link>
             </p>
           </div>
           <div className={styles.bandDeal}>
@@ -383,9 +383,12 @@ export default async function InnerBalanceMockup(
               list has the code I use at each.
             </p>
           </div>
-          <a href="/mockup/trusted-providers" className={shared.buttonPrimary}>
+          <Link
+            href="/mockup/trusted-providers"
+            className={shared.buttonPrimary}
+          >
             Trusted providers
-          </a>
+          </Link>
         </div>
       </section>
     </MockupShell>

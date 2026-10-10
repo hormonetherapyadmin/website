@@ -3,6 +3,28 @@
   "id": "navigation",
   "json": {
     "Main menu": {
+      "header_button_label": {
+        "config": {
+          "label": "Header button label",
+          "placeholder": "Trusted providers"
+        },
+        "type": "Text"
+      },
+      "header_button_icon": {
+        "config": {
+          "label": "Header button icon",
+          "placeholder": "Any icon on a transparent background. Shown in the button color."
+        },
+        "type": "Image"
+      },
+      "header_button_link": {
+        "config": {
+          "allowTargetBlank": true,
+          "label": "Header button link",
+          "placeholder": "Where the button goes, such as /trusted-providers. Leave the label or this link blank to hide the button."
+        },
+        "type": "Link"
+      },
       "main_items": {
         "config": {
           "fields": {

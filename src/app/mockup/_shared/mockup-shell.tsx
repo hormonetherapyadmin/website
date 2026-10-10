@@ -1,11 +1,14 @@
 import type { ReactNode } from "react";
-import { ShieldCheckIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { Besley, Figtree, Newsreader, Young_Serif } from "next/font/google";
 import { loadSiteNavigation } from "@/lib/navigation";
 import styles from "./mockup.module.css";
-import { FALLBACK_FOOTER, FALLBACK_NAV } from "./nav-fallback";
-import { SiteNav } from "./site-nav";
+import {
+  FALLBACK_FOOTER,
+  FALLBACK_HEADER_BUTTON,
+  FALLBACK_NAV,
+} from "./nav-fallback";
+import { HeaderCta, SiteNav } from "./site-nav";
+import Link from "next/link";
 
 /*
   Header, footer, and option switcher shared by the design mockups.
@@ -101,6 +104,7 @@ export async function MockupShell({
   const published = await loadSiteNavigation();
   const main = published ? published.main : FALLBACK_NAV;
   const footer = published ? published.footer : FALLBACK_FOOTER;
+  const headerButton = published ? published.button : FALLBACK_HEADER_BUTTON;
   const palette = pick<PaletteKey>(searchParams.palette, PALETTES, "raspberry");
   const serif = pick<SerifKey>(searchParams.serif, SERIFS, "besley");
 
@@ -122,18 +126,14 @@ export async function MockupShell({
         </a>
         <SiteNav items={main} />
         <div className={styles.headerActions}>
-          <a href="/search" className={styles.searchLink} aria-label="Search">
+          <Link
+            href="/search"
+            className={styles.searchLink}
+            aria-label="Search"
+          >
             <SearchIcon />
-          </a>
-          <a href="/mockup/trusted-providers" className={styles.headerCta}>
-            <HugeiconsIcon
-              icon={ShieldCheckIcon}
-              size={18}
-              strokeWidth={1.75}
-              aria-hidden="true"
-            />
-            Trusted providers
-          </a>
+          </Link>
+          {headerButton ? <HeaderCta link={headerButton} /> : null}
         </div>
       </header>
 
@@ -182,7 +182,10 @@ export async function MockupShell({
             links are affiliate links.
           </p>
           <div className={styles.footerBottom}>
-            <p>© 2026 Hormone Therapy Hub · Columbus, Ohio</p>
+            <p>
+              © 2026 Hormone Therapy Hub · Columbus, Ohio ·{" "}
+              <Link href="/sitemap">Sitemap</Link>
+            </p>
             <nav aria-label="Mockup options" className={styles.explorer}>
               <span className={styles.explorerGroup}>
                 <span>Palette:</span>

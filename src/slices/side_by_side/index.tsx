@@ -17,6 +17,7 @@ import {
   sectionAnchor,
   type SliceSectionFields,
 } from "@/components/slice-section";
+import { visitLinkProps } from "@/lib/affiliate-link";
 import styles from "./side-by-side.module.css";
 
 export const SIDES = ["Media left", "Media right"] as const;
@@ -50,11 +51,9 @@ export type SideClinic = {
   quote?: string;
   visitHref?: string;
   visitText?: string;
-  newTab?: boolean;
 };
 
-type SideBySidePrimary = {
-  section?: readonly SliceSectionFields[] | null;
+type SideBySidePrimary = Partial<SliceSectionFields> & {
   side?: SelectField<Side> | string | null;
   text?: RichTextField | null;
   button?: readonly LinkField[] | null;
@@ -65,8 +64,6 @@ type SideBySidePrimary = {
   attribution?: string | null;
   clinic?: LinkField | null;
 };
-
-const AFFILIATE_REL = "sponsored nofollow noopener noreferrer";
 
 function choice<T extends string>(
   value: string | null | undefined,
@@ -210,19 +207,11 @@ function ClinicCard({ clinic }: { clinic: SideClinic }) {
         <a
           href={clinic.visitHref}
           className={styles.visit}
-          target={clinic.newTab ? "_blank" : undefined}
-          rel={clinic.newTab ? AFFILIATE_REL : undefined}
-          data-provider={clinic.name}
-          data-placement="side_by_side"
+          {...visitLinkProps(clinic.name, "side_by_side")}
         >
           {visit}
           <Chevron />
-          {clinic.newTab ? (
-            <span className="sr-only">
-              {" "}
-              (affiliate link, opens in a new tab)
-            </span>
-          ) : null}
+          <span className="sr-only"> (affiliate link, opens in a new tab)</span>
         </a>
       ) : null}
     </div>
@@ -253,8 +242,7 @@ export function SideBySide({
 }) {
   const layout = choice(variation, SIDE_BY_SIDE_VARIATIONS, "image");
   const side = choice(primary.side, SIDES, "Media left");
-  const fields = primary.section?.[0];
-  const heading = fields?.heading;
+  const heading = primary.heading;
   const slug = sectionAnchor(heading ? asText(heading) : "");
   const titleId = slug ? `${slug}-title` : undefined;
   const showImage =
@@ -265,14 +253,10 @@ export function SideBySide({
   const showClinic = layout === "clinic" && Boolean(clinic?.name);
 
   return (
-    <SliceSection
-      section={primary.section}
-      showHeader={false}
-      labelId={titleId}
-    >
+    <SliceSection section={primary} showHeader={false} labelId={titleId}>
       <header className={styles.head}>
         <RichText
-          field={fields?.small_heading}
+          field={primary.small_heading}
           as="p"
           unstyled
           className={styles.kicker}
@@ -285,7 +269,7 @@ export function SideBySide({
           className={styles.heading}
         />
         <RichText
-          field={fields?.intro}
+          field={primary.intro}
           as="p"
           unstyled
           className={styles.lead}
