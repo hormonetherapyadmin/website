@@ -1,13 +1,17 @@
+import { Medicine02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import {
   asText,
   isFilled,
   type ImageField,
+  type KeyTextField,
   type LinkField,
   type RichTextField,
 } from "@prismicio/client";
-import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
+import { PrismicNextImage } from "@prismicio/next";
 import Image from "next/image";
 import { useId } from "react";
+import type { BrandKind, PriceUnit } from "@/components/content-blocks";
 import { RichText } from "@/components/rich-text";
 import {
   SliceSection,
@@ -23,7 +27,11 @@ export type BrandPromoClinic = {
   logo?: { src: string };
   visitHref?: string;
   visitText?: string;
+  /** A Product has no insurance line. */
+  kind?: BrandKind;
   monthlyPrice?: number | null;
+  /** One time drops the /mo after the price. */
+  priceUnit?: PriceUnit;
   priceNote?: string;
   insurance?: boolean;
   formulation?: string;
@@ -33,20 +41,86 @@ export type BrandPromoClinic = {
   topChoice?: string;
   /** The clinic's In my words, used when Quote on the slice is empty. */
   quote?: string;
+  /** The site page about this brand. The card labels it Products & pricing. */
+  pageHref?: string;
+  /** The review video. The card labels it Watch my review. */
+  reviewVideoHref?: string;
+  /** The brand's product photo, used when this slice has none. */
+  product?: ImageField | null;
 };
 
 type BrandPromoPrimary = Partial<SliceSectionFields> & {
   clinic?: LinkField | null;
   quote?: RichTextField | null;
+  text?: RichTextField | null;
   /** On shows the 1st badge. Off hides it. */
   first?: boolean | null;
+  /** Words beside the 1st badge, such as "My 2026 top choice". */
+  place?: KeyTextField;
   product?: ImageField | null;
+  /** Stacked puts the photo above the price, as one card. */
+  layout?: string | null;
   links?: readonly LinkField[] | null;
 };
+
+const PRODUCTS_LABEL = "Products & pricing";
+const WATCH_LABEL = "Watch my review";
 
 function text(value: string | null | undefined) {
   const trimmed = value?.trim();
   return trimmed || undefined;
+}
+
+function isVideoUrl(href: string) {
+  return /youtu\.?be|vimeo/i.test(href);
+}
+
+export type BrandPromoLink = {
+  href: string;
+  text: string;
+  external: boolean;
+};
+
+/** Products & pricing is the brand's page. Watch my review is its video. */
+export function brandPromoLinks(
+  clinic?: Pick<BrandPromoClinic, "pageHref" | "reviewVideoHref"> | null,
+): BrandPromoLink[] {
+  const page = text(clinic?.pageHref);
+  const video = text(clinic?.reviewVideoHref);
+
+  return [
+    page ? { href: page, text: PRODUCTS_LABEL, external: false } : undefined,
+    video ? { href: video, text: WATCH_LABEL, external: true } : undefined,
+  ].filter((link): link is BrandPromoLink => link !== undefined);
+}
+
+/** Links written on the slice. They sit on a second row under the brand buttons. */
+export function brandPromoExtraLinks(
+  sliceLinks: readonly LinkField[] | null | undefined,
+): BrandPromoLink[] {
+  return (sliceLinks ?? []).flatMap((link) => {
+    if (!isFilled.link(link)) return [];
+    const href = text(link.url);
+    const label = text(link.text);
+    if (!href || !label) return [];
+    return [
+      {
+        href,
+        text: label,
+        external: link.target === "_blank" || isVideoUrl(href),
+      },
+    ];
+  });
+}
+
+/** The slice photo wins. An empty one uses the brand's product image. */
+export function brandPromoProduct(
+  slice: ImageField | null | undefined,
+  clinic?: ImageField | null,
+) {
+  if (slice && isFilled.image(slice)) return slice;
+  if (clinic && isFilled.image(clinic)) return clinic;
+  return null;
 }
 
 function priceLabel(value: number) {
@@ -113,22 +187,13 @@ function Medal() {
 function FactIcon({ kind }: { kind: "formulation" | "yes" | "no" }) {
   if (kind === "formulation") {
     return (
-      <svg viewBox="0 0 24 24" className={styles.factIcon} aria-hidden="true">
-        <path
-          d="M8 3.5h8v3.2a6 6 0 0 1-1.2 3.6L12 14.5l-2.8-4.2A6 6 0 0 1 8 6.7z"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.75"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M9.2 8.5h5.6M10 20.5h4"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.75"
-          strokeLinecap="round"
-        />
-      </svg>
+      <HugeiconsIcon
+        icon={Medicine02Icon}
+        size={16}
+        strokeWidth={1.75}
+        className={styles.factIcon}
+        aria-hidden="true"
+      />
     );
   }
 
@@ -160,8 +225,8 @@ function FactIcon({ kind }: { kind: "formulation" | "yes" | "no" }) {
   );
 }
 
-function ResourceIcon({ url }: { url: string }) {
-  if (/youtu\.?be|vimeo/i.test(url)) {
+function ResourceIcon({ url, label }: { url: string; label: string }) {
+  if (isVideoUrl(url) || label === WATCH_LABEL) {
     return (
       <svg
         width="16"
@@ -194,18 +259,23 @@ function ResourceIcon({ url }: { url: string }) {
   );
 }
 
-function Media({ field }: { field: ImageField }) {
+function Media({ field, sizes }: { field: ImageField; sizes: string }) {
   if (field.url?.startsWith("/")) {
-    return <Image src={field.url} alt={field.alt ?? ""} fill sizes="216px" />;
+    return <Image src={field.url} alt={field.alt ?? ""} fill sizes={sizes} />;
   }
 
-  return <PrismicNextImage field={field} fallbackAlt="" fill sizes="216px" />;
+  return <PrismicNextImage field={field} fallbackAlt="" fill sizes={sizes} />;
 }
 
 /**
  * One clinic card. Trusted providers stacks one of these per clinic.
  * Navy is the featured card. Is this 1st? shows the badge.
+ * Place is the line beside that badge. A blank Small heading reads
+ * "Voted best for".
  * The price, logo, visit link, and coupon come from the clinic.
+ * Products & pricing is the brand's page. Watch my review is its
+ * review video. Links written here sit under those buttons.
+ * The product photo is the brand's, unless one is placed here.
  */
 export function BrandPromo({
   primary,
@@ -216,12 +286,16 @@ export function BrandPromo({
 }) {
   const labelId = useId();
   const name = text(clinic?.name);
+  const place = text(primary.place);
   const tone = brandPromoTone(primary.background);
   const headingFilled = isFilled.richText(primary.heading);
+  const kickerFilled =
+    isFilled.richText(primary.small_heading) &&
+    Boolean(asText(primary.small_heading).trim());
   const quote = brandPromoQuote(primary.quote, clinic?.quote);
-  const links = (primary.links ?? []).filter(
-    (link) => isFilled.link(link) && link.text,
-  );
+  const links = brandPromoLinks(clinic);
+  const extraLinks = brandPromoExtraLinks(primary.links);
+  const product = brandPromoProduct(primary.product, clinic?.product);
   const price =
     typeof clinic?.monthlyPrice === "number" ? clinic.monthlyPrice : undefined;
   const priceNote = text(clinic?.priceNote);
@@ -234,7 +308,7 @@ export function BrandPromo({
     formulation
       ? { kind: "formulation" as const, text: formulation }
       : undefined,
-    typeof clinic?.insurance === "boolean"
+    clinic?.kind !== "Product" && typeof clinic?.insurance === "boolean"
       ? {
           kind: clinic.insurance ? ("yes" as const) : ("no" as const),
           text: clinic.insurance ? "Takes insurance" : "Doesn't take insurance",
@@ -249,7 +323,7 @@ export function BrandPromo({
     code ||
     codeNote,
   );
-  const showProduct = isFilled.image(primary.product);
+  const showProduct = Boolean(product);
 
   return (
     <SliceSection
@@ -258,7 +332,11 @@ export function BrandPromo({
       title={clinic?.uid || (headingFilled ? asText(primary.heading) : name)}
       labelId={headingFilled || name ? labelId : undefined}
     >
-      <div className={styles.layout} data-tone={tone}>
+      <div
+        className={styles.layout}
+        data-tone={tone}
+        data-layout={primary.layout === "Stacked" ? "stacked" : undefined}
+      >
         <div className={styles.copy}>
           {primary.first ? (
             <p className={styles.placeLine}>
@@ -267,15 +345,19 @@ export function BrandPromo({
                 1st
                 <span className="sr-only"> place</span>
               </span>
-              {clinic?.topChoice}
+              {place}
             </p>
           ) : null}
-          <RichText
-            field={primary.small_heading}
-            as="p"
-            unstyled
-            className={styles.kicker}
-          />
+          {kickerFilled ? (
+            <RichText
+              field={primary.small_heading}
+              as="p"
+              unstyled
+              className={styles.kicker}
+            />
+          ) : (
+            <p className={styles.kicker}>Voted best for</p>
+          )}
           {headingFilled ? (
             <RichText
               field={primary.heading}
@@ -327,20 +409,47 @@ export function BrandPromo({
           ) : quote.text ? (
             <p className={styles.quote}>{quote.text}</p>
           ) : null}
+          {primary.text && isFilled.richText(primary.text) ? (
+            <RichText field={primary.text} className={styles.text} />
+          ) : null}
           {links.length > 0 ? (
             <ul className={styles.links}>
               {links.map((link) => (
-                <li key={`${link.text}-${"url" in link ? link.url : ""}`}>
-                  <PrismicNextLink field={link}>
-                    {isFilled.link(link) ? (
-                      <ResourceIcon url={link.url ?? ""} />
-                    ) : null}
+                <li key={`${link.text}-${link.href}`}>
+                  <a
+                    href={link.href}
+                    {...(link.external
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                  >
+                    <ResourceIcon url={link.href} label={link.text} />
                     {link.text}
                     {name ? <span className="sr-only"> — {name}</span> : null}
-                    {"target" in link && link.target === "_blank" ? (
+                    {link.external ? (
                       <span className="sr-only"> (opens in a new tab)</span>
                     ) : null}
-                  </PrismicNextLink>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          {extraLinks.length > 0 ? (
+            <ul className={styles.more}>
+              {extraLinks.map((link) => (
+                <li key={`${link.text}-${link.href}`}>
+                  <a
+                    href={link.href}
+                    {...(link.external
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                  >
+                    {link.text}
+                    <Chevron />
+                    {name ? <span className="sr-only"> — {name}</span> : null}
+                    {link.external ? (
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    ) : null}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -348,9 +457,16 @@ export function BrandPromo({
         </div>
         {showProduct || showDeal ? (
           <div className={styles.offer}>
-            {showProduct ? (
+            {product ? (
               <figure className={styles.product}>
-                <Media field={primary.product as ImageField} />
+                <Media
+                  field={product}
+                  sizes={
+                    primary.layout === "Stacked"
+                      ? "(max-width: 440px) 100vw, 26rem"
+                      : "216px"
+                  }
+                />
               </figure>
             ) : null}
             {showDeal ? (
@@ -361,7 +477,9 @@ export function BrandPromo({
                 {price !== undefined ? (
                   <p className={styles.price}>
                     <span className={styles.amount}>{priceLabel(price)}</span>
-                    <span className={styles.per}>/mo</span>
+                    {clinic?.priceUnit === "One time" ? null : (
+                      <span className={styles.per}>/mo</span>
+                    )}
                     {priceNote ? (
                       <span className={styles.priceNote}>{priceNote}</span>
                     ) : null}
@@ -409,11 +527,10 @@ export function BrandPromo({
 }
 
 function Logo({ clinic }: { clinic: BrandPromoClinic }) {
+  if (!clinic.logo?.src) return null;
   return (
     <span className={styles.logo}>
-      {clinic.logo?.src ? (
-        <Image src={clinic.logo.src} alt="" width={64} height={64} />
-      ) : null}
+      <Image src={clinic.logo.src} alt="" width={64} height={64} />
     </span>
   );
 }

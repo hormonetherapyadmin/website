@@ -115,7 +115,7 @@
   overflow-x: clip;
 }
 
-.page a {
+:where(.page) a {
   color: inherit;
   text-underline-offset: 3px;
 }

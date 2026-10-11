@@ -7,6 +7,7 @@ import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 import { PrismicRichText, type RichTextComponents } from "@prismicio/react";
 import type { ReactNode } from "react";
 import { storyLinkRel } from "@/lib/affiliate-link";
+import styles from "./rich-text.module.css";
 
 const VIDEO_PROVIDERS = new Set(["YouTube", "Vimeo"]);
 
@@ -84,7 +85,7 @@ function RichTextEmbed({ oembed }: { oembed: EmbedField }) {
   );
 }
 
-const linkClass = "underline underline-offset-2";
+const linkClass = styles.link;
 
 const contentComponents: RichTextComponents = {
   heading2: ({ children }) => (
@@ -98,12 +99,14 @@ const contentComponents: RichTextComponents = {
       {children}
     </h4>
   ),
-  paragraph: ({ children }) => <p className="mb-4 last:mb-0">{children}</p>,
+  paragraph: ({ children }) => (
+    <p className="mb-[1.4rem] last:mb-0">{children}</p>
+  ),
   list: ({ children }) => (
-    <ul className="mb-4 list-disc ps-6 last:mb-0">{children}</ul>
+    <ul className="mb-[1.4rem] list-disc ps-6 last:mb-0">{children}</ul>
   ),
   oList: ({ children }) => (
-    <ol className="mb-4 list-decimal ps-6 last:mb-0">{children}</ol>
+    <ol className="mb-[1.4rem] list-decimal ps-6 last:mb-0">{children}</ol>
   ),
   hyperlink: ({ node, children }) => (
     <PrismicNextLink field={node.data} className={linkClass} rel={storyLinkRel}>

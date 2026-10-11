@@ -145,31 +145,38 @@ actually applicable.
 
 ### Provider
 
-One clinic, one document. She updates a price, a coupon, or a logo
-here, and every slice that shows that fact updates with it. A slice
-stores a content relationship to the clinic. The slice decides which
-fields it fills in. It does not keep its own copy of the price.
+One brand, one document. In Prismic the type is labeled Brand. Its API
+id stays `provider`, so code, slices, and story tokens keep that name.
+A brand is a clinic or a product she reviews, such as a test kit. Kind
+says which. She updates a price, a coupon, or a logo here, and every
+slice that shows that fact updates with it. A slice stores a content
+relationship to the brand. The slice decides which fields it fills
+in. It does not keep its own copy of the price.
 
-The clinic is a custom type, `customtypes/provider`. Peggy fills it
+The brand is a custom type, `customtypes/provider`. Peggy fills it
 in tabs. A tab is a group of fields. The model is in that file.
 
 Tabs:
 
--   Profile — name, logo, short description, visit link, review video, page link
--   Price — the monthly price, the three price-box lines, and the coupon code
+-   Profile — name, kind, logo, short description, visit link, review video, page link
+-   Price — the price and whether it is per month or one time, the three price-box lines, and the coupon code
 -   Care — labs, HSA, states
 -   Words — her short quote
 -   Product — the product image
 
 A clinic has no public page and no SEO tab. A clinic page is a Page.
 Slices on that page point at the clinic. Visit is the affiliate link,
-and the only link to the clinic's own site. Review video is the
-YouTube link for her review. Slices that show either link read it from
+and the only link to the clinic's own site. Its button words come from
+the link when she fills them, and otherwise say "Visit" plus the clinic
+name. Review video is the YouTube link for her review. Slices say
+"Watch my review". Slices that show either link read the address from
 the clinic. Page is a link to the site page about this clinic, and it
-stays blank until that page exists. The sidebar name uses Page. A
-written review link, such as "Read review", stays on the slice that
-shows it. The product image is on the Product tab. A slice that shows
-the jar or bottle reads it from the clinic.
+stays blank until that page exists. The sidebar name uses Page. Brand
+promo uses Page as Products & pricing and Review video as Watch my
+review. Links written on Brand promo sit on a second row under those
+buttons. The product image is on the Product tab. A slice that shows
+the jar or bottle reads it from the clinic. Brand promo uses that
+photo unless a photo is placed on the slice.
 
 Field ids are in `docs/SLICE_MODEL.md`. The long review stays on the
 Provider review. A story inserts a clinic with a token such as

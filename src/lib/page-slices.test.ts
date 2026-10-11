@@ -2,6 +2,7 @@ import type { ImageField, RichTextField } from "@prismicio/client";
 import { describe, expect, it } from "vitest";
 import {
   boxClinic,
+  brandPromoClinic,
   comparisonClinic,
   gridPage,
   pageClinic,
@@ -139,6 +140,46 @@ describe("pageClinic and comparisonClinic", () => {
       offerCode: "PEGGY10",
       shortDescription: "Bioidentical cream by mail.",
     });
+  });
+
+  it("gives a brand promo the page and the review video", () => {
+    const clinic = pageClinic(
+      provider({
+        page: {
+          link_type: "Document",
+          id: "page-id",
+          type: "page",
+          tags: [],
+          lang: "en-us",
+          uid: "inner-balance",
+          url: "/inner-balance",
+        },
+        youtube: {
+          link_type: "Web",
+          url: "https://youtu.be/_OlA4wXOHdQ",
+        },
+      }),
+    )!;
+
+    expect(brandPromoClinic(clinic)).toMatchObject({
+      pageHref: "/inner-balance",
+      reviewVideoHref: "https://youtu.be/_OlA4wXOHdQ",
+    });
+    expect(
+      brandPromoClinic(
+        pageClinic(
+          provider({
+            product: {
+              url: "https://images.prismic.io/jar.jpg",
+              alt: "Oestra cream jar",
+            } as ImageField,
+          }),
+        )!,
+      ).product,
+    ).toMatchObject({ alt: "Oestra cream jar" });
+    expect(
+      brandPromoClinic(pageClinic(provider())!).reviewVideoHref,
+    ).toBeUndefined();
   });
 
   it("leaves blank badge and review empty", () => {

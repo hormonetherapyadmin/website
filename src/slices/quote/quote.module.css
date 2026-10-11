@@ -67,6 +67,11 @@
   margin: 0 0 1rem;
 }
 
+.text {
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+}
+
 .reminder {
   font-size: 0.95rem;
   opacity: 0.85;

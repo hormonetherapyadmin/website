@@ -39,13 +39,21 @@ describe("tokenClinic", () => {
       visitText: undefined,
       offerCode: "PEGGY10",
       offerCopy: "10% off your first order.",
+      kind: "Clinic",
       monthlyPrice: 199,
+      priceUnit: "Per month",
       priceNote: "First six months, then $99.",
       insurance: false,
       formulation: "Oestra vaginal cream",
       gettingStarted: "Free consults as needed.",
       pageHref: undefined,
     });
+  });
+
+  it("reads a product with a one-time price", () => {
+    expect(
+      tokenClinic(clinic({ kind: "Product", price_unit: "One time" })),
+    ).toMatchObject({ kind: "Product", priceUnit: "One time" });
   });
 
   it("reads the site page and ignores a blank Page link", () => {

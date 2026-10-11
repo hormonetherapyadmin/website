@@ -120,6 +120,26 @@ describe("Hero", () => {
     expect(empty).not.toContain("<img");
   });
 
+  it("renders a centered title with no media", () => {
+    const html = renderToStaticMarkup(
+      <Hero
+        variation="centered"
+        primary={section({
+          small_heading: rich("At-Home"),
+          heading: rich("Perimenopause & Menopause Trackers & Testing"),
+          intro: rich("A puzzle with missing pieces."),
+          link: { link_type: "Web", url: "/post/kits", text: "Read more" },
+        })}
+      />,
+    );
+
+    expect(html).toMatch(/<h1[^>]*>Perimenopause &amp; Menopause/);
+    expect(html).toContain("A puzzle with missing pieces.");
+    expect(html).toContain('href="/post/kits"');
+    expect(html).not.toContain("<img");
+    expect(html).not.toContain("<figure");
+  });
+
   it("renders the brands title and a clinic logo link", () => {
     const html = renderToStaticMarkup(
       <Hero

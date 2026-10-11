@@ -112,6 +112,7 @@ export default function SideBySidePreview() {
             "I’ll say that again: menopause isn’t something to be ashamed of, or a subject you should feel embarrassed to talk about.",
           ),
           side: "Media left",
+          media_position: "Sticky",
           text: story,
           button: [
             {
@@ -137,10 +138,12 @@ export default function SideBySidePreview() {
             "Media right keeps the writing first on a wide screen. On a phone the photo still comes first.",
           ),
           side: "Media right",
+          media_position: "Top",
           text: rich(
             "I’m your typical late-50’s woman. I love Jesus! I’m married, I have three grown children, three grandchildren, and my full-time gig is in the banking industry.",
           ),
-          caption: rich("Peggy"),
+          caption: rich("Peggy, at home."),
+          caption_on_photo: false,
         }}
         image={{
           src: "/mockup/peggy-portrait.jpg",

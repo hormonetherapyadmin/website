@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ImageField, LinkField, RichTextField } from "@prismicio/client";
 import type { SliceSectionFields } from "@/components/slice-section";
+import { BrandPromo, type BrandPromoClinic } from "@/slices/BrandPromo";
 import { Divider } from "@/slices/divider";
 import { Hero } from "@/slices/hero";
 import { Ribbon } from "@/slices/Ribbon";
@@ -10,8 +11,10 @@ import { MockupShell } from "../_shared/mockup-shell";
 /*
   Test kits mockup for the live URL /trackersandtesting, built only from
   page slices. Copy and photos are from that Wix page (October 2026).
-  The kit headings, kickers, buttons, and pull quote are layout added
-  here. The Amazon links use the shared #affiliate-link placeholder.
+  The kit headings, kickers, card links, and pull quote are layout added
+  here. The live intro's first sentence stays in the Hero, and the rest
+  of it opens the photo section. The Amazon links use the shared
+  #affiliate-link placeholder.
 */
 
 export const metadata: Metadata = {
@@ -23,6 +26,31 @@ const POST =
   "/post/beyond-standard-blood-work-using-proov-and-mira-tests-for-insights-into-perimenopause";
 
 const emptyRich = [] as RichTextField;
+
+/*
+  The two kits as Brand documents with Kind set to Product. Mira's $179
+  and both "typically" lines are from the live copy. The live page gives
+  no Proov price, so the card shows none.
+*/
+const MIRA: BrandPromoClinic = {
+  uid: "mira",
+  name: "Mira",
+  kind: "Product",
+  visitHref: "#affiliate-link",
+  visitText: "See Mira on Amazon",
+  monthlyPrice: 179,
+  priceUnit: "One time",
+  formulation: "Perimenopause Kit",
+};
+
+const PROOV: BrandPromoClinic = {
+  uid: "proov",
+  name: "Proov",
+  kind: "Product",
+  visitHref: "#affiliate-link",
+  visitText: "See Proov on Amazon",
+  formulation: "Urine test strips",
+};
 
 type Span = { start: number; end: number; type: string; data?: object };
 
@@ -93,6 +121,9 @@ const button = (
 
 const intro = [
   paragraph(
+    "For many women, the first signs aren’t always obvious; they often manifest as subtle shifts in mood, unexpected changes in sleep quality, or cycles that suddenly lose their predictability. Understanding your body during this phase is about more than just identifying hot flashes—it’s about monitoring the delicate fluctuations in hormone levels, specifically estrogen and progesterone, which begin to shift years before clinical menopause.",
+  ),
+  paragraph(
     "Using at-home perimenopause trackers and hormone test kits empowers you to move from guesswork to data-driven insights. By consistently recording symptoms like night sweats, brain fog, and irregular periods, you create a comprehensive health profile that bridges the gap between how you feel and what your biology is doing. These tools provide a clear window into your endocrine health, helping you determine if your symptoms are related to declining ovarian reserve or other hormonal imbalances.",
   ),
   paragraph(
@@ -133,35 +164,32 @@ export default async function TrackersAndTestingMockup(
   return (
     <MockupShell searchParams={searchParams}>
       <Hero
-        variation="subpage"
-        primary={{
-          ...section({
-            small_heading: rich("At-Home"),
-            heading: rich("Perimenopause & Menopause Trackers & Testing"),
-            intro: rich(
-              "Navigating the transition into perimenopause can feel like trying to solve a puzzle with missing pieces. For many women, the first signs aren’t always obvious; they often manifest as subtle shifts in mood, unexpected changes in sleep quality, or cycles that suddenly lose their predictability. Understanding your body during this phase is about more than just identifying hot flashes—it’s about monitoring the delicate fluctuations in hormone levels, specifically estrogen and progesterone, which begin to shift years before clinical menopause.",
-            ),
-            link: {
-              link_type: "Web",
-              url: POST,
-              text: "Read my Proov vs. Mira comparison",
-            } as LinkField,
-            space_above: "Medium",
-          }),
-          image: image(
-            "/mockup/test-kits/peggy-standing.jpg",
-            "Peggy standing in her living room with her arms crossed, smiling",
-            1000,
-            1500,
+        variation="centered"
+        primary={section({
+          small_heading: rich("At-Home"),
+          heading: rich("Perimenopause & Menopause Trackers & Testing"),
+          intro: rich(
+            "Navigating the transition into perimenopause can feel like trying to solve a puzzle with missing pieces.",
           ),
-        }}
+          link: {
+            link_type: "Web",
+            url: POST,
+            text: "Read my Proov vs. Mira comparison",
+          } as LinkField,
+          space_above: "Medium",
+        })}
       />
 
       <SideBySide
-        variation="quote"
+        variation="image"
+        image={{
+          src: "/mockup/test-kits/peggy-standing.jpg",
+          alt: "Peggy standing in her living room with her arms crossed, smiling",
+        }}
         primary={{
           ...section(),
           side: "Media left",
+          media_position: "Sticky",
           quote: rich(
             "From “I think something is wrong” to “Here is the evidence of my hormonal shift.”",
           ),
@@ -179,53 +207,50 @@ export default async function TrackersAndTestingMockup(
         }}
       />
 
-      <SideBySide
-        variation="image"
+      <BrandPromo
         primary={{
           ...section({
             small_heading: rich("At-home monitor"),
             heading: rich("Mira Hormone Monitor"),
           }),
-          side: "Media right",
+          quote: emptyRich,
           text: mira,
-          button: [
-            button(
-              "See the Mira kit on Amazon",
-              "#affiliate-link",
-              "Solid",
-              true,
-            ),
-            button("Affiliate disclosure", "/affiliate-disclosures", "Ghost"),
+          first: false,
+          product: image(
+            "/mockup/test-kits/mira-monitor.jpg",
+            "Mira hormone monitor on a counter, its screen reading Ready to test",
+            1400,
+            1211,
+          ),
+          layout: "Stacked",
+          links: [
+            button("Read my Proov vs. Mira comparison", POST),
+            button("Affiliate disclosure", "/affiliate-disclosures"),
           ],
         }}
-        image={{
-          src: "/mockup/test-kits/mira-monitor.jpg",
-          alt: "Mira hormone monitor on a counter, its screen reading Ready to test",
-        }}
+        clinic={MIRA}
       />
 
-      <SideBySide
-        variation="image"
+      <BrandPromo
         primary={{
           ...section({
             small_heading: rich("At-home test kit"),
             heading: rich("Proov Empower Hormone Test Kit"),
+            space_above: "None",
           }),
-          side: "Media left",
+          quote: emptyRich,
           text: proov,
-          button: [
-            button(
-              "See the Proov kit on Amazon",
-              "#affiliate-link",
-              "Solid",
-              true,
-            ),
-          ],
+          first: false,
+          product: image(
+            "/mockup/test-kits/proov-empower.jpg",
+            "Proov Empower perimenopause test box beside test strips and two foil pouches",
+            1142,
+            1400,
+          ),
+          layout: "Stacked",
+          links: [button("Read my Proov vs. Mira comparison", POST)],
         }}
-        image={{
-          src: "/mockup/test-kits/proov-empower.jpg",
-          alt: "Proov Empower perimenopause test box beside test strips and two foil pouches",
-        }}
+        clinic={PROOV}
       />
 
       <Ribbon

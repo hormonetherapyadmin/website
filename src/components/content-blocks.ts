@@ -2,6 +2,9 @@ import type { RichTextField } from "@prismicio/client";
 
 export type TokenPart = "offer" | "facts";
 
+export type BrandKind = "Clinic" | "Product";
+export type PriceUnit = "Per month" | "One time";
+
 /** A clinic a story token can read. The page loads it by UID. */
 export type TokenClinic = {
   uid: string;
@@ -11,7 +14,11 @@ export type TokenClinic = {
   visitText?: string;
   offerCode?: string;
   offerCopy?: string;
+  /** A Product has no insurance line. */
+  kind?: BrandKind;
   monthlyPrice?: number | null;
+  /** One time drops the /mo after the price. */
+  priceUnit?: PriceUnit;
   priceNote?: string;
   insurance?: boolean;
   formulation?: string;

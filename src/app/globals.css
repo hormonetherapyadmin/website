@@ -49,6 +49,10 @@
   --spacing-gutter: clamp(1.25rem, 4vw, 3.5rem);
   --container-wrap: calc(var(--container-content) + var(--spacing-gutter) * 2);
 
+  /* Writing in a post body and in every slice's Text field. */
+  --text-body: 1.3rem;
+  --text-body--line-height: 1.7;
+
   --radius-control: 0.5rem;
   --radius-card: 1rem;
 

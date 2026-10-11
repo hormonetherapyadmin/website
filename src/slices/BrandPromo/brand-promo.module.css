@@ -81,6 +81,7 @@
 
 .brand:focus-visible,
 .links a:focus-visible,
+.more a:focus-visible,
 .visit:focus-visible {
   outline: 2px solid var(--color-focus);
   outline-offset: 3px;
@@ -88,6 +89,7 @@
 
 .layout[data-tone="dark"] .brand:focus-visible,
 .layout[data-tone="dark"] .links a:focus-visible,
+.layout[data-tone="dark"] .more a:focus-visible,
 .layout[data-tone="dark"] .visit:focus-visible {
   outline-color: var(--color-panel-text);
 }
@@ -128,6 +130,13 @@
   font-size: 1.35rem;
 }
 
+.text {
+  max-width: 38rem;
+  margin-top: 1rem;
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+}
+
 .links {
   display: flex;
   flex-wrap: wrap;
@@ -165,6 +174,38 @@
 
 .layout[data-tone="dark"] .links a:hover {
   background: color-mix(in srgb, var(--color-panel-accent) 28%, transparent);
+}
+
+.more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.15rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.links + .more {
+  margin-top: 0.7rem;
+}
+
+.more a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.1rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.more a:hover {
+  color: var(--color-text);
+}
+
+.layout[data-tone="dark"] .more a,
+.layout[data-tone="dark"] .more a:hover {
+  color: var(--color-panel-text);
 }
 
 .offer {
@@ -342,9 +383,55 @@
   font-size: 0.95rem;
 }
 
+.layout[data-layout="stacked"] {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  align-items: start;
+  border-top: 0;
+}
+
+.layout[data-layout="stacked"] .offer {
+  position: sticky;
+  top: 2rem;
+  flex-direction: column;
+  align-items: stretch;
+  justify-self: center;
+  width: min(100%, 26rem);
+  overflow: hidden;
+  border-radius: 1.25rem;
+  box-shadow: 0 16px 36px -24px rgb(20 16 12 / 55%);
+}
+
+.layout[data-layout="stacked"][data-tone="dark"] .offer {
+  box-shadow: 0 18px 40px -20px rgb(0 0 0 / 55%);
+}
+
+.layout[data-layout="stacked"] .product {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  border-radius: 0;
+}
+
+.layout[data-layout="stacked"] .deal,
+.layout[data-layout="stacked"] .offer:not(:has(.product)) .deal {
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
 @media (max-width: 960px) {
   .layout {
     grid-template-columns: 1fr;
+  }
+
+  .layout[data-layout="stacked"] {
+    grid-template-columns: 1fr;
+  }
+
+  .layout[data-layout="stacked"] .offer {
+    position: static;
+    justify-self: center;
   }
 
   .offer {

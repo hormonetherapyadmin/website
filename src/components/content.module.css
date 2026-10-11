@@ -1,18 +1,14 @@
 .body {
-  font-size: 1.1rem;
-  line-height: 1.75;
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
 }
 
 .body p {
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.4rem;
 }
 
 .body p:last-child {
   margin-bottom: 0;
-}
-
-.body a {
-  font-weight: 700;
 }
 
 .signoff {

@@ -119,6 +119,8 @@
 
 .content {
   max-width: 38rem;
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
 }
 
 .actions {

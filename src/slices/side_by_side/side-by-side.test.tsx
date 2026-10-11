@@ -102,6 +102,7 @@ describe("SideBySide", () => {
       "Peggy on a wooded trail holding her Bernedoodle puppy, Winston",
     );
     expect(markup).toContain("Me and Winston, my Bernedoodle.");
+    expect(markup).toContain('data-caption="on"');
     expect(markup).toContain("I’ve personally tested more than 9 providers.");
     expect(markup).toContain(
       "I created HormoneTherapyHub to offer transparent telemetry.",
@@ -113,6 +114,35 @@ describe("SideBySide", () => {
     expect(markup).toContain("See the reviews");
   });
 
+  it("centers a caption under the photo when the choice is off", () => {
+    const markup = renderToStaticMarkup(
+      <SideBySide
+        variation="image"
+        primary={{
+          ...section(),
+          text: rich("Hi."),
+          caption: rich("Peggy, at home."),
+          caption_on_photo: false,
+        }}
+        image={{ src: "/photo.jpg", alt: "Peggy" }}
+      />,
+    );
+    expect(markup).toContain('data-caption="under"');
+    expect(markup).toContain("Peggy, at home.");
+  });
+
+  it("hides an empty caption", () => {
+    const markup = renderToStaticMarkup(
+      <SideBySide
+        variation="image"
+        primary={{ ...section(), text: rich("Hi."), caption: [] }}
+        image={{ src: "/photo.jpg", alt: "Peggy" }}
+      />,
+    );
+    expect(markup).not.toContain("<figcaption");
+    expect(markup).not.toContain("data-caption");
+  });
+
   it("moves the media to the right", () => {
     const markup = renderToStaticMarkup(
       <SideBySide
@@ -122,6 +152,40 @@ describe("SideBySide", () => {
       />,
     );
     expect(markup).toContain('data-side="right"');
+  });
+
+  it("centers the media unless Top or Sticky is chosen", () => {
+    const render = (media_position?: string) =>
+      renderToStaticMarkup(
+        <SideBySide
+          variation="image"
+          primary={{ ...section(), media_position, text: rich("Hi.") }}
+          image={{ src: "/photo.jpg", alt: "Peggy" }}
+        />,
+      );
+    expect(render()).toContain('data-position="center"');
+    expect(render("Unknown")).toContain('data-position="center"');
+    expect(render("Top")).toContain('data-position="top"');
+    expect(render("Sticky")).toContain('data-position="sticky"');
+  });
+
+  it("puts a quote above the writing beside the photo", () => {
+    const markup = renderToStaticMarkup(
+      <SideBySide
+        variation="image"
+        primary={{
+          ...section(),
+          quote: rich("Here is the evidence of my hormonal shift."),
+          text: rich("For many women, the first signs aren’t always obvious."),
+        }}
+        image={{ src: "/photo.jpg", alt: "Peggy" }}
+      />,
+    );
+    expect(markup).toContain('alt="Peggy"');
+    expect(markup).not.toContain("<blockquote");
+    expect(markup.indexOf("Here is the evidence")).toBeLessThan(
+      markup.indexOf("For many women"),
+    );
   });
 
   it("marks a button to an affiliate address as sponsored", () => {
@@ -201,13 +265,19 @@ describe("SideBySide", () => {
     const markup = renderToStaticMarkup(
       <SideBySide
         variation="video"
-        primary={{ ...section(), text: rich("Watch with me.") }}
+        primary={{
+          ...section(),
+          text: rich("Watch with me."),
+          caption: rich("On the video."),
+        }}
         video={{
           html: '<iframe src="https://www.youtube.com/embed/example"></iframe>',
         }}
       />,
     );
     expect(markup).toContain("<iframe");
+    expect(markup).toContain('data-caption="on"');
+    expect(markup).toContain("On the video.");
     expect(markup).not.toContain("Watch video");
   });
 

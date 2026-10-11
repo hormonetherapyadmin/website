@@ -47,6 +47,8 @@ const clinic: PageClinic = {
   monthlyPrice: 199,
   formulation: "Oestra vaginal cream",
   quote: "The one I stayed with.",
+  pageHref: "/inner-balance",
+  reviewVideoHref: "https://youtu.be/_OlA4wXOHdQ",
 };
 
 function context(overrides: Partial<PageSliceContext> = {}): PageSliceContext {
@@ -163,6 +165,10 @@ describe("PageSliceZone", () => {
     expect(html).toContain("1st");
     expect(html).toContain('data-placement="brand_promo"');
     expect(html).toContain("My review");
+    expect(html).toContain('href="/inner-balance"');
+    expect(html).toContain("Products &amp; pricing");
+    expect(html).toContain('href="https://youtu.be/_OlA4wXOHdQ"');
+    expect(html).toContain("Watch my review");
   });
 
   it("shows the posts the page loaded", () => {
