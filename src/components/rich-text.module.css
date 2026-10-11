@@ -19,3 +19,62 @@
 .link:focus-visible {
   background-size: 100% 0.42em;
 }
+
+/* Matches the post body lists in blog.module.css. */
+.list,
+.oList {
+  --list-mark: var(--section-marker, var(--color-marker));
+  --list-wash: color-mix(in srgb, var(--list-mark) 16%, transparent);
+  margin: 0 0 1.4rem;
+  padding: 0;
+  list-style: none;
+}
+
+.list:last-child,
+.oList:last-child {
+  margin-bottom: 0;
+}
+
+.oList {
+  counter-reset: content-list;
+}
+
+.list > li,
+.oList > li {
+  position: relative;
+  margin: 0.55rem 0;
+  padding-left: 1.95em;
+}
+
+.list > li::before {
+  position: absolute;
+  top: 0.65em;
+  left: 0.5em;
+  width: 0.4em;
+  height: 0.4em;
+  border-radius: 50%;
+  background: var(--list-mark);
+  box-shadow: 0 0 0 0.24em var(--list-wash);
+  content: "";
+}
+
+.oList > li::before {
+  position: absolute;
+  top: 0.19em;
+  left: 0;
+  display: grid;
+  place-items: center;
+  min-width: 1.75em;
+  height: 1.75em;
+  padding: 0 0.3em;
+  border-radius: 999px;
+  background: var(--list-wash);
+  color: var(--list-mark);
+  font-family: var(--font-heading);
+  font-size: 0.8em;
+  font-weight: 600;
+  font-variant-numeric: lining-nums tabular-nums;
+  line-height: 1;
+  content: counter(content-list);
+  counter-increment: content-list;
+}

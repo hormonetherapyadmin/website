@@ -51,6 +51,39 @@ const spaceBelowClass: Record<SectionSpacing, string> = {
   Large: "mb-slice-lg",
 };
 
+/**
+ * The same gap, as a length, so a slice can center something in it.
+ * The gap between two slices is the lower slice's Space above.
+ */
+const spaceAboveVar: Record<SectionSpacing, string> = {
+  None: "[--section-space-above:0px]",
+  Small: "[--section-space-above:var(--spacing-slice-sm)]",
+  Medium: "[--section-space-above:var(--spacing-slice)]",
+  Large: "[--section-space-above:var(--spacing-slice-lg)]",
+};
+
+const spaceBelowVar: Record<SectionSpacing, string> = {
+  None: "[--section-space-below:0px]",
+  Small: "[--section-space-below:var(--spacing-slice-sm)]",
+  Medium: "[--section-space-below:var(--spacing-slice)]",
+  Large: "[--section-space-below:var(--spacing-slice-lg)]",
+};
+
+/** The gap after this slice, as a length. Margins collapse to the larger one. */
+const gapAfterVar: Record<SectionSpacing, string> = {
+  None: "[--section-gap-after:0px]",
+  Small: "[--section-gap-after:var(--spacing-slice-sm)]",
+  Medium: "[--section-gap-after:var(--spacing-slice)]",
+  Large: "[--section-gap-after:var(--spacing-slice-lg)]",
+};
+
+const spaceRank: Record<SectionSpacing, number> = {
+  None: 0,
+  Small: 1,
+  Medium: 2,
+  Large: 3,
+};
+
 /** Transparent paints nothing, so the page shows through. */
 export const sectionBackgroundClass: Record<SectionBackground, string> = {
   Transparent: "",
@@ -76,6 +109,12 @@ const kickerColorClass: Record<SectionBackground, string> = {
   Lavender: "[--section-kicker:var(--color-accent)]",
   Raspberry: "[--section-kicker:var(--color-card-2)]",
   Navy: "[--section-kicker:var(--color-panel-accent)]",
+};
+
+/** Sets --section-marker, the list bullet color, where navy would vanish. */
+const markerColorClass: Partial<Record<SectionBackground, string>> = {
+  Raspberry: "[--section-marker:var(--color-card-2)]",
+  Navy: "[--section-marker:var(--color-card-2)]",
 };
 
 function choice<T extends string>(
@@ -162,6 +201,11 @@ type SliceSectionProps = {
    * Pass the id of that heading.
    */
   labelId?: string;
+  /**
+   * Space above on the next slice. False means nothing follows.
+   * Omit it outside a slice list. An empty field uses the Medium default.
+   */
+  followingSpaceAbove?: string | null | false;
   children?: ReactNode;
 };
 
@@ -177,6 +221,7 @@ export function SliceSection({
   showHeader = true,
   title,
   labelId,
+  followingSpaceAbove,
   children,
 }: SliceSectionProps) {
   const headingId = useId();
@@ -184,6 +229,12 @@ export function SliceSection({
   const background = sectionBackground(fields?.background);
   const spaceAbove = choice(fields?.space_above, SECTION_SPACING, "Medium");
   const spaceBelow = choice(fields?.space_below, SECTION_SPACING, "None");
+  const nextAbove =
+    followingSpaceAbove === undefined || followingSpaceAbove === false
+      ? spaceBelow
+      : choice(followingSpaceAbove, SECTION_SPACING, "Medium");
+  const gapAfter =
+    spaceRank[nextAbove] > spaceRank[spaceBelow] ? nextAbove : spaceBelow;
   const band = background !== "Transparent" && background !== "Cream";
   const header = showHeader && fields && hasHeader(fields) ? fields : null;
   const anchor = sectionAnchor(title ?? (fields ? asText(fields.heading) : ""));
@@ -198,8 +249,12 @@ export function SliceSection({
       className={[
         spaceAboveClass[spaceAbove],
         spaceBelowClass[spaceBelow],
+        spaceAboveVar[spaceAbove],
+        spaceBelowVar[spaceBelow],
+        gapAfterVar[gapAfter],
         sectionBackgroundClass[background],
         kickerColorClass[background],
+        markerColorClass[background],
       ]
         .filter(Boolean)
         .join(" ")}

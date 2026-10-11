@@ -38,6 +38,13 @@
   /* Clinic comparison. Paper is a table row. Badge is the top-choice pill. */
   --color-paper: #ffffff;
   --color-badge: #f6e3a1;
+  /* The frame around a YouTube video in the video modal. */
+  --color-video-frame: #1c1c1e;
+  /*
+    List bullets and numbers. A brighter navy than panel, so lists do not
+    compete with raspberry links.
+  */
+  --color-marker: #24548f;
 
   --font-body:
     ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;

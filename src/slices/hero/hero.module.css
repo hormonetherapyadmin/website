@@ -314,6 +314,7 @@
 }
 
 .floatLogoImage img {
+  border-radius: 0.4rem;
   object-fit: contain;
 }
 
@@ -437,6 +438,7 @@
 }
 
 .brandLogo img {
+  border-radius: 0.4rem;
   object-fit: contain;
 }
 

@@ -209,23 +209,24 @@ export default async function TrackersAndTestingMockup(
 
       <BrandPromo
         primary={{
-          ...section({
-            small_heading: rich("At-home monitor"),
-            heading: rich("Mira Hormone Monitor"),
-          }),
-          quote: emptyRich,
-          text: mira,
+          ...section({ heading: rich("Mira Hormone Monitor") }),
           first: false,
-          product: image(
-            "/mockup/test-kits/mira-monitor.jpg",
-            "Mira hormone monitor on a counter, its screen reading Ready to test",
-            1400,
-            1211,
-          ),
-          layout: "Stacked",
-          links: [
-            button("Read my Proov vs. Mira comparison", POST),
-            button("Affiliate disclosure", "/affiliate-disclosures"),
+          overwrite: [
+            {
+              small_heading: rich("At-home monitor"),
+              text: mira,
+              product: image(
+                "/mockup/test-kits/mira-monitor.jpg",
+                "Mira hormone monitor on a counter, its screen reading Ready to test",
+                1400,
+                1211,
+              ),
+              layout: "Stacked",
+              links: [
+                button("Read my Proov vs. Mira comparison", POST),
+                button("Affiliate disclosure", "/affiliate-disclosures"),
+              ],
+            },
           ],
         }}
         clinic={MIRA}
@@ -234,21 +235,24 @@ export default async function TrackersAndTestingMockup(
       <BrandPromo
         primary={{
           ...section({
-            small_heading: rich("At-home test kit"),
             heading: rich("Proov Empower Hormone Test Kit"),
             space_above: "None",
           }),
-          quote: emptyRich,
-          text: proov,
           first: false,
-          product: image(
-            "/mockup/test-kits/proov-empower.jpg",
-            "Proov Empower perimenopause test box beside test strips and two foil pouches",
-            1142,
-            1400,
-          ),
-          layout: "Stacked",
-          links: [button("Read my Proov vs. Mira comparison", POST)],
+          overwrite: [
+            {
+              small_heading: rich("At-home test kit"),
+              text: proov,
+              product: image(
+                "/mockup/test-kits/proov-empower.jpg",
+                "Proov Empower perimenopause test box beside test strips and two foil pouches",
+                1142,
+                1400,
+              ),
+              layout: "Stacked",
+              links: [button("Read my Proov vs. Mira comparison", POST)],
+            },
+          ],
         }}
         clinic={PROOV}
       />

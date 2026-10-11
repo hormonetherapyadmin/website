@@ -125,14 +125,18 @@ export default function BrandPromoPreview() {
             heading: rich("Improved sleep"),
             background: "Navy",
           }),
-          quote: rich(innerBalance.quote ?? ""),
           first: true,
           place: "My 2026 top choice",
-          links: [
-            link(
-              "Oestra vs Winona",
-              "/post/musely-estrogen-cream-vs-winona-which-hrt-cream-wins",
-            ),
+          overwrite: [
+            {
+              quote: rich(innerBalance.quote ?? ""),
+              links: [
+                link(
+                  "Oestra vs Winona",
+                  "/post/musely-estrogen-cream-vs-winona-which-hrt-cream-wins",
+                ),
+              ],
+            },
           ],
         }}
         clinic={innerBalance}
@@ -140,22 +144,22 @@ export default function BrandPromoPreview() {
       <BrandPromo
         primary={{
           ...section({ heading: rich("No pre-testing") }),
-          quote: emptyRich,
           first: false,
-          product: image(
-            "/mockup/products/image%20copy%202.png",
-            "Musely estrogen cream bottle",
-          ),
-          links: [],
+          overwrite: [
+            {
+              product: image(
+                "/mockup/products/image%20copy%202.png",
+                "Musely estrogen cream bottle",
+              ),
+            },
+          ],
         }}
         clinic={winona}
       />
       <BrandPromo
         primary={{
           ...section({ heading: rich("Most comprehensive testing") }),
-          quote: emptyRich,
           first: false,
-          links: [],
         }}
         clinic={joi}
       />

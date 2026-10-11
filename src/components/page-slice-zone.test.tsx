@@ -144,16 +144,20 @@ describe("PageSliceZone", () => {
     const html = render([
       slice("brand_promo", {
         ...section("Improved sleep"),
-        small_heading: rich("Voted best for"),
         clinic: clinicLink,
-        quote: emptyRich,
         first: true,
-        product: {},
-        links: [
+        overwrite: [
           {
-            link_type: "Web",
-            url: "/post/oestra-vs-winona",
-            text: "Oestra vs Winona",
+            small_heading: rich("Voted best for"),
+            quote: emptyRich,
+            product: {},
+            links: [
+              {
+                link_type: "Web",
+                url: "/post/oestra-vs-winona",
+                text: "Oestra vs Winona",
+              },
+            ],
           },
         ],
       }),

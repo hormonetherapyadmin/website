@@ -10,6 +10,7 @@ import {
   brandPromoQuote,
   brandPromoTone,
   type BrandPromoClinic,
+  type BrandPromoOverwrite,
 } from "./index";
 
 vi.mock("next/image", () => ({
@@ -56,6 +57,10 @@ const clinic: BrandPromoClinic = {
     "Finding a product that treats my symptoms of menopause and helps with sleep was a clear winner for me.",
 };
 
+function written(fields: BrandPromoOverwrite) {
+  return { overwrite: [fields] };
+}
+
 function render(
   primary: Parameters<typeof BrandPromo>[0]["primary"],
   item: BrandPromoClinic | null = clinic,
@@ -90,7 +95,6 @@ describe("BrandPromo", () => {
   it("reads the price, the coupon, and the visit link from the clinic", () => {
     const html = render({
       ...section(),
-      quote: emptyRich,
       first: true,
       place: "My 2026 top choice",
     });
@@ -124,7 +128,6 @@ describe("BrandPromo", () => {
     const html = render(
       {
         ...section({ small_heading: emptyRich }),
-        quote: emptyRich,
         first: true,
         place: "My 2026 top choice",
       },
@@ -140,7 +143,7 @@ describe("BrandPromo", () => {
   it("lets the slice quote replace the clinic's words and hides the badge when it is not 1st", () => {
     const html = render({
       ...section({ background: "Navy" }),
-      quote: rich("A sentence just for this card."),
+      ...written({ quote: rich("A sentence just for this card.") }),
       first: false,
     });
 
@@ -153,7 +156,7 @@ describe("BrandPromo", () => {
 
   it("shows the offer line alone when the clinic has no code", () => {
     const html = render(
-      { ...section({ heading: rich("No pre-testing") }), quote: emptyRich },
+      { ...section({ heading: rich("No pre-testing") }) },
       {
         ...clinic,
         uid: "winona",
@@ -173,9 +176,10 @@ describe("BrandPromo", () => {
     const html = render(
       {
         ...section({ heading: rich("Mira Hormone Monitor") }),
-        quote: emptyRich,
-        text: rich("The kit is measuring four critical hormones."),
-        layout: "Stacked",
+        ...written({
+          text: rich("The kit is measuring four critical hormones."),
+          layout: "Stacked",
+        }),
       },
       {
         uid: "mira",
@@ -200,18 +204,20 @@ describe("BrandPromo", () => {
     const html = render(
       {
         ...section(),
-        quote: rich("Still here."),
-        links: [
-          {
-            link_type: "Web",
-            url: "https://youtu.be/abc",
-            text: "Watch my review",
-          },
-        ],
-        product: {
-          url: "/mockup/products/oestra_rnieuz.webp",
-          alt: "Oestra cream jar",
-        } as ImageField,
+        ...written({
+          quote: rich("Still here."),
+          links: [
+            {
+              link_type: "Web",
+              url: "https://youtu.be/abc",
+              text: "Watch my review",
+            },
+          ],
+          product: {
+            url: "/mockup/products/oestra_rnieuz.webp",
+            alt: "Oestra cream jar",
+          } as ImageField,
+        }),
       },
       null,
     );
@@ -227,13 +233,15 @@ describe("BrandPromo", () => {
     const html = render(
       {
         ...section(),
-        links: [
-          {
-            link_type: "Web",
-            url: "/post/musely-vs-winona",
-            text: "Musely vs Winona",
-          },
-        ],
+        ...written({
+          links: [
+            {
+              link_type: "Web",
+              url: "/post/musely-vs-winona",
+              text: "Musely vs Winona",
+            },
+          ],
+        }),
       },
       {
         ...clinic,
@@ -248,6 +256,7 @@ describe("BrandPromo", () => {
     expect(html).toContain('href="/post/inner-balance-hrt-review"');
     expect(html).toContain("My review");
     expect(html).toContain('href="https://youtu.be/_OlA4wXOHdQ"');
+    expect(html).toContain('aria-haspopup="dialog"');
     expect(html).toContain("Watch my review");
     expect(html).toContain("Musely vs Winona");
     expect(html.indexOf("Products")).toBeLessThan(html.indexOf("My review"));
@@ -288,7 +297,7 @@ describe("BrandPromo", () => {
     } as ImageField;
 
     const fallback = render(
-      { ...section(), product: {} as ImageField },
+      { ...section(), ...written({ product: {} as ImageField }) },
       {
         ...clinic,
         product: brand,
@@ -297,7 +306,7 @@ describe("BrandPromo", () => {
     expect(fallback).toContain('alt="Winona treatment jar"');
 
     const override = render(
-      { ...section(), product: placed },
+      { ...section(), ...written({ product: placed }) },
       {
         ...clinic,
         product: brand,

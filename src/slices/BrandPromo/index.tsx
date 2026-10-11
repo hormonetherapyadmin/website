@@ -17,7 +17,9 @@ import {
   SliceSection,
   type SliceSectionFields,
 } from "@/components/slice-section";
+import { VideoLink } from "@/components/video-link";
 import { visitLinkProps } from "@/lib/affiliate-link";
+import { youtubeVideo } from "@/lib/youtube";
 import styles from "./brand-promo.module.css";
 
 /** The clinic this card points at. The page reads it off the Provider. */
@@ -51,23 +53,39 @@ export type BrandPromoClinic = {
   product?: ImageField | null;
 };
 
-type BrandPromoPrimary = Partial<SliceSectionFields> & {
-  clinic?: LinkField | null;
+/** One optional set of words and photos that replace what the brand supplies. */
+export type BrandPromoOverwrite = {
+  small_heading?: RichTextField | null;
+  intro?: RichTextField | null;
+  link?: LinkField | null;
   quote?: RichTextField | null;
   text?: RichTextField | null;
-  /** On shows the 1st badge. Off hides it. */
-  first?: boolean | null;
-  /** Words beside the 1st badge, such as "My 2026 top choice". */
-  place?: KeyTextField;
   product?: ImageField | null;
   /** Stacked puts the photo above the price, as one card. */
   layout?: string | null;
   links?: readonly LinkField[] | null;
 };
 
+type BrandPromoPrimary = Partial<SliceSectionFields> & {
+  clinic?: LinkField | null;
+  /** On shows the 1st badge. Off hides it. */
+  first?: boolean | null;
+  /** Words beside the 1st badge, such as "My 2026 top choice". */
+  place?: KeyTextField;
+  /** Empty until she adds one. The card reads the first item. */
+  overwrite?: readonly BrandPromoOverwrite[] | null;
+};
+
+/** The Overwrite group, when she has added one. */
+function cardOverwrite(primary: BrandPromoPrimary): BrandPromoOverwrite {
+  return primary.overwrite?.[0] ?? {};
+}
+
 const PRODUCTS_LABEL = "Products & pricing";
 const REVIEW_LABEL = "My review";
 const WATCH_LABEL = "Watch my review";
+/** The video modal heading. The brand logo and name follow it. */
+const VIDEO_TITLE = "My review on";
 
 function text(value: string | null | undefined) {
   const trimmed = value?.trim();
@@ -118,7 +136,8 @@ export function brandPromoExtraLinks(
       {
         href,
         text: label,
-        external: link.target === "_blank" || isVideoUrl(href),
+        external:
+          ("target" in link && link.target === "_blank") || isVideoUrl(href),
       },
     ];
   });
@@ -299,33 +318,39 @@ function Media({ field, sizes }: { field: ImageField; sizes: string }) {
 /**
  * One clinic card. Trusted providers stacks one of these per clinic.
  * Navy is the featured card. Is this 1st? shows the badge.
- * Place is the line beside that badge. A blank Small heading reads
- * "Voted best for".
+ * Place is the line beside that badge. Small heading, Intro, Quote,
+ * Text, the product photo, Photo and price, and extra links live in
+ * Overwrite. Leave that group off and the card uses the brand.
+ * A blank Small heading reads "Voted best for".
  * The price, logo, visit link, and coupon come from the clinic.
  * Products & pricing is the brand's page. My review is her post.
- * Watch my review is the review video. Links written here sit under
- * those buttons.
+ * Watch my review is the review video, and a YouTube link plays in the
+ * video modal. Links written here sit under those buttons.
  * The product photo is the brand's, unless one is placed here.
  */
 export function BrandPromo({
   primary,
   clinic,
+  followingSpaceAbove,
 }: {
   primary: BrandPromoPrimary;
   clinic?: BrandPromoClinic | null;
+  /** Space above on the next slice. False means this card is last. */
+  followingSpaceAbove?: string | null | false;
 }) {
   const labelId = useId();
   const name = text(clinic?.name);
   const place = text(primary.place);
+  const written = cardOverwrite(primary);
   const tone = brandPromoTone(primary.background);
   const headingFilled = isFilled.richText(primary.heading);
   const kickerFilled =
-    isFilled.richText(primary.small_heading) &&
-    Boolean(asText(primary.small_heading).trim());
-  const quote = brandPromoQuote(primary.quote, clinic?.quote);
+    isFilled.richText(written.small_heading) &&
+    Boolean(asText(written.small_heading).trim());
+  const quote = brandPromoQuote(written.quote, clinic?.quote);
   const links = brandPromoLinks(clinic);
-  const extraLinks = brandPromoExtraLinks(primary.links);
-  const product = brandPromoProduct(primary.product, clinic?.product);
+  const extraLinks = brandPromoExtraLinks(written.links);
+  const product = brandPromoProduct(written.product, clinic?.product);
   const price =
     typeof clinic?.monthlyPrice === "number" ? clinic.monthlyPrice : undefined;
   const priceNote = text(clinic?.priceNote);
@@ -361,11 +386,12 @@ export function BrandPromo({
       showHeader={false}
       title={clinic?.uid || (headingFilled ? asText(primary.heading) : name)}
       labelId={headingFilled || name ? labelId : undefined}
+      followingSpaceAbove={followingSpaceAbove}
     >
       <div
         className={styles.layout}
         data-tone={tone}
-        data-layout={primary.layout === "Stacked" ? "stacked" : undefined}
+        data-layout={written.layout === "Stacked" ? "stacked" : undefined}
       >
         <div className={styles.copy}>
           {primary.first ? (
@@ -380,7 +406,7 @@ export function BrandPromo({
           ) : null}
           {kickerFilled ? (
             <RichText
-              field={primary.small_heading}
+              field={written.small_heading}
               as="p"
               unstyled
               className={styles.kicker}
@@ -424,7 +450,7 @@ export function BrandPromo({
             </p>
           ) : null}
           <RichText
-            field={primary.intro}
+            field={written.intro}
             as="p"
             unstyled
             className={styles.detail}
@@ -439,26 +465,40 @@ export function BrandPromo({
           ) : quote.text ? (
             <p className={styles.quote}>{quote.text}</p>
           ) : null}
-          {primary.text && isFilled.richText(primary.text) ? (
-            <RichText field={primary.text} className={styles.text} />
+          {written.text && isFilled.richText(written.text) ? (
+            <RichText field={written.text} className={styles.text} />
           ) : null}
           {links.length > 0 ? (
             <ul className={styles.links}>
               {links.map((link) => (
                 <li key={`${link.text}-${link.href}`}>
-                  <a
-                    href={link.href}
-                    {...(link.external
-                      ? { target: "_blank", rel: "noopener noreferrer" }
-                      : {})}
-                  >
-                    <ResourceIcon url={link.href} label={link.text} />
-                    {link.text}
-                    {name ? <span className="sr-only"> — {name}</span> : null}
-                    {link.external ? (
-                      <span className="sr-only"> (opens in a new tab)</span>
-                    ) : null}
-                  </a>
+                  {youtubeVideo(link.href) ? (
+                    <VideoLink
+                      href={link.href}
+                      title={name ? VIDEO_TITLE : link.text}
+                      brand={
+                        name ? { name, logo: clinic?.logo?.src } : undefined
+                      }
+                    >
+                      <ResourceIcon url={link.href} label={link.text} />
+                      {link.text}
+                      {name ? <span className="sr-only"> — {name}</span> : null}
+                    </VideoLink>
+                  ) : (
+                    <a
+                      href={link.href}
+                      {...(link.external
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
+                    >
+                      <ResourceIcon url={link.href} label={link.text} />
+                      {link.text}
+                      {name ? <span className="sr-only"> — {name}</span> : null}
+                      {link.external ? (
+                        <span className="sr-only"> (opens in a new tab)</span>
+                      ) : null}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -467,19 +507,27 @@ export function BrandPromo({
             <ul className={styles.more}>
               {extraLinks.map((link) => (
                 <li key={`${link.text}-${link.href}`}>
-                  <a
-                    href={link.href}
-                    {...(link.external
-                      ? { target: "_blank", rel: "noopener noreferrer" }
-                      : {})}
-                  >
-                    {link.text}
-                    <Chevron />
-                    {name ? <span className="sr-only"> — {name}</span> : null}
-                    {link.external ? (
-                      <span className="sr-only"> (opens in a new tab)</span>
-                    ) : null}
-                  </a>
+                  {youtubeVideo(link.href) ? (
+                    <VideoLink href={link.href} title={link.text}>
+                      {link.text}
+                      <Chevron />
+                      {name ? <span className="sr-only"> — {name}</span> : null}
+                    </VideoLink>
+                  ) : (
+                    <a
+                      href={link.href}
+                      {...(link.external
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
+                    >
+                      {link.text}
+                      <Chevron />
+                      {name ? <span className="sr-only"> — {name}</span> : null}
+                      {link.external ? (
+                        <span className="sr-only"> (opens in a new tab)</span>
+                      ) : null}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -492,7 +540,7 @@ export function BrandPromo({
                 <Media
                   field={product}
                   sizes={
-                    primary.layout === "Stacked"
+                    written.layout === "Stacked"
                       ? "(max-width: 440px) 100vw, 26rem"
                       : "216px"
                   }

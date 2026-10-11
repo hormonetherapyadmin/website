@@ -25,7 +25,8 @@ type PickContentRelationshipFieldData<
         prismic.CustomTypeModelFetchContentRelationshipLevel1
       > as TSubRelationship["id"]
     ]: ContentRelationshipFieldWithData<TSubRelationship["customtypes"], TLang>;
-  } & { // Group
+  } & // Group
+  {
     [
       TGroup in Extract<
         TRelationship["fields"][number],
@@ -37,7 +38,8 @@ type PickContentRelationshipFieldData<
           PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
         >
       : never;
-  } & { // Other fields
+  } & // Other fields
+  {
     [
       TFieldKey in Extract<TRelationship["fields"][number], string>
     ]: TFieldKey extends keyof TData ? TData[TFieldKey] : never;
@@ -1290,19 +1292,97 @@ type BoxesSliceVariation = BoxesSliceDefault;
 export type BoxesSlice = prismic.SharedSlice<"boxes", BoxesSliceVariation>;
 
 /**
- * Primary content in *Brand promo → Default → Primary*
+ * Item in *Brand promo → Default → Primary → Overwrite*
  */
-export interface BrandPromoSliceDefaultPrimary {
+export interface BrandPromoSliceDefaultPrimaryOverwriteItem {
   /**
-   * Small heading field in *Brand promo → Default → Primary*
+   * Small heading field in *Brand promo → Default → Primary → Overwrite*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: Voted best for
-   * - **API ID Path**: brand_promo.default.primary.small_heading
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].small_heading
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   small_heading: prismic.RichTextField;
 
+  /**
+   * Intro field in *Brand promo → Default → Primary → Overwrite*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: A short line under the clinic name. Leave blank to hide it.
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Brand promo → Default → Primary → Overwrite*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Quote field in *Brand promo → Default → Primary → Overwrite*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Leave blank to use the clinic's In my words.
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].quote
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  quote: prismic.RichTextField;
+
+  /**
+   * Text field in *Brand promo → Default → Primary → Overwrite*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: More about this brand, such as what a test kit measures. Leave blank to hide it.
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].text
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  text: prismic.RichTextField;
+
+  /**
+   * Product image field in *Brand promo → Default → Primary → Overwrite*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: Empty uses the brand's product image. Describe the product.
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].product
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  product: prismic.ImageField<never>;
+
+  /**
+   * Photo and price field in *Brand promo → Default → Primary → Overwrite*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Beside puts the price next to the photo. Stacked puts the photo on top and the price under it, as one card. Use Stacked when the card has a lot of writing.
+   * - **Default Value**: Beside
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].layout
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  layout: prismic.SelectField<"Beside" | "Stacked", "filled">;
+
+  /**
+   * Links field in *Brand promo → Default → Primary → Overwrite*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: A comparison or another link. Shown under the buttons.
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].links
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  links: prismic.Repeatable<
+    prismic.LinkField<string, string, unknown, prismic.FieldState, never>
+  >;
+}
+
+/**
+ * Primary content in *Brand promo → Default → Primary*
+ */
+export interface BrandPromoSliceDefaultPrimary {
   /**
    * Heading field in *Brand promo → Default → Primary*
    *
@@ -1314,24 +1394,40 @@ export interface BrandPromoSliceDefaultPrimary {
   heading: prismic.RichTextField;
 
   /**
-   * Intro field in *Brand promo → Default → Primary*
+   * Clinic field in *Brand promo → Default → Primary*
    *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: A short line under the clinic name. Leave blank to hide it.
-   * - **API ID Path**: brand_promo.default.primary.intro
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Brand promo → Default → Primary*
-   *
-   * - **Field Type**: Link
+   * - **Field Type**: Content Relationship
    * - **Placeholder**: *None*
-   * - **API ID Path**: brand_promo.default.primary.link
-   * - **Documentation**: https://prismic.io/docs/fields/link
+   * - **API ID Path**: brand_promo.default.primary.clinic
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
    */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  clinic: ContentRelationshipFieldWithData<
+    [
+      {
+        fields: [
+          "name",
+          "kind",
+          "logo",
+          "visit",
+          "page",
+          "review",
+          "youtube",
+          "product",
+          "monthly_price",
+          "price_unit",
+          "price_note",
+          "formulation",
+          "insurance",
+          "note",
+          "code",
+          "code_note",
+          "top_choice_label",
+          "quote",
+        ];
+        id: "provider";
+      },
+    ]
+  >;
 
   /**
    * Background field in *Brand promo → Default → Primary*
@@ -1383,62 +1479,6 @@ export interface BrandPromoSliceDefaultPrimary {
   >;
 
   /**
-   * Clinic field in *Brand promo → Default → Primary*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: brand_promo.default.primary.clinic
-   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
-   */
-  clinic: ContentRelationshipFieldWithData<
-    [
-      {
-        fields: [
-          "name",
-          "kind",
-          "logo",
-          "visit",
-          "page",
-          "review",
-          "youtube",
-          "product",
-          "monthly_price",
-          "price_unit",
-          "price_note",
-          "formulation",
-          "insurance",
-          "note",
-          "code",
-          "code_note",
-          "top_choice_label",
-          "quote",
-        ];
-        id: "provider";
-      },
-    ]
-  >;
-
-  /**
-   * Quote field in *Brand promo → Default → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Leave blank to use the clinic's In my words.
-   * - **API ID Path**: brand_promo.default.primary.quote
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  quote: prismic.RichTextField;
-
-  /**
-   * Text field in *Brand promo → Default → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: More about this brand, such as what a test kit measures. Leave blank to hide it.
-   * - **API ID Path**: brand_promo.default.primary.text
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  text: prismic.RichTextField;
-
-  /**
    * Is this 1st? field in *Brand promo → Default → Primary*
    *
    * - **Field Type**: Boolean
@@ -1460,36 +1500,15 @@ export interface BrandPromoSliceDefaultPrimary {
   place: prismic.KeyTextField;
 
   /**
-   * Product image field in *Brand promo → Default → Primary*
+   * Overwrite field in *Brand promo → Default → Primary*
    *
-   * - **Field Type**: Image
-   * - **Placeholder**: Empty uses the brand's product image. Describe the product.
-   * - **API ID Path**: brand_promo.default.primary.product
-   * - **Documentation**: https://prismic.io/docs/fields/image
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: brand_promo.default.primary.overwrite[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
    */
-  product: prismic.ImageField<never>;
-
-  /**
-   * Photo and price field in *Brand promo → Default → Primary*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: Beside puts the price next to the photo. Stacked puts the photo on top and the price under it, as one card. Use Stacked when the card has a lot of writing.
-   * - **Default Value**: Beside
-   * - **API ID Path**: brand_promo.default.primary.layout
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  layout: prismic.SelectField<"Beside" | "Stacked", "filled">;
-
-  /**
-   * Links field in *Brand promo → Default → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: A comparison or another link. Shown under the buttons.
-   * - **API ID Path**: brand_promo.default.primary.links
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  links: prismic.Repeatable<
-    prismic.LinkField<string, string, unknown, prismic.FieldState, never>
+  overwrite: prismic.GroupField<
+    Simplify<BrandPromoSliceDefaultPrimaryOverwriteItem>
   >;
 }
 
@@ -4459,6 +4478,7 @@ declare module "@prismicio/client" {
       BoxesSliceVariation,
       BoxesSliceDefault,
       BrandPromoSlice,
+      BrandPromoSliceDefaultPrimaryOverwriteItem,
       BrandPromoSliceDefaultPrimary,
       BrandPromoSliceVariation,
       BrandPromoSliceDefault,

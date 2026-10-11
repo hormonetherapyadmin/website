@@ -102,12 +102,8 @@ const contentComponents: RichTextComponents = {
   paragraph: ({ children }) => (
     <p className="mb-[1.4rem] last:mb-0">{children}</p>
   ),
-  list: ({ children }) => (
-    <ul className="mb-[1.4rem] list-disc ps-6 last:mb-0">{children}</ul>
-  ),
-  oList: ({ children }) => (
-    <ol className="mb-[1.4rem] list-decimal ps-6 last:mb-0">{children}</ol>
-  ),
+  list: ({ children }) => <ul className={styles.list}>{children}</ul>,
+  oList: ({ children }) => <ol className={styles.oList}>{children}</ol>,
   hyperlink: ({ node, children }) => (
     <PrismicNextLink field={node.data} className={linkClass} rel={storyLinkRel}>
       {children}

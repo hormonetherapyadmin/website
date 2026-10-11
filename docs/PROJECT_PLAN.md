@@ -977,7 +977,13 @@ inventory.
 -   Server Components by default. Client code is limited to the
     mobile menu, the search page (it filters the server-sent catalog
     as you type, and does not fetch again), one shared delegated click
-    listener for CTA tracking, and the offer copy-code button.
+    listener for CTA tracking, the offer copy-code button, and the
+    YouTube video modal (`src/components/video-link.tsx`).
+-   A YouTube link that a component plays in place opens the shared
+    video modal. The page HTML keeps the plain YouTube link, so a
+    modified click or a browser without JavaScript opens YouTube in a
+    new tab. The player is `youtube-nocookie.com` and loads only after
+    the click, so YouTube gets no request on page load.
 -   Images through Prismic's image CDN (`PrismicNextImage`) with
     explicit dimensions.
 -   No font is loaded until brand fonts arrive; system font stacks

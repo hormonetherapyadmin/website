@@ -172,13 +172,14 @@ editor that field is labeled Affiliate. Its id stays `visit`. The
 button words come from the link when she fills them, and otherwise say
 "Visit" plus the clinic name. Affiliate only accepts a web address.
 Review video is the YouTube
-link for her review. Slices say "Watch my review". Page is a link to
+link for her review. Slices say "Watch my review", and the video plays
+in a modal on the page. Page is a link to
 the site page about this clinic, and it stays blank until that page
 exists. The sidebar name uses Page. My review is a link to the post
 where she reviews this brand. Brand promo says "My review" for that
 post, "Products & pricing" for Page, and "Watch my review" for the
-video. Links written on Brand promo sit on a second row under those
-buttons. The product image is on the Product tab. A slice that shows
+video. Links written in Brand promo's Overwrite group sit on a second
+row under those buttons. The product image is on the Product tab. A slice that shows
 the jar or bottle reads it from the clinic. Brand promo uses that
 photo unless a photo is placed on the slice.
 
