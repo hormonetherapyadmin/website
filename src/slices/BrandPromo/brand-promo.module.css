@@ -96,10 +96,11 @@
   display: grid;
   flex: none;
   place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 4rem;
+  height: 4rem;
+  padding: 0.45rem;
   overflow: hidden;
-  border-radius: 0.75rem;
+  border-radius: 1rem;
   background: var(--color-paper);
   box-shadow: 0 0 0 1px var(--color-border);
 }

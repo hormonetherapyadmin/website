@@ -124,6 +124,40 @@ describe("SideBySide", () => {
     expect(markup).toContain('data-side="right"');
   });
 
+  it("marks a button to an affiliate address as sponsored", () => {
+    const markup = renderToStaticMarkup(
+      <SideBySide
+        variation="image"
+        primary={{
+          ...section(),
+          text: rich("Hi."),
+          button: [
+            {
+              link_type: "Web",
+              url: "https://amzn.to/4cW6sUq",
+              text: "See the Mira kit on Amazon",
+              target: "_blank",
+              variant: "Solid",
+            } as LinkField,
+            {
+              link_type: "Web",
+              url: "https://example.com/about",
+              text: "About",
+              variant: "Ghost",
+            } as LinkField,
+          ],
+        }}
+        image={{ src: "/photo.jpg", alt: "Mira monitor" }}
+      />,
+    );
+    const links = [...markup.matchAll(/<a [^>]*>/g)].map(([tag]) => tag);
+    const amazon = links.find((tag) => tag.includes("amzn.to"));
+    const about = links.find((tag) => tag.includes("example.com/about"));
+    expect(amazon).toContain('rel="sponsored nofollow noopener noreferrer"');
+    expect(amazon).toContain('target="_blank"');
+    expect(about).toContain('rel="noreferrer"');
+  });
+
   it("renders a quote with its attribution", () => {
     const markup = renderToStaticMarkup(
       <SideBySide

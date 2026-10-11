@@ -111,7 +111,7 @@ export default function BrandPromoPreview() {
             background: "Navy",
           }),
           quote: rich(innerBalance.quote ?? ""),
-          place: "1st",
+          first: true,
           product: image(
             "/mockup/products/oestra_rnieuz.webp",
             "Oestra cream jar",
@@ -128,7 +128,7 @@ export default function BrandPromoPreview() {
         primary={{
           ...section({ heading: rich("No pre-testing") }),
           quote: emptyRich,
-          place: null,
+          first: false,
           product: image("/mockup/products/image.png", "Winona treatment jar"),
           links: [
             link("Products & pricing", "/winona-review-page"),
@@ -145,7 +145,7 @@ export default function BrandPromoPreview() {
         primary={{
           ...section({ heading: rich("Most comprehensive testing") }),
           quote: emptyRich,
-          place: null,
+          first: false,
           product: image(
             "/mockup/products/image%20copy.png",
             "Joi HRT injectable vial",

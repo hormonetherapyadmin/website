@@ -144,7 +144,7 @@ describe("PageSliceZone", () => {
         small_heading: rich("Voted best for"),
         clinic: clinicLink,
         quote: emptyRich,
-        place: "1st",
+        first: true,
         product: {},
         links: [
           {

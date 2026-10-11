@@ -2,7 +2,6 @@ import {
   asText,
   isFilled,
   type ImageField,
-  type KeyTextField,
   type LinkField,
   type RichTextField,
 } from "@prismicio/client";
@@ -39,7 +38,8 @@ export type BrandPromoClinic = {
 type BrandPromoPrimary = Partial<SliceSectionFields> & {
   clinic?: LinkField | null;
   quote?: RichTextField | null;
-  place?: KeyTextField;
+  /** On shows the 1st badge. Off hides it. */
+  first?: boolean | null;
   product?: ImageField | null;
   links?: readonly LinkField[] | null;
 };
@@ -204,7 +204,7 @@ function Media({ field }: { field: ImageField }) {
 
 /**
  * One clinic card. Trusted providers stacks one of these per clinic.
- * Navy is the featured card. A Place such as "1st" shows the badge.
+ * Navy is the featured card. Is this 1st? shows the badge.
  * The price, logo, visit link, and coupon come from the clinic.
  */
 export function BrandPromo({
@@ -216,7 +216,6 @@ export function BrandPromo({
 }) {
   const labelId = useId();
   const name = text(clinic?.name);
-  const place = text(primary.place);
   const tone = brandPromoTone(primary.background);
   const headingFilled = isFilled.richText(primary.heading);
   const quote = brandPromoQuote(primary.quote, clinic?.quote);
@@ -261,11 +260,11 @@ export function BrandPromo({
     >
       <div className={styles.layout} data-tone={tone}>
         <div className={styles.copy}>
-          {place ? (
+          {primary.first ? (
             <p className={styles.placeLine}>
               <span className={styles.place}>
                 <Medal />
-                {place}
+                1st
                 <span className="sr-only"> place</span>
               </span>
               {clinic?.topChoice}
@@ -413,7 +412,7 @@ function Logo({ clinic }: { clinic: BrandPromoClinic }) {
   return (
     <span className={styles.logo}>
       {clinic.logo?.src ? (
-        <Image src={clinic.logo.src} alt="" width={44} height={44} />
+        <Image src={clinic.logo.src} alt="" width={64} height={64} />
       ) : null}
     </span>
   );

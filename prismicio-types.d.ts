@@ -852,12 +852,29 @@ interface ProviderDocumentData {
    * Visit field in *Clinic*
    *
    * - **Field Type**: Link
-   * - **Placeholder**: The affiliate link. Opens in a new tab.
+   * - **Placeholder**: Affiliate link
    * - **API ID Path**: provider.visit
    * - **Tab**: Profile
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
   visit: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Review video field in *Clinic*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: The YouTube link for my review.
+   * - **API ID Path**: provider.youtube
+   * - **Tab**: Profile
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  youtube: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Page field in *Clinic*
@@ -997,6 +1014,17 @@ interface ProviderDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   quote: prismic.RichTextField;
+
+  /**
+   * Product image field in *Clinic*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: The jar or bottle. The description is the alt text.
+   * - **API ID Path**: provider.product
+   * - **Tab**: Product
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  product: prismic.ImageField<never>;
 }
 
 /**

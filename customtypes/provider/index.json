@@ -37,9 +37,19 @@
           "allowTargetBlank": true,
           "allowText": true,
           "label": "Visit",
-          "placeholder": "The affiliate link. Opens in a new tab.",
+          "placeholder": "Affiliate link",
           "repeat": false,
           "select": null
+        },
+        "type": "Link"
+      },
+      "youtube": {
+        "config": {
+          "allowTargetBlank": true,
+          "allowText": true,
+          "label": "Review video",
+          "placeholder": "The YouTube link for my review.",
+          "select": "web"
         },
         "type": "Link"
       },
@@ -148,6 +158,15 @@
           "single": "paragraph,strong,em,hyperlink"
         },
         "type": "StructuredText"
+      }
+    },
+    "Product": {
+      "product": {
+        "config": {
+          "label": "Product image",
+          "placeholder": "The jar or bottle. The description is the alt text."
+        },
+        "type": "Image"
       }
     }
   },

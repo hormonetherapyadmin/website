@@ -155,16 +155,21 @@ in tabs. A tab is a group of fields. The model is in that file.
 
 Tabs:
 
--   Profile — name, logo, short description, visit link, page link
+-   Profile — name, logo, short description, visit link, review video, page link
 -   Price — the monthly price, the three price-box lines, and the coupon code
 -   Care — labs, HSA, states
 -   Words — her short quote
+-   Product — the product image
 
 A clinic has no public page and no SEO tab. A clinic page is a Page.
-Slices on that page point at the clinic. Visit is the only link to the
-clinic's own site. Page is a link to the site page about this clinic,
-and it stays blank until that page exists. The sidebar name uses Page.
-A review link is written on the slice that shows it.
+Slices on that page point at the clinic. Visit is the affiliate link,
+and the only link to the clinic's own site. Review video is the
+YouTube link for her review. Slices that show either link read it from
+the clinic. Page is a link to the site page about this clinic, and it
+stays blank until that page exists. The sidebar name uses Page. A
+written review link, such as "Read review", stays on the slice that
+shows it. The product image is on the Product tab. A slice that shows
+the jar or bottle reads it from the clinic.
 
 Field ids are in `docs/SLICE_MODEL.md`. The long review stays on the
 Provider review. A story inserts a clinic with a token such as

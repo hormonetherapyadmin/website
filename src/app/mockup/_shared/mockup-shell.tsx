@@ -11,9 +11,9 @@ import { HeaderCta, SiteNav } from "./site-nav";
 import Link from "next/link";
 
 /*
-  Header, footer, and option switcher shared by the design mockups.
-  Palettes and heading fonts are exploratory options for the brand
-  designer, chosen with ?palette= and ?serif= query parameters.
+  Header and footer shared by the design mockups.
+  Palettes and heading fonts stay available through ?palette= and ?serif=
+  for the brand designer. The footer does not show that switcher.
 */
 
 export const AFFILIATE_REL = "sponsored nofollow noopener noreferrer";
@@ -182,35 +182,12 @@ export async function MockupShell({
             links are affiliate links.
           </p>
           <div className={styles.footerBottom}>
-            <p>
-              © 2026 Hormone Therapy Hub · Columbus, Ohio ·{" "}
+            <p>© 2026 Hormone Therapy Hub · Columbus, Ohio</p>
+            <nav aria-label="Site information" className={styles.footerMeta}>
               <Link href="/sitemap">Sitemap</Link>
-            </p>
-            <nav aria-label="Mockup options" className={styles.explorer}>
-              <span className={styles.explorerGroup}>
-                <span>Palette:</span>
-                {(Object.keys(PALETTES) as PaletteKey[]).map((key) => (
-                  <a
-                    key={key}
-                    href={`?palette=${key}&serif=${serif}`}
-                    aria-current={key === palette ? "true" : undefined}
-                  >
-                    {PALETTES[key].label}
-                  </a>
-                ))}
-              </span>
-              <span className={styles.explorerGroup}>
-                <span>Headings:</span>
-                {(Object.keys(SERIFS) as SerifKey[]).map((key) => (
-                  <a
-                    key={key}
-                    href={`?palette=${palette}&serif=${key}`}
-                    aria-current={key === serif ? "true" : undefined}
-                  >
-                    {SERIFS[key].label}
-                  </a>
-                ))}
-              </span>
+              {/* Editorial standards page is not published yet. */}
+              <a href="#">How I review</a>
+              <Link href={DISCLOSURE_HREF}>Affiliate disclosure</Link>
             </nav>
           </div>
         </div>

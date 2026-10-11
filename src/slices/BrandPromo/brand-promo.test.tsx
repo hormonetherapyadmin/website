@@ -86,7 +86,7 @@ describe("brandPromoTone", () => {
 
 describe("BrandPromo", () => {
   it("reads the price, the coupon, and the visit link from the clinic", () => {
-    const html = render({ ...section(), quote: emptyRich, place: "1st" });
+    const html = render({ ...section(), quote: emptyRich, first: true });
 
     expect(html).toContain('id="inner-balance"');
     expect(html).toContain("Voted best for");
@@ -112,16 +112,17 @@ describe("BrandPromo", () => {
     );
   });
 
-  it("lets the slice quote replace the clinic's words and hides an empty place", () => {
+  it("lets the slice quote replace the clinic's words and hides the badge when it is not 1st", () => {
     const html = render({
       ...section({ background: "Navy" }),
       quote: rich("A sentence just for this card."),
-      place: "  ",
+      first: false,
     });
 
     expect(html).toContain('data-tone="dark"');
     expect(html).toContain("A sentence just for this card.");
     expect(html).not.toContain(clinic.quote!);
+    expect(html).not.toContain("1st");
     expect(html).not.toContain("My 2026 top choice");
   });
 

@@ -17,7 +17,7 @@ import {
   sectionAnchor,
   type SliceSectionFields,
 } from "@/components/slice-section";
-import { visitLinkProps } from "@/lib/affiliate-link";
+import { storyLinkRel, visitLinkProps } from "@/lib/affiliate-link";
 import styles from "./side-by-side.module.css";
 
 export const SIDES = ["Media left", "Media right"] as const;
@@ -114,6 +114,7 @@ function Buttons({
             key={`${button.variant ?? "Solid"}-${button.text}`}
             field={button}
             className={ghost ? styles.ghost : styles.button}
+            rel={storyLinkRel}
           >
             {button.text}
             {ghost ? <Chevron /> : null}

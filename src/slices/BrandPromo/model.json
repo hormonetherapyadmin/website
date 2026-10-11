@@ -117,12 +117,14 @@
           },
           "type": "StructuredText"
         },
-        "place": {
+        "first": {
           "config": {
-            "label": "Place",
-            "placeholder": "1st. Leave blank to hide the badge."
+            "default_value": false,
+            "label": "Is this 1st?",
+            "placeholder_false": "No",
+            "placeholder_true": "Yes"
           },
-          "type": "Text"
+          "type": "Boolean"
         },
         "product": {
           "config": {

@@ -141,35 +141,6 @@
   border: 0;
 }
 
-/* Mockup-only option switcher */
-
-.explorer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 2rem;
-  max-width: var(--max);
-  margin: 1.5rem auto 0;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--rule);
-  color: var(--muted);
-  font-size: 0.85rem;
-}
-
-.explorerGroup {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 0.9rem;
-}
-
-.explorerGroup > span {
-  font-weight: 600;
-}
-
-.explorer a[aria-current="true"] {
-  font-weight: 700;
-  text-decoration-thickness: 2px;
-}
-
 /* Header */
 
 .header {
@@ -1577,7 +1548,7 @@ a.clinicName:focus-visible {
 
 .footer {
   background: var(--panel);
-  color: var(--panel-text);
+  color: #fff;
   padding: clamp(3.5rem, 7vw, 5.5rem) var(--gutter) 2rem;
 }
 
@@ -1610,13 +1581,13 @@ a.clinicName:focus-visible {
   max-width: 18rem;
   margin: 0;
   line-height: 1.5;
-  opacity: 0.85;
 }
 
 .page .footerEmail {
   width: fit-content;
   color: var(--panel-accent);
   font-weight: 600;
+  text-decoration: none;
 }
 
 .footerNav {
@@ -1631,7 +1602,7 @@ a.clinicName:focus-visible {
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: var(--panel-accent);
+  color: #fff;
 }
 
 .footerNav ul {
@@ -1642,13 +1613,21 @@ a.clinicName:focus-visible {
   list-style: none;
 }
 
-.footerNav a {
+.footer a {
   text-decoration: none;
+}
+
+.footer a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footerNav a {
+  color: var(--panel-text);
   opacity: 0.9;
 }
 
 .footerNav a:hover {
-  text-decoration: underline;
   opacity: 1;
 }
 
@@ -1663,7 +1642,6 @@ a.clinicName:focus-visible {
   margin: 2rem 0 0;
   font-size: 0.9rem;
   line-height: 1.6;
-  opacity: 0.8;
 }
 
 .footerBottom {
@@ -1678,21 +1656,22 @@ a.clinicName:focus-visible {
 
 .footerBottom > p {
   margin: 0;
-  opacity: 0.8;
 }
 
-.footerBottom > p a {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
+.footerMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.9rem;
 }
 
-.footer .explorer {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  color: inherit;
-  opacity: 0.8;
+.footerMeta a {
+  color: var(--panel-text);
+  opacity: 0.9;
+  text-decoration: none;
+}
+
+.footerMeta a:hover {
+  opacity: 1;
 }
 
 @media (max-width: 960px) {
