@@ -25,8 +25,7 @@ type PickContentRelationshipFieldData<
         prismic.CustomTypeModelFetchContentRelationshipLevel1
       > as TSubRelationship["id"]
     ]: ContentRelationshipFieldWithData<TSubRelationship["customtypes"], TLang>;
-  } & // Group
-  {
+  } & { // Group
     [
       TGroup in Extract<
         TRelationship["fields"][number],
@@ -38,8 +37,7 @@ type PickContentRelationshipFieldData<
           PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
         >
       : never;
-  } & // Other fields
-  {
+  } & { // Other fields
     [
       TFieldKey in Extract<TRelationship["fields"][number], string>
     ]: TFieldKey extends keyof TData ? TData[TFieldKey] : never;
@@ -861,12 +859,21 @@ interface ProviderDocumentData {
   short_description: prismic.KeyTextField;
 
   /**
-   * Visit field in *Brand*
+   * Top choice label field in *Brand*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Leave blank for no badge.
+   * - **API ID Path**: provider.top_choice_label
+   * - **Tab**: Profile
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  top_choice_label: prismic.KeyTextField; /**
+   * Affiliate field in *Brand*
    *
    * - **Field Type**: Link
    * - **Placeholder**: Affiliate link
    * - **API ID Path**: provider.visit
-   * - **Tab**: Profile
+   * - **Tab**: Links
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
   visit: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
@@ -877,7 +884,7 @@ interface ProviderDocumentData {
    * - **Field Type**: Link
    * - **Placeholder**: The YouTube link for my review.
    * - **API ID Path**: provider.youtube
-   * - **Tab**: Profile
+   * - **Tab**: Links
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
   youtube: prismic.LinkField<
@@ -894,21 +901,21 @@ interface ProviderDocumentData {
    * - **Field Type**: Content Relationship
    * - **Placeholder**: The site page about this brand. Leave blank until that page exists.
    * - **API ID Path**: provider.page
-   * - **Tab**: Profile
+   * - **Tab**: Links
    * - **Documentation**: https://prismic.io/docs/fields/content-relationship
    */
   page: prismic.ContentRelationshipField<"page">;
 
   /**
-   * Top choice label field in *Brand*
+   * My review field in *Brand*
    *
-   * - **Field Type**: Text
-   * - **Placeholder**: Leave blank for no badge.
-   * - **API ID Path**: provider.top_choice_label
-   * - **Tab**: Profile
-   * - **Documentation**: https://prismic.io/docs/fields/text
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: The post where I review this brand.
+   * - **API ID Path**: provider.review
+   * - **Tab**: Links
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
    */
-  top_choice_label: prismic.KeyTextField; /**
+  review: prismic.ContentRelationshipField<"post">; /**
    * Price field in *Brand*
    *
    * - **Field Type**: Number
@@ -1392,6 +1399,7 @@ export interface BrandPromoSliceDefaultPrimary {
           "logo",
           "visit",
           "page",
+          "review",
           "youtube",
           "product",
           "monthly_price",
@@ -1476,7 +1484,7 @@ export interface BrandPromoSliceDefaultPrimary {
    * Links field in *Brand promo → Default → Primary*
    *
    * - **Field Type**: Link
-   * - **Placeholder**: Extra links under the buttons, such as My review or a comparison.
+   * - **Placeholder**: A comparison or another link. Shown under the buttons.
    * - **API ID Path**: brand_promo.default.primary.links
    * - **Documentation**: https://prismic.io/docs/fields/link
    */

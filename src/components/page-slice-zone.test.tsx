@@ -48,6 +48,7 @@ const clinic: PageClinic = {
   formulation: "Oestra vaginal cream",
   quote: "The one I stayed with.",
   pageHref: "/inner-balance",
+  reviewHref: "/post/inner-balance-hrt-review",
   reviewVideoHref: "https://youtu.be/_OlA4wXOHdQ",
 };
 
@@ -151,8 +152,8 @@ describe("PageSliceZone", () => {
         links: [
           {
             link_type: "Web",
-            url: "/post/inner-balance-hrt-review",
-            text: "My review",
+            url: "/post/oestra-vs-winona",
+            text: "Oestra vs Winona",
           },
         ],
       }),
@@ -164,7 +165,9 @@ describe("PageSliceZone", () => {
     expect(html).toContain("$199");
     expect(html).toContain("1st");
     expect(html).toContain('data-placement="brand_promo"');
+    expect(html).toContain('href="/post/inner-balance-hrt-review"');
     expect(html).toContain("My review");
+    expect(html).toContain("Oestra vs Winona");
     expect(html).toContain('href="/inner-balance"');
     expect(html).toContain("Products &amp; pricing");
     expect(html).toContain('href="https://youtu.be/_OlA4wXOHdQ"');

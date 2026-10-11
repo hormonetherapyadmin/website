@@ -91,6 +91,7 @@
                   "logo",
                   "visit",
                   "page",
+                  "review",
                   "youtube",
                   "product",
                   "monthly_price",
@@ -169,7 +170,7 @@
             "allowTargetBlank": true,
             "allowText": true,
             "label": "Links",
-            "placeholder": "Extra links under the buttons, such as My review or a comparison.",
+            "placeholder": "A comparison or another link. Shown under the buttons.",
             "repeat": true
           },
           "type": "Link"

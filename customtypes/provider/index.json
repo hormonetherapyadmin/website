@@ -41,14 +41,23 @@
         },
         "type": "Text"
       },
+      "top_choice_label": {
+        "config": {
+          "label": "Top choice label",
+          "placeholder": "Leave blank for no badge."
+        },
+        "type": "Text"
+      }
+    },
+    "Links": {
       "visit": {
         "config": {
           "allowTargetBlank": true,
           "allowText": true,
-          "label": "Visit",
+          "label": "Affiliate",
           "placeholder": "Affiliate link",
           "repeat": false,
-          "select": null
+          "select": "web"
         },
         "type": "Link"
       },
@@ -70,12 +79,14 @@
         },
         "type": "Link"
       },
-      "top_choice_label": {
+      "review": {
         "config": {
-          "label": "Top choice label",
-          "placeholder": "Leave blank for no badge."
+          "customtypes": ["post"],
+          "label": "My review",
+          "placeholder": "The post where I review this brand.",
+          "select": "document"
         },
-        "type": "Text"
+        "type": "Link"
       }
     },
     "Price": {

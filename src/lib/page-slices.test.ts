@@ -158,11 +158,21 @@ describe("pageClinic and comparisonClinic", () => {
           link_type: "Web",
           url: "https://youtu.be/_OlA4wXOHdQ",
         },
+        review: {
+          link_type: "Document",
+          id: "post-id",
+          type: "post",
+          tags: [],
+          lang: "en-us",
+          uid: "inner-balance-hrt-review",
+          url: "/post/inner-balance-hrt-review",
+        },
       }),
     )!;
 
     expect(brandPromoClinic(clinic)).toMatchObject({
       pageHref: "/inner-balance",
+      reviewHref: "/post/inner-balance-hrt-review",
       reviewVideoHref: "https://youtu.be/_OlA4wXOHdQ",
     });
     expect(

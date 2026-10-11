@@ -67,6 +67,7 @@ const innerBalance: BrandPromoClinic = {
   offerCopy: "10% off your first order",
   topChoice: "My 2026 top choice",
   pageHref: "/mockup/inner-balance",
+  reviewHref: "/post/inner-balance-hrt-review",
   reviewVideoHref: "https://youtu.be/_OlA4wXOHdQ",
   product: image("/mockup/products/oestra_rnieuz.webp", "Oestra cream jar"),
   quote:
@@ -85,6 +86,7 @@ const winona: BrandPromoClinic = {
   gettingStarted: "No consult required.",
   offerCopy: "15% off your first order",
   pageHref: "/winona-review-page",
+  reviewHref: "/post/winona-bioidentical-hormone-therapy-review",
   reviewVideoHref: "https://youtu.be/XZD4yvTKScA",
   product: image("/mockup/products/image.png", "Winona treatment jar"),
   quote:
@@ -104,6 +106,7 @@ const joi: BrandPromoClinic = {
   offerCode: "BRONSON",
   offerCopy: "50% off labs and 15% off HRT treatments",
   pageHref: "/joiwommenswellness",
+  reviewHref: "/post/joi-womens-hormone-replacement-review",
   reviewVideoHref: "https://youtu.be/2sQ2-kh1F10",
   product: image(
     "/mockup/products/image%20copy.png",
@@ -126,7 +129,6 @@ export default function BrandPromoPreview() {
           first: true,
           place: "My 2026 top choice",
           links: [
-            link("My review", "/post/inner-balance-hrt-review"),
             link(
               "Oestra vs Winona",
               "/post/musely-estrogen-cream-vs-winona-which-hrt-cream-wins",
@@ -144,12 +146,7 @@ export default function BrandPromoPreview() {
             "/mockup/products/image%20copy%202.png",
             "Musely estrogen cream bottle",
           ),
-          links: [
-            link(
-              "My review",
-              "/post/winona-bioidentical-hormone-therapy-review",
-            ),
-          ],
+          links: [],
         }}
         clinic={winona}
       />
@@ -158,9 +155,7 @@ export default function BrandPromoPreview() {
           ...section({ heading: rich("Most comprehensive testing") }),
           quote: emptyRich,
           first: false,
-          links: [
-            link("My review", "/post/joi-womens-hormone-replacement-review"),
-          ],
+          links: [],
         }}
         clinic={joi}
       />

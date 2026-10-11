@@ -230,11 +230,6 @@ describe("BrandPromo", () => {
         links: [
           {
             link_type: "Web",
-            url: "/post/inner-balance-hrt-review",
-            text: "My review",
-          },
-          {
-            link_type: "Web",
             url: "/post/musely-vs-winona",
             text: "Musely vs Winona",
           },
@@ -243,21 +238,23 @@ describe("BrandPromo", () => {
       {
         ...clinic,
         pageHref: "/inner-balance",
+        reviewHref: "/post/inner-balance-hrt-review",
         reviewVideoHref: "https://youtu.be/_OlA4wXOHdQ",
       },
     );
 
     expect(html).toContain('href="/inner-balance"');
     expect(html).toContain("Products &amp; pricing");
-    expect(html).toContain('href="https://youtu.be/_OlA4wXOHdQ"');
-    expect(html).toContain("Watch my review");
     expect(html).toContain('href="/post/inner-balance-hrt-review"');
     expect(html).toContain("My review");
+    expect(html).toContain('href="https://youtu.be/_OlA4wXOHdQ"');
+    expect(html).toContain("Watch my review");
     expect(html).toContain("Musely vs Winona");
-    expect(html.indexOf("Watch my review")).toBeLessThan(
-      html.indexOf("My review"),
-    );
+    expect(html.indexOf("Products")).toBeLessThan(html.indexOf("My review"));
     expect(html.indexOf("My review")).toBeLessThan(
+      html.indexOf("Watch my review"),
+    );
+    expect(html.indexOf("Watch my review")).toBeLessThan(
       html.indexOf("Musely vs Winona"),
     );
   });

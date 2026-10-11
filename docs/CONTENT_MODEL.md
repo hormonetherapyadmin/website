@@ -158,22 +158,26 @@ in tabs. A tab is a group of fields. The model is in that file.
 
 Tabs:
 
--   Profile — name, kind, logo, short description, visit link, review video, page link
+-   Profile — name, kind, logo, short description
+-   Links — affiliate link, page, review post, review video
 -   Price — the price and whether it is per month or one time, the three price-box lines, and the coupon code
 -   Care — labs, HSA, states
 -   Words — her short quote
 -   Product — the product image
 
 A clinic has no public page and no SEO tab. A clinic page is a Page.
-Slices on that page point at the clinic. Visit is the affiliate link,
-and the only link to the clinic's own site. Its button words come from
-the link when she fills them, and otherwise say "Visit" plus the clinic
-name. Review video is the YouTube link for her review. Slices say
-"Watch my review". Slices that show either link read the address from
-the clinic. Page is a link to the site page about this clinic, and it
-stays blank until that page exists. The sidebar name uses Page. Brand
-promo uses Page as Products & pricing and Review video as Watch my
-review. Links written on Brand promo sit on a second row under those
+Slices on that page point at the clinic. The four links sit on the
+Links tab. Affiliate is the link to the clinic's own site. In the
+editor that field is labeled Affiliate. Its id stays `visit`. The
+button words come from the link when she fills them, and otherwise say
+"Visit" plus the clinic name. Affiliate only accepts a web address.
+Review video is the YouTube
+link for her review. Slices say "Watch my review". Page is a link to
+the site page about this clinic, and it stays blank until that page
+exists. The sidebar name uses Page. My review is a link to the post
+where she reviews this brand. Brand promo says "My review" for that
+post, "Products & pricing" for Page, and "Watch my review" for the
+video. Links written on Brand promo sit on a second row under those
 buttons. The product image is on the Product tab. A slice that shows
 the jar or bottle reads it from the clinic. Brand promo uses that
 photo unless a photo is placed on the slice.

@@ -24,6 +24,7 @@ export type PageClinicSource = TokenClinicSource & {
     top_choice_label?: string | null;
     quote?: RichTextField | null;
     youtube?: LinkField | null;
+    review?: LinkField | null;
     product?: ImageField | null;
   };
 };
@@ -36,6 +37,8 @@ export type PageClinic = TokenClinic & {
   quote?: string;
   /** Review video. Brand promo labels it Watch my review. */
   reviewVideoHref?: string;
+  /** Her review post. Brand promo labels it My review. */
+  reviewHref?: string;
   /** The jar or bottle. Brand promo uses this unless the slice has a photo. */
   product?: ImageField;
 };
@@ -68,6 +71,13 @@ function text(value: string | null | undefined) {
 /** A web address, such as the review video. A blank link stays blank. */
 function webHref(link: LinkField | null | undefined) {
   if (!link || !isFilled.link(link) || link.link_type !== "Web")
+    return undefined;
+  return text(link.url);
+}
+
+/** A Prismic document, such as her review post. A blank link stays blank. */
+function documentHref(link: LinkField | null | undefined) {
+  if (!link || !isFilled.link(link) || link.link_type !== "Document")
     return undefined;
   return text(link.url);
 }
@@ -150,6 +160,7 @@ export function pageClinic(document: PageClinicSource): PageClinic | null {
     shortDescription: text(document.data.short_description),
     quote: text(quote),
     reviewVideoHref: webHref(document.data.youtube),
+    reviewHref: documentHref(document.data.review),
     product:
       document.data.product && isFilled.image(document.data.product)
         ? document.data.product
@@ -211,6 +222,7 @@ export function brandPromoClinic(clinic: PageClinic): BrandPromoClinic {
     topChoice: clinic.topChoice,
     quote: clinic.quote,
     pageHref: clinic.pageHref,
+    reviewHref: clinic.reviewHref,
     reviewVideoHref: clinic.reviewVideoHref,
     product: clinic.product,
   };

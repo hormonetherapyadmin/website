@@ -43,6 +43,8 @@ export type BrandPromoClinic = {
   quote?: string;
   /** The site page about this brand. The card labels it Products & pricing. */
   pageHref?: string;
+  /** Her review post. The card labels it My review. */
+  reviewHref?: string;
   /** The review video. The card labels it Watch my review. */
   reviewVideoHref?: string;
   /** The brand's product photo, used when this slice has none. */
@@ -64,6 +66,7 @@ type BrandPromoPrimary = Partial<SliceSectionFields> & {
 };
 
 const PRODUCTS_LABEL = "Products & pricing";
+const REVIEW_LABEL = "My review";
 const WATCH_LABEL = "Watch my review";
 
 function text(value: string | null | undefined) {
@@ -81,15 +84,23 @@ export type BrandPromoLink = {
   external: boolean;
 };
 
-/** Products & pricing is the brand's page. Watch my review is its video. */
+/**
+ * Products & pricing is the brand's page. My review is her post.
+ * Watch my review is the review video.
+ */
 export function brandPromoLinks(
-  clinic?: Pick<BrandPromoClinic, "pageHref" | "reviewVideoHref"> | null,
+  clinic?: Pick<
+    BrandPromoClinic,
+    "pageHref" | "reviewHref" | "reviewVideoHref"
+  > | null,
 ): BrandPromoLink[] {
   const page = text(clinic?.pageHref);
+  const review = text(clinic?.reviewHref);
   const video = text(clinic?.reviewVideoHref);
 
   return [
     page ? { href: page, text: PRODUCTS_LABEL, external: false } : undefined,
+    review ? { href: review, text: REVIEW_LABEL, external: false } : undefined,
     video ? { href: video, text: WATCH_LABEL, external: true } : undefined,
   ].filter((link): link is BrandPromoLink => link !== undefined);
 }
@@ -226,6 +237,24 @@ function FactIcon({ kind }: { kind: "formulation" | "yes" | "no" }) {
 }
 
 function ResourceIcon({ url, label }: { url: string; label: string }) {
+  if (label === REVIEW_LABEL) {
+    return (
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        aria-hidden="true"
+      >
+        <path d="M7 3.5h7.2L19 8.2V20.5H7z" />
+        <path d="M14.2 3.5V8.2H19" />
+        <path d="M10 12.5h5.5M10 16h5.5" />
+      </svg>
+    );
+  }
+
   if (isVideoUrl(url) || label === WATCH_LABEL) {
     return (
       <svg
@@ -273,8 +302,9 @@ function Media({ field, sizes }: { field: ImageField; sizes: string }) {
  * Place is the line beside that badge. A blank Small heading reads
  * "Voted best for".
  * The price, logo, visit link, and coupon come from the clinic.
- * Products & pricing is the brand's page. Watch my review is its
- * review video. Links written here sit under those buttons.
+ * Products & pricing is the brand's page. My review is her post.
+ * Watch my review is the review video. Links written here sit under
+ * those buttons.
  * The product photo is the brand's, unless one is placed here.
  */
 export function BrandPromo({
