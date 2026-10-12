@@ -315,9 +315,10 @@ function factBullets(clinic: TokenClinic) {
   if (clinic.formulation) {
     bullets.push({ icon: Medicine02Icon, text: clinic.formulation });
   }
-  if (clinic.insurance === true) {
+  const product = clinic.kind === "Product";
+  if (!product && clinic.insurance === true) {
     bullets.push({ icon: Tick02Icon, text: "Takes insurance" });
-  } else if (clinic.insurance === false) {
+  } else if (!product && clinic.insurance === false) {
     bullets.push({ icon: Cancel01Icon, text: "Doesn’t take insurance" });
   }
   if (clinic.gettingStarted) {
@@ -335,9 +336,15 @@ function FactsCallout({ clinic }: { clinic: TokenClinic }) {
       <div>
         {typeof clinic.monthlyPrice === "number" ? (
           <p className={styles.factsPrice}>
-            <span className={shared.srOnly}>What I paid per month </span>
+            <span className={shared.srOnly}>
+              {clinic.priceUnit === "One time"
+                ? "What I paid "
+                : "What I paid per month "}
+            </span>
             <span>{money(clinic.monthlyPrice)}</span>
-            <span className={styles.factsPer}>/mo</span>
+            {clinic.priceUnit === "One time" ? null : (
+              <span className={styles.factsPer}>/mo</span>
+            )}
           </p>
         ) : null}
         {clinic.priceNote ? (

@@ -5,9 +5,12 @@ import { describe, expect, it, vi } from "vitest";
 import type { SliceSectionFields } from "@/components/slice-section";
 import {
   BrandPromo,
+  brandPromoExtraLinks,
+  brandPromoProduct,
   brandPromoQuote,
   brandPromoTone,
   type BrandPromoClinic,
+  type BrandPromoOverwrite,
 } from "./index";
 
 vi.mock("next/image", () => ({
@@ -54,6 +57,10 @@ const clinic: BrandPromoClinic = {
     "Finding a product that treats my symptoms of menopause and helps with sleep was a clear winner for me.",
 };
 
+function written(fields: BrandPromoOverwrite) {
+  return { overwrite: [fields] };
+}
+
 function render(
   primary: Parameters<typeof BrandPromo>[0]["primary"],
   item: BrandPromoClinic | null = clinic,
@@ -86,7 +93,11 @@ describe("brandPromoTone", () => {
 
 describe("BrandPromo", () => {
   it("reads the price, the coupon, and the visit link from the clinic", () => {
-    const html = render({ ...section(), quote: emptyRich, place: "1st" });
+    const html = render({
+      ...section(),
+      first: true,
+      place: "My 2026 top choice",
+    });
 
     expect(html).toContain('id="inner-balance"');
     expect(html).toContain("Voted best for");
@@ -107,27 +118,45 @@ describe("BrandPromo", () => {
     expect(html).toContain('rel="sponsored nofollow noopener noreferrer"');
     expect(html).toContain('target="_blank"');
     expect(html).toContain('data-placement="brand_promo"');
+    expect(html).not.toContain("data-layout");
     expect(html).not.toMatch(
       /<a [^>]*href="https:\/\/example[^>]*rel="noreferrer"/,
     );
   });
 
-  it("lets the slice quote replace the clinic's words and hides an empty place", () => {
+  it("defaults a blank small heading and keeps the heading off the badge line", () => {
+    const html = render(
+      {
+        ...section({ small_heading: emptyRich }),
+        first: true,
+        place: "My 2026 top choice",
+      },
+      { ...clinic, topChoice: "Improved sleep" },
+    );
+
+    expect(html).toContain("Voted best for");
+    expect(html).toContain("My 2026 top choice");
+    expect(html).toContain("Improved sleep");
+    expect(html).not.toMatch(/1st[^<]*Improved sleep/);
+  });
+
+  it("lets the slice quote replace the clinic's words and hides the badge when it is not 1st", () => {
     const html = render({
       ...section({ background: "Navy" }),
-      quote: rich("A sentence just for this card."),
-      place: "  ",
+      ...written({ quote: rich("A sentence just for this card.") }),
+      first: false,
     });
 
     expect(html).toContain('data-tone="dark"');
     expect(html).toContain("A sentence just for this card.");
     expect(html).not.toContain(clinic.quote!);
+    expect(html).not.toContain("1st");
     expect(html).not.toContain("My 2026 top choice");
   });
 
   it("shows the offer line alone when the clinic has no code", () => {
     const html = render(
-      { ...section({ heading: rich("No pre-testing") }), quote: emptyRich },
+      { ...section({ heading: rich("No pre-testing") }) },
       {
         ...clinic,
         uid: "winona",
@@ -143,22 +172,52 @@ describe("BrandPromo", () => {
     expect(html).not.toContain("Code ");
   });
 
+  it("drops /mo for a one-time price and the insurance line for a product", () => {
+    const html = render(
+      {
+        ...section({ heading: rich("Mira Hormone Monitor") }),
+        ...written({
+          text: rich("The kit is measuring four critical hormones."),
+          layout: "Stacked",
+        }),
+      },
+      {
+        uid: "mira",
+        name: "Mira",
+        kind: "Product",
+        monthlyPrice: 179,
+        priceUnit: "One time",
+        insurance: false,
+        formulation: "Perimenopause kit",
+      },
+    );
+
+    expect(html).toContain("$179");
+    expect(html).toContain('data-layout="stacked"');
+    expect(html).not.toContain("/mo");
+    expect(html).toContain("measuring four critical hormones");
+    expect(html).toContain("Perimenopause kit");
+    expect(html).not.toContain("insurance");
+  });
+
   it("renders the written heading when the clinic is missing", () => {
     const html = render(
       {
         ...section(),
-        quote: rich("Still here."),
-        links: [
-          {
-            link_type: "Web",
-            url: "https://youtu.be/abc",
-            text: "Watch my review",
-          },
-        ],
-        product: {
-          url: "/mockup/products/oestra_rnieuz.webp",
-          alt: "Oestra cream jar",
-        } as ImageField,
+        ...written({
+          quote: rich("Still here."),
+          links: [
+            {
+              link_type: "Web",
+              url: "https://youtu.be/abc",
+              text: "Watch my review",
+            },
+          ],
+          product: {
+            url: "/mockup/products/oestra_rnieuz.webp",
+            alt: "Oestra cream jar",
+          } as ImageField,
+        }),
       },
       null,
     );
@@ -168,5 +227,96 @@ describe("BrandPromo", () => {
     expect(html).toContain("Watch my review");
     expect(html).toContain('alt="Oestra cream jar"');
     expect(html).not.toContain("Visit");
+  });
+
+  it("puts brand buttons first and slice links on the next row", () => {
+    const html = render(
+      {
+        ...section(),
+        ...written({
+          links: [
+            {
+              link_type: "Web",
+              url: "/post/musely-vs-winona",
+              text: "Musely vs Winona",
+            },
+          ],
+        }),
+      },
+      {
+        ...clinic,
+        pageHref: "/inner-balance",
+        reviewHref: "/post/inner-balance-hrt-review",
+        reviewVideoHref: "https://youtu.be/_OlA4wXOHdQ",
+      },
+    );
+
+    expect(html).toContain('href="/inner-balance"');
+    expect(html).toContain("Products &amp; pricing");
+    expect(html).toContain('href="/post/inner-balance-hrt-review"');
+    expect(html).toContain("My review");
+    expect(html).toContain('href="https://youtu.be/_OlA4wXOHdQ"');
+    expect(html).toContain('aria-haspopup="dialog"');
+    expect(html).toContain("Watch my review");
+    expect(html).toContain("Musely vs Winona");
+    expect(html.indexOf("Products")).toBeLessThan(html.indexOf("My review"));
+    expect(html.indexOf("My review")).toBeLessThan(
+      html.indexOf("Watch my review"),
+    );
+    expect(html.indexOf("Watch my review")).toBeLessThan(
+      html.indexOf("Musely vs Winona"),
+    );
+  });
+
+  it("keeps a slice link when the brand has no page or video", () => {
+    expect(
+      brandPromoExtraLinks([
+        {
+          link_type: "Web",
+          url: "/post/inner-balance-hrt-review",
+          text: "My review",
+        },
+      ]),
+    ).toEqual([
+      {
+        href: "/post/inner-balance-hrt-review",
+        text: "My review",
+        external: false,
+      },
+    ]);
+  });
+
+  it("uses the brand product photo unless the slice has one", () => {
+    const brand = {
+      url: "/mockup/products/image.png",
+      alt: "Winona treatment jar",
+    } as ImageField;
+    const placed = {
+      url: "/mockup/products/oestra_rnieuz.webp",
+      alt: "Oestra cream jar",
+    } as ImageField;
+
+    const fallback = render(
+      { ...section(), ...written({ product: {} as ImageField }) },
+      {
+        ...clinic,
+        product: brand,
+      },
+    );
+    expect(fallback).toContain('alt="Winona treatment jar"');
+
+    const override = render(
+      { ...section(), ...written({ product: placed }) },
+      {
+        ...clinic,
+        product: brand,
+      },
+    );
+    expect(override).toContain('alt="Oestra cream jar"');
+    expect(override).not.toContain("Winona treatment jar");
+    expect(brandPromoProduct(placed, brand)?.alt).toBe("Oestra cream jar");
+    expect(brandPromoProduct({} as ImageField, brand)?.alt).toBe(
+      "Winona treatment jar",
+    );
   });
 });

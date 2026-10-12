@@ -23,7 +23,7 @@ custom type. The clinic has no public page. A clinic page is a Page.
 | --- | --- | --- |
 | Homepage | Page type, single | The `/` page |
 | Blog | Page type, single | The `/blog` page |
-| Provider | Custom type | The clinic every slice links to. File: `customtypes/provider` |
+| Provider (labeled Brand) | Custom type | The clinic or product every slice links to. File: `customtypes/provider` |
 | Post | Page type | A blog post. File: `customtypes/post` |
 | Page | Page type | A site page at `/<uid>`. File: `customtypes/page` |
 | Provider review, Comparison | Page type | Public pages |
@@ -60,6 +60,8 @@ on the slice and before its own fields. They are not in a group. In the
 Page Builder even a non-repeatable group starts empty, and she has to
 add an item before she can type a heading, so the fields stay open
 instead. The Divider has only Background, Space above, and Space below.
+Brand promo keeps Heading, Background, Space above, and Space below
+open, and puts Small heading, Intro, and Link in Overwrite.
 
 | Label | Id | Kind | Default |
 | --- | --- | --- | --- |
@@ -98,8 +100,9 @@ The four pastels are the Start here card colors. Raspberry and Navy use
 light text. The small heading is raspberry on Transparent, Cream, and
 the pastels,
 light blue (`card-2`) on Raspberry, and pink (`panel-accent`) on Navy.
-Slices that draw their own small heading (Hero, Side by side, Quote,
-Brand promo) follow the same rule. A later palette
+Slices that draw their own small heading (Hero, Side by side, Quote)
+follow the same rule. Brand promo's small heading on Navy is light blue
+(`card-2`) and sits close above the heading. A later palette
 change to a token updates every section that uses it. A brand change
 that makes a name wrong, such as a new accent that is not raspberry,
 renames the choice, and pages that stored the old name fall back to
@@ -156,6 +159,24 @@ content field's JSON (`labels`), not in the Type Builder. Handle them in
 
 A label styles words. It does not insert a document.
 
+Writing is one size everywhere. A post body and every slice's Text field
+(Side by side, Brand promo, Ribbon, and Quote) use the `--text-body`
+token in `globals.css`, 1.3rem with a 1.7 line height, with 1.4rem
+between paragraphs. Intros, captions, card text, the closing line, and
+the note box keep their own sizes.
+
+A link in writing looks the same as a link in a post body: the accent
+color, semibold, no underline, and a tint that grows under the words on
+hover or keyboard focus. On a Raspberry or Navy section the color is
+that section's small heading color, so the link stays readable.
+
+Lists in writing look the same as lists in a post body. A bullet is a
+navy dot (`marker`) with a pale navy ring. A number is a heading-font
+numeral in navy inside a pale navy circle. Lists use navy, not
+raspberry, so they do not compete with links. On a Raspberry or Navy
+section, or a Ribbon box in those colors, they are light blue
+(`card-2`).
+
 Plain text stays in use for a name, a code, a price, and an icon choice.
 Those values are data, not writing.
 
@@ -186,7 +207,9 @@ posts is a repeatable group with one content relationship in each row.
 A line between slices. It does not use the Section header. Background,
 Space above, and Space below are fields on the slice, with the same
 choices as Section. Both spacing fields default to None, so the line does
-not add a gap until she asks for one.
+not add a gap until she asks for one. That gap is added around the line,
+on top of the space on the slices beside it. A margin would collapse into
+the neighbor's margin, and None and Small would look the same.
 
 | Label | Id | Kind | Default |
 | --- | --- | --- | --- |
@@ -257,39 +280,99 @@ headings to the page outline.
 
 One clinic card, in `src/slices/BrandPromo`. Trusted providers stacks
 one slice per clinic. The featured card is this slice with Background
-Navy and Place filled in. Each card under it is the same slice on a
-transparent background, with Place left blank.
+Navy and Is this 1st? turned on. Each card under it is the same slice
+on a transparent background, with Is this 1st? left off.
 
-The slice lays out Small heading, Heading, and Intro itself. Small
-heading is "Voted best for". Heading is the specialty, such as
-"Improved sleep", and it is an `h2`. Intro is a short line under the
-clinic name, such as Effecty's "Choose a consult or not, and choose
-patch or gel." Leave Intro blank to hide it. The section Link is not
-shown. The section id is the clinic's UID, so a Boxes jump link of
+The open fields are the ones she fills on every card. Heading is the
+specialty, such as "Improved sleep", and it is an `h2`. Clinic is the
+brand. Background, Space above, and Space below are the section.
+Is this 1st? shows the badge. Place is the words beside it.
+
+Overwrite is one optional group. It starts empty. She adds it only when
+this card should differ from the brand, or from the built-in line
+"Voted best for". The card reads the first item. Small heading, Intro,
+Quote, Text, the product photo, Photo and price, and the extra links
+are in that group. The section Link is in the group and is not shown.
+The section id is the clinic's UID, so a Boxes jump link of
 `#inner-balance` lands on this card.
+
+Small heading is "Voted best for" when Overwrite is off or that field
+is blank. On a Navy card that line is light blue. On every other
+background it uses the usual small-heading color. Intro is a short line
+under the clinic name, such as Effecty's "Choose a consult or not, and
+choose patch or gel." Leave Intro blank to hide it.
 
 | Label | Id | Kind | Required | Trusted providers |
 | --- | --- | --- | --- | --- |
+| Heading | `heading` | Heading rich text | No | Improved sleep |
 | Clinic | `clinic` | Content relationship to Provider | Yes | Inner Balance |
-| Quote | `quote` | Heading rich text | No | Blank uses the clinic's In my words. Write a sentence here when this card should say something else. |
-| Place | `place` | Text | No | 1st. Blank hides the badge. |
-| Product image | `product` | Image | No | The Oestra jar. The description is the alt text. |
-| Links | `links` | Repeatable link, with display text | No | Products & pricing, My review, Watch my review |
+| Background | `background` | Select | No | Navy on the featured card. Transparent on the cards under it. |
+| Space above | `space_above` | Select | No | None on the directory cards |
+| Space below | `space_below` | Select | No | None on the directory cards |
+| Is this 1st? | `first` | Boolean | No | On shows the 1st badge. Off hides it. |
+| Place | `place` | Text | No | My 2026 top choice. Shown beside the badge. Blank hides the words. |
+| Overwrite | `overwrite` | Non-repeatable group | No | Off. Add it to replace what the brand supplies. |
 
-The relationship fetches `name`, `logo`, `visit`, `monthly_price`,
-`price_note`, `formulation`, `insurance`, `note`, `code`, `code_note`,
-`top_choice_label`, and `quote`.
+Overwrite fields:
+
+| Label | Id | Kind | Required | Trusted providers |
+| --- | --- | --- | --- | --- |
+| Small heading | `small_heading` | Heading rich text | No | Blank still says Voted best for |
+| Intro | `intro` | Heading rich text | No | Blank hides it |
+| Link | `link` | Link, with display text | No | Not shown |
+| Quote | `quote` | Heading rich text | No | Blank uses the clinic's In my words. Write a sentence here when this card should say something else. |
+| Text | `text` | Content rich text | No | Empty. On test kits, the paragraphs about each kit |
+| Product image | `product` | Image | No | Empty uses the brand's product image. A photo here replaces it. The description is the alt text. |
+| Photo and price | `layout` | Select: Beside, Stacked | No | Beside. Off the group, the card is Beside. |
+| Links | `links` | Repeatable link, with display text | No | A second row under the brand buttons, such as a comparison |
+
+Text is more writing under the quote, with the content toolbar. Leave
+it blank to hide it. The test kits page uses it for the paragraphs
+about each kit, because a product card has more to say than one line.
+
+Photo and price sets the card on the right. Beside, the default, puts
+the price box next to the product image, as on Trusted providers.
+Stacked puts the image on top and the price box under it, as one
+card centered in the right half, with no line. The
+card stays in view while the writing scrolls on wide screens. Use Stacked when the card has a lot of writing, as on the
+test kits page. On a phone both layouts stack.
+
+The relationship fetches `name`, `kind`, `logo`, `visit`, `page`,
+`review`, `youtube`, `product`, `monthly_price`, `price_unit`,
+`price_note`,
+`formulation`, `insurance`, `note`, `code`, `code_note`,
+`top_choice_label`, and `quote`. A product leaves out the insurance
+line, and a one-time price has no "/mo". A brand with no logo shows
+its name without the logo tile. Page is the Products & pricing
+button. My review is her post. Review video is Watch my review. A
+YouTube link plays in the site's video modal. The modal heading reads
+"My review on", then the brand logo and name. Any other video link
+opens in a new tab. A YouTube link written in the slice's extra links
+also plays in the modal. A blank Page, My review, or Review video
+hides that button. The product photo is
+the brand's, unless a photo is placed in Overwrite. Links written in
+Overwrite sit on a second row under those buttons.
 
 The logo, the name, the price, the three price-box lines, the visit
-button, and the coupon come from the clinic. A filled Quote replaces
-the clinic's In my words. Place, such as "1st", shows the badge, and
-the words beside it are the clinic's Top choice label. A clinic with
-a code shows "Code PEGGY10" and the code line under it. A clinic with
-no code shows the code line alone, such as Winona's "15% off your
-first order". A YouTube or Vimeo link gets a play icon. Any other
-link gets a tag icon. Set Space above and Space below to None on the
-directory cards so they stack. Navy and Raspberry use the light text
-and the light visit button.
+button, the coupon, the product photo, Products & pricing, My
+review, and Watch my review come from the clinic. A photo in
+Overwrite replaces the
+brand's product image. A filled Quote replaces the clinic's In my
+words. Is this 1st?, when on, shows the badge, and Place is the words
+beside it, such as "My 2026 top choice". A clinic with a code shows
+"Code PEGGY10" and the code line under it. A clinic with no code shows
+the code line alone, such as Winona's "15% off your first order". The
+brand buttons sit in this order: Products & pricing, My review,
+then Watch my review. A YouTube or Vimeo link gets a play icon. My
+review gets a page icon. Page gets a tag icon. Links written on the
+slice are a second row of text, grey on a
+light card and white on Navy or Raspberry, each with a chevron. Set
+Space above and Space below to None on the directory cards so they
+stack. A light Beside card draws a rule across the bottom, in the
+middle of the gap after the card, so that gap is even on both sides
+of the line. The gap is Space below, or the next slice's Space above
+when that is larger. Stacked draws no rule. Navy and Raspberry use the light text and the light visit
+button.
 
 ### Ribbon
 
@@ -325,7 +408,8 @@ transparent band has no wave.
 Title is an `h2`, and the section id, when Section Heading is empty.
 Under a Section Heading it is an `h3`. Solid is the filled button.
 Ghost is the text button, with an arrow. A button with no words is
-hidden. An empty title, content, and button list hides the box. The
+hidden. A button to an affiliate address gets the affiliate `rel`, the
+same as Side by side. An empty title, content, and button list hides the box. The
 section header can still show.
 
 ## Homepage
@@ -346,12 +430,12 @@ Each slice below lists only its own fields. Section is on all of them.
 
 ### Hero
 
-One slice, four variations. Each variation includes the shared Section
+One slice, five variations. Each variation includes the shared Section
 fields and lays the heading out itself. Section supplies the spacing and
 background. The homepage section id comes from the tagline. The homepage
 variation also keeps the mockup's vertical padding, and Space above and
-Space below add to it. The subpage, brands, and provider variations do
-not, so those fields are the whole gap.
+Space below add to it. The subpage, centered, brands, and provider
+variations do not, so those fields are the whole gap.
 
 #### Home
 
@@ -387,6 +471,15 @@ are the kicker, the page title, the dek, and the text link.
 
 Hide the photo when the image is empty. Image help: "Describe who is in
 the photo and what they are doing."
+
+#### Centered
+
+A short page top with no photo. The Section Small heading, Heading,
+Intro, and Link are centered, in the same type as Subpage. The heading
+spans the container. The intro stays on the shorter measure. It has no
+fields of its own. The test kits page uses it with one intro sentence
+and moves Peggy's photo into the Side by side under it. Keep the intro
+to a sentence or two, because a long centered paragraph is hard to read.
 
 #### Brands
 
@@ -427,11 +520,13 @@ slice has a Product image.
 | Links | `links` | Repeatable link, with display text | No | My 1-year review, Watch my review |
 | Product image | `product` | Image | No | The Oestra jar |
 
-The relationship fetches `name`, `logo`, `formulation`, `visit`,
-`monthly_price`, `price_note`, `top_choice_label`, `code`, and
-`code_note`. The price card shows the formulation when
-that field is filled, and the clinic name otherwise. The price is the
-clinic's one monthly price.
+The relationship fetches `name`, `kind`, `logo`, `formulation`,
+`visit`, `monthly_price`, `price_unit`, `price_note`,
+`top_choice_label`, `code`, and `code_note`. The price card shows the
+formulation when that field is filled, and the clinic name otherwise.
+The price is the clinic's one price, with "/mo" unless Price is says
+One time. This variation still uses its own product
+image and its own links, including "Watch my review".
 
 ### Start here
 
@@ -524,7 +619,9 @@ The slice is in `src/slices/clinic_comparison`. The page resolves each
 clinic and passes the fields this table reads.
 
 The columns stay fixed: Clinic, Description, What I paid per month,
-Insurance, Typically prescribed, In my words. The relationship fetches
+Insurance, Typically prescribed, In my words. The chart compares
+clinics. Do not add a product row: it would show "/mo" and an
+insurance mark that do not apply. The relationship fetches
 the Provider fields in the next section, including `code` and
 `code_note`. The review link is the row's Review field.
 
@@ -560,14 +657,22 @@ story is the Image variation with the media on the left. Section holds
 the small heading, the title, and the lead sentence. Buttons sit under
 the writing. Solid is the filled button, such as "Read my whole story."
 Ghost is the quieter text button, with an arrow. A button with no words
-is hidden.
+is hidden. A button to an affiliate address, such as an Amazon link,
+gets the affiliate `rel` by the same check as a link in post text.
 
 Side is Media left or Media right. Media left matches the story photo.
 On a narrow screen the media stacks above the writing either way.
 
+Media position sets where the media sits beside the writing. Center,
+the default, lines it up with the middle of the writing. Top lines it
+up with the first line. Sticky starts at the top and keeps the media in
+view while long writing scrolls, as on the homepage story. A slice
+saved before this field existed has no value and shows as Center. On a
+narrow screen the media stacks above the writing and never sticks.
+
 | Variation | Id | The media side |
 | --- | --- | --- |
-| Image | `image` | Image and Caption. The description is the image's alt text. Caption sits on the photo. |
+| Image | `image` | Image and Caption. The description is the image's alt text. Caption on the photo, the default, puts the words on the picture. Off centers them under it. |
 | Video | `video` | Video, a YouTube or Vimeo embed, and Caption |
 | Quote | `quote` | Quote, and Attribution under it |
 | Clinic | `clinic` | A clinic. Logo, name, quote, and the visit link come from the clinic |
@@ -576,12 +681,14 @@ On a narrow screen the media stacks above the writing either way.
 | --- | --- | --- | --- |
 | Section | The seven Section fields | Shared, open on the slice | All |
 | Side | `side` | Select: Media left, Media right. Default Media left | All |
+| Media position | `media_position` | Select: Center, Top, Sticky. Default Center | All |
 | Text | `text` | Content rich text | All |
 | Buttons | `button` | Repeatable link, with display text and a style | All |
 | Image | `image` | Image | Image |
 | Caption | `caption` | Heading rich text | Image, Video |
+| Caption on the photo | `caption_on_photo` | Boolean. On the photo, or under the photo. Default On the photo | Image |
 | Video | `video` | Embed | Video |
-| Quote | `quote` | Heading rich text | Quote |
+| Quote | `quote` | Heading rich text | Quote, Image |
 | Attribution | `attribution` | Text | Quote |
 | Clinic | `clinic` | Content relationship to Provider | Clinic |
 
@@ -592,11 +699,29 @@ does not provide medical advice or treatment plans." A paragraph can
 start with a clinic token, the same `{{provider:inner-balance:offer}}`
 and `{{provider:inner-balance:facts}}` tokens as the post.
 
+Caption is the line about the photo, such as "Me and Winston, my
+Bernedoodle." Caption on the photo is on by default. On draws those
+words as a label on the lower left of the picture. Off centers the same
+words under the photo. A blank Caption hides the line. Video captions
+stay on the video.
+
+On the Image variation, Quote is optional. A filled Quote is the large
+line at the top of the writing side, above Text, with no box and no
+attribution. The test kits page puts Peggy's photo on the left and
+"From “I think something is wrong” to “Here is the evidence of my
+hormonal shift.”" above the intro. On the Quote variation, Quote is
+still the boxed sentence on the media side.
+
 ## Provider, Offer, and Callout
 
 ### Provider
 
-Custom type, in `customtypes/provider`. One clinic, one document.
+Custom type, in `customtypes/provider`. One brand, one document. In
+the editor the type is labeled Brand. The API id stays `provider`,
+because Prismic cannot rename a type id and every slice relationship,
+query, and story token uses it. A brand is a clinic or a product she
+reviews, such as an at-home test kit. Kind says which. Below, "clinic"
+means any brand unless a rule says Clinic or Product.
 Peggy fills it in tabs. A tab is a group of fields in the editor.
 Every tab is static, so a slice or a story token can read it.
 
@@ -607,20 +732,27 @@ page point at this document.
 Slices point at this document with a content relationship. Each slice
 fills itself from the fields it lists. Price is one field. The
 comparison chart, the clinic price card, a facts token, and any later
-slice that lists `monthly_price` all show that same number.
+slice that lists `monthly_price` all show that same number. On the
+Links tab, Affiliate (`visit`) is a web link. Review video
+(`youtube`) is a web link. Page (`page`) is a Page document. My review
+(`review`) is a Post. Those are the links a slice reads from the
+clinic. Product image (`product`) is
+the jar or
+bottle a slice reads from the clinic. A slice lists the field on its
+clinic relationship, the same way it lists `visit`.
 
 | Place | Points with | Fills in |
 | --- | --- | --- |
 | Hero, brands | `clinic` | Name, logo |
-| Hero, provider | `clinic` | Name, logo, formulation, visit, price, price note, top choice label, code, code line |
+| Hero, provider | `clinic` | Name, logo, formulation, visit, price, price is, price note, top choice label, code, code line |
 | Clinic comparison | `clinic` | Name, logo, short description, price, price note, insurance, formulation, quote, getting started, top choice label, visit, code, code line. The review link is on the slice row |
 | Quote | `clinic` | Logo, name, visit. A Name on the slice replaces the clinic name |
 | Side by side, clinic | `clinic` | Logo, name, quote, visit |
 | Boxes | `clinic` on each box | Logo, short description, name, code. A written Image, Heading, Text, or Bottom line replaces it |
-| Brand promo | `clinic` | Name, logo, visit, price, price note, formulation, insurance, getting started, code, code line, top choice label, quote. A written Quote replaces the clinic quote. Place, the product photo, and the links are on the slice |
+| Brand promo | `clinic` | Name, kind, logo, visit, page, my review, review video, product image, price, price is, price note, formulation, insurance, getting started, code, code line, quote. Page is Products & pricing. My review is her post. Review video is Watch my review. A photo in Overwrite replaces the product image. A written Quote replaces the clinic quote. Is this 1st? and Place stay on the slice. Text and extra links are in Overwrite. Extra links are a second row of text |
 | Post sidebar | `clinic` | Name, logo. The name links to Page when that field is set |
 | Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, code, code line, plus the sentence in that paragraph |
-| Story facts token | `{{provider:uid:facts}}` | Price, price note, insurance, formulation |
+| Story facts token | `{{provider:uid:facts}}` | Price, price is, price note, insurance (clinics only), formulation |
 
 #### Profile
 
@@ -630,29 +762,53 @@ this tab.
 | Label | Id | Kind | Required |
 | --- | --- | --- | --- |
 | Name | `name` | Text | Yes |
+| Kind | `kind` | Select: Clinic, Product. Default Clinic | Yes |
 | Logo | `logo` | Image | Yes |
 | Short description | `short_description` | Text | No |
-| Visit | `visit` | Link, with display text, open in a new tab | No |
-| Page | `page` | Link to a Page document | No |
 | Top choice label | `top_choice_label` | Text | No |
 
 Short description is the one line about the clinic. The comparison
 chart's Description column reads it, a Boxes box with an empty Heading
 shows it, and so does any other clinic summary that needs a short
-line. An empty Visit link means a name that
-would go to the clinic's site is not a link. Page is the site page
-about this clinic. The sidebar name links there when Page is set, and
-a blank Page leaves that name as text. A blank Top choice label means
-no badge. A clinic on the site is one Peggy has tried. There is no
-tested checkbox.
+line. A blank Top choice label means no badge. A clinic on the site
+is one Peggy has tried. There is no tested checkbox.
+
+Kind is Clinic or Product. An empty Kind is a clinic. A product has
+no insurance line: the Brand promo price box and the story facts
+token leave out Takes insurance. The comparison chart is for clinics
+and does not read Kind. Prismic pickers filter by type, not by a
+field, so a product still appears in every brand picker.
+
+#### Links
+
+The second tab. The four links for this brand.
+
+| Label | Id | Kind | Required |
+| --- | --- | --- | --- |
+| Affiliate | `visit` | Web link, with display text, open in a new tab | No |
+| Review video | `youtube` | Web link, no display text | No |
+| Page | `page` | Link to a Page document | No |
+| My review | `review` | Link to a Post | No |
+
+An empty Affiliate link means a name that would go to the clinic's
+site is not a link. The placeholder is "Affiliate link". Affiliate
+only accepts a web address. The button still says "Visit" plus the
+clinic name when she leaves the display text blank. Review video is
+the YouTube link for her review. Slices say "Watch my review", and the
+video plays in a modal on the page. A blank Review video hides that
+link. Page is the site page about this clinic.
+The sidebar name links there when Page is set, and a blank Page leaves
+that name as text. My review is the post where she reviews this brand.
+Brand promo says "My review". A blank My review hides that button.
 
 #### Price
 
-The one monthly amount, and the line under it.
+The one amount, whether it is per month, and the line under it.
 
 | Label | Id | Kind | Example |
 | --- | --- | --- | --- |
-| Price | `monthly_price` | Number | What I paid per month |
+| Price | `monthly_price` | Number | What I paid |
+| Price is | `price_unit` | Select: Per month, One time. Default Per month | One time for the Mira kit, $179 |
 | Price note | `price_note` | Text | First six months, then $99. |
 | Typically prescribed | `formulation` | Text | Oestra vaginal cream |
 | Takes insurance | `insurance` | Boolean | No |
@@ -661,6 +817,10 @@ The one monthly amount, and the line under it.
 | Code line | `code_note` | Text | 10% off your first order. |
 
 The comparison chart and the clinic price card show this same price.
+Price is Per month shows "/mo" after the price. One time shows the
+price alone, in the provider Hero, Brand promo, and the story facts
+token. An empty Price is means per month. The comparison chart always
+shows "/mo", because its column is "What I paid per month".
 A step-down, such as $199 then $99, is written in Price note. A consult
 fee goes there too, such as "+ $99 one-time consult."
 
@@ -688,8 +848,19 @@ Her one sentence. The long review stays on the Provider review.
 | --- | --- | --- | --- |
 | In my words | `quote` | Heading rich text | The table quote |
 
+#### Product
+
+The jar or bottle. A slice that shows the product reads this image.
+The description is the alt text.
+
+| Label | Id | Kind |
+| --- | --- | --- |
+| Product image | `product` | Image |
+
 Code and Code line sit on the Price tab. Visit is the only link to the
-clinic. "Read review" is a link on the slice that shows it.
+clinic's own site. Review video is the YouTube link slices share.
+Slices say "Watch my review". "Read review" is a written link on the
+slice that shows it.
 
 ### Callout
 

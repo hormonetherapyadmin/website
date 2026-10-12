@@ -80,6 +80,8 @@ describe("SliceSection", () => {
     expect(html).toContain('id="menopause-isnt-a-dirty-word"');
     expect(html).toContain("mt-slice-lg");
     expect(html).toContain("mb-slice-sm");
+    expect(html).toContain("[--section-space-above:var(--spacing-slice-lg)]");
+    expect(html).toContain("[--section-space-below:var(--spacing-slice-sm)]");
     expect(html).toContain("bg-panel");
     expect(html).toContain("py-slice");
     expect(html).toContain("<h2");
@@ -114,6 +116,8 @@ describe("SliceSection", () => {
     expect(raspberry).toContain("bg-accent text-panel-text");
     expect(pink).toContain("[--section-kicker:var(--color-accent)]");
     expect(raspberry).toContain("[--section-kicker:var(--color-card-2)]");
+    expect(raspberry).toContain("[--section-marker:var(--color-card-2)]");
+    expect(pink).not.toContain("--section-marker");
     expect(
       renderToStaticMarkup(
         <SliceSection section={fields({ background: "Navy" })} />,

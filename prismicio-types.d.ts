@@ -812,11 +812,11 @@ export type PostDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PostDocumentData>, "post", Lang>;
 
 /**
- * Content for Clinic documents
+ * Content for Brand documents
  */
 interface ProviderDocumentData {
   /**
-   * Name field in *Clinic*
+   * Name field in *Brand*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
@@ -827,7 +827,19 @@ interface ProviderDocumentData {
   name: prismic.KeyTextField;
 
   /**
-   * Logo field in *Clinic*
+   * Kind field in *Brand*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Clinic for a telehealth clinic. Product for something I buy, such as a test kit.
+   * - **Default Value**: Clinic
+   * - **API ID Path**: provider.kind
+   * - **Tab**: Profile
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  kind: prismic.SelectField<"Clinic" | "Product", "filled">;
+
+  /**
+   * Logo field in *Brand*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
@@ -838,10 +850,10 @@ interface ProviderDocumentData {
   logo: prismic.ImageField<never>;
 
   /**
-   * Short description field in *Clinic*
+   * Short description field in *Brand*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: Better sleep. The comparison chart and other clinic summaries use this.
+   * - **Placeholder**: Better sleep. The comparison chart and other summaries use this.
    * - **API ID Path**: provider.short_description
    * - **Tab**: Profile
    * - **Documentation**: https://prismic.io/docs/fields/text
@@ -849,29 +861,7 @@ interface ProviderDocumentData {
   short_description: prismic.KeyTextField;
 
   /**
-   * Visit field in *Clinic*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: The affiliate link. Opens in a new tab.
-   * - **API ID Path**: provider.visit
-   * - **Tab**: Profile
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  visit: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
-   * Page field in *Clinic*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: The site page about this clinic. Leave blank until that page exists.
-   * - **API ID Path**: provider.page
-   * - **Tab**: Profile
-   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
-   */
-  page: prismic.ContentRelationshipField<"page">;
-
-  /**
-   * Top choice label field in *Clinic*
+   * Top choice label field in *Brand*
    *
    * - **Field Type**: Text
    * - **Placeholder**: Leave blank for no badge.
@@ -880,10 +870,58 @@ interface ProviderDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   top_choice_label: prismic.KeyTextField; /**
-   * Price field in *Clinic*
+   * Affiliate field in *Brand*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Affiliate link
+   * - **API ID Path**: provider.visit
+   * - **Tab**: Links
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  visit: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Review video field in *Brand*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: The YouTube link for my review.
+   * - **API ID Path**: provider.youtube
+   * - **Tab**: Links
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  youtube: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Page field in *Brand*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: The site page about this brand. Leave blank until that page exists.
+   * - **API ID Path**: provider.page
+   * - **Tab**: Links
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  page: prismic.ContentRelationshipField<"page">;
+
+  /**
+   * My review field in *Brand*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: The post where I review this brand.
+   * - **API ID Path**: provider.review
+   * - **Tab**: Links
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  review: prismic.ContentRelationshipField<"post">; /**
+   * Price field in *Brand*
    *
    * - **Field Type**: Number
-   * - **Placeholder**: What I paid per month. The chart and the clinic page use this.
+   * - **Placeholder**: What I paid. The chart and the brand page use this.
    * - **API ID Path**: provider.monthly_price
    * - **Tab**: Price
    * - **Documentation**: https://prismic.io/docs/fields/number
@@ -891,7 +929,19 @@ interface ProviderDocumentData {
   monthly_price: prismic.NumberField;
 
   /**
-   * Price note field in *Clinic*
+   * Price is field in *Brand*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Per month shows /mo after the price. One time shows the price alone.
+   * - **Default Value**: Per month
+   * - **API ID Path**: provider.price_unit
+   * - **Tab**: Price
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  price_unit: prismic.SelectField<"Per month" | "One time", "filled">;
+
+  /**
+   * Price note field in *Brand*
    *
    * - **Field Type**: Text
    * - **Placeholder**: The line under the price, such as First six months, then $99.
@@ -902,7 +952,7 @@ interface ProviderDocumentData {
   price_note: prismic.KeyTextField;
 
   /**
-   * Typically prescribed field in *Clinic*
+   * Typically prescribed field in *Brand*
    *
    * - **Field Type**: Text
    * - **Placeholder**: First bullet in the price box. Oestra vaginal cream.
@@ -913,7 +963,7 @@ interface ProviderDocumentData {
   formulation: prismic.KeyTextField;
 
   /**
-   * Takes insurance field in *Clinic*
+   * Takes insurance field in *Brand*
    *
    * - **Field Type**: Boolean
    * - **Placeholder**: *None*
@@ -925,7 +975,7 @@ interface ProviderDocumentData {
   insurance: prismic.BooleanField;
 
   /**
-   * Getting started field in *Clinic*
+   * Getting started field in *Brand*
    *
    * - **Field Type**: Text
    * - **Placeholder**: Third bullet in the price box. No visit.
@@ -936,7 +986,7 @@ interface ProviderDocumentData {
   note: prismic.KeyTextField;
 
   /**
-   * Code field in *Clinic*
+   * Code field in *Brand*
    *
    * - **Field Type**: Text
    * - **Placeholder**: PEGGY10. Leave blank when there is no code.
@@ -947,7 +997,7 @@ interface ProviderDocumentData {
   code: prismic.KeyTextField;
 
   /**
-   * Code line field in *Clinic*
+   * Code line field in *Brand*
    *
    * - **Field Type**: Text
    * - **Placeholder**: 10% off your first order.
@@ -956,7 +1006,7 @@ interface ProviderDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   code_note: prismic.KeyTextField; /**
-   * Labs field in *Clinic*
+   * Labs field in *Brand*
    *
    * - **Field Type**: Text
    * - **Placeholder**: None, or $150 labs up front.
@@ -967,7 +1017,7 @@ interface ProviderDocumentData {
   lab_requirement: prismic.KeyTextField;
 
   /**
-   * HSA / FSA field in *Clinic*
+   * HSA / FSA field in *Brand*
    *
    * - **Field Type**: Boolean
    * - **Placeholder**: *None*
@@ -979,7 +1029,7 @@ interface ProviderDocumentData {
   hsa_fsa: prismic.BooleanField;
 
   /**
-   * State availability field in *Clinic*
+   * State availability field in *Brand*
    *
    * - **Field Type**: Text
    * - **Placeholder**: All 50 states
@@ -988,7 +1038,7 @@ interface ProviderDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   state_availability: prismic.KeyTextField; /**
-   * In my words field in *Clinic*
+   * In my words field in *Brand*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
@@ -996,11 +1046,20 @@ interface ProviderDocumentData {
    * - **Tab**: Words
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  quote: prismic.RichTextField;
+  quote: prismic.RichTextField; /**
+   * Product image field in *Brand*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: The jar or bottle. The description is the alt text.
+   * - **API ID Path**: provider.product
+   * - **Tab**: Product
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  product: prismic.ImageField<never>;
 }
 
 /**
- * Clinic document from Prismic
+ * Brand document from Prismic
  *
  * - **API ID**: `provider`
  * - **Repeatable**: `true`
@@ -1233,19 +1292,97 @@ type BoxesSliceVariation = BoxesSliceDefault;
 export type BoxesSlice = prismic.SharedSlice<"boxes", BoxesSliceVariation>;
 
 /**
- * Primary content in *Brand promo → Default → Primary*
+ * Item in *Brand promo → Default → Primary → Overwrite*
  */
-export interface BrandPromoSliceDefaultPrimary {
+export interface BrandPromoSliceDefaultPrimaryOverwriteItem {
   /**
-   * Small heading field in *Brand promo → Default → Primary*
+   * Small heading field in *Brand promo → Default → Primary → Overwrite*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: Voted best for
-   * - **API ID Path**: brand_promo.default.primary.small_heading
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].small_heading
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   small_heading: prismic.RichTextField;
 
+  /**
+   * Intro field in *Brand promo → Default → Primary → Overwrite*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: A short line under the clinic name. Leave blank to hide it.
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Brand promo → Default → Primary → Overwrite*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Quote field in *Brand promo → Default → Primary → Overwrite*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Leave blank to use the clinic's In my words.
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].quote
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  quote: prismic.RichTextField;
+
+  /**
+   * Text field in *Brand promo → Default → Primary → Overwrite*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: More about this brand, such as what a test kit measures. Leave blank to hide it.
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].text
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  text: prismic.RichTextField;
+
+  /**
+   * Product image field in *Brand promo → Default → Primary → Overwrite*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: Empty uses the brand's product image. Describe the product.
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].product
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  product: prismic.ImageField<never>;
+
+  /**
+   * Photo and price field in *Brand promo → Default → Primary → Overwrite*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Beside puts the price next to the photo. Stacked puts the photo on top and the price under it, as one card. Use Stacked when the card has a lot of writing.
+   * - **Default Value**: Beside
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].layout
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  layout: prismic.SelectField<"Beside" | "Stacked", "filled">;
+
+  /**
+   * Links field in *Brand promo → Default → Primary → Overwrite*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: A comparison or another link. Shown under the buttons.
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].links
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  links: prismic.Repeatable<
+    prismic.LinkField<string, string, unknown, prismic.FieldState, never>
+  >;
+}
+
+/**
+ * Primary content in *Brand promo → Default → Primary*
+ */
+export interface BrandPromoSliceDefaultPrimary {
   /**
    * Heading field in *Brand promo → Default → Primary*
    *
@@ -1257,24 +1394,40 @@ export interface BrandPromoSliceDefaultPrimary {
   heading: prismic.RichTextField;
 
   /**
-   * Intro field in *Brand promo → Default → Primary*
+   * Clinic field in *Brand promo → Default → Primary*
    *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: A short line under the clinic name. Leave blank to hide it.
-   * - **API ID Path**: brand_promo.default.primary.intro
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Brand promo → Default → Primary*
-   *
-   * - **Field Type**: Link
+   * - **Field Type**: Content Relationship
    * - **Placeholder**: *None*
-   * - **API ID Path**: brand_promo.default.primary.link
-   * - **Documentation**: https://prismic.io/docs/fields/link
+   * - **API ID Path**: brand_promo.default.primary.clinic
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
    */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  clinic: ContentRelationshipFieldWithData<
+    [
+      {
+        fields: [
+          "name",
+          "kind",
+          "logo",
+          "visit",
+          "page",
+          "review",
+          "youtube",
+          "product",
+          "monthly_price",
+          "price_unit",
+          "price_note",
+          "formulation",
+          "insurance",
+          "note",
+          "code",
+          "code_note",
+          "top_choice_label",
+          "quote",
+        ];
+        id: "provider";
+      },
+    ]
+  >;
 
   /**
    * Background field in *Brand promo → Default → Primary*
@@ -1326,75 +1479,36 @@ export interface BrandPromoSliceDefaultPrimary {
   >;
 
   /**
-   * Clinic field in *Brand promo → Default → Primary*
+   * Is this 1st? field in *Brand promo → Default → Primary*
    *
-   * - **Field Type**: Content Relationship
+   * - **Field Type**: Boolean
    * - **Placeholder**: *None*
-   * - **API ID Path**: brand_promo.default.primary.clinic
-   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   * - **Default Value**: false
+   * - **API ID Path**: brand_promo.default.primary.first
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
    */
-  clinic: ContentRelationshipFieldWithData<
-    [
-      {
-        fields: [
-          "name",
-          "logo",
-          "visit",
-          "monthly_price",
-          "price_note",
-          "formulation",
-          "insurance",
-          "note",
-          "code",
-          "code_note",
-          "top_choice_label",
-          "quote",
-        ];
-        id: "provider";
-      },
-    ]
-  >;
-
-  /**
-   * Quote field in *Brand promo → Default → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Leave blank to use the clinic's In my words.
-   * - **API ID Path**: brand_promo.default.primary.quote
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  quote: prismic.RichTextField;
+  first: prismic.BooleanField;
 
   /**
    * Place field in *Brand promo → Default → Primary*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: 1st. Leave blank to hide the badge.
+   * - **Placeholder**: My 2026 top choice. Shown beside the 1st badge.
    * - **API ID Path**: brand_promo.default.primary.place
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   place: prismic.KeyTextField;
 
   /**
-   * Product image field in *Brand promo → Default → Primary*
+   * Overwrite field in *Brand promo → Default → Primary*
    *
-   * - **Field Type**: Image
-   * - **Placeholder**: The jar or bottle beside the price. Describe the product.
-   * - **API ID Path**: brand_promo.default.primary.product
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  product: prismic.ImageField<never>;
-
-  /**
-   * Links field in *Brand promo → Default → Primary*
-   *
-   * - **Field Type**: Link
+   * - **Field Type**: Group
    * - **Placeholder**: *None*
-   * - **API ID Path**: brand_promo.default.primary.links
-   * - **Documentation**: https://prismic.io/docs/fields/link
+   * - **API ID Path**: brand_promo.default.primary.overwrite[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
    */
-  links: prismic.Repeatable<
-    prismic.LinkField<string, string, unknown, prismic.FieldState, never>
+  overwrite: prismic.GroupField<
+    Simplify<BrandPromoSliceDefaultPrimaryOverwriteItem>
   >;
 }
 
@@ -2300,10 +2414,12 @@ export interface HeroSliceProviderPrimary {
       {
         fields: [
           "name",
+          "kind",
           "logo",
           "formulation",
           "visit",
           "monthly_price",
+          "price_unit",
           "price_note",
           "top_choice_label",
           "code",
@@ -2371,10 +2487,121 @@ export type HeroSliceProvider = prismic.SharedSliceVariation<
 >;
 
 /**
+ * Primary content in *Hero → Centered → Primary*
+ */
+export interface HeroSliceCenteredPrimary {
+  /**
+   * Small heading field in *Hero → Centered → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Learn
+   * - **API ID Path**: hero.centered.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Hero → Centered → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: New to hormone therapy
+   * - **API ID Path**: hero.centered.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Hero → Centered → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero.centered.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Hero → Centered → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Start here
+   * - **API ID Path**: hero.centered.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Hero → Centered → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Transparent
+   * - **API ID Path**: hero.centered.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Hero → Centered → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: hero.centered.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Hero → Centered → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: hero.centered.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+}
+
+/**
+ * Centered variation for Hero Slice
+ *
+ * - **API ID**: `centered`
+ * - **Description**: Centered
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type HeroSliceCentered = prismic.SharedSliceVariation<
+  "centered",
+  Simplify<HeroSliceCenteredPrimary>,
+  never
+>;
+
+/**
  * Slice variation for *Hero*
  */
 type HeroSliceVariation =
-  HeroSliceHome | HeroSliceSubpage | HeroSliceBrands | HeroSliceProvider;
+  | HeroSliceHome
+  | HeroSliceSubpage
+  | HeroSliceBrands
+  | HeroSliceProvider
+  | HeroSliceCentered;
 
 /**
  * Hero Shared Slice
@@ -3379,6 +3606,17 @@ export interface SideBySideSliceImagePrimary {
   side: prismic.SelectField<"Media left" | "Media right", "filled">;
 
   /**
+   * Media position field in *Side by side → Image → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Center lines the media up with the middle of the writing. Top lines it up with the first line. Sticky keeps it in view while long writing scrolls.
+   * - **Default Value**: Center
+   * - **API ID Path**: side_by_side.image.primary.media_position
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  media_position: prismic.SelectField<"Center" | "Top" | "Sticky", "filled">;
+
+  /**
    * Image field in *Side by side → Image → Primary*
    *
    * - **Field Type**: Image
@@ -3392,11 +3630,32 @@ export interface SideBySideSliceImagePrimary {
    * Caption field in *Side by side → Image → Primary*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: Sits on the photo. Me and Winston, my Bernedoodle.
+   * - **Placeholder**: The line about this photo. Me and Winston, my Bernedoodle.
    * - **API ID Path**: side_by_side.image.primary.caption
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   caption: prismic.RichTextField;
+
+  /**
+   * Caption on the photo field in *Side by side → Image → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: side_by_side.image.primary.caption_on_photo
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  caption_on_photo: prismic.BooleanField;
+
+  /**
+   * Quote field in *Side by side → Image → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: A large sentence at the top of the writing side. Leave blank to hide it.
+   * - **API ID Path**: side_by_side.image.primary.quote
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  quote: prismic.RichTextField;
 
   /**
    * Text field in *Side by side → Image → Primary*
@@ -3543,6 +3802,17 @@ export interface SideBySideSliceVideoPrimary {
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   side: prismic.SelectField<"Media left" | "Media right", "filled">;
+
+  /**
+   * Media position field in *Side by side → Video → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Center lines the media up with the middle of the writing. Top lines it up with the first line. Sticky keeps it in view while long writing scrolls.
+   * - **Default Value**: Center
+   * - **API ID Path**: side_by_side.video.primary.media_position
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  media_position: prismic.SelectField<"Center" | "Top" | "Sticky", "filled">;
 
   /**
    * Video field in *Side by side → Video → Primary*
@@ -3711,6 +3981,17 @@ export interface SideBySideSliceQuotePrimary {
   side: prismic.SelectField<"Media left" | "Media right", "filled">;
 
   /**
+   * Media position field in *Side by side → Quote → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Center lines the media up with the middle of the writing. Top lines it up with the first line. Sticky keeps it in view while long writing scrolls.
+   * - **Default Value**: Center
+   * - **API ID Path**: side_by_side.quote.primary.media_position
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  media_position: prismic.SelectField<"Center" | "Top" | "Sticky", "filled">;
+
+  /**
    * Quote field in *Side by side → Quote → Primary*
    *
    * - **Field Type**: Rich Text
@@ -3875,6 +4156,17 @@ export interface SideBySideSliceClinicPrimary {
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   side: prismic.SelectField<"Media left" | "Media right", "filled">;
+
+  /**
+   * Media position field in *Side by side → Clinic → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Center lines the media up with the middle of the writing. Top lines it up with the first line. Sticky keeps it in view while long writing scrolls.
+   * - **Default Value**: Center
+   * - **API ID Path**: side_by_side.clinic.primary.media_position
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  media_position: prismic.SelectField<"Center" | "Top" | "Sticky", "filled">;
 
   /**
    * Clinic field in *Side by side → Clinic → Primary*
@@ -4186,6 +4478,7 @@ declare module "@prismicio/client" {
       BoxesSliceVariation,
       BoxesSliceDefault,
       BrandPromoSlice,
+      BrandPromoSliceDefaultPrimaryOverwriteItem,
       BrandPromoSliceDefaultPrimary,
       BrandPromoSliceVariation,
       BrandPromoSliceDefault,
@@ -4205,11 +4498,13 @@ declare module "@prismicio/client" {
       HeroSliceBrandsPrimaryClinicsItem,
       HeroSliceBrandsPrimary,
       HeroSliceProviderPrimary,
+      HeroSliceCenteredPrimary,
       HeroSliceVariation,
       HeroSliceHome,
       HeroSliceSubpage,
       HeroSliceBrands,
       HeroSliceProvider,
+      HeroSliceCentered,
       PostsSlice,
       PostsSliceHomePrimary,
       PostsSliceFeaturedPrimary,

@@ -90,6 +90,15 @@
           },
           "type": "Select"
         },
+        "media_position": {
+          "config": {
+            "default_value": "Center",
+            "label": "Media position",
+            "options": ["Center", "Top", "Sticky"],
+            "placeholder": "Center lines the media up with the middle of the writing. Top lines it up with the first line. Sticky keeps it in view while long writing scrolls."
+          },
+          "type": "Select"
+        },
         "image": {
           "config": {
             "constraint": {},
@@ -102,7 +111,25 @@
           "config": {
             "label": "Caption",
             "labels": ["superscript"],
-            "placeholder": "Sits on the photo. Me and Winston, my Bernedoodle.",
+            "placeholder": "The line about this photo. Me and Winston, my Bernedoodle.",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "caption_on_photo": {
+          "config": {
+            "default_value": true,
+            "label": "Caption on the photo",
+            "placeholder_false": "Under the photo",
+            "placeholder_true": "On the photo"
+          },
+          "type": "Boolean"
+        },
+        "quote": {
+          "config": {
+            "label": "Quote",
+            "labels": ["superscript"],
+            "placeholder": "A large sentence at the top of the writing side. Leave blank to hide it.",
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -212,6 +239,15 @@
             "default_value": "Media left",
             "label": "Side",
             "options": ["Media left", "Media right"]
+          },
+          "type": "Select"
+        },
+        "media_position": {
+          "config": {
+            "default_value": "Center",
+            "label": "Media position",
+            "options": ["Center", "Top", "Sticky"],
+            "placeholder": "Center lines the media up with the middle of the writing. Top lines it up with the first line. Sticky keeps it in view while long writing scrolls."
           },
           "type": "Select"
         },
@@ -339,6 +375,15 @@
           },
           "type": "Select"
         },
+        "media_position": {
+          "config": {
+            "default_value": "Center",
+            "label": "Media position",
+            "options": ["Center", "Top", "Sticky"],
+            "placeholder": "Center lines the media up with the middle of the writing. Top lines it up with the first line. Sticky keeps it in view while long writing scrolls."
+          },
+          "type": "Select"
+        },
         "quote": {
           "config": {
             "label": "Quote",
@@ -460,6 +505,15 @@
             "default_value": "Media right",
             "label": "Side",
             "options": ["Media left", "Media right"]
+          },
+          "type": "Select"
+        },
+        "media_position": {
+          "config": {
+            "default_value": "Center",
+            "label": "Media position",
+            "options": ["Center", "Top", "Sticky"],
+            "placeholder": "Center lines the media up with the middle of the writing. Top lines it up with the first line. Sticky keeps it in view while long writing scrolls."
           },
           "type": "Select"
         },

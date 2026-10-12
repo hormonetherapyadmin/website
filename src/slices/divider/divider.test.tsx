@@ -20,8 +20,8 @@ describe("Divider", () => {
     expect(html).toContain(styles.squiggly);
     expect(html).toContain(styles.accent);
     expect(html).toContain('aria-hidden="true"');
-    expect(html).toContain("mt-0");
-    expect(html).toContain("mb-0");
+    expect(html).toContain("pt-0");
+    expect(html).toContain("pb-0");
     expect(html).not.toContain("py-slice");
     expect(html).not.toContain("<h2");
   });
@@ -60,7 +60,7 @@ describe("Divider", () => {
     expect(html).toContain(styles.border);
     expect(html).toContain("bg-card-2");
     expect(html).toContain("py-slice");
-    expect(html).toContain("mt-slice-lg");
-    expect(html).toContain("mb-slice-sm");
+    expect(html).toContain("pt-slice-lg");
+    expect(html).toContain("pb-slice-sm");
   });
 });

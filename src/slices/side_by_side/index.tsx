@@ -9,6 +9,7 @@ import {
 } from "@prismicio/client";
 import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 import Image from "next/image";
+import type { ReactNode } from "react";
 import { Content } from "@/components/content";
 import type { TokenClinic } from "@/components/content-blocks";
 import { RichText } from "@/components/rich-text";
@@ -17,10 +18,11 @@ import {
   sectionAnchor,
   type SliceSectionFields,
 } from "@/components/slice-section";
-import { visitLinkProps } from "@/lib/affiliate-link";
+import { storyLinkRel, visitLinkProps } from "@/lib/affiliate-link";
 import styles from "./side-by-side.module.css";
 
 export const SIDES = ["Media left", "Media right"] as const;
+export const MEDIA_POSITIONS = ["Center", "Top", "Sticky"] as const;
 export const SIDE_BY_SIDE_VARIATIONS = [
   "image",
   "video",
@@ -55,10 +57,13 @@ export type SideClinic = {
 
 type SideBySidePrimary = Partial<SliceSectionFields> & {
   side?: SelectField<Side> | string | null;
+  media_position?: string | null;
   text?: RichTextField | null;
   button?: readonly LinkField[] | null;
   image?: ImageField | null;
   caption?: RichTextField | null;
+  /** On the photo is the default. Off centers the caption under the photo. */
+  caption_on_photo?: boolean | null;
   video?: EmbedField | null;
   quote?: RichTextField | null;
   attribution?: string | null;
@@ -114,6 +119,7 @@ function Buttons({
             key={`${button.variant ?? "Solid"}-${button.text}`}
             field={button}
             className={ghost ? styles.ghost : styles.button}
+            rel={storyLinkRel}
           >
             {button.text}
             {ghost ? <Chevron /> : null}
@@ -124,12 +130,30 @@ function Buttons({
   );
 }
 
-function Caption({ field }: { field: RichTextField | null | undefined }) {
-  if (!isFilled.richText(field)) return null;
+function MediaFigure({
+  children,
+  caption,
+  onPhoto,
+}: {
+  children: ReactNode;
+  caption?: RichTextField | null;
+  onPhoto: boolean;
+}) {
+  if (!isFilled.richText(caption)) {
+    return (
+      <figure className={styles.figure}>
+        <div className={styles.frame}>{children}</div>
+      </figure>
+    );
+  }
+
   return (
-    <figcaption className={styles.caption}>
-      <RichText field={field} as="p" unstyled />
-    </figcaption>
+    <figure className={styles.figure} data-caption={onPhoto ? "on" : "under"}>
+      <div className={styles.frame}>{children}</div>
+      <figcaption className={onPhoto ? styles.caption : styles.captionUnder}>
+        <RichText field={caption} as="p" unstyled />
+      </figcaption>
+    </figure>
   );
 }
 
@@ -242,6 +266,7 @@ export function SideBySide({
 }) {
   const layout = choice(variation, SIDE_BY_SIDE_VARIATIONS, "image");
   const side = choice(primary.side, SIDES, "Media left");
+  const position = choice(primary.media_position, MEDIA_POSITIONS, "Center");
   const heading = primary.heading;
   const slug = sectionAnchor(heading ? asText(heading) : "");
   const titleId = slug ? `${slug}-title` : undefined;
@@ -250,6 +275,7 @@ export function SideBySide({
     (Boolean(image?.src) || isFilled.image(primary.image));
   const showVideo = layout === "video" && Boolean(video?.html || video?.url);
   const showQuote = layout === "quote" && isFilled.richText(primary.quote);
+  const showStatement = layout === "image" && isFilled.richText(primary.quote);
   const showClinic = layout === "clinic" && Boolean(clinic?.name);
 
   return (
@@ -278,18 +304,20 @@ export function SideBySide({
       <div
         className={styles.grid}
         data-side={side === "Media right" ? "right" : "left"}
+        data-position={position.toLowerCase()}
       >
         {showImage ? (
-          <figure className={styles.figure}>
+          <MediaFigure
+            caption={primary.caption}
+            onPhoto={primary.caption_on_photo !== false}
+          >
             <Photo image={image} field={primary.image} />
-            <Caption field={primary.caption} />
-          </figure>
+          </MediaFigure>
         ) : null}
         {showVideo && video ? (
-          <figure className={styles.figure}>
+          <MediaFigure caption={primary.caption} onPhoto>
             <VideoFrame video={video} />
-            <Caption field={primary.caption} />
-          </figure>
+          </MediaFigure>
         ) : null}
         {showQuote ? (
           <blockquote className={styles.pull}>
@@ -308,6 +336,14 @@ export function SideBySide({
         ) : null}
         {showClinic && clinic ? <ClinicCard clinic={clinic} /> : null}
         <div className={styles.copy}>
+          {showStatement ? (
+            <RichText
+              field={primary.quote}
+              as="p"
+              unstyled
+              className={styles.statement}
+            />
+          ) : null}
           <Content field={primary.text} clinics={clinics} tokens={tokens} />
           <Buttons fields={primary.button} />
         </div>

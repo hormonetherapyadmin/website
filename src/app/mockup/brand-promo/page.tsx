@@ -66,6 +66,10 @@ const innerBalance: BrandPromoClinic = {
   offerCode: "PEGGY10",
   offerCopy: "10% off your first order",
   topChoice: "My 2026 top choice",
+  pageHref: "/mockup/inner-balance",
+  reviewHref: "/post/inner-balance-hrt-review",
+  reviewVideoHref: "https://youtu.be/_OlA4wXOHdQ",
+  product: image("/mockup/products/oestra_rnieuz.webp", "Oestra cream jar"),
   quote:
     "Finding a product that treats my symptoms of menopause and helps with sleep was a clear winner for me.",
 };
@@ -81,6 +85,10 @@ const winona: BrandPromoClinic = {
   formulation: "Topical cream",
   gettingStarted: "No consult required.",
   offerCopy: "15% off your first order",
+  pageHref: "/winona-review-page",
+  reviewHref: "/post/winona-bioidentical-hormone-therapy-review",
+  reviewVideoHref: "https://youtu.be/XZD4yvTKScA",
+  product: image("/mockup/products/image.png", "Winona treatment jar"),
   quote:
     "I received my first order within 5 days of placing order for the HRT products my clinician recommended.",
 };
@@ -97,6 +105,13 @@ const joi: BrandPromoClinic = {
   gettingStarted: "$150 labs required up front, includes a 30-minute consult.",
   offerCode: "BRONSON",
   offerCopy: "50% off labs and 15% off HRT treatments",
+  pageHref: "/joiwommenswellness",
+  reviewHref: "/post/joi-womens-hormone-replacement-review",
+  reviewVideoHref: "https://youtu.be/2sQ2-kh1F10",
+  product: image(
+    "/mockup/products/image%20copy.png",
+    "Joi HRT injectable vial",
+  ),
   quote:
     "My 1:1’s were very thorough and I learned something new each time I met with a Joi Clinician.",
 };
@@ -110,16 +125,18 @@ export default function BrandPromoPreview() {
             heading: rich("Improved sleep"),
             background: "Navy",
           }),
-          quote: rich(innerBalance.quote ?? ""),
-          place: "1st",
-          product: image(
-            "/mockup/products/oestra_rnieuz.webp",
-            "Oestra cream jar",
-          ),
-          links: [
-            link("Products & pricing", "/mockup/inner-balance"),
-            link("My review", "/post/inner-balance-hrt-review"),
-            link("Watch my review", "https://youtu.be/_OlA4wXOHdQ", true),
+          first: true,
+          place: "My 2026 top choice",
+          overwrite: [
+            {
+              quote: rich(innerBalance.quote ?? ""),
+              links: [
+                link(
+                  "Oestra vs Winona",
+                  "/post/musely-estrogen-cream-vs-winona-which-hrt-cream-wins",
+                ),
+              ],
+            },
           ],
         }}
         clinic={innerBalance}
@@ -127,16 +144,14 @@ export default function BrandPromoPreview() {
       <BrandPromo
         primary={{
           ...section({ heading: rich("No pre-testing") }),
-          quote: emptyRich,
-          place: null,
-          product: image("/mockup/products/image.png", "Winona treatment jar"),
-          links: [
-            link("Products & pricing", "/winona-review-page"),
-            link(
-              "My review",
-              "/post/winona-bioidentical-hormone-therapy-review",
-            ),
-            link("Watch my review", "https://youtu.be/XZD4yvTKScA", true),
+          first: false,
+          overwrite: [
+            {
+              product: image(
+                "/mockup/products/image%20copy%202.png",
+                "Musely estrogen cream bottle",
+              ),
+            },
           ],
         }}
         clinic={winona}
@@ -144,17 +159,7 @@ export default function BrandPromoPreview() {
       <BrandPromo
         primary={{
           ...section({ heading: rich("Most comprehensive testing") }),
-          quote: emptyRich,
-          place: null,
-          product: image(
-            "/mockup/products/image%20copy.png",
-            "Joi HRT injectable vial",
-          ),
-          links: [
-            link("Products & pricing", "/joiwommenswellness"),
-            link("My review", "/post/joi-womens-hormone-replacement-review"),
-            link("Watch my review", "https://youtu.be/2sQ2-kh1F10", true),
-          ],
+          first: false,
         }}
         clinic={joi}
       />

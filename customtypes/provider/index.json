@@ -17,6 +17,15 @@
         },
         "type": "Text"
       },
+      "kind": {
+        "config": {
+          "default_value": "Clinic",
+          "label": "Kind",
+          "options": ["Clinic", "Product"],
+          "placeholder": "Clinic for a telehealth clinic. Product for something I buy, such as a test kit."
+        },
+        "type": "Select"
+      },
       "logo": {
         "config": {
           "constraint": {},
@@ -28,29 +37,9 @@
       "short_description": {
         "config": {
           "label": "Short description",
-          "placeholder": "Better sleep. The comparison chart and other clinic summaries use this."
+          "placeholder": "Better sleep. The comparison chart and other summaries use this."
         },
         "type": "Text"
-      },
-      "visit": {
-        "config": {
-          "allowTargetBlank": true,
-          "allowText": true,
-          "label": "Visit",
-          "placeholder": "The affiliate link. Opens in a new tab.",
-          "repeat": false,
-          "select": null
-        },
-        "type": "Link"
-      },
-      "page": {
-        "config": {
-          "customtypes": ["page"],
-          "label": "Page",
-          "placeholder": "The site page about this clinic. Leave blank until that page exists.",
-          "select": "document"
-        },
-        "type": "Link"
       },
       "top_choice_label": {
         "config": {
@@ -60,13 +49,62 @@
         "type": "Text"
       }
     },
+    "Links": {
+      "visit": {
+        "config": {
+          "allowTargetBlank": true,
+          "allowText": true,
+          "label": "Affiliate",
+          "placeholder": "Affiliate link",
+          "repeat": false,
+          "select": "web"
+        },
+        "type": "Link"
+      },
+      "youtube": {
+        "config": {
+          "allowTargetBlank": true,
+          "label": "Review video",
+          "placeholder": "The YouTube link for my review.",
+          "select": "web"
+        },
+        "type": "Link"
+      },
+      "page": {
+        "config": {
+          "customtypes": ["page"],
+          "label": "Page",
+          "placeholder": "The site page about this brand. Leave blank until that page exists.",
+          "select": "document"
+        },
+        "type": "Link"
+      },
+      "review": {
+        "config": {
+          "customtypes": ["post"],
+          "label": "My review",
+          "placeholder": "The post where I review this brand.",
+          "select": "document"
+        },
+        "type": "Link"
+      }
+    },
     "Price": {
       "monthly_price": {
         "config": {
           "label": "Price",
-          "placeholder": "What I paid per month. The chart and the clinic page use this."
+          "placeholder": "What I paid. The chart and the brand page use this."
         },
         "type": "Number"
+      },
+      "price_unit": {
+        "config": {
+          "default_value": "Per month",
+          "label": "Price is",
+          "options": ["Per month", "One time"],
+          "placeholder": "Per month shows /mo after the price. One time shows the price alone."
+        },
+        "type": "Select"
       },
       "price_note": {
         "config": {
@@ -149,9 +187,18 @@
         },
         "type": "StructuredText"
       }
+    },
+    "Product": {
+      "product": {
+        "config": {
+          "label": "Product image",
+          "placeholder": "The jar or bottle. The description is the alt text."
+        },
+        "type": "Image"
+      }
     }
   },
-  "label": "Clinic",
+  "label": "Brand",
   "repeatable": true,
   "status": true
 }

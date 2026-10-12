@@ -1,6 +1,7 @@
 // Formats staged files with Prettier so `pnpm format:check` passes in CI.
 // Run by .githooks/pre-commit.
 import { execFileSync } from "node:child_process";
+import { formatFiles } from "./format.mjs";
 
 const prettier = "node_modules/.bin/prettier";
 
@@ -26,11 +27,7 @@ const toFormat = staged.filter((file) => !partial.has(file));
 const toCheck = staged.filter((file) => partial.has(file));
 
 if (toFormat.length > 0) {
-  execFileSync(
-    prettier,
-    ["--write", "--ignore-unknown", "--log-level", "warn", ...toFormat],
-    { stdio: "inherit" },
-  );
+  formatFiles(toFormat);
   git("add", "--", ...toFormat);
 }
 

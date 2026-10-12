@@ -224,12 +224,13 @@ Preserve existing high-performing content and intent during migration.
 
 Provider is a structured entity, not merely an article.
 
-Core fields should include identity, the affiliate visit link, a short
-description, her quote, one coupon code, one monthly price,
-formulation, labs, insurance, HSA/FSA, state availability, how to get
-started. The visit link is the only outbound clinic
-link. A clinic on the site is one Peggy has tried. A clinic page is a
-Page.
+Core fields should include identity, the affiliate visit link, the
+review video, the product image, a short description, her quote, one
+coupon code, one monthly price, formulation, labs, insurance, HSA/FSA,
+state availability, how to get started. The visit link is the only
+outbound link to the clinic. The review video is a YouTube link, not a
+second link to the clinic. A clinic on the site is one Peggy has tried.
+A clinic page is a Page.
 
 ### Provider Review
 
@@ -889,8 +890,13 @@ inventory.
 -   ESLint (Next.js config) and Prettier.
 -   A pre-commit hook (`.githooks/pre-commit`, enabled by the
     `prepare` script on `pnpm install`) formats staged files with
-    Prettier, so the CI format check does not fail on push. A Cursor
-    `afterFileEdit` hook (`.cursor/hooks.json`) formats agent edits.
+    Prettier until `prettier --check` passes, so the CI format check
+    does not fail on push. One write is not enough for
+    `prismicio-types.d.ts`: Prettier 3.9 leaves the generated
+    intersection comments one pass short of a stable result, and the
+    Prismic CLI rewrites that file on model changes. `pnpm format`
+    and the Cursor `afterFileEdit` hook (`.cursor/hooks.json`) use
+    the same second pass.
 -   Vitest for logic; Playwright with axe for smoke, legacy-URL, and
     accessibility checks.
 -   Netlify with its Next.js runtime, configured in `netlify.toml`.
@@ -976,7 +982,13 @@ inventory.
 -   Server Components by default. Client code is limited to the
     mobile menu, the search page (it filters the server-sent catalog
     as you type, and does not fetch again), one shared delegated click
-    listener for CTA tracking, and the offer copy-code button.
+    listener for CTA tracking, the offer copy-code button, and the
+    YouTube video modal (`src/components/video-link.tsx`).
+-   A YouTube link that a component plays in place opens the shared
+    video modal. The page HTML keeps the plain YouTube link, so a
+    modified click or a browser without JavaScript opens YouTube in a
+    new tab. The player is `youtube-nocookie.com` and loads only after
+    the click, so YouTube gets no request on page load.
 -   Images through Prismic's image CDN (`PrismicNextImage`) with
     explicit dimensions.
 -   No font is loaded until brand fonts arrive; system font stacks

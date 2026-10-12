@@ -10,16 +10,6 @@
       "imageUrl": "",
       "name": "Default",
       "primary": {
-        "small_heading": {
-          "config": {
-            "allowTargetBlank": true,
-            "label": "Small heading",
-            "labels": ["superscript"],
-            "placeholder": "Voted best for",
-            "single": "paragraph,strong,em,hyperlink"
-          },
-          "type": "StructuredText"
-        },
         "heading": {
           "config": {
             "allowTargetBlank": true,
@@ -30,21 +20,35 @@
           },
           "type": "StructuredText"
         },
-        "intro": {
+        "clinic": {
           "config": {
-            "allowTargetBlank": true,
-            "label": "Intro",
-            "labels": ["superscript"],
-            "placeholder": "A short line under the clinic name. Leave blank to hide it.",
-            "single": "paragraph,strong,em,hyperlink"
-          },
-          "type": "StructuredText"
-        },
-        "link": {
-          "config": {
-            "allowTargetBlank": true,
-            "allowText": true,
-            "label": "Link"
+            "customtypes": [
+              {
+                "fields": [
+                  "name",
+                  "kind",
+                  "logo",
+                  "visit",
+                  "page",
+                  "review",
+                  "youtube",
+                  "product",
+                  "monthly_price",
+                  "price_unit",
+                  "price_note",
+                  "formulation",
+                  "insurance",
+                  "note",
+                  "code",
+                  "code_note",
+                  "top_choice_label",
+                  "quote"
+                ],
+                "id": "provider"
+              }
+            ],
+            "label": "Clinic",
+            "select": "document"
           },
           "type": "Link"
         },
@@ -81,64 +85,104 @@
           },
           "type": "Select"
         },
-        "clinic": {
+        "first": {
           "config": {
-            "customtypes": [
-              {
-                "fields": [
-                  "name",
-                  "logo",
-                  "visit",
-                  "monthly_price",
-                  "price_note",
-                  "formulation",
-                  "insurance",
-                  "note",
-                  "code",
-                  "code_note",
-                  "top_choice_label",
-                  "quote"
-                ],
-                "id": "provider"
-              }
-            ],
-            "label": "Clinic",
-            "select": "document"
+            "default_value": false,
+            "label": "Is this 1st?",
+            "placeholder_false": "No",
+            "placeholder_true": "Yes"
           },
-          "type": "Link"
-        },
-        "quote": {
-          "config": {
-            "allowTargetBlank": true,
-            "label": "Quote",
-            "labels": ["superscript"],
-            "placeholder": "Leave blank to use the clinic's In my words.",
-            "single": "paragraph,strong,em,hyperlink"
-          },
-          "type": "StructuredText"
+          "type": "Boolean"
         },
         "place": {
           "config": {
             "label": "Place",
-            "placeholder": "1st. Leave blank to hide the badge."
+            "placeholder": "My 2026 top choice. Shown beside the 1st badge."
           },
           "type": "Text"
         },
-        "product": {
+        "overwrite": {
           "config": {
-            "label": "Product image",
-            "placeholder": "The jar or bottle beside the price. Describe the product."
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Small heading",
+                  "labels": ["superscript"],
+                  "placeholder": "Voted best for",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "intro": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Intro",
+                  "labels": ["superscript"],
+                  "placeholder": "A short line under the clinic name. Leave blank to hide it.",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "label": "Link"
+                },
+                "type": "Link"
+              },
+              "quote": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Quote",
+                  "labels": ["superscript"],
+                  "placeholder": "Leave blank to use the clinic's In my words.",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "text": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Text",
+                  "labels": ["highlight", "superscript", "signoff", "note"],
+                  "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
+                  "placeholder": "More about this brand, such as what a test kit measures. Leave blank to hide it."
+                },
+                "type": "StructuredText"
+              },
+              "product": {
+                "config": {
+                  "label": "Product image",
+                  "placeholder": "Empty uses the brand's product image. Describe the product."
+                },
+                "type": "Image"
+              },
+              "layout": {
+                "config": {
+                  "default_value": "Beside",
+                  "label": "Photo and price",
+                  "options": ["Beside", "Stacked"],
+                  "placeholder": "Beside puts the price next to the photo. Stacked puts the photo on top and the price under it, as one card. Use Stacked when the card has a lot of writing."
+                },
+                "type": "Select"
+              },
+              "links": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "label": "Links",
+                  "placeholder": "A comparison or another link. Shown under the buttons.",
+                  "repeat": true
+                },
+                "type": "Link"
+              }
+            },
+            "label": "Overwrite",
+            "repeat": false
           },
-          "type": "Image"
-        },
-        "links": {
-          "config": {
-            "allowTargetBlank": true,
-            "allowText": true,
-            "label": "Links",
-            "repeat": true
-          },
-          "type": "Link"
+          "type": "Group"
         }
       },
       "version": ""

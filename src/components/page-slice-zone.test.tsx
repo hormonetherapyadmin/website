@@ -47,6 +47,9 @@ const clinic: PageClinic = {
   monthlyPrice: 199,
   formulation: "Oestra vaginal cream",
   quote: "The one I stayed with.",
+  pageHref: "/inner-balance",
+  reviewHref: "/post/inner-balance-hrt-review",
+  reviewVideoHref: "https://youtu.be/_OlA4wXOHdQ",
 };
 
 function context(overrides: Partial<PageSliceContext> = {}): PageSliceContext {
@@ -141,16 +144,20 @@ describe("PageSliceZone", () => {
     const html = render([
       slice("brand_promo", {
         ...section("Improved sleep"),
-        small_heading: rich("Voted best for"),
         clinic: clinicLink,
-        quote: emptyRich,
-        place: "1st",
-        product: {},
-        links: [
+        first: true,
+        overwrite: [
           {
-            link_type: "Web",
-            url: "/post/inner-balance-hrt-review",
-            text: "My review",
+            small_heading: rich("Voted best for"),
+            quote: emptyRich,
+            product: {},
+            links: [
+              {
+                link_type: "Web",
+                url: "/post/oestra-vs-winona",
+                text: "Oestra vs Winona",
+              },
+            ],
           },
         ],
       }),
@@ -162,7 +169,13 @@ describe("PageSliceZone", () => {
     expect(html).toContain("$199");
     expect(html).toContain("1st");
     expect(html).toContain('data-placement="brand_promo"');
+    expect(html).toContain('href="/post/inner-balance-hrt-review"');
     expect(html).toContain("My review");
+    expect(html).toContain("Oestra vs Winona");
+    expect(html).toContain('href="/inner-balance"');
+    expect(html).toContain("Products &amp; pricing");
+    expect(html).toContain('href="https://youtu.be/_OlA4wXOHdQ"');
+    expect(html).toContain("Watch my review");
   });
 
   it("shows the posts the page loaded", () => {

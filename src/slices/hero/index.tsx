@@ -22,6 +22,7 @@ export type HeroClinic = {
   formulation?: KeyTextField;
   visit?: LinkField | null;
   monthly_price?: number | null;
+  price_unit?: string | null;
   price_note?: KeyTextField;
   top_choice_label?: KeyTextField;
   code?: KeyTextField;
@@ -62,7 +63,8 @@ export type HeroSlice =
   | { variation: "home"; primary: HomePrimary }
   | { variation: "subpage"; primary: SubpagePrimary }
   | { variation: "brands"; primary: BrandsPrimary }
-  | { variation: "provider"; primary: ProviderPrimary };
+  | { variation: "provider"; primary: ProviderPrimary }
+  | { variation: "centered"; primary: Partial<SliceSectionFields> };
 
 function text(value: KeyTextField | null | undefined) {
   const trimmed = value?.trim();
@@ -411,6 +413,16 @@ function SubpageHero({ primary }: { primary: SubpagePrimary }) {
   );
 }
 
+function CenteredHero({ primary }: { primary: Partial<SliceSectionFields> }) {
+  return (
+    <SliceSection section={primary} showHeader={false}>
+      <div className={styles.centered}>
+        <TitleCopy section={primary} />
+      </div>
+    </SliceSection>
+  );
+}
+
 function BrandsHero({ primary }: { primary: BrandsPrimary }) {
   const clinics = primary.clinics ?? [];
 
@@ -539,7 +551,9 @@ function ProviderHero({ primary }: { primary: ProviderPrimary }) {
               {price ? (
                 <p className={styles.price}>
                   <span className={styles.amount}>{priceLabel(price)}</span>
-                  <span className={styles.per}>/mo</span>
+                  {clinic?.price_unit === "One time" ? null : (
+                    <span className={styles.per}>/mo</span>
+                  )}
                   {priceNote ? (
                     <span className={styles.priceNote}>{priceNote}</span>
                   ) : null}
@@ -579,7 +593,7 @@ function ProviderHero({ primary }: { primary: ProviderPrimary }) {
   );
 }
 
-/** Homepage, subpage, brand-logo, and clinic-page heroes. */
+/** Homepage, subpage, centered, brand-logo, and clinic-page heroes. */
 export function Hero({ variation, primary }: HeroSlice) {
   switch (variation) {
     case "home":
@@ -590,6 +604,8 @@ export function Hero({ variation, primary }: HeroSlice) {
       return <BrandsHero primary={primary} />;
     case "provider":
       return <ProviderHero primary={primary} />;
+    case "centered":
+      return <CenteredHero primary={primary} />;
   }
 }
 

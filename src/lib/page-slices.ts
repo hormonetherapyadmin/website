@@ -2,6 +2,7 @@ import {
   asLink,
   asText,
   isFilled,
+  type ImageField,
   type LinkField,
   type RichTextField,
 } from "@prismicio/client";
@@ -22,6 +23,9 @@ export type PageClinicSource = TokenClinicSource & {
     short_description?: string | null;
     top_choice_label?: string | null;
     quote?: RichTextField | null;
+    youtube?: LinkField | null;
+    review?: LinkField | null;
+    product?: ImageField | null;
   };
 };
 
@@ -31,6 +35,12 @@ export type PageClinic = TokenClinic & {
   topChoice?: string;
   shortDescription?: string;
   quote?: string;
+  /** Review video. Brand promo labels it Watch my review. */
+  reviewVideoHref?: string;
+  /** Her review post. Brand promo labels it My review. */
+  reviewHref?: string;
+  /** The jar or bottle. Brand promo uses this unless the slice has a photo. */
+  product?: ImageField;
 };
 
 /** The post fields a card reads. */
@@ -56,6 +66,20 @@ type SliceLike = {
 function text(value: string | null | undefined) {
   const trimmed = value?.trim();
   return trimmed || undefined;
+}
+
+/** A web address, such as the review video. A blank link stays blank. */
+function webHref(link: LinkField | null | undefined) {
+  if (!link || !isFilled.link(link) || link.link_type !== "Web")
+    return undefined;
+  return text(link.url);
+}
+
+/** A Prismic document, such as her review post. A blank link stays blank. */
+function documentHref(link: LinkField | null | undefined) {
+  if (!link || !isFilled.link(link) || link.link_type !== "Document")
+    return undefined;
+  return text(link.url);
 }
 
 function linkedId(field: unknown) {
@@ -135,6 +159,12 @@ export function pageClinic(document: PageClinicSource): PageClinic | null {
     topChoice: text(document.data.top_choice_label),
     shortDescription: text(document.data.short_description),
     quote: text(quote),
+    reviewVideoHref: webHref(document.data.youtube),
+    reviewHref: documentHref(document.data.review),
+    product:
+      document.data.product && isFilled.image(document.data.product)
+        ? document.data.product
+        : undefined,
   };
 }
 
@@ -180,7 +210,9 @@ export function brandPromoClinic(clinic: PageClinic): BrandPromoClinic {
     logo: clinic.logo,
     visitHref: clinic.visitHref,
     visitText: clinic.visitText,
+    kind: clinic.kind,
     monthlyPrice: clinic.monthlyPrice,
+    priceUnit: clinic.priceUnit,
     priceNote: clinic.priceNote,
     insurance: clinic.insurance,
     formulation: clinic.formulation,
@@ -189,6 +221,10 @@ export function brandPromoClinic(clinic: PageClinic): BrandPromoClinic {
     offerCopy: clinic.offerCopy,
     topChoice: clinic.topChoice,
     quote: clinic.quote,
+    pageHref: clinic.pageHref,
+    reviewHref: clinic.reviewHref,
+    reviewVideoHref: clinic.reviewVideoHref,
+    product: clinic.product,
   };
 }
 

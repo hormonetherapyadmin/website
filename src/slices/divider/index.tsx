@@ -35,17 +35,17 @@ const colorClass: Record<LineColor, string> = {
 };
 
 const spaceAboveClass: Record<SectionSpacing, string> = {
-  None: "mt-0",
-  Small: "mt-slice-sm",
-  Medium: "mt-slice",
-  Large: "mt-slice-lg",
+  None: "pt-0",
+  Small: "pt-slice-sm",
+  Medium: "pt-slice",
+  Large: "pt-slice-lg",
 };
 
 const spaceBelowClass: Record<SectionSpacing, string> = {
-  None: "mb-0",
-  Small: "mb-slice-sm",
-  Medium: "mb-slice",
-  Large: "mb-slice-lg",
+  None: "pb-0",
+  Small: "pb-slice-sm",
+  Medium: "pb-slice",
+  Large: "pb-slice-lg",
 };
 
 function choice<T extends string>(
@@ -59,7 +59,10 @@ function choice<T extends string>(
   return fallback;
 }
 
-/** A decorative line. Spacing and background are fields on this slice. */
+/**
+ * A decorative line. Space above and below are padding, so the gap is
+ * not swallowed by the margin on the slices beside the line.
+ */
 export function Divider({ primary }: { primary: DividerPrimary }) {
   const line = choice(primary.line, LINES, "Squiggly");
   const color = choice(primary.color, COLORS, "Accent");
@@ -71,27 +74,25 @@ export function Divider({ primary }: { primary: DividerPrimary }) {
   return (
     <div
       aria-hidden="true"
-      className={[
-        spaceAboveClass[spaceAbove],
-        spaceBelowClass[spaceBelow],
-        sectionBackgroundClass[background],
-      ]
+      className={[spaceAboveClass[spaceAbove], spaceBelowClass[spaceBelow]]
         .filter(Boolean)
         .join(" ")}
     >
-      <div
-        className={[
-          "mx-auto w-full max-w-wrap px-gutter",
-          band ? "py-slice" : "",
-        ]
-          .filter(Boolean)
-          .join(" ")}
-      >
+      <div className={sectionBackgroundClass[background] || undefined}>
         <div
-          className={[styles.line, lineClass[line], colorClass[color]].join(
-            " ",
-          )}
-        />
+          className={[
+            "mx-auto w-full max-w-wrap px-gutter",
+            band ? "py-slice" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+        >
+          <div
+            className={[styles.line, lineClass[line], colorClass[color]].join(
+              " ",
+            )}
+          />
+        </div>
       </div>
     </div>
   );

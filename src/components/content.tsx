@@ -59,16 +59,22 @@ function Offer({
 }
 
 function Facts({ clinic }: { clinic: TokenClinic }) {
+  const oneTime = clinic.priceUnit === "One time";
+  const product = clinic.kind === "Product";
   const rows = [
     typeof clinic.monthlyPrice === "number"
-      ? ["What I paid per month", `${money(clinic.monthlyPrice)}/mo`]
+      ? oneTime
+        ? ["What I paid", money(clinic.monthlyPrice)]
+        : ["What I paid per month", `${money(clinic.monthlyPrice)}/mo`]
       : null,
     clinic.priceNote ? ["Price note", clinic.priceNote] : null,
-    clinic.insurance === true
-      ? ["Insurance", "Takes insurance"]
-      : clinic.insurance === false
-        ? ["Insurance", "Doesn’t take insurance"]
-        : null,
+    product
+      ? null
+      : clinic.insurance === true
+        ? ["Insurance", "Takes insurance"]
+        : clinic.insurance === false
+          ? ["Insurance", "Doesn’t take insurance"]
+          : null,
     clinic.formulation ? ["Typically prescribed", clinic.formulation] : null,
   ].filter((row): row is [string, string] => row !== null);
 
