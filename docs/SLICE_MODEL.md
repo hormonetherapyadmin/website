@@ -344,9 +344,10 @@ The relationship fetches `name`, `kind`, `logo`, `visit`, `page`,
 `top_choice_label`, and `quote`. A product leaves out the insurance
 line, and a one-time price has no "/mo". A brand with no logo shows
 its name without the logo tile. Page is the Products & pricing
-button. My review is her post. My comparison is her comparison post,
-and the button says the link's display text, such as "Musely vs
-Winona cream". A blank display text says "My comparison". Review video
+button. My review is her post. Each My comparison link is one of her
+comparison posts, and its button says the link's display text, such
+as "Musely vs Winona cream". A blank display text says "My
+comparison". Review video
 is Watch my review. A
 YouTube link plays in the site's video modal. The modal heading reads
 "My review on", then the brand logo and name. Any other video link
@@ -366,8 +367,8 @@ beside it, such as "My 2026 top choice". A clinic with a code shows
 "Code PEGGY10" and the code line under it. A clinic with no code shows
 the code line alone, such as Winona's "15% off your first order". The
 brand buttons sit in this order: Products & pricing, My review,
-My comparison, then Watch my review. A YouTube or Vimeo link gets a
-play icon. My review gets a page icon. My comparison gets a two-way
+each My comparison in editor order, then Watch my review. A YouTube or
+Vimeo link gets a play icon. My review gets a page icon. My comparison gets a two-way
 arrow icon. Page gets a tag icon. Links written on the
 slice are a second row of text, grey on a
 light card and white on Navy or Raspberry, each with a chevron. Set
@@ -739,8 +740,8 @@ comparison chart, the clinic price card, a facts token, and any later
 slice that lists `monthly_price` all show that same number. On the
 Links tab, Affiliate (`visit`) is a web link. Review video
 (`youtube`) is a web link. Page (`page`) is a Page document. My review
-(`review`) is a Post. My comparison (`comparison`) is a Post with
-display text. Those are the links a slice reads from the
+(`review`) is a Post. My comparison (`comparison`) is a repeatable
+link to Posts, with display text. Those are the links a slice reads from the
 clinic. Product image (`product`) is
 the jar or
 bottle a slice reads from the clinic. A slice lists the field on its
@@ -754,7 +755,7 @@ clinic relationship, the same way it lists `visit`.
 | Quote | `clinic` | Logo, name, visit. A Name on the slice replaces the clinic name |
 | Side by side, clinic | `clinic` | Logo, name, quote, visit |
 | Boxes | `clinic` on each box | Logo, short description, name, code. A written Image, Heading, Text, or Bottom line replaces it |
-| Brand promo | `clinic` | Name, kind, logo, visit, page, my review, my comparison, review video, product image, price, price is, price note, formulation, insurance, getting started, code, code line, quote. Page is Products & pricing. My review is her post. My comparison is a button with its display text. Review video is Watch my review. A photo in Overwrite replaces the product image. A written Quote replaces the clinic quote. Is this 1st? and Place stay on the slice. Text and extra links are in Overwrite. Extra links are a second row of text |
+| Brand promo | `clinic` | Name, kind, logo, visit, page, my review, my comparison, review video, product image, price, price is, price note, formulation, insurance, getting started, code, code line, quote. Page is Products & pricing. My review is her post. Each My comparison is a button with its display text. Review video is Watch my review. A photo in Overwrite replaces the product image. A written Quote replaces the clinic quote. Is this 1st? and Place stay on the slice. Text and extra links are in Overwrite. Extra links are a second row of text |
 | Post sidebar | `clinic` | Name, logo. The name links to Page when that field is set |
 | Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, code, code line, plus the sentence in that paragraph |
 | Story facts token | `{{provider:uid:facts}}` | Price, price is, price note, insurance (clinics only), formulation |
@@ -794,7 +795,7 @@ The second tab. The five links for this brand.
 | Review video | `youtube` | Web link, no display text | No |
 | Page | `page` | Link to a Page document | No |
 | My review | `review` | Link to a Post | No |
-| My comparison | `comparison` | Link to a Post, with display text | No |
+| My comparison | `comparison` | Repeatable link, with display text. Documents are Posts only | No |
 
 An empty Affiliate link means a name that would go to the clinic's
 site is not a link. The placeholder is "Affiliate link". Affiliate
@@ -806,12 +807,16 @@ link. Page is the site page about this clinic.
 The sidebar name links there when Page is set, and a blank Page leaves
 that name as text. My review is the post where she reviews this brand.
 Brand promo says "My review". A blank My review hides that button.
-My comparison is the post where she compares this brand with another.
-Brand promo shows it as a button after My review, and the button says
-the display text, such as "Musely vs Winona cream". A blank display
-text says "My comparison". A blank My comparison hides that button.
-A brand holds one comparison. More comparisons for one card go in
-Brand promo's Overwrite links.
+My comparison holds her blog posts that compare this brand with
+another. She adds one link per post. Brand promo shows each as a
+button after My review, in editor order, and each button says its
+display text, such as "Musely vs Winona cream". A blank display text
+says "My comparison". An empty link is skipped, and an empty My
+comparison shows no comparison buttons. The field allows any link
+kind, which is the repeatable link the type generator supports. Its
+document picker only lists Posts. A web address gets a button too.
+A brand saved before the field was repeatable has a single link, and
+the site reads it as a list of one.
 
 #### Price
 

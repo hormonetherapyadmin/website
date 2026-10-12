@@ -22,6 +22,9 @@ import { visitLinkProps } from "@/lib/affiliate-link";
 import { youtubeVideo } from "@/lib/youtube";
 import styles from "./brand-promo.module.css";
 
+/** One comparison post. Blank text reads My comparison. */
+export type BrandPromoComparison = { href: string; text?: string };
+
 /** The clinic this card points at. The page reads it off the Provider. */
 export type BrandPromoClinic = {
   uid: string;
@@ -47,10 +50,8 @@ export type BrandPromoClinic = {
   pageHref?: string;
   /** Her review post. The card labels it My review. */
   reviewHref?: string;
-  /** Her comparison post. The card labels it with the link's display text. */
-  comparisonHref?: string;
-  /** Blank reads My comparison. */
-  comparisonText?: string;
+  /** Her comparison posts. Each is a button labeled with its display text. */
+  comparisons?: readonly BrandPromoComparison[];
   /** The review video. The card labels it Watch my review. */
   reviewVideoHref?: string;
   /** The brand's product photo, used when this slice has none. */
@@ -113,23 +114,32 @@ export type BrandPromoLink = {
 
 /**
  * Products & pricing is the brand's page. My review is her post.
- * The comparison is her comparison post, labeled with its display text.
- * Watch my review is the review video.
+ * Each comparison is one of her comparison posts, labeled with its
+ * display text. Watch my review is the review video.
  */
 export function brandPromoLinks(
   clinic?: Pick<
     BrandPromoClinic,
-    | "pageHref"
-    | "reviewHref"
-    | "comparisonHref"
-    | "comparisonText"
-    | "reviewVideoHref"
+    "pageHref" | "reviewHref" | "comparisons" | "reviewVideoHref"
   > | null,
 ): BrandPromoLink[] {
   const page = text(clinic?.pageHref);
   const review = text(clinic?.reviewHref);
-  const comparison = text(clinic?.comparisonHref);
   const video = text(clinic?.reviewVideoHref);
+  const comparisons = (clinic?.comparisons ?? []).flatMap(
+    (comparison): BrandPromoLink[] => {
+      const href = text(comparison.href);
+      if (!href) return [];
+      return [
+        {
+          href,
+          text: text(comparison.text) ?? COMPARISON_LABEL,
+          external: false,
+          icon: "comparison",
+        },
+      ];
+    },
+  );
   const links: (BrandPromoLink | undefined)[] = [
     page
       ? { href: page, text: PRODUCTS_LABEL, external: false, icon: "page" }
@@ -137,14 +147,7 @@ export function brandPromoLinks(
     review
       ? { href: review, text: REVIEW_LABEL, external: false, icon: "review" }
       : undefined,
-    comparison
-      ? {
-          href: comparison,
-          text: text(clinic?.comparisonText) ?? COMPARISON_LABEL,
-          external: false,
-          icon: "comparison",
-        }
-      : undefined,
+    ...comparisons,
     video
       ? { href: video, text: WATCH_LABEL, external: true, icon: "video" }
       : undefined,
@@ -372,8 +375,8 @@ function Media({ field, sizes }: { field: ImageField; sizes: string }) {
  * Overwrite. Leave that group off and the card uses the brand.
  * A blank Small heading reads "Voted best for".
  * The price, logo, visit link, and coupon come from the clinic.
- * Products & pricing is the brand's page. My review is her post. The
- * comparison button is her comparison post, labeled with its display text.
+ * Products & pricing is the brand's page. My review is her post. Each
+ * comparison post is a button, labeled with its display text.
  * Watch my review is the review video, and a YouTube link plays in the
  * video modal. Links written here sit under those buttons.
  * The product photo is the brand's, unless one is placed here.

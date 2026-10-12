@@ -192,7 +192,7 @@ describe("pageClinic and comparisonClinic", () => {
     ).toBeUndefined();
   });
 
-  it("gives a brand promo the comparison post and its display text", () => {
+  it("gives a brand promo each comparison post and its display text", () => {
     const comparison = {
       link_type: "Document" as const,
       id: "comparison-id",
@@ -207,22 +207,31 @@ describe("pageClinic and comparisonClinic", () => {
       brandPromoClinic(
         pageClinic(
           provider({
-            comparison: { ...comparison, text: " Musely vs Winona cream " },
+            comparison: [
+              { ...comparison, text: " Musely vs Winona cream " },
+              { link_type: "Any" },
+              { ...comparison, url: "/post/alloy-vs-musely", text: " " },
+            ],
           }),
         )!,
-      ),
-    ).toMatchObject({
-      comparisonHref: "/post/musely-vs-winona",
-      comparisonText: "Musely vs Winona cream",
-    });
+      ).comparisons,
+    ).toEqual([
+      { href: "/post/musely-vs-winona", text: "Musely vs Winona cream" },
+      { href: "/post/alloy-vs-musely" },
+    ]);
 
-    const blank = brandPromoClinic(
-      pageClinic(provider({ comparison: { ...comparison, text: " " } }))!,
-    );
-    expect(blank.comparisonHref).toBe("/post/musely-vs-winona");
-    expect(blank.comparisonText).toBeUndefined();
     expect(
-      brandPromoClinic(pageClinic(provider())!).comparisonHref,
+      brandPromoClinic(
+        pageClinic(
+          provider({ comparison: { ...comparison, text: "Winona vs Musely" } }),
+        )!,
+      ).comparisons,
+    ).toEqual([{ href: "/post/musely-vs-winona", text: "Winona vs Musely" }]);
+    expect(
+      brandPromoClinic(pageClinic(provider({ comparison: [] }))!).comparisons,
+    ).toBeUndefined();
+    expect(
+      brandPromoClinic(pageClinic(provider())!).comparisons,
     ).toBeUndefined();
   });
 

@@ -9,7 +9,10 @@ import {
 import { storyClinicUids, type TokenClinic } from "@/components/content-blocks";
 import { minutesToRead } from "@/lib/post-derived";
 import { tokenClinic, type TokenClinicSource } from "@/lib/token-clinic";
-import type { BrandPromoClinic } from "@/slices/BrandPromo";
+import type {
+  BrandPromoClinic,
+  BrandPromoComparison,
+} from "@/slices/BrandPromo";
 import type { BoxClinic } from "@/slices/boxes";
 import type { ComparisonClinic } from "@/slices/clinic_comparison";
 import type { PostCardData } from "@/slices/posts";
@@ -25,7 +28,8 @@ export type PageClinicSource = TokenClinicSource & {
     quote?: RichTextField | null;
     youtube?: LinkField | null;
     review?: LinkField | null;
-    comparison?: LinkField | null;
+    /** Repeatable. A link saved before it was repeatable is one object. */
+    comparison?: readonly LinkField[] | LinkField | null;
     product?: ImageField | null;
   };
 };
@@ -40,10 +44,8 @@ export type PageClinic = TokenClinic & {
   reviewVideoHref?: string;
   /** Her review post. Brand promo labels it My review. */
   reviewHref?: string;
-  /** Her comparison post. Brand promo shows it as a button. */
-  comparisonHref?: string;
-  /** The display text on My comparison, such as Musely vs Winona cream. */
-  comparisonText?: string;
+  /** Her comparison posts, in editor order. Brand promo shows each as a button. */
+  comparisons?: BrandPromoComparison[];
   /** The jar or bottle. Brand promo uses this unless the slice has a photo. */
   product?: ImageField;
 };
@@ -92,6 +94,24 @@ function linkText(link: LinkField | null | undefined) {
   if (!link || !("text" in link) || typeof link.text !== "string")
     return undefined;
   return text(link.text);
+}
+
+/** Each filled post or web link, with its display text. Blank items drop. */
+function comparisonLinks(
+  field: readonly LinkField[] | LinkField | null | undefined,
+): BrandPromoComparison[] | undefined {
+  const items = Array.isArray(field)
+    ? field
+    : field
+      ? [field as LinkField]
+      : [];
+  const links = items.flatMap((link) => {
+    const href = documentHref(link) ?? webHref(link);
+    if (!href) return [];
+    const label = linkText(link);
+    return [label ? { href, text: label } : { href }];
+  });
+  return links.length ? links : undefined;
 }
 
 function linkedId(field: unknown) {
@@ -173,8 +193,7 @@ export function pageClinic(document: PageClinicSource): PageClinic | null {
     quote: text(quote),
     reviewVideoHref: webHref(document.data.youtube),
     reviewHref: documentHref(document.data.review),
-    comparisonHref: documentHref(document.data.comparison),
-    comparisonText: linkText(document.data.comparison),
+    comparisons: comparisonLinks(document.data.comparison),
     product:
       document.data.product && isFilled.image(document.data.product)
         ? document.data.product
@@ -237,8 +256,7 @@ export function brandPromoClinic(clinic: PageClinic): BrandPromoClinic {
     quote: clinic.quote,
     pageHref: clinic.pageHref,
     reviewHref: clinic.reviewHref,
-    comparisonHref: clinic.comparisonHref,
-    comparisonText: clinic.comparisonText,
+    comparisons: clinic.comparisons,
     reviewVideoHref: clinic.reviewVideoHref,
     product: clinic.product,
   };

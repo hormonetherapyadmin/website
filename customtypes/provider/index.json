@@ -93,8 +93,8 @@
           "allowText": true,
           "customtypes": ["post"],
           "label": "My comparison",
-          "placeholder": "The post where I compare this brand with another. The display text is the button, such as Musely vs Winona cream.",
-          "select": "document"
+          "placeholder": "Posts where I compare this brand with another. Add one for each. The display text is the button, such as Musely vs Winona cream.",
+          "repeat": true
         },
         "type": "Link"
       }

@@ -922,13 +922,15 @@ interface ProviderDocumentData {
   /**
    * My comparison field in *Brand*
    *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: The post where I compare this brand with another. The display text is the button, such as Musely vs Winona cream.
+   * - **Field Type**: Link
+   * - **Placeholder**: Posts where I compare this brand with another. Add one for each. The display text is the button, such as Musely vs Winona cream.
    * - **API ID Path**: provider.comparison
    * - **Tab**: Links
-   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  comparison: prismic.ContentRelationshipField<"post">; /**
+  comparison: prismic.Repeatable<
+    prismic.LinkField<string, string, unknown, prismic.FieldState, never>
+  >; /**
    * Price field in *Brand*
    *
    * - **Field Type**: Number

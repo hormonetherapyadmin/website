@@ -159,7 +159,7 @@ in tabs. A tab is a group of fields. The model is in that file.
 Tabs:
 
 -   Profile — name, kind, logo, short description
--   Links — affiliate link, page, review post, comparison post, review video
+-   Links — affiliate link, page, review post, comparison posts, review video
 -   Price — the price and whether it is per month or one time, the three price-box lines, and the coupon code
 -   Care — labs, HSA, states
 -   Words — her short quote
@@ -176,11 +176,11 @@ link for her review. Slices say "Watch my review", and the video plays
 in a modal on the page. Page is a link to
 the site page about this clinic, and it stays blank until that page
 exists. The sidebar name uses Page. My review is a link to the post
-where she reviews this brand. My comparison is a link to the post
-where she compares this brand with another. It is a blog post, the
-same as My review. Brand promo says "My review" for
+where she reviews this brand. My comparison is a repeatable link to
+the posts where she compares this brand with another, one link per
+post. They are blog posts, the same as My review. Brand promo says "My review" for
 that post, "Products & pricing" for Page, and "Watch my review" for the
-video. The comparison button says the link's display text, such as
+video. Each comparison button says its link's display text, such as
 "Musely vs Winona cream", or "My comparison" when that is blank. Links written in Brand promo's Overwrite group sit on a second
 row under those buttons. The product image is on the Product tab. A slice that shows
 the jar or bottle reads it from the clinic. Brand promo uses that
