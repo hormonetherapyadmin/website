@@ -158,7 +158,7 @@ in tabs. A tab is a group of fields. The model is in that file.
 
 Tabs:
 
--   Profile — name, kind, logo, short description
+-   Profile — name, kind, logo, short description, top choice label
 -   Links — affiliate link, page, review post, comparison posts, review video
 -   Price — the price and whether it is per month or one time, the three price-box lines, and the coupon code
 -   Care — labs, HSA, states
@@ -184,7 +184,8 @@ video. Each comparison button says its link's display text, such as
 "Musely vs Winona cream", or "My comparison" when that is blank. Links written in Brand promo's Overwrite group sit on a second
 row under those buttons. The product image is on the Product tab. A slice that shows
 the jar or bottle reads it from the clinic. Brand promo uses that
-photo unless a photo is placed on the slice.
+photo unless a photo is placed on the slice, and the photo links to
+the brand's affiliate link.
 
 Field ids are in `docs/SLICE_MODEL.md`. The long review stays on the
 Provider review. A story inserts a clinic with a token such as
@@ -239,7 +240,8 @@ Fields:
 -   Indexability control with safe default
 
 The card reads Title, Image, Subtitle, Published, Category, and the
-minutes to read. Clinics in the sidebar come from provider tokens in
+minutes to read. On a card, the subtitle is limited to three lines.
+Clinics in the sidebar come from provider tokens in
 the story. A paragraph that is only `{{photos}}` places the next two
 photos side by side. Minutes to read, Keep reading, and the document
 tags are derived. Published is the original publish date. There is no updated

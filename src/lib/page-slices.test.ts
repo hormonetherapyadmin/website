@@ -133,12 +133,12 @@ describe("pageClinic and comparisonClinic", () => {
     });
   });
 
-  it("gives a box the logo, code, and short description", () => {
+  it("gives a box the logo, code, and top choice label", () => {
     expect(boxClinic(pageClinic(provider())!)).toEqual({
       name: "Inner Balance",
       logo: { src: "https://images.prismic.io/logo.png" },
       offerCode: "PEGGY10",
-      shortDescription: "Bioidentical cream by mail.",
+      topChoice: "My 2026 top choice",
     });
   });
 

@@ -1108,7 +1108,7 @@ export interface BoxesSliceDefaultPrimaryBoxesItem {
    * - **Documentation**: https://prismic.io/docs/fields/content-relationship
    */
   clinic: ContentRelationshipFieldWithData<
-    [{ fields: ["name", "logo", "code", "short_description"]; id: "provider" }]
+    [{ fields: ["name", "logo", "code", "top_choice_label"]; id: "provider" }]
   >;
 
   /**
@@ -1125,7 +1125,7 @@ export interface BoxesSliceDefaultPrimaryBoxesItem {
    * Heading field in *Boxes → Default → Primary → Boxes*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: Empty uses the clinic short description, such as Improved sleep
+   * - **Placeholder**: Empty uses the clinic top choice label, such as No appointment required
    * - **API ID Path**: boxes.default.primary.boxes[].heading
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */

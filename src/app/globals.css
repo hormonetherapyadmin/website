@@ -70,6 +70,15 @@
 }
 
 @layer base {
+  /*
+    Anchor and jump links scroll down to their target. The matching
+    data-scroll-behavior on <html> lets Next.js keep that scroll for a
+    hash change and turn it off when moving to another page.
+  */
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-text);

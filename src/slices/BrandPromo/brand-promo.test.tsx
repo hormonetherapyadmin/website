@@ -228,6 +228,7 @@ describe("BrandPromo", () => {
     expect(html).toContain("Watch my review");
     expect(html).toContain('alt="Oestra cream jar"');
     expect(html).not.toContain("Visit");
+    expect(html).not.toMatch(/<a [^>]*>\s*<img [^>]*alt="Oestra cream jar"/);
   });
 
   it("puts brand buttons first and slice links on the next row", () => {
@@ -345,6 +346,18 @@ describe("BrandPromo", () => {
       },
     );
     expect(fallback).toContain('alt="Winona treatment jar"');
+    expect(fallback).toMatch(
+      /<a [^>]*href="https:\/\/example\.com\/inner-balance\?ref=peggy"[^>]*data-placement="brand_promo"[^>]*>\s*<img [^>]*alt="Winona treatment jar"[^>]*>\s*<span class="sr-only"> \(affiliate link, opens in a new tab\)/,
+    );
+
+    const unlinked = render(
+      { ...section(), ...written({ product: brand }) },
+      { ...clinic, visitHref: undefined, product: brand },
+    );
+    expect(unlinked).toContain('alt="Winona treatment jar"');
+    expect(unlinked).not.toMatch(
+      /<a [^>]*>\s*<img [^>]*alt="Winona treatment jar"/,
+    );
 
     const override = render(
       { ...section(), ...written({ product: placed }) },

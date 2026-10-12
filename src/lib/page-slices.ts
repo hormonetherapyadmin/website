@@ -267,7 +267,7 @@ export function boxClinic(clinic: PageClinic): BoxClinic {
     name: clinic.name,
     logo: clinic.logo,
     offerCode: clinic.offerCode,
-    shortDescription: clinic.shortDescription,
+    topChoice: clinic.topChoice,
   };
 }
 

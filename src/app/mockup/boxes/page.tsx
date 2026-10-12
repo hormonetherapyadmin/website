@@ -33,12 +33,12 @@ function section(
 
 /*
   The trusted-providers jump band. Codes and labels are from that mockup.
-  Each label stands in for the clinic's short description.
+  Each label stands in for the clinic's top choice label.
 */
 type Sample = {
   id: string;
   name: string;
-  shortDescription: string;
+  topChoice: string;
   code?: string;
   bottomLine?: string;
 };
@@ -47,43 +47,43 @@ const CLINIC_BOXES: Sample[] = [
   {
     id: "inner-balance",
     name: "Inner Balance",
-    shortDescription: "Improved sleep",
+    topChoice: "Improved sleep",
     code: "PEGGY10",
   },
   {
     id: "winona",
     name: "Winona",
-    shortDescription: "No pre-testing",
+    topChoice: "No pre-testing",
     bottomLine: "15% off",
   },
   {
     id: "joi",
     name: "Joi Women’s Wellness",
-    shortDescription: "Most comprehensive testing",
+    topChoice: "Most comprehensive testing",
     code: "BRONSON",
   },
   {
     id: "musely",
     name: "Musely",
-    shortDescription: "Most gentle HRT",
+    topChoice: "Most gentle HRT",
     code: "HTH20",
   },
   {
     id: "alloy",
     name: "Alloy",
-    shortDescription: "No appointment required",
+    topChoice: "No appointment required",
     code: "HORMONEHUB10",
   },
   {
     id: "effecty",
     name: "Effecty",
-    shortDescription: "You get a say",
+    topChoice: "You get a say",
     code: "PEGGY50",
   },
   {
     id: "mymenopauserx",
     name: "MyMenopauseRx",
-    shortDescription: "Most insurance-friendly",
+    topChoice: "Most insurance-friendly",
     bottomLine: "No code",
   },
 ];
@@ -92,7 +92,7 @@ const clinics: BoxClinic[] = CLINIC_BOXES.map((sample) => ({
   name: sample.name,
   logo: { src: `/mockup/logos/${sample.id}.png` },
   offerCode: sample.code,
-  shortDescription: sample.shortDescription,
+  topChoice: sample.topChoice,
 }));
 
 const clinicBoxes = CLINIC_BOXES.map((sample) => ({

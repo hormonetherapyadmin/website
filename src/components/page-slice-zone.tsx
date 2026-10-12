@@ -51,6 +51,11 @@ export type PageSliceContext = {
    * False means that slice is last.
    */
   followingSpaceAbove?: ReadonlyMap<string, string | null | false>;
+  /**
+   * Slice type of the slice after each slice id.
+   * False means that slice is last.
+   */
+  followingSliceType?: ReadonlyMap<string, string | false>;
 };
 
 type Props<TSlice extends PageDocumentDataSlicesSlice> = SliceComponentProps<
@@ -198,6 +203,7 @@ function BrandPromoAdapter({ slice, context }: Props<BrandPromoSlice>) {
       primary={slice.primary}
       clinic={clinic ? brandPromoClinic(clinic) : null}
       followingSpaceAbove={context.followingSpaceAbove?.get(slice.id)}
+      last={context.followingSliceType?.get(slice.id) !== "brand_promo"}
     />
   );
 }
@@ -245,12 +251,22 @@ export function PageSliceZone({
       followingSpaceAbove(slices[index + 1]),
     ]),
   );
+  const followingType = new Map(
+    slices.map((slice, index) => [
+      slice.id,
+      slices[index + 1]?.slice_type ?? false,
+    ]),
+  );
 
   return (
     <SliceZone
       slices={slices}
       components={components}
-      context={{ ...context, followingSpaceAbove: following }}
+      context={{
+        ...context,
+        followingSpaceAbove: following,
+        followingSliceType: followingType,
+      }}
     />
   );
 }

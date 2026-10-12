@@ -172,6 +172,7 @@ export default function BrandPromoPreview() {
           first: false,
         }}
         clinic={joi}
+        last
       />
     </>
   );

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={besley.variable}>
+    <html lang="en" className={besley.variable} data-scroll-behavior="smooth">
       <body className="antialiased">
         <a
           href="#main"

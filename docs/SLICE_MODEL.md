@@ -126,7 +126,9 @@ other slice it is the heading. An empty title leaves the section with no
 id. A button uses that id with a hash, such as
 `#eight-online-hrt-clinics-side-by-side` for the comparison heading
 "Eight online HRT clinics, side by side." Changing the title changes the
-id, so the button address has to change with it.
+id, so the button address has to change with it. Clicking that hash, or
+any other anchor on the site, scrolls the page down to the target.
+Someone who prefers reduced motion lands there without the scroll.
 
 ### Rich text
 
@@ -162,8 +164,10 @@ A label styles words. It does not insert a document.
 Writing is one size everywhere. A post body and every slice's Text field
 (Side by side, Brand promo, Ribbon, and Quote) use the `--text-body`
 token in `globals.css`, 1.3rem with a 1.7 line height, with 1.4rem
-between paragraphs. Intros, captions, card text, the closing line, and
-the note box keep their own sizes.
+between paragraphs. The Ribbon box keeps the 1.3rem size with a 1.5
+line height, so its short lines sit together under the title. Intros,
+captions, card text, the closing line, and the note box keep their own
+sizes.
 
 A link in writing looks the same as a link in a post body: the accent
 color, semibold, no underline, and a tint that grows under the words on
@@ -241,18 +245,18 @@ Each box:
 | --- | --- | --- | --- | --- |
 | Clinic | `clinic` | Content relationship to Provider | No | Inner Balance |
 | Image | `image` | Image | No | Empty, so the clinic logo |
-| Heading | `heading` | Heading rich text | No | Empty, so the short description, such as Improved sleep |
+| Heading | `heading` | Heading rich text | No | Empty, so the top choice label, such as No appointment required |
 | Text | `text` | Heading rich text | No | Empty, so the clinic name |
 | Bottom line | `bottom_line` | Text | No | Empty, so the code PEGGY10. Winona's is "15% off" |
 | Link | `link` | Link, no display text | No | `#inner-balance` |
 
 A written field wins. An empty Image, Heading, Text, or Bottom line
-uses the clinic's logo, short description, name, or code. A box with
-no clinic is written by hand. A box with no heading, no short
-description, no text, and no clinic name is hidden. A clinic
+uses the clinic's logo, top choice label, name, or code. A box with
+no clinic is written by hand. A box with no heading, no top choice
+label, no text, and no clinic name is hidden. A clinic
 with no code and an empty Bottom line shows no bottom line, so write
 "No code" when the box should say it. The relationship fetches `name`,
-`logo`, `code`, and `short_description`.
+`logo`, `code`, and `top_choice_label`.
 
 The whole box is the link. A box with an empty Link is not clickable.
 A jump link is `#` and the id of a section lower on the page, made from
@@ -354,7 +358,9 @@ YouTube link plays in the site's video modal. The modal heading reads
 opens in a new tab. A YouTube link written in the slice's extra links
 also plays in the modal. A blank Page, My review, My comparison, or
 Review video hides that button. The product photo is
-the brand's, unless a photo is placed in Overwrite. Links written in
+the brand's, unless a photo is placed in Overwrite. When the clinic
+has an affiliate link, that photo opens it in a new tab, with the same
+sponsored rel as the visit button. Links written in
 Overwrite sit on a second row under those buttons.
 
 The logo, the name, the price, the three price-box lines, the visit
@@ -376,7 +382,10 @@ Space above and Space below to None on the directory cards so they
 stack. A light Beside card draws a rule across the bottom, in the
 middle of the gap after the card, so that gap is even on both sides
 of the line. The gap is Space below, or the next slice's Space above
-when that is larger. Stacked draws no rule. Navy and Raspberry use the light text and the light visit
+when that is larger. Stacked draws no rule. The last card in a run
+draws no rule either: when the next slice is not a Brand promo, or
+nothing follows, the line is left off, so it never doubles up with a
+Divider or trails the page. There is no field for this. Navy and Raspberry use the light text and the light visit
 button.
 
 ### Ribbon
@@ -593,7 +602,10 @@ posts are the newest in the same category, then the newest in any
 category. The current post is left out. There is no Related posts field.
 
 The card reads these fields from a Post. Minutes to read is calculated
-from the story.
+from the story. The subtitle on a card is at most three lines, on every
+variation, including the large homepage card and the featured card. A
+longer subtitle ends in an ellipsis. The post page still shows the full
+subtitle under the title.
 
 | Label | Id | Kind |
 | --- | --- | --- |
@@ -754,7 +766,7 @@ clinic relationship, the same way it lists `visit`.
 | Clinic comparison | `clinic` | Name, logo, short description, price, price note, insurance, formulation, quote, getting started, top choice label, visit, code, code line. The review link is on the slice row |
 | Quote | `clinic` | Logo, name, visit. A Name on the slice replaces the clinic name |
 | Side by side, clinic | `clinic` | Logo, name, quote, visit |
-| Boxes | `clinic` on each box | Logo, short description, name, code. A written Image, Heading, Text, or Bottom line replaces it |
+| Boxes | `clinic` on each box | Logo, top choice label, name, code. A written Image, Heading, Text, or Bottom line replaces it |
 | Brand promo | `clinic` | Name, kind, logo, visit, page, my review, my comparison, review video, product image, price, price is, price note, formulation, insurance, getting started, code, code line, quote. Page is Products & pricing. My review is her post. Each My comparison is a button with its display text. Review video is Watch my review. A photo in Overwrite replaces the product image. A written Quote replaces the clinic quote. Is this 1st? and Place stay on the slice. Text and extra links are in Overwrite. Extra links are a second row of text |
 | Post sidebar | `clinic` | Name, logo. The name links to Page when that field is set |
 | Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, code, code line, plus the sentence in that paragraph |
@@ -774,10 +786,12 @@ this tab.
 | Top choice label | `top_choice_label` | Text | No |
 
 Short description is the one line about the clinic. The comparison
-chart's Description column reads it, a Boxes box with an empty Heading
-shows it, and so does any other clinic summary that needs a short
-line. A blank Top choice label means no badge. A clinic on the site
-is one Peggy has tried. There is no tested checkbox.
+chart's Description column reads it, and so does any other clinic
+summary that needs a short line. A Boxes box with an empty Heading
+shows the top choice label as its title. A blank Top choice label
+means no badge, and that box has no title unless Heading is written.
+A clinic on the site is one Peggy has tried. There is no tested
+checkbox.
 
 Kind is Clinic or Product. An empty Kind is a clinic. A product has
 no insurance line: the Brand promo price box and the story facts

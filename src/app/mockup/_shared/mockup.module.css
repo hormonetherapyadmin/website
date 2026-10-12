@@ -1440,9 +1440,14 @@ a.clinicName:focus-visible {
 }
 
 .postExcerpt {
+  display: -webkit-box;
   margin: 0;
+  overflow: hidden;
   color: var(--muted);
   font-size: 1rem;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
 }
 
 .leadPost .postExcerpt {

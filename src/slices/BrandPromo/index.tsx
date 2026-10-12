@@ -379,17 +379,21 @@ function Media({ field, sizes }: { field: ImageField; sizes: string }) {
  * comparison post is a button, labeled with its display text.
  * Watch my review is the review video, and a YouTube link plays in the
  * video modal. Links written here sit under those buttons.
- * The product photo is the brand's, unless one is placed here.
+ * The product photo is the brand's, unless one is placed here. When
+ * the clinic has an affiliate link, that photo opens it.
  */
 export function BrandPromo({
   primary,
   clinic,
   followingSpaceAbove,
+  last = false,
 }: {
   primary: BrandPromoPrimary;
   clinic?: BrandPromoClinic | null;
   /** Space above on the next slice. False means this card is last. */
   followingSpaceAbove?: string | null | false;
+  /** The next slice is not a Brand promo. The last card draws no bottom rule. */
+  last?: boolean;
 }) {
   const labelId = useId();
   const name = text(clinic?.name);
@@ -432,6 +436,8 @@ export function BrandPromo({
     codeNote,
   );
   const showProduct = Boolean(product);
+  const productSizes =
+    written.layout === "Stacked" ? "(max-width: 440px) 100vw, 26rem" : "216px";
 
   return (
     <SliceSection
@@ -445,6 +451,7 @@ export function BrandPromo({
         className={styles.layout}
         data-tone={tone}
         data-layout={written.layout === "Stacked" ? "stacked" : undefined}
+        data-last={last ? "" : undefined}
       >
         <div className={styles.copy}>
           {primary.first ? (
@@ -590,14 +597,22 @@ export function BrandPromo({
           <div className={styles.offer}>
             {product ? (
               <figure className={styles.product}>
-                <Media
-                  field={product}
-                  sizes={
-                    written.layout === "Stacked"
-                      ? "(max-width: 440px) 100vw, 26rem"
-                      : "216px"
-                  }
-                />
+                {clinic?.visitHref ? (
+                  <a
+                    href={clinic.visitHref}
+                    className={styles.productLink}
+                    {...visitLinkProps(name ?? "", "brand_promo")}
+                  >
+                    <Media field={product} sizes={productSizes} />
+                    <span className="sr-only">
+                      {text(product.alt)
+                        ? " (affiliate link, opens in a new tab)"
+                        : ` ${name ? `Visit ${name}` : "Visit"} (affiliate link, opens in a new tab)`}
+                    </span>
+                  </a>
+                ) : (
+                  <Media field={product} sizes={productSizes} />
+                )}
               </figure>
             ) : null}
             {showDeal ? (
