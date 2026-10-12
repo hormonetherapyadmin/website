@@ -177,8 +177,8 @@ in a modal on the page. Page is a link to
 the site page about this clinic, and it stays blank until that page
 exists. The sidebar name uses Page. My review is a link to the post
 where she reviews this brand. My comparison is a link to the post
-where she compares this brand with another. A comparison article is a
-Post, until a Comparison type exists. Brand promo says "My review" for
+where she compares this brand with another. It is a blog post, the
+same as My review. Brand promo says "My review" for
 that post, "Products & pricing" for Page, and "Watch my review" for the
 video. The comparison button says the link's display text, such as
 "Musely vs Winona cream", or "My comparison" when that is blank. Links written in Brand promo's Overwrite group sit on a second
