@@ -9,7 +9,7 @@ case "$file" in
 esac
 
 if [ -f "$file" ] && [ -x node_modules/.bin/prettier ]; then
-  node_modules/.bin/prettier --write --ignore-unknown --log-level silent "$file" >/dev/null 2>&1
+  node scripts/format.mjs "$file" >/dev/null 2>&1
 fi
 
 echo '{}'

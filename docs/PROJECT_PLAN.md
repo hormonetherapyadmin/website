@@ -890,8 +890,13 @@ inventory.
 -   ESLint (Next.js config) and Prettier.
 -   A pre-commit hook (`.githooks/pre-commit`, enabled by the
     `prepare` script on `pnpm install`) formats staged files with
-    Prettier, so the CI format check does not fail on push. A Cursor
-    `afterFileEdit` hook (`.cursor/hooks.json`) formats agent edits.
+    Prettier until `prettier --check` passes, so the CI format check
+    does not fail on push. One write is not enough for
+    `prismicio-types.d.ts`: Prettier 3.9 leaves the generated
+    intersection comments one pass short of a stable result, and the
+    Prismic CLI rewrites that file on model changes. `pnpm format`
+    and the Cursor `afterFileEdit` hook (`.cursor/hooks.json`) use
+    the same second pass.
 -   Vitest for logic; Playwright with axe for smoke, legacy-URL, and
     accessibility checks.
 -   Netlify with its Next.js runtime, configured in `netlify.toml`.
