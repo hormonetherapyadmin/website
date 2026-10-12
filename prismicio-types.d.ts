@@ -917,7 +917,18 @@ interface ProviderDocumentData {
    * - **Tab**: Links
    * - **Documentation**: https://prismic.io/docs/fields/content-relationship
    */
-  review: prismic.ContentRelationshipField<"post">; /**
+  review: prismic.ContentRelationshipField<"post">;
+
+  /**
+   * My comparison field in *Brand*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: The post where I compare this brand with another. The display text is the button, such as Musely vs Winona cream.
+   * - **API ID Path**: provider.comparison
+   * - **Tab**: Links
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  comparison: prismic.ContentRelationshipField<"post">; /**
    * Price field in *Brand*
    *
    * - **Field Type**: Number
@@ -1411,6 +1422,7 @@ export interface BrandPromoSliceDefaultPrimary {
           "visit",
           "page",
           "review",
+          "comparison",
           "youtube",
           "product",
           "monthly_price",

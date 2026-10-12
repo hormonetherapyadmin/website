@@ -25,6 +25,7 @@ export type PageClinicSource = TokenClinicSource & {
     quote?: RichTextField | null;
     youtube?: LinkField | null;
     review?: LinkField | null;
+    comparison?: LinkField | null;
     product?: ImageField | null;
   };
 };
@@ -39,6 +40,10 @@ export type PageClinic = TokenClinic & {
   reviewVideoHref?: string;
   /** Her review post. Brand promo labels it My review. */
   reviewHref?: string;
+  /** Her comparison post. Brand promo shows it as a button. */
+  comparisonHref?: string;
+  /** The display text on My comparison, such as Musely vs Winona cream. */
+  comparisonText?: string;
   /** The jar or bottle. Brand promo uses this unless the slice has a photo. */
   product?: ImageField;
 };
@@ -80,6 +85,13 @@ function documentHref(link: LinkField | null | undefined) {
   if (!link || !isFilled.link(link) || link.link_type !== "Document")
     return undefined;
   return text(link.url);
+}
+
+/** The display text she wrote on a link. Blank means none. */
+function linkText(link: LinkField | null | undefined) {
+  if (!link || !("text" in link) || typeof link.text !== "string")
+    return undefined;
+  return text(link.text);
 }
 
 function linkedId(field: unknown) {
@@ -161,6 +173,8 @@ export function pageClinic(document: PageClinicSource): PageClinic | null {
     quote: text(quote),
     reviewVideoHref: webHref(document.data.youtube),
     reviewHref: documentHref(document.data.review),
+    comparisonHref: documentHref(document.data.comparison),
+    comparisonText: linkText(document.data.comparison),
     product:
       document.data.product && isFilled.image(document.data.product)
         ? document.data.product
@@ -223,6 +237,8 @@ export function brandPromoClinic(clinic: PageClinic): BrandPromoClinic {
     quote: clinic.quote,
     pageHref: clinic.pageHref,
     reviewHref: clinic.reviewHref,
+    comparisonHref: clinic.comparisonHref,
+    comparisonText: clinic.comparisonText,
     reviewVideoHref: clinic.reviewVideoHref,
     product: clinic.product,
   };

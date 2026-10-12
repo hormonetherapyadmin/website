@@ -47,6 +47,10 @@ export type BrandPromoClinic = {
   pageHref?: string;
   /** Her review post. The card labels it My review. */
   reviewHref?: string;
+  /** Her comparison post. The card labels it with the link's display text. */
+  comparisonHref?: string;
+  /** Blank reads My comparison. */
+  comparisonText?: string;
   /** The review video. The card labels it Watch my review. */
   reviewVideoHref?: string;
   /** The brand's product photo, used when this slice has none. */
@@ -83,6 +87,7 @@ function cardOverwrite(primary: BrandPromoPrimary): BrandPromoOverwrite {
 
 const PRODUCTS_LABEL = "Products & pricing";
 const REVIEW_LABEL = "My review";
+const COMPARISON_LABEL = "My comparison";
 const WATCH_LABEL = "Watch my review";
 /** The video modal heading. The brand logo and name follow it. */
 const VIDEO_TITLE = "My review on";
@@ -96,31 +101,56 @@ function isVideoUrl(href: string) {
   return /youtu\.?be|vimeo/i.test(href);
 }
 
+type BrandPromoIcon = "page" | "review" | "comparison" | "video";
+
 export type BrandPromoLink = {
   href: string;
   text: string;
   external: boolean;
+  /** Brand buttons only. Slice links have no icon. */
+  icon?: BrandPromoIcon;
 };
 
 /**
  * Products & pricing is the brand's page. My review is her post.
+ * The comparison is her comparison post, labeled with its display text.
  * Watch my review is the review video.
  */
 export function brandPromoLinks(
   clinic?: Pick<
     BrandPromoClinic,
-    "pageHref" | "reviewHref" | "reviewVideoHref"
+    | "pageHref"
+    | "reviewHref"
+    | "comparisonHref"
+    | "comparisonText"
+    | "reviewVideoHref"
   > | null,
 ): BrandPromoLink[] {
   const page = text(clinic?.pageHref);
   const review = text(clinic?.reviewHref);
+  const comparison = text(clinic?.comparisonHref);
   const video = text(clinic?.reviewVideoHref);
+  const links: (BrandPromoLink | undefined)[] = [
+    page
+      ? { href: page, text: PRODUCTS_LABEL, external: false, icon: "page" }
+      : undefined,
+    review
+      ? { href: review, text: REVIEW_LABEL, external: false, icon: "review" }
+      : undefined,
+    comparison
+      ? {
+          href: comparison,
+          text: text(clinic?.comparisonText) ?? COMPARISON_LABEL,
+          external: false,
+          icon: "comparison",
+        }
+      : undefined,
+    video
+      ? { href: video, text: WATCH_LABEL, external: true, icon: "video" }
+      : undefined,
+  ];
 
-  return [
-    page ? { href: page, text: PRODUCTS_LABEL, external: false } : undefined,
-    review ? { href: review, text: REVIEW_LABEL, external: false } : undefined,
-    video ? { href: video, text: WATCH_LABEL, external: true } : undefined,
-  ].filter((link): link is BrandPromoLink => link !== undefined);
+  return links.filter((link): link is BrandPromoLink => link !== undefined);
 }
 
 /** Links written on the slice. They sit on a second row under the brand buttons. */
@@ -255,8 +285,27 @@ function FactIcon({ kind }: { kind: "formulation" | "yes" | "no" }) {
   );
 }
 
-function ResourceIcon({ url, label }: { url: string; label: string }) {
-  if (label === REVIEW_LABEL) {
+function ResourceIcon({ url, icon }: { url: string; icon?: BrandPromoIcon }) {
+  if (icon === "comparison") {
+    return (
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M4 8h15M15 4l4 4-4 4" />
+        <path d="M20 16H5M9 12l-4 4 4 4" />
+      </svg>
+    );
+  }
+
+  if (icon === "review") {
     return (
       <svg
         width="16"
@@ -274,7 +323,7 @@ function ResourceIcon({ url, label }: { url: string; label: string }) {
     );
   }
 
-  if (isVideoUrl(url) || label === WATCH_LABEL) {
+  if (isVideoUrl(url) || icon === "video") {
     return (
       <svg
         width="16"
@@ -323,7 +372,8 @@ function Media({ field, sizes }: { field: ImageField; sizes: string }) {
  * Overwrite. Leave that group off and the card uses the brand.
  * A blank Small heading reads "Voted best for".
  * The price, logo, visit link, and coupon come from the clinic.
- * Products & pricing is the brand's page. My review is her post.
+ * Products & pricing is the brand's page. My review is her post. The
+ * comparison button is her comparison post, labeled with its display text.
  * Watch my review is the review video, and a YouTube link plays in the
  * video modal. Links written here sit under those buttons.
  * The product photo is the brand's, unless one is placed here.
@@ -480,7 +530,7 @@ export function BrandPromo({
                         name ? { name, logo: clinic?.logo?.src } : undefined
                       }
                     >
-                      <ResourceIcon url={link.href} label={link.text} />
+                      <ResourceIcon url={link.href} icon={link.icon} />
                       {link.text}
                       {name ? <span className="sr-only"> — {name}</span> : null}
                     </VideoLink>
@@ -491,7 +541,7 @@ export function BrandPromo({
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
                     >
-                      <ResourceIcon url={link.href} label={link.text} />
+                      <ResourceIcon url={link.href} icon={link.icon} />
                       {link.text}
                       {name ? <span className="sr-only"> — {name}</span> : null}
                       {link.external ? (

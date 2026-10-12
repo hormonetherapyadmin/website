@@ -87,6 +87,16 @@
           "select": "document"
         },
         "type": "Link"
+      },
+      "comparison": {
+        "config": {
+          "allowText": true,
+          "customtypes": ["post"],
+          "label": "My comparison",
+          "placeholder": "The post where I compare this brand with another. The display text is the button, such as Musely vs Winona cream.",
+          "select": "document"
+        },
+        "type": "Link"
       }
     },
     "Price": {

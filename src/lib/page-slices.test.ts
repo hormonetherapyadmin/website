@@ -192,6 +192,40 @@ describe("pageClinic and comparisonClinic", () => {
     ).toBeUndefined();
   });
 
+  it("gives a brand promo the comparison post and its display text", () => {
+    const comparison = {
+      link_type: "Document" as const,
+      id: "comparison-id",
+      type: "post",
+      tags: [],
+      lang: "en-us",
+      uid: "musely-vs-winona",
+      url: "/post/musely-vs-winona",
+    };
+
+    expect(
+      brandPromoClinic(
+        pageClinic(
+          provider({
+            comparison: { ...comparison, text: " Musely vs Winona cream " },
+          }),
+        )!,
+      ),
+    ).toMatchObject({
+      comparisonHref: "/post/musely-vs-winona",
+      comparisonText: "Musely vs Winona cream",
+    });
+
+    const blank = brandPromoClinic(
+      pageClinic(provider({ comparison: { ...comparison, text: " " } }))!,
+    );
+    expect(blank.comparisonHref).toBe("/post/musely-vs-winona");
+    expect(blank.comparisonText).toBeUndefined();
+    expect(
+      brandPromoClinic(pageClinic(provider())!).comparisonHref,
+    ).toBeUndefined();
+  });
+
   it("leaves blank badge and review empty", () => {
     const clinic = pageClinic(provider({ top_choice_label: " " }))!;
     expect(clinic.topChoice).toBeUndefined();

@@ -6,6 +6,7 @@ import type { SliceSectionFields } from "@/components/slice-section";
 import {
   BrandPromo,
   brandPromoExtraLinks,
+  brandPromoLinks,
   brandPromoProduct,
   brandPromoQuote,
   brandPromoTone,
@@ -266,6 +267,39 @@ describe("BrandPromo", () => {
     expect(html.indexOf("Watch my review")).toBeLessThan(
       html.indexOf("Musely vs Winona"),
     );
+  });
+
+  it("shows the brand's comparison as a button after My review", () => {
+    const html = render(
+      { ...section() },
+      {
+        ...clinic,
+        reviewHref: "/post/musely-estrogen-boost-review",
+        comparisonHref: "/post/musely-vs-winona",
+        comparisonText: "Musely vs Winona cream",
+        reviewVideoHref: "https://youtu.be/_OlA4wXOHdQ",
+      },
+    );
+
+    expect(html).toContain('href="/post/musely-vs-winona"');
+    expect(html).toContain("Musely vs Winona cream");
+    expect(html.indexOf("My review")).toBeLessThan(
+      html.indexOf("Musely vs Winona cream"),
+    );
+    expect(html.indexOf("Musely vs Winona cream")).toBeLessThan(
+      html.indexOf("Watch my review"),
+    );
+    expect(
+      brandPromoLinks({ comparisonHref: "/post/musely-vs-winona" }),
+    ).toEqual([
+      {
+        href: "/post/musely-vs-winona",
+        text: "My comparison",
+        external: false,
+        icon: "comparison",
+      },
+    ]);
+    expect(render({ ...section() }, clinic)).not.toContain("My comparison");
   });
 
   it("keeps a slice link when the brand has no page or video", () => {

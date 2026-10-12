@@ -338,24 +338,27 @@ card stays in view while the writing scrolls on wide screens. Use Stacked when t
 test kits page. On a phone both layouts stack.
 
 The relationship fetches `name`, `kind`, `logo`, `visit`, `page`,
-`review`, `youtube`, `product`, `monthly_price`, `price_unit`,
+`review`, `comparison`, `youtube`, `product`, `monthly_price`, `price_unit`,
 `price_note`,
 `formulation`, `insurance`, `note`, `code`, `code_note`,
 `top_choice_label`, and `quote`. A product leaves out the insurance
 line, and a one-time price has no "/mo". A brand with no logo shows
 its name without the logo tile. Page is the Products & pricing
-button. My review is her post. Review video is Watch my review. A
+button. My review is her post. My comparison is her comparison post,
+and the button says the link's display text, such as "Musely vs
+Winona cream". A blank display text says "My comparison". Review video
+is Watch my review. A
 YouTube link plays in the site's video modal. The modal heading reads
 "My review on", then the brand logo and name. Any other video link
 opens in a new tab. A YouTube link written in the slice's extra links
-also plays in the modal. A blank Page, My review, or Review video
-hides that button. The product photo is
+also plays in the modal. A blank Page, My review, My comparison, or
+Review video hides that button. The product photo is
 the brand's, unless a photo is placed in Overwrite. Links written in
 Overwrite sit on a second row under those buttons.
 
 The logo, the name, the price, the three price-box lines, the visit
 button, the coupon, the product photo, Products & pricing, My
-review, and Watch my review come from the clinic. A photo in
+review, My comparison, and Watch my review come from the clinic. A photo in
 Overwrite replaces the
 brand's product image. A filled Quote replaces the clinic's In my
 words. Is this 1st?, when on, shows the badge, and Place is the words
@@ -363,8 +366,9 @@ beside it, such as "My 2026 top choice". A clinic with a code shows
 "Code PEGGY10" and the code line under it. A clinic with no code shows
 the code line alone, such as Winona's "15% off your first order". The
 brand buttons sit in this order: Products & pricing, My review,
-then Watch my review. A YouTube or Vimeo link gets a play icon. My
-review gets a page icon. Page gets a tag icon. Links written on the
+My comparison, then Watch my review. A YouTube or Vimeo link gets a
+play icon. My review gets a page icon. My comparison gets a two-way
+arrow icon. Page gets a tag icon. Links written on the
 slice are a second row of text, grey on a
 light card and white on Navy or Raspberry, each with a chevron. Set
 Space above and Space below to None on the directory cards so they
@@ -735,7 +739,8 @@ comparison chart, the clinic price card, a facts token, and any later
 slice that lists `monthly_price` all show that same number. On the
 Links tab, Affiliate (`visit`) is a web link. Review video
 (`youtube`) is a web link. Page (`page`) is a Page document. My review
-(`review`) is a Post. Those are the links a slice reads from the
+(`review`) is a Post. My comparison (`comparison`) is a Post with
+display text. Those are the links a slice reads from the
 clinic. Product image (`product`) is
 the jar or
 bottle a slice reads from the clinic. A slice lists the field on its
@@ -749,7 +754,7 @@ clinic relationship, the same way it lists `visit`.
 | Quote | `clinic` | Logo, name, visit. A Name on the slice replaces the clinic name |
 | Side by side, clinic | `clinic` | Logo, name, quote, visit |
 | Boxes | `clinic` on each box | Logo, short description, name, code. A written Image, Heading, Text, or Bottom line replaces it |
-| Brand promo | `clinic` | Name, kind, logo, visit, page, my review, review video, product image, price, price is, price note, formulation, insurance, getting started, code, code line, quote. Page is Products & pricing. My review is her post. Review video is Watch my review. A photo in Overwrite replaces the product image. A written Quote replaces the clinic quote. Is this 1st? and Place stay on the slice. Text and extra links are in Overwrite. Extra links are a second row of text |
+| Brand promo | `clinic` | Name, kind, logo, visit, page, my review, my comparison, review video, product image, price, price is, price note, formulation, insurance, getting started, code, code line, quote. Page is Products & pricing. My review is her post. My comparison is a button with its display text. Review video is Watch my review. A photo in Overwrite replaces the product image. A written Quote replaces the clinic quote. Is this 1st? and Place stay on the slice. Text and extra links are in Overwrite. Extra links are a second row of text |
 | Post sidebar | `clinic` | Name, logo. The name links to Page when that field is set |
 | Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, code, code line, plus the sentence in that paragraph |
 | Story facts token | `{{provider:uid:facts}}` | Price, price is, price note, insurance (clinics only), formulation |
@@ -781,7 +786,7 @@ field, so a product still appears in every brand picker.
 
 #### Links
 
-The second tab. The four links for this brand.
+The second tab. The five links for this brand.
 
 | Label | Id | Kind | Required |
 | --- | --- | --- | --- |
@@ -789,6 +794,7 @@ The second tab. The four links for this brand.
 | Review video | `youtube` | Web link, no display text | No |
 | Page | `page` | Link to a Page document | No |
 | My review | `review` | Link to a Post | No |
+| My comparison | `comparison` | Link to a Post, with display text | No |
 
 An empty Affiliate link means a name that would go to the clinic's
 site is not a link. The placeholder is "Affiliate link". Affiliate
@@ -800,6 +806,12 @@ link. Page is the site page about this clinic.
 The sidebar name links there when Page is set, and a blank Page leaves
 that name as text. My review is the post where she reviews this brand.
 Brand promo says "My review". A blank My review hides that button.
+My comparison is the post where she compares this brand with another.
+Brand promo shows it as a button after My review, and the button says
+the display text, such as "Musely vs Winona cream". A blank display
+text says "My comparison". A blank My comparison hides that button.
+A brand holds one comparison. More comparisons for one card go in
+Brand promo's Overwrite links.
 
 #### Price
 
