@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import { PageSliceZone } from "@/components/page-slice-zone";
+import { SiteShell } from "@/components/site-shell";
 import { isIndexingAllowed } from "@/lib/env";
 import {
   gridPage,
@@ -22,7 +23,6 @@ import type {
   PostDocument,
   ProviderDocument,
 } from "../../../prismicio-types";
-import { MockupShell } from "../mockup/_shared/mockup-shell";
 
 async function loadPage(uid: string) {
   if (APP_ROUTE_UIDS.has(uid)) return null;
@@ -131,7 +131,7 @@ export default async function SitePage(props: PageProps<"/[uid]">) {
   const startsWithHero = slices[0]?.slice_type === "hero";
 
   return (
-    <MockupShell searchParams={searchParams}>
+    <SiteShell>
       {!startsWithHero && title ? (
         <h1 className="mx-auto w-full max-w-wrap px-gutter pt-slice font-heading text-4xl">
           {title}
@@ -149,6 +149,6 @@ export default async function SitePage(props: PageProps<"/[uid]">) {
           tokens: draft.isEnabled ? "preview" : "public",
         }}
       />
-    </MockupShell>
+    </SiteShell>
   );
 }

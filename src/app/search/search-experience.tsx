@@ -10,13 +10,9 @@ const EMPTY_PROMPT = "Enter a search term above to find pages and blog posts.";
 export function SearchExperience({
   hits,
   initialQuery,
-  palette,
-  serif,
 }: {
   hits: readonly SearchHit[];
   initialQuery: string;
-  palette?: string;
-  serif?: string;
 }) {
   const [query, setQuery] = useState(initialQuery);
   const groups = useMemo(() => groupResults(hits, query), [hits, query]);
@@ -79,10 +75,6 @@ export function SearchExperience({
             </button>
           ) : null}
         </div>
-        {palette ? (
-          <input type="hidden" name="palette" value={palette} />
-        ) : null}
-        {serif ? <input type="hidden" name="serif" value={serif} /> : null}
       </form>
 
       <p className={styles.status} aria-live="polite" aria-atomic="true">

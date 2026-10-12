@@ -97,6 +97,29 @@ coverage.
 
 Do not imply medical review or medical organization status.
 
+What the app emits, as one JSON-LD `@graph` per page, built in
+`src/lib/structured-data.ts`:
+
+-   Homepage: `WebSite` and `Organization`, the same as the live
+    homepage. The Organization is the site name and URL. There is no
+    logo until the brand delivery.
+-   Post: `BlogPosting` and `BreadcrumbList`. Headline is the post
+    title, the `h1`. Description is the meta description, or the
+    subtitle when that is empty. `datePublished` is Published. Image is
+    the cover, with its size. Author is a `Person` from the Author
+    document: name, name title as `description`, and profile photo.
+    Peggy's `url` is `/about`, the page her byline links to.
+    `articleSection` is Category and `keywords` are the document tags,
+    both shown on the post. Publisher is the Organization. The
+    breadcrumb is Home, Blog, and the title, as shown.
+-   There is no `dateModified`. A post has no updated date, and the
+    Wix last published date is not copied (see `docs/SLICE_MODEL.md`).
+    The live site emits `dateModified`; this is the one property it
+    has that the new posts do not.
+-   Pages, search, and the HTML sitemap emit none. The live site emits
+    none on site pages. A clinic page could later carry a `Product` or
+    `Review`, but that needs its own decision.
+
 ## AEO / GEO
 
 Optimize for clear extraction and attribution through:

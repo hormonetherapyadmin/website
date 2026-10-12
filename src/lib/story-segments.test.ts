@@ -85,7 +85,52 @@ describe("storySegments", () => {
     ]);
   });
 
-  it("keeps a single photo full width and hides the token", () => {
+  it("gives a photo on its own the paragraph under it as its caption", () => {
+    const shot = image("Musely app");
+    const segments = storySegments([
+      paragraph("Before."),
+      shot,
+      paragraph(""),
+      paragraph("The Musely app on my phone."),
+      paragraph("After."),
+    ] as RichTextField);
+
+    expect(segments).toEqual([
+      { kind: "rich", field: [paragraph("Before.")] },
+      {
+        kind: "photo",
+        image: shot,
+        caption: [paragraph("The Musely app on my phone.")],
+      },
+      { kind: "rich", field: [paragraph("After.")] },
+    ]);
+  });
+
+  it("does not take a token or a heading as a photo's caption", () => {
+    const first = image("First");
+    const second = image("Second");
+    const segments = storySegments([
+      first,
+      paragraph("{{provider:musely:offer}} My favorite eye serum."),
+      second,
+      { type: "heading2", text: "Next section", spans: [] },
+    ] as RichTextField);
+
+    expect(segments).toEqual([
+      { kind: "photo", image: first, caption: null },
+      {
+        kind: "rich",
+        field: [paragraph("{{provider:musely:offer}} My favorite eye serum.")],
+      },
+      { kind: "photo", image: second, caption: null },
+      {
+        kind: "rich",
+        field: [{ type: "heading2", text: "Next section", spans: [] }],
+      },
+    ]);
+  });
+
+  it("keeps a single photo on its own and hides the token", () => {
     const only = image("One portrait");
     const segments = storySegments([
       paragraph("  {{photos}}  "),
@@ -95,8 +140,9 @@ describe("storySegments", () => {
 
     expect(segments).toEqual([
       {
-        kind: "rich",
-        field: [only, paragraph("Just the one.")],
+        kind: "photo",
+        image: only,
+        caption: [paragraph("Just the one.")],
       },
     ]);
   });
@@ -112,15 +158,17 @@ describe("storySegments", () => {
       second,
     ] as RichTextField);
 
-    expect(segments.map((segment) => segment.kind)).toEqual(["rich"]);
-    expect(segments[0]).toMatchObject({
-      field: [
-        first,
-        { type: "heading2", text: "Next section" },
-        paragraph("{{provider:musely:offer}} My favorite eye serum."),
-        second,
-      ],
-    });
+    expect(segments).toEqual([
+      { kind: "photo", image: first, caption: null },
+      {
+        kind: "rich",
+        field: [
+          { type: "heading2", text: "Next section", spans: [] },
+          paragraph("{{provider:musely:offer}} My favorite eye serum."),
+        ],
+      },
+      { kind: "photo", image: second, caption: null },
+    ]);
   });
 
   it("does not treat the token as a caption or as part of a sentence", () => {
@@ -135,20 +183,63 @@ describe("storySegments", () => {
       paragraph("After"),
     ] as RichTextField);
 
-    expect(segments.map((segment) => segment.kind)).toEqual([
-      "rich",
-      "rich",
-      "rich",
+    expect(segments).toEqual([
+      { kind: "rich", field: [paragraph("See the {{photos}} above.")] },
+      { kind: "photo", image: left, caption: null },
+      { kind: "photo", image: right, caption: [paragraph("After")] },
     ]);
-    expect(
-      segments.flatMap((segment) =>
-        segment.kind === "rich" ? [segment.field] : [],
-      ),
-    ).toEqual([
-      [paragraph("See the {{photos}} above.")],
-      [left],
-      [right, paragraph("After")],
+  });
+
+  it("places the next photo beside the paragraph under it", () => {
+    const portrait = image("Peggy at the clinic");
+    const segments = storySegments([
+      paragraph("Before."),
+      paragraph(" {{photo-text}} "),
+      portrait,
+      paragraph("This is the week I started the patch."),
+      paragraph("After."),
+    ] as RichTextField);
+
+    expect(segments).toEqual([
+      { kind: "rich", field: [paragraph("Before.")] },
+      {
+        kind: "photoText",
+        image: portrait,
+        text: [paragraph("This is the week I started the patch.")],
+      },
+      { kind: "rich", field: [paragraph("After.")] },
     ]);
+  });
+
+  it("keeps a photo with no paragraph under it on its own", () => {
+    const lonely = image("Lonely");
+    const segments = storySegments([
+      paragraph("{{photo-text}}"),
+      lonely,
+      { type: "heading2", text: "Next section", spans: [] },
+      paragraph("{{photo-text}}"),
+      paragraph("No photo here."),
+    ] as RichTextField);
+
+    expect(segments).toEqual([
+      { kind: "photo", image: lonely, caption: null },
+      {
+        kind: "rich",
+        field: [{ type: "heading2", text: "Next section", spans: [] }],
+      },
+      { kind: "rich", field: [paragraph("No photo here.")] },
+    ]);
+  });
+
+  it("does not take a photo-text token as a photo row caption", () => {
+    const left = image("Left");
+    const segments = storySegments([
+      paragraph("{{photos}}"),
+      left,
+      paragraph("{{photo-text}}"),
+    ] as RichTextField);
+
+    expect(segments).toEqual([{ kind: "photo", image: left, caption: null }]);
   });
 
   it("turns a Resources list into the numbered sources", () => {

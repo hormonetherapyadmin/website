@@ -4,6 +4,8 @@ export const SITE_URL = "https://www.hormonetherapyhub.com";
 
 export const SITE_NAME = "Hormone Therapy Hub";
 
+export const DISCLOSURE_HREF = "/affiliate-disclosures";
+
 /**
  * Top-level paths the app owns. A Page with one of these UIDs never shows,
  * so search and the sitemap leave the path out. `/blog` is not here until

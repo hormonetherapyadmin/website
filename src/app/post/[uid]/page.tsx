@@ -16,17 +16,25 @@ import Link from "next/link";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import { storyClinicUids } from "@/components/content-blocks";
+import { JsonLd } from "@/components/json-ld";
 import {
   PostSources,
   PostStory,
   SourceReference,
 } from "@/components/post-story";
+import { SiteShell } from "@/components/site-shell";
 import { storyLinkRel } from "@/lib/affiliate-link";
-import { resolveAuthorId } from "@/lib/author";
+import { DEFAULT_AUTHOR_ID, resolveAuthorId } from "@/lib/author";
 import { isIndexingAllowed } from "@/lib/env";
 import { headingAnchors } from "@/lib/post-headings";
 import { minutesToRead, relatedPosts } from "@/lib/post-derived";
-import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { DISCLOSURE_HREF, SITE_NAME, SITE_URL } from "@/lib/site";
+import {
+  blogPosting,
+  breadcrumbList,
+  graph,
+  person,
+} from "@/lib/structured-data";
 import { tokenClinic } from "@/lib/token-clinic";
 import { createClient } from "@/prismicio";
 import type {
@@ -34,10 +42,6 @@ import type {
   PostDocument,
   ProviderDocument,
 } from "../../../../prismicio-types";
-import {
-  DISCLOSURE_HREF,
-  MockupShell,
-} from "../../mockup/_shared/mockup-shell";
 import shared from "../../mockup/_shared/mockup.module.css";
 import { POSTS, formatDate } from "../../mockup/_shared/posts";
 import styles from "../../mockup/blog/blog.module.css";
@@ -174,6 +178,11 @@ function authorTitle(data: AuthorDocument["data"] | null) {
   return data?.name_title?.trim() || "";
 }
 
+export async function generateStaticParams() {
+  const posts = await createClient().getAllByType("post");
+  return posts.flatMap((post) => (post.uid ? [{ uid: post.uid }] : []));
+}
+
 export async function generateMetadata(
   props: PageProps<"/post/[uid]">,
 ): Promise<Metadata> {
@@ -205,7 +214,6 @@ export async function generateMetadata(
 
 export default async function PostPage(props: PageProps<"/post/[uid]">) {
   const { uid } = await props.params;
-  const searchParams = await props.searchParams;
   const post = await loadPost(uid);
   if (!post) notFound();
 
@@ -276,8 +284,43 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
   const related =
     fromCatalog.length > 0 ? fromCatalog : mockKeepReading(post.uid);
 
+  const path = `/post/${post.uid}`;
+  const cover = isFilled.image(post.data.image) ? post.data.image : null;
+  const structuredData = graph(
+    blogPosting({
+      path,
+      headline: title,
+      description: metaDescription(post),
+      datePublished: published,
+      image: cover
+        ? {
+            url: cover.url,
+            width: cover.dimensions.width,
+            height: cover.dimensions.height,
+          }
+        : null,
+      author: person({
+        name,
+        description: nameTitle,
+        path:
+          resolveAuthorId(post.data.author) === DEFAULT_AUTHOR_ID
+            ? "/about"
+            : undefined,
+        image: profile?.url,
+      }),
+      category: post.data.category,
+      tags,
+    }),
+    breadcrumbList([
+      { name: "Home", path: "/" },
+      { name: "Blog", path: "/blog" },
+      { name: title },
+    ]),
+  );
+
   return (
-    <MockupShell searchParams={searchParams}>
+    <SiteShell>
+      <JsonLd data={structuredData} />
       <nav aria-label="Breadcrumb" className={styles.crumbs}>
         <ol>
           <li>
@@ -590,7 +633,7 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
           </section>
         </>
       ) : null}
-    </MockupShell>
+    </SiteShell>
   );
 }
 

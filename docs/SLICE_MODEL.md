@@ -989,8 +989,8 @@ the story.
 
 Minutes to read is not a field. The build counts the words in the
 story, at 250 words a minute, and rounds to the nearest minute. A
-story with any words is at least one minute. A clinic token and
-`{{photos}}` are not counted. Wix tags are the document tags at the top of the post, not a
+story with any words is at least one minute. A clinic token,
+`{{photos}}`, and `{{photo-text}}` are not counted. Wix tags are the document tags at the top of the post, not a
 group on this type. Public `/blog/tags/…` addresses still need a
 disposition in the URL manifest.
 
@@ -1012,6 +1012,25 @@ first photo is the same file as Image, move its caption into Caption
 and do not repeat the photo. The cover is not a link. A link Wix had
 on that first photo is not kept (81 posts in the 2026-10-08 export,
 17 of them affiliate links). Approved by the owner on 2026-10-09.
+
+A photo on its own in the story is centered. It is never wider than
+the story column or than the photo file itself, and never taller than
+576 pixels; a photo that would be taller shows narrower, at its own
+shape. In the 2026-10-08 export, 380 of 590 story photos were taller
+than that at full column width on a 1440-pixel laptop, and 94 were
+narrower than the column. Wix also kept a size on each photo (154 were
+set to Small); that setting is not imported, and the cap replaces it.
+Photos in a `{{photos}}` row or beside text keep their own layout.
+Approved by the owner on 2026-10-12.
+
+The paragraph directly under a photo on its own shows as its caption:
+smaller, muted, centered, and no wider than the photo. A heading, a
+list, or a token under the photo is not a caption. Nothing in the
+paragraph changes in Prismic, so this can be undone in the layout
+alone. In the 2026-10-08 export, 13 of 590 story photos had no Wix
+caption and were followed by story text, which now shows as a caption.
+Most of those are lines about the photo ("See my YouTube video…"). To
+keep a sentence as story text, move it above the photo.
 
 | Wix block | Becomes |
 | --- | --- |
@@ -1057,6 +1076,16 @@ Before or After. A photo with no token above it stays full width. One
 photo after the token stays full width, and the token is not shown. A
 heading or another token between the photos ends the row. Import does
 not write the token.
+
+### Photo beside text
+
+A paragraph that is only `{{photo-text}}` places the next photo and the
+one paragraph under it in one block. The photo takes a third of the
+width and the paragraph sits to its right. On a phone the block is one
+column, photo first. A photo with no paragraph under it stays full
+width, and the token is not shown. A token with no photo after it is
+not shown. A heading or another token under the photo is not taken as
+its paragraph. Import does not write the token.
 
 ### Clinic tokens
 

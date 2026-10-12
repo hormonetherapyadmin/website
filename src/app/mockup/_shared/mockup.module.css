@@ -90,6 +90,12 @@
   --display-weight: 500;
 }
 
+/* Public pages. Besley comes from the root layout. */
+.serifSite {
+  --display: var(--font-besley), Georgia, serif;
+  --display-weight: 500;
+}
+
 .serifYoung {
   --display: var(--mock-serif-young), Georgia, serif;
   --display-weight: 400;

@@ -243,7 +243,9 @@ The card reads Title, Image, Subtitle, Published, Category, and the
 minutes to read. On a card, the subtitle is limited to three lines.
 Clinics in the sidebar come from provider tokens in
 the story. A paragraph that is only `{{photos}}` places the next two
-photos side by side. Minutes to read, Keep reading, and the document
+photos side by side. A paragraph that is only `{{photo-text}}` places
+the next photo at a third of the width with the paragraph under it
+beside it. Minutes to read, Keep reading, and the document
 tags are derived. Published is the original publish date. There is no updated
 date. Migration writes the Wix excerpt into Subtitle.
 

@@ -915,6 +915,13 @@ inventory.
     checks the shared secret and expires the `prismic` tag. Edits are
     live on the next request, without a rebuild.
 -   New documents render on first request and are then cached.
+-   Posts are pre-rendered through `generateStaticParams`. A Page
+    (`/<uid>`) still renders per request, because the Posts grid reads
+    `?page=` and `?category=`.
+-   Public pages use `SiteShell` (`src/components/site-shell.tsx`), in
+    the working palette. Only `/mockup` routes use `MockupShell`, which
+    reads `?palette=` and `?serif=` for the brand designer. Reading the
+    address makes a page render per request.
 -   Local development does not cache Prismic responses. The webhook
     does not reach localhost, and a cached miss would keep a just
     published document off the page.

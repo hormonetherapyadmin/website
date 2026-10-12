@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MockupShell } from "@/app/mockup/_shared/mockup-shell";
+import { SiteShell } from "@/components/site-shell";
 import { isIndexingAllowed } from "@/lib/env";
 import { loadSitemapLinks, organizeSitemap, SITEMAP_PATH } from "@/lib/sitemap";
 import styles from "./sitemap.module.css";
@@ -14,8 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function SitemapPage(props: PageProps<"/sitemap">) {
-  const searchParams = await props.searchParams;
+export default async function SitemapPage() {
   const { pages, posts } = organizeSitemap(await loadSitemapLinks());
   const pageLinks = [
     { title: "Home", path: "/" },
@@ -24,7 +23,7 @@ export default async function SitemapPage(props: PageProps<"/sitemap">) {
   ];
 
   return (
-    <MockupShell searchParams={searchParams}>
+    <SiteShell>
       <div className={styles.wrap}>
         <h1 className={styles.heading}>Sitemap</h1>
         <p className={styles.lede}>
@@ -77,7 +76,7 @@ export default async function SitemapPage(props: PageProps<"/sitemap">) {
           </section>
         </div>
       </div>
-    </MockupShell>
+    </SiteShell>
   );
 }
 
