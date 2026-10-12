@@ -206,6 +206,8 @@ type SliceSectionProps = {
    * Omit it outside a slice list. An empty field uses the Medium default.
    */
   followingSpaceAbove?: string | null | false;
+  /** Story keeps the header and children to the post story column, centered. */
+  width?: "wrap" | "story";
   children?: ReactNode;
 };
 
@@ -222,6 +224,7 @@ export function SliceSection({
   title,
   labelId,
   followingSpaceAbove,
+  width = "wrap",
   children,
 }: SliceSectionProps) {
   const headingId = useId();
@@ -261,7 +264,8 @@ export function SliceSection({
     >
       <div
         className={[
-          "mx-auto w-full max-w-wrap px-gutter",
+          "mx-auto w-full px-gutter",
+          width === "story" ? "max-w-story-wrap" : "max-w-wrap",
           band ? "py-slice" : "",
         ]
           .filter(Boolean)

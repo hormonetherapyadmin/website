@@ -184,6 +184,36 @@
           "placeholder": "All 50 states"
         },
         "type": "Text"
+      },
+      "specialties": {
+        "config": {
+          "label": "Specialties",
+          "multi": "paragraph,list-item",
+          "placeholder": "One per line, such as Menopause or PCOS. Each line is one pill."
+        },
+        "type": "StructuredText"
+      },
+      "how_it_works": {
+        "config": {
+          "fields": {
+            "title": {
+              "config": {
+                "label": "Step title",
+                "placeholder": "Health quiz"
+              },
+              "type": "Text"
+            },
+            "text": {
+              "config": {
+                "label": "Step text",
+                "placeholder": "Complete their 5-minute health quiz."
+              },
+              "type": "Text"
+            }
+          },
+          "label": "How it works"
+        },
+        "type": "Group"
       }
     },
     "Words": {

@@ -1,0 +1,138 @@
+/*
+  Layout copied from the fact sheet, How it works, and specialties on
+  the Inner Balance mockup. A card keeps its own color on any band.
+*/
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin: 0;
+}
+
+.fact {
+  margin: 0;
+  padding: 1.2rem 1.25rem 1.3rem;
+  border-radius: 1.25rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.fact dt {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.icon,
+.number {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-background);
+  color: var(--color-accent);
+}
+
+.icon {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.fact dd {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
+.part {
+  margin-top: 3rem;
+}
+
+.part:first-child {
+  margin-top: 0;
+}
+
+.partTitle {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  line-height: 1.15;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steps li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 1.35rem 1.35rem 1.5rem;
+  border-radius: 1.5rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.number {
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: 0.45rem;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+}
+
+.steps p {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.45;
+}
+
+.steps .stepTitle {
+  font-family: var(--font-heading);
+  font-size: 1.55rem;
+  line-height: 1.15;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pills li {
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+@media (max-width: 960px) {
+  .facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .facts {
+    grid-template-columns: 1fr;
+  }
+}

@@ -162,7 +162,7 @@ content field's JSON (`labels`), not in the Type Builder. Handle them in
 A label styles words. It does not insert a document.
 
 Writing is one size everywhere. A post body and every slice's Text field
-(Side by side, Brand promo, Ribbon, and Quote) use the `--text-body`
+(Text, Side by side, Brand promo, Ribbon, and Quote) use the `--text-body`
 token in `globals.css`, 1.3rem with a 1.7 line height, with 1.4rem
 between paragraphs. The Ribbon box keeps the 1.3rem size with a 1.5
 line height, so its short lines sit together under the title. Intros,
@@ -425,6 +425,102 @@ Ghost is the text button, with an arrow. A button with no words is
 hidden. A button to an affiliate address gets the affiliate `rel`, the
 same as Side by side. An empty title, content, and button list hides the box. The
 section header can still show.
+
+### Text
+
+Writing on its own, in `src/slices/Text`. Use it for a page that is
+mostly words, such as `/costandinsurance`, `/formuations`, or `/faq`.
+The writing is left aligned in a column the width of a post story,
+952 pixels on a wide screen (`--container-story`). The column is
+centered on the page. The section header sits in the same column. A
+Background color still fills the full width, the same as every slice.
+On a narrow screen the column is the screen, less the gutter.
+
+| Label | Id | Kind | Required |
+| --- | --- | --- | --- |
+| Section | The seven Section fields | Shared, open on the slice | |
+| Text | `text` | Content rich text | No |
+
+Text uses the content toolbar: Heading 2, Heading 3, Heading 4,
+paragraphs, lists, photos, video, and the labels. Section Heading is
+the `h2` and the section id. Headings inside Text are for the parts
+under it, so use Heading 3 there when the slice has a heading. A
+paragraph can start with a clinic token, the same
+`{{provider:inner-balance:offer}}` and `{{provider:inner-balance:facts}}`
+tokens as the post. Tables and the `{{photos}}` and `{{photo-text}}`
+rows are post-only. An empty slice shows only its spacing.
+
+Wix pages often fake a heading with a bold paragraph. In Prismic make
+it a Heading 3. The words stay the same.
+
+### Clinic facts
+
+A clinic's fact sheet, in `src/slices/ClinicFacts`. The layout is the
+fact sheet, How it works, and specialties on the Inner Balance
+mockup. Everything in it comes from the Brand. She picks the clinic
+and writes nothing else, so a fact changed on the Brand changes on
+every clinic page.
+
+| Label | Id | Kind | Required | Mockup |
+| --- | --- | --- | --- | --- |
+| Section | The seven Section fields | Shared, open on the slice | | Heading: The facts. Intro: What I confirmed on their page… |
+| Clinic | `clinic` | Content relationship to Provider | Yes | Inner Balance |
+
+The fact cards, in this order, each with a fixed icon:
+
+| Card | Reads | Shows |
+| --- | --- | --- |
+| Availability | `state_availability` | The text |
+| Typically prescribed | `formulation` | The text |
+| Pre-testing | `lab_requirement` | The text |
+| Insurance | `insurance` | Accepted or Not accepted. Not on a product |
+| HSA / FSA | `hsa_fsa` | Yes, only when it is on |
+| To get started | `note` | The text |
+
+An empty field hides its card. A switch in Prismic is off until she
+turns it on, so an HSA / FSA switch that is off hides the card instead
+of saying No. Insurance follows the comparison chart and says Not
+accepted when it is off. The cards are three across, two from 960
+pixels, and one from 640 pixels.
+
+How it works is the Brand's steps, numbered, three across. A step can
+have a title, text, or both. Specialties they list is the Brand's
+Specialties, one pill per line. Each part is hidden when the Brand has
+none. With a Section Heading, the two part titles are `h3`. Without
+one they are `h2`. A slice whose clinic is not published shows only its
+header.
+
+Facts on the Wix clinic pages that are not on the Brand, such as
+"Voted Best For" and the product price list, are written in a Text
+slice on that page. The provider Hero already shows "Voted best for".
+
+### Pros and cons
+
+Pros beside cons, in `src/slices/ProsAndCons`. `/ishrtforme` uses two
+rows, HRT and BHRT. A review uses one row.
+
+| Label | Id | Kind | Required | `/ishrtforme` |
+| --- | --- | --- | --- | --- |
+| Section | The seven Section fields | Shared, open on the slice | | Heading: Pros and Cons |
+| Pros label | `pros_label` | Text | No | Blank, so Pros |
+| Cons label | `cons_label` | Text | No | Blank, so Cons |
+| Rows | `rows` | Repeatable group | Yes | HRT, then BHRT |
+
+Each row:
+
+| Label | Id | Kind | Required | Example |
+| --- | --- | --- | --- | --- |
+| Title | `title` | Text | No | HRT. Blank when there is one row |
+| Pros | `pros` | Rich text: paragraph, bullet, bold, italic, link | No | FDA Approval, one per line |
+| Cons | `cons` | Rich text: paragraph, bullet, bold, italic, link | No | Cost, one per line |
+
+Each line or bullet is one item. A blank label says Pros or Cons, and
+she can write her own, such as "What I liked". Pros have a check
+mark and Cons a minus sign, so the side does not depend on color. A row
+with no pros and no cons is hidden. A row with only one side shows
+that card alone. A row title is an `h3` under a Section Heading, and
+the Pros and Cons labels are a level below the row title. The two
+cards stack at 640 pixels.
 
 ## Homepage
 
@@ -768,6 +864,7 @@ clinic relationship, the same way it lists `visit`.
 | Side by side, clinic | `clinic` | Logo, name, quote, visit |
 | Boxes | `clinic` on each box | Logo, top choice label, name, code. A written Image, Heading, Text, or Bottom line replaces it |
 | Brand promo | `clinic` | Name, kind, logo, visit, page, my review, my comparison, review video, product image, price, price is, price note, formulation, insurance, getting started, code, code line, quote. Page is Products & pricing. My review is her post. Each My comparison is a button with its display text. Review video is Watch my review. A photo in Overwrite replaces the product image. A written Quote replaces the clinic quote. Is this 1st? and Place stay on the slice. Text and extra links are in Overwrite. Extra links are a second row of text |
+| Clinic facts | `clinic` | Kind, state availability, typically prescribed, labs, insurance, HSA / FSA, getting started, how it works, specialties |
 | Post sidebar | `clinic` | Name, logo. The name links to Page when that field is set |
 | Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, code, code line, plus the sentence in that paragraph |
 | Story facts token | `{{provider:uid:facts}}` | Price, price is, price note, insurance (clinics only), formulation |
@@ -862,7 +959,7 @@ quote.
 
 #### Care
 
-Facts that are not in the price box. A clinic page fact list reads
+Facts that are not in the price box. The Clinic facts slice reads
 this tab.
 
 | Label | Id | Kind |
@@ -870,6 +967,12 @@ this tab.
 | Labs | `lab_requirement` | Text |
 | HSA / FSA | `hsa_fsa` | Boolean |
 | State availability | `state_availability` | Text |
+| Specialties | `specialties` | Rich text: paragraph, bullet. One per line |
+| How it works | `how_it_works` | Repeatable group: Step title (`title`), Step text (`text`), both Text |
+
+Specialties and How it works are the "Specialities" and "How it Works"
+blocks on the Wix clinic pages (owner decision, 2026-10-12: typed once
+on the Brand).
 
 #### Words
 
@@ -1207,7 +1310,8 @@ unchanged.
 
 The slice zone accepts every shared slice: Hero, Start here, Posts,
 Clinic comparison, Quote, Side by side, Divider, Boxes, Brand promo,
-and Ribbon. A slice added to the library later is connected to Page too.
+Ribbon, Text, Clinic facts, and Pros and cons. A slice added to the
+library later is connected to Page too.
 
 | Label | Id | Kind | Required | Notes |
 | --- | --- | --- | --- | --- |
@@ -1230,8 +1334,8 @@ The page reads what its slices point at before it renders. A slice does
 not fetch. A clinic a slice names is read from the published Clinic, by
 the fields each slice lists under Provider. An unpublished clinic is
 left out of the chart, and a Quote or Side by side without one shows
-its writing only. A clinic token in Side by side writing reads the same
-fields as a story token. Posts loads every Post only when the page has
+its writing only. A clinic token in Side by side or Text writing reads
+the same fields as a story token. Posts loads every Post only when the page has
 a Posts slice. Featured shows the post it points at, or the newest.
 Grid reads `?page=` and `?category=` from the address. Those addresses
 keep the page's canonical.

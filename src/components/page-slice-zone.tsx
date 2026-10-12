@@ -6,32 +6,39 @@ import {
   brandPromoClinic,
   boxClinic,
   comparisonClinic,
+  factsClinic,
   quoteClinic,
   sideClinic,
 } from "@/lib/page-slices";
 import { BrandPromo } from "@/slices/BrandPromo";
 import { Boxes } from "@/slices/boxes";
 import { ClinicComparison } from "@/slices/clinic_comparison";
+import { ClinicFacts } from "@/slices/ClinicFacts";
 import { Divider } from "@/slices/divider";
 import { Hero, type HeroSlice as HeroProps } from "@/slices/hero";
 import { Posts, type PostCardData } from "@/slices/posts";
+import { ProsAndCons } from "@/slices/ProsAndCons";
 import { Quote } from "@/slices/quote";
 import { Ribbon } from "@/slices/Ribbon";
 import { SideBySide } from "@/slices/side_by_side";
 import { StartHere } from "@/slices/start_here";
+import { Text } from "@/slices/Text";
 import type {
   BrandPromoSlice,
   BoxesSlice,
   ClinicComparisonSlice,
+  ClinicFactsSlice,
   DividerSlice,
   HeroSlice,
   PageDocumentDataSlicesSlice,
   PostsSlice,
+  ProsConsSlice,
   ProviderDocument,
   QuoteSlice,
   RibbonSlice,
   SideBySideSlice,
   StartHereSlice,
+  TextSlice,
 } from "../../prismicio-types";
 
 /** What the page loaded for its slices. Slices do not fetch. */
@@ -39,7 +46,7 @@ export type PageSliceContext = {
   /** Published clinics the slices point at, by document id. */
   providers: ReadonlyMap<string, ProviderDocument>;
   clinics: ReadonlyMap<string, PageClinic>;
-  /** Clinics a story token in Side by side writing can name. */
+  /** Clinics a story token in Side by side or Text writing can name. */
   tokenClinics: readonly TokenClinic[];
   posts: readonly PostCardData[];
   /** Grid page and category tab, from the address. */
@@ -194,6 +201,32 @@ function RibbonAdapter({ slice }: Props<RibbonSlice>) {
   return <Ribbon primary={slice.primary} />;
 }
 
+function ClinicFactsAdapter({ slice, context }: Props<ClinicFactsSlice>) {
+  const id = linkedId(slice.primary.clinic);
+  const clinic = id ? context.clinics.get(id) : undefined;
+
+  return (
+    <ClinicFacts
+      primary={slice.primary}
+      clinic={clinic ? factsClinic(clinic) : null}
+    />
+  );
+}
+
+function ProsConsAdapter({ slice }: Props<ProsConsSlice>) {
+  return <ProsAndCons primary={slice.primary} />;
+}
+
+function TextAdapter({ slice, context }: Props<TextSlice>) {
+  return (
+    <Text
+      primary={slice.primary}
+      clinics={context.tokenClinics}
+      tokens={context.tokens}
+    />
+  );
+}
+
 function BrandPromoAdapter({ slice, context }: Props<BrandPromoSlice>) {
   const id = linkedId(slice.primary.clinic);
   const clinic = id ? context.clinics.get(id) : undefined;
@@ -229,6 +262,9 @@ const components = {
   ribbon: RibbonAdapter,
   boxes: BoxesAdapter,
   brand_promo: BrandPromoAdapter,
+  clinic_facts: ClinicFactsAdapter,
+  pros_cons: ProsConsAdapter,
+  text: TextAdapter,
 };
 
 function followingSpaceAbove(slice: PageDocumentDataSlicesSlice | undefined) {

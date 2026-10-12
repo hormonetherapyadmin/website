@@ -496,7 +496,10 @@ type PageDocumentDataSlicesSlice =
   | DividerSlice
   | BoxesSlice
   | BrandPromoSlice
-  | RibbonSlice;
+  | RibbonSlice
+  | TextSlice
+  | ClinicFactsSlice
+  | ProsConsSlice;
 
 /**
  * Content for Page documents
@@ -812,6 +815,31 @@ export type PostDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PostDocumentData>, "post", Lang>;
 
 /**
+ * Item in *Brand → How it works*
+ */
+export interface ProviderDocumentDataHowItWorksItem {
+  /**
+   * Step title field in *Brand → How it works*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Health quiz
+   * - **API ID Path**: provider.how_it_works[].title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Step text field in *Brand → How it works*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Complete their 5-minute health quiz.
+   * - **API ID Path**: provider.how_it_works[].text
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  text: prismic.KeyTextField;
+}
+
+/**
  * Content for Brand documents
  */
 interface ProviderDocumentData {
@@ -1050,7 +1078,31 @@ interface ProviderDocumentData {
    * - **Tab**: Care
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
-  state_availability: prismic.KeyTextField; /**
+  state_availability: prismic.KeyTextField;
+
+  /**
+   * Specialties field in *Brand*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: One per line, such as Menopause or PCOS. Each line is one pill.
+   * - **API ID Path**: provider.specialties
+   * - **Tab**: Care
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  specialties: prismic.RichTextField;
+
+  /**
+   * How it works field in *Brand*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: provider.how_it_works[]
+   * - **Tab**: Care
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  how_it_works: prismic.GroupField<
+    Simplify<ProviderDocumentDataHowItWorksItem>
+  >; /**
    * In my words field in *Brand*
    *
    * - **Field Type**: Rich Text
@@ -1751,6 +1803,140 @@ type ClinicComparisonSliceVariation = ClinicComparisonSliceDefault;
 export type ClinicComparisonSlice = prismic.SharedSlice<
   "clinic_comparison",
   ClinicComparisonSliceVariation
+>;
+
+/**
+ * Primary content in *Clinic facts → Default → Primary*
+ */
+export interface ClinicFactsSliceDefaultPrimary {
+  /**
+   * Small heading field in *Clinic facts → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: clinic_facts.default.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Clinic facts → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The facts
+   * - **API ID Path**: clinic_facts.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Clinic facts → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: What I confirmed on their page. This is my experience as a patient, not a medical review.
+   * - **API ID Path**: clinic_facts.default.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Clinic facts → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: clinic_facts.default.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Clinic facts → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Transparent
+   * - **API ID Path**: clinic_facts.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Clinic facts → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: clinic_facts.default.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Clinic facts → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: clinic_facts.default.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Clinic field in *Clinic facts → Default → Primary*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: clinic_facts.default.primary.clinic
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  clinic: prismic.ContentRelationshipField<"provider">;
+}
+
+/**
+ * Default variation for Clinic facts Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ClinicFactsSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ClinicFactsSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Clinic facts*
+ */
+type ClinicFactsSliceVariation = ClinicFactsSliceDefault;
+
+/**
+ * Clinic facts Shared Slice
+ *
+ * - **API ID**: `clinic_facts`
+ * - **Description**: *None*
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ClinicFactsSlice = prismic.SharedSlice<
+  "clinic_facts",
+  ClinicFactsSliceVariation
 >;
 
 /**
@@ -3149,6 +3335,195 @@ type PostsSliceVariation =
 export type PostsSlice = prismic.SharedSlice<"posts", PostsSliceVariation>;
 
 /**
+ * Item in *Pros and cons → Default → Primary → Rows*
+ */
+export interface ProsConsSliceDefaultPrimaryRowsItem {
+  /**
+   * Title field in *Pros and cons → Default → Primary → Rows*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Such as HRT. Leave blank when there is one row.
+   * - **API ID Path**: pros_cons.default.primary.rows[].title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Pros field in *Pros and cons → Default → Primary → Rows*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: One per line.
+   * - **API ID Path**: pros_cons.default.primary.rows[].pros
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  pros: prismic.RichTextField;
+
+  /**
+   * Cons field in *Pros and cons → Default → Primary → Rows*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: One per line.
+   * - **API ID Path**: pros_cons.default.primary.rows[].cons
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  cons: prismic.RichTextField;
+}
+
+/**
+ * Primary content in *Pros and cons → Default → Primary*
+ */
+export interface ProsConsSliceDefaultPrimary {
+  /**
+   * Small heading field in *Pros and cons → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: pros_cons.default.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Pros and cons → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Pros and Cons
+   * - **API ID Path**: pros_cons.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Pros and cons → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: pros_cons.default.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Pros and cons → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: pros_cons.default.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Pros and cons → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Transparent
+   * - **API ID Path**: pros_cons.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Pros and cons → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: pros_cons.default.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Pros and cons → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: pros_cons.default.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Pros label field in *Pros and cons → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Blank says Pros. Or write your own, such as What I liked.
+   * - **API ID Path**: pros_cons.default.primary.pros_label
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  pros_label: prismic.KeyTextField;
+
+  /**
+   * Cons label field in *Pros and cons → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Blank says Cons. Or write your own, such as What I didn’t like.
+   * - **API ID Path**: pros_cons.default.primary.cons_label
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  cons_label: prismic.KeyTextField;
+
+  /**
+   * Rows field in *Pros and cons → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: pros_cons.default.primary.rows[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  rows: prismic.GroupField<Simplify<ProsConsSliceDefaultPrimaryRowsItem>>;
+}
+
+/**
+ * Default variation for Pros and cons Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ProsConsSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ProsConsSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Pros and cons*
+ */
+type ProsConsSliceVariation = ProsConsSliceDefault;
+
+/**
+ * Pros and cons Shared Slice
+ *
+ * - **API ID**: `pros_cons`
+ * - **Description**: *None*
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ProsConsSlice = prismic.SharedSlice<
+  "pros_cons",
+  ProsConsSliceVariation
+>;
+
+/**
  * Primary content in *Quote → Default → Primary*
  */
 export interface QuoteSliceDefaultPrimary {
@@ -4444,6 +4819,137 @@ export type StartHereSlice = prismic.SharedSlice<
   StartHereSliceVariation
 >;
 
+/**
+ * Primary content in *Text → Default → Primary*
+ */
+export interface TextSliceDefaultPrimary {
+  /**
+   * Small heading field in *Text → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: text.default.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading field in *Text → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: text.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Intro field in *Text → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: text.default.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link field in *Text → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: text.default.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Text → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Transparent
+   * - **API ID Path**: text.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Text → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: text.default.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Text → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: text.default.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Text field in *Text → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The writing. Headings, lists, photos, and videos are allowed.
+   * - **API ID Path**: text.default.primary.text
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  text: prismic.RichTextField;
+}
+
+/**
+ * Default variation for Text Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type TextSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<TextSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Text*
+ */
+type TextSliceVariation = TextSliceDefault;
+
+/**
+ * Text Shared Slice
+ *
+ * - **API ID**: `text`
+ * - **Description**: *None*
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type TextSlice = prismic.SharedSlice<"text", TextSliceVariation>;
+
 declare module "@prismicio/client" {
   interface CreateClient {
     (
@@ -4485,6 +4991,7 @@ declare module "@prismicio/client" {
       PostDocumentDataSourcesItem,
       ProviderDocument,
       ProviderDocumentData,
+      ProviderDocumentDataHowItWorksItem,
       AllDocumentTypes,
       BoxesSlice,
       BoxesSliceDefaultPrimaryBoxesItem,
@@ -4501,6 +5008,10 @@ declare module "@prismicio/client" {
       ClinicComparisonSliceDefaultPrimary,
       ClinicComparisonSliceVariation,
       ClinicComparisonSliceDefault,
+      ClinicFactsSlice,
+      ClinicFactsSliceDefaultPrimary,
+      ClinicFactsSliceVariation,
+      ClinicFactsSliceDefault,
       DividerSlice,
       DividerSliceDefaultPrimary,
       DividerSliceVariation,
@@ -4529,6 +5040,11 @@ declare module "@prismicio/client" {
       PostsSliceFeatured,
       PostsSliceGrid,
       PostsSliceRow,
+      ProsConsSlice,
+      ProsConsSliceDefaultPrimaryRowsItem,
+      ProsConsSliceDefaultPrimary,
+      ProsConsSliceVariation,
+      ProsConsSliceDefault,
       QuoteSlice,
       QuoteSliceDefaultPrimary,
       QuoteSliceVariation,
@@ -4552,6 +5068,10 @@ declare module "@prismicio/client" {
       StartHereSliceDefaultPrimary,
       StartHereSliceVariation,
       StartHereSliceDefault,
+      TextSlice,
+      TextSliceDefaultPrimary,
+      TextSliceVariation,
+      TextSliceDefault,
     };
   }
 }

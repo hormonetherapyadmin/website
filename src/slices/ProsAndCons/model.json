@@ -1,0 +1,135 @@
+{
+  "id": "pros_cons",
+  "name": "Pros and cons",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "small_heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Small heading",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Heading",
+            "labels": ["superscript"],
+            "placeholder": "Pros and Cons",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "intro": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Intro",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "link": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Link"
+          },
+          "type": "Link"
+        },
+        "background": {
+          "config": {
+            "default_value": "Transparent",
+            "label": "Background",
+            "options": [
+              "Transparent",
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ]
+          },
+          "type": "Select"
+        },
+        "space_above": {
+          "config": {
+            "default_value": "Medium",
+            "label": "Space above",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "space_below": {
+          "config": {
+            "default_value": "None",
+            "label": "Space below",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "pros_label": {
+          "config": {
+            "label": "Pros label",
+            "placeholder": "Blank says Pros. Or write your own, such as What I liked."
+          },
+          "type": "Text"
+        },
+        "cons_label": {
+          "config": {
+            "label": "Cons label",
+            "placeholder": "Blank says Cons. Or write your own, such as What I didn’t like."
+          },
+          "type": "Text"
+        },
+        "rows": {
+          "config": {
+            "fields": {
+              "title": {
+                "config": {
+                  "label": "Title",
+                  "placeholder": "Such as HRT. Leave blank when there is one row."
+                },
+                "type": "Text"
+              },
+              "pros": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Pros",
+                  "labels": ["superscript"],
+                  "multi": "paragraph,list-item,strong,em,hyperlink",
+                  "placeholder": "One per line."
+                },
+                "type": "StructuredText"
+              },
+              "cons": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Cons",
+                  "labels": ["superscript"],
+                  "multi": "paragraph,list-item,strong,em,hyperlink",
+                  "placeholder": "One per line."
+                },
+                "type": "StructuredText"
+              }
+            },
+            "label": "Rows"
+          },
+          "type": "Group"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

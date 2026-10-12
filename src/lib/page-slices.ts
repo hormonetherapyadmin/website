@@ -14,6 +14,7 @@ import type {
   BrandPromoComparison,
 } from "@/slices/BrandPromo";
 import type { BoxClinic } from "@/slices/boxes";
+import type { FactsClinic } from "@/slices/ClinicFacts";
 import type { ComparisonClinic } from "@/slices/clinic_comparison";
 import type { PostCardData } from "@/slices/posts";
 import type { QuoteClinic } from "@/slices/quote";
@@ -31,6 +32,14 @@ export type PageClinicSource = TokenClinicSource & {
     /** Repeatable. A link saved before it was repeatable is one object. */
     comparison?: readonly LinkField[] | LinkField | null;
     product?: ImageField | null;
+    state_availability?: string | null;
+    lab_requirement?: string | null;
+    hsa_fsa?: boolean | null;
+    specialties?: RichTextField | null;
+    how_it_works?: readonly {
+      title?: string | null;
+      text?: string | null;
+    }[];
   };
 };
 
@@ -48,6 +57,12 @@ export type PageClinic = TokenClinic & {
   comparisons?: BrandPromoComparison[];
   /** The jar or bottle. Brand promo uses this unless the slice has a photo. */
   product?: ImageField;
+  availability?: string;
+  labs?: string;
+  hsaFsa?: boolean;
+  /** One per line of the Specialties field. */
+  specialties?: string[];
+  steps?: { title?: string; text?: string }[];
 };
 
 /** The post fields a card reads. */
@@ -155,6 +170,7 @@ export function sliceClinicIds(slices: readonly SliceLike[]): string[] {
         for (const row of rows(primary.boxes)) add(row.clinic);
         break;
       case "brand_promo":
+      case "clinic_facts":
         add(primary.clinic);
         break;
     }
@@ -163,11 +179,13 @@ export function sliceClinicIds(slices: readonly SliceLike[]): string[] {
   return ids;
 }
 
-/** Clinic UIDs named by a story token in Side by side writing. */
+/** Clinic UIDs named by a story token in Side by side or Text writing. */
 export function sliceTokenUids(slices: readonly SliceLike[]): string[] {
   const uids: string[] = [];
   for (const slice of slices) {
-    if (slice.slice_type !== "side_by_side") continue;
+    if (slice.slice_type !== "side_by_side" && slice.slice_type !== "text") {
+      continue;
+    }
     for (const uid of storyClinicUids(slice.primary.text as RichTextField)) {
       if (!uids.includes(uid)) uids.push(uid);
     }
@@ -198,6 +216,49 @@ export function pageClinic(document: PageClinicSource): PageClinic | null {
       document.data.product && isFilled.image(document.data.product)
         ? document.data.product
         : undefined,
+    availability: text(document.data.state_availability),
+    labs: text(document.data.lab_requirement),
+    hsaFsa:
+      typeof document.data.hsa_fsa === "boolean"
+        ? document.data.hsa_fsa
+        : undefined,
+    specialties: lines(document.data.specialties),
+    steps: steps(document.data.how_it_works),
+  };
+}
+
+/** Each line or bullet of a rich text field. Blank lines drop. */
+function lines(field: RichTextField | null | undefined) {
+  const items = (field ?? []).flatMap((block) => {
+    const value = "text" in block ? text(block.text) : undefined;
+    return value ? [value] : [];
+  });
+  return items.length ? items : undefined;
+}
+
+/** How it works, in editor order. A step with no title and no text drops. */
+function steps(rows: PageClinicSource["data"]["how_it_works"]) {
+  const items = (rows ?? []).flatMap((row) => {
+    const title = text(row.title);
+    const body = text(row.text);
+    if (!title && !body) return [];
+    return [{ title, text: body }];
+  });
+  return items.length ? items : undefined;
+}
+
+export function factsClinic(clinic: PageClinic): FactsClinic {
+  return {
+    name: clinic.name,
+    kind: clinic.kind,
+    availability: clinic.availability,
+    formulation: clinic.formulation,
+    labs: clinic.labs,
+    insurance: clinic.insurance,
+    hsaFsa: clinic.hsaFsa,
+    gettingStarted: clinic.gettingStarted,
+    steps: clinic.steps,
+    specialties: clinic.specialties,
   };
 }
 

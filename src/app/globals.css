@@ -45,6 +45,9 @@
     compete with raspberry links.
   */
   --color-marker: #24548f;
+  /* The Pros card and its check marks. */
+  --color-pros: #e2f1e3;
+  --color-pros-mark: #2c6a3a;
 
   --font-body:
     ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -55,6 +58,14 @@
   --container-content: 88rem;
   --spacing-gutter: clamp(1.25rem, 4vw, 3.5rem);
   --container-wrap: calc(var(--container-content) + var(--spacing-gutter) * 2);
+  /*
+    The post story column on a wide screen: content less the 24rem rail
+    and the 4.5rem gap. The Text slice uses it, centered.
+  */
+  --container-story: 59.5rem;
+  --container-story-wrap: calc(
+    var(--container-story) + var(--spacing-gutter) * 2
+  );
 
   /* Writing in a post body and in every slice's Text field. */
   --text-body: 1.3rem;

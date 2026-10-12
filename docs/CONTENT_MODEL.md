@@ -161,7 +161,7 @@ Tabs:
 -   Profile — name, kind, logo, short description, top choice label
 -   Links — affiliate link, page, review post, comparison posts, review video
 -   Price — the price and whether it is per month or one time, the three price-box lines, and the coupon code
--   Care — labs, HSA, states
+-   Care — labs, HSA, states, specialties, how it works
 -   Words — her short quote
 -   Product — the product image
 
@@ -379,7 +379,8 @@ specified yet. Candidates:
 -   Editorial Callout
 -   Affiliate CTA
 -   Offer Callout
--   Newsletter CTA (future/optional)
+-   Email signup (planned, EmailOctopus. Not specified yet. See
+    `docs/PROJECT_PLAN.md` section 24, "Email capture")
 -   Related Articles
 -   Sources / References
 -   Video / Embed
@@ -389,7 +390,10 @@ Trim overlapping candidates before building them (for example Provider
 Card / Provider Grid / Provider Comparison / Comparison Table, and
 Affiliate CTA / Offer Callout). The homepage clinic comparison is the
 comparison slice. The trusted-providers clinic card is the Brand promo
-slice. The trusted-providers close band is the Ribbon slice. A post
+slice. The trusted-providers close band is the Ribbon slice. Rich
+Text is the Text slice: writing on its own, for pages that are mostly
+words. The Wix clinic pages' fact block is the Clinic facts slice,
+which reads the Brand. Pros / Cons is the Pros and cons slice. A post
 inserts a clinic offer with a provider token. It does not insert a
 Callout.
 
