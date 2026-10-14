@@ -11,17 +11,25 @@ export type PhotoCell = {
 
 export type StorySegment =
   | { kind: "rich"; field: RichTextField }
+  | ({ kind: "photo" } & PhotoCell)
   | { kind: "photos"; cells: [PhotoCell, PhotoCell] }
+  | { kind: "photoText"; image: StoryImage; text: RichTextField }
   /** Position in the Tables group. {{table}} is 1, {{table2}} is 2. */
   | { kind: "table"; number: number }
   | { kind: "sources"; items: StoryBlock[] };
 
 const PHOTO_ROW = /^\{\{photos\}\}$/;
+const PHOTO_TEXT = /^\{\{photo-text\}\}$/;
 const TABLE_TOKEN = /^\{\{table([1-9]\d*)?\}\}$/;
 
 /** A paragraph that is only the side-by-side photo token. */
 export function isPhotoRowToken(text: string) {
   return PHOTO_ROW.test(text.trim());
+}
+
+/** A paragraph that is only the photo-beside-text token. */
+export function isPhotoTextToken(text: string) {
+  return PHOTO_TEXT.test(text.trim());
 }
 
 /** The table a paragraph asks for, or null when it is not a table token. */
@@ -57,6 +65,7 @@ function isCaption(block: StoryBlock) {
   const text = paragraphText(block);
   if (text === null || text.trim() === "") return false;
   if (isPhotoRowToken(text)) return false;
+  if (isPhotoTextToken(text)) return false;
   if (isTableToken(text)) return false;
   if (parseProviderToken(text)) return false;
   return true;
@@ -76,15 +85,15 @@ function isListItem(block: StoryBlock) {
 }
 
 /**
- * The next two photos after a {{photos}} line. Each photo keeps the
- * paragraph directly under it. A heading, a token, or a single photo
- * ends the row.
+ * The next photos after a {{photos}} or {{photo-text}} line. Each photo
+ * keeps the paragraph directly under it. A heading, a token, or a
+ * single photo ends the row.
  */
-function collectPhotos(field: RichTextField, start: number) {
+function collectPhotos(field: RichTextField, start: number, limit = 2) {
   const cells: PhotoCell[] = [];
   let index = start;
 
-  while (cells.length < 2 && index < field.length) {
+  while (cells.length < limit && index < field.length) {
     while (index < field.length && isBlank(field[index])) index += 1;
     const block = field[index];
     if (!block || !isImage(block)) break;
@@ -106,7 +115,8 @@ function collectPhotos(field: RichTextField, start: number) {
 }
 
 /**
- * Splits a story into ordinary rich text, side-by-side photo rows, and
+ * Splits a story into ordinary rich text, single photos with their
+ * caption, side-by-side photo rows, photos beside their paragraph, and
  * a trailing Resources list. The list becomes the numbered sources when
  * the Sources field is empty.
  */
@@ -148,10 +158,35 @@ export function storySegments(
         });
       } else {
         for (const cell of collected.cells) {
-          rich.push(cell.image);
-          if (cell.caption?.[0]) rich.push(cell.caption[0]);
+          segments.push({ kind: "photo", ...cell });
         }
       }
+      continue;
+    }
+
+    if (text !== null && isPhotoTextToken(text)) {
+      flush();
+      index += 1;
+      const collected = collectPhotos(field, index, 1);
+      index = collected.next;
+      const [cell] = collected.cells;
+      if (cell?.caption) {
+        segments.push({
+          kind: "photoText",
+          image: cell.image,
+          text: cell.caption,
+        });
+      } else if (cell) {
+        segments.push({ kind: "photo", ...cell });
+      }
+      continue;
+    }
+
+    if (isImage(field[index])) {
+      flush();
+      const collected = collectPhotos(field, index, 1);
+      index = collected.next;
+      segments.push({ kind: "photo", ...collected.cells[0] });
       continue;
     }
 

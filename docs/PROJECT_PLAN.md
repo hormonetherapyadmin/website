@@ -39,7 +39,8 @@ Primary conversion outcomes:
 1.  Affiliate outbound click
 2.  Affiliate offer/code usage where applicable
 3.  Secondary engagement with provider comparisons and related content
-4.  Optional future owned-audience conversion such as newsletter signup
+4.  Email signup, an owned audience. Planned with EmailOctopus (see
+    section 24, "Email capture")
 
 ## 3. Positioning
 
@@ -817,7 +818,7 @@ Only after stability:
 -   content refresh workflow
 -   provider data freshness workflow
 -   conversion testing
--   optional email/newsletter strategy
+-   email list growth beyond the signup in section 24
 
 ## 23. Definition of Done
 
@@ -915,6 +916,13 @@ inventory.
     checks the shared secret and expires the `prismic` tag. Edits are
     live on the next request, without a rebuild.
 -   New documents render on first request and are then cached.
+-   Posts are pre-rendered through `generateStaticParams`. A Page
+    (`/<uid>`) still renders per request, because the Posts grid reads
+    `?page=` and `?category=`.
+-   Public pages use `SiteShell` (`src/components/site-shell.tsx`), in
+    the working palette. Only `/mockup` routes use `MockupShell`, which
+    reads `?palette=` and `?serif=` for the brand designer. Reading the
+    address makes a page render per request.
 -   Local development does not cache Prismic responses. The webhook
     does not reach localhost, and a cached miss would keep a just
     published document off the page.
@@ -994,7 +1002,8 @@ inventory.
 -   No font is loaded until brand fonts arrive; system font stacks
     until then. Brand fonts are self-hosted through `next/font`.
 -   No UI component library, no client-side data fetching, no
-    third-party scripts beyond GA.
+    third-party scripts beyond GA. An EmailOctopus embed would be one;
+    see Email capture.
 
 ### Affiliate links
 
@@ -1030,7 +1039,39 @@ inventory.
     these automatically.
 -   Search Console verification before launch.
 
+### Email capture
+
+Owner direction, 2026-10-12: the site collects email, through
+EmailOctopus, from a signup slice. The slice is not specified or built
+yet. Specify it in `docs/SLICE_MODEL.md` before building it.
+
+What the live Wix site does today (crawl of the pages sitemap,
+2026-10-12):
+
+-   `/copy-of-trusted-providers` has a signup form: "Subscribe to
+    receive our FREE Online HRT Price Comparison Chart!"
+-   Every page loads a Wix lightbox titled "Conversion Popup". Its
+    contents have not been checked.
+
+To decide before the slice is built:
+
+-   How the form reaches EmailOctopus: their embedded form script, or
+    a server route that calls their API. The API key stays on the
+    server either way and is never sent to the browser.
+-   Single or double opt-in, the consent line under the form, and the
+    privacy policy wording.
+-   Whether the free price chart stays the reason to sign up, and how
+    it is delivered.
+-   Whether the popup comes back. It is not rebuilt by default.
+-   Moving the existing Wix subscribers into EmailOctopus.
+-   The GA4 event for a signup. It sends no email address.
+-   Whether the signup is needed at cutover, so the trusted providers
+    page does not lose its form.
+
 ### Open questions for the owner
 
 -   Who has Search Console access?
 -   Where is the domain registered?
+-   `/sleep` is in the pages sitemap and returns 200 with a
+    self-canonical, but the page shows no content (crawl,
+    2026-10-12). Keep and rebuild it, or redirect it?

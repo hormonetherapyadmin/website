@@ -95,6 +95,10 @@ describe("SideBySide", () => {
 
     expect(markup).toContain('id="menopause-isnt-a-dirty-word"');
     expect(markup).toContain('data-side="left"');
+    expect(markup).toContain('data-media="true"');
+    expect(markup.indexOf("Menopause isn’t a dirty word.")).toBeLessThan(
+      markup.indexOf('alt="Peggy on a wooded trail'),
+    );
     expect(markup).toContain("My hormone replacement story");
     expect(markup).toContain("Menopause isn’t a dirty word.");
     expect(markup).toContain("/mockup/peggy-winston.jpg");
@@ -167,6 +171,41 @@ describe("SideBySide", () => {
     expect(render("Unknown")).toContain('data-position="center"');
     expect(render("Top")).toContain('data-position="top"');
     expect(render("Sticky")).toContain('data-position="sticky"');
+  });
+
+  it("renders every intro paragraph in the writing column", () => {
+    const markup = renderToStaticMarkup(
+      <SideBySide
+        variation="image"
+        primary={{
+          ...section(),
+          intro: [
+            ...rich("First signs aren’t always obvious."),
+            ...rich("Proactive tracking is the tool for advocacy."),
+          ] as RichTextField,
+        }}
+        image={{ src: "/photo.jpg", alt: "Peggy standing" }}
+      />,
+    );
+    expect(markup).toContain("First signs aren’t always obvious.");
+    expect(markup).toContain("Proactive tracking is the tool for advocacy.");
+    expect(markup.indexOf("First signs")).toBeLessThan(
+      markup.indexOf("Proactive tracking"),
+    );
+    expect(markup.indexOf("Proactive tracking")).toBeLessThan(
+      markup.indexOf('alt="Peggy standing"'),
+    );
+  });
+
+  it("uses one column when the slice has no media", () => {
+    const markup = renderToStaticMarkup(
+      <SideBySide
+        variation="image"
+        primary={{ ...section(), intro: rich("Only the writing.") }}
+      />,
+    );
+    expect(markup).toContain('data-media="false"');
+    expect(markup).toContain("Only the writing.");
   });
 
   it("puts a quote above the writing beside the photo", () => {

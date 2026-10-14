@@ -377,6 +377,40 @@
   border-radius: 1.25rem;
 }
 
+.body .storyPhoto {
+  width: 100%;
+  margin-inline: auto;
+}
+
+/* The photo keeps its own width. The caption is 75% of the column. */
+.body .storyPhoto > a,
+.body .storyPhoto > img {
+  width: min(100%, var(--photo-max-width, 100%));
+  margin-inline: auto;
+}
+
+.storyPhoto > a {
+  display: block;
+}
+
+.body .storyPhoto figcaption {
+  width: 75%;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.body .storyPhoto figcaption p {
+  margin: 0.75rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--muted);
+}
+
+.storyPhoto figcaption strong {
+  color: var(--text);
+}
+
 .body .embed {
   margin: 0 0 1.4rem;
 }
@@ -577,6 +611,27 @@
 .beforeAfter strong {
   margin-right: 0.35rem;
   color: var(--text);
+}
+
+.photoText {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin: 2.5rem 0;
+}
+
+.body .photoText figure {
+  flex: 0 0 33%;
+  margin: 0;
+}
+
+.photoText > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.body .photoText p:last-child {
+  margin-bottom: 0;
 }
 
 .offerCallout,
@@ -1627,8 +1682,17 @@
   }
 
   .offerCallout,
-  .facts {
+  .facts,
+  .photoText {
     flex-direction: column;
+  }
+
+  .photoText {
+    align-items: stretch;
+  }
+
+  .body .photoText figure {
+    flex-basis: auto;
   }
 }
 

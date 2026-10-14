@@ -90,6 +90,12 @@
   --display-weight: 500;
 }
 
+/* Public pages. Besley comes from the root layout. */
+.serifSite {
+  --display: var(--font-besley), Georgia, serif;
+  --display-weight: 500;
+}
+
 .serifYoung {
   --display: var(--mock-serif-young), Georgia, serif;
   --display-weight: 400;
@@ -1440,9 +1446,14 @@ a.clinicName:focus-visible {
 }
 
 .postExcerpt {
+  display: -webkit-box;
   margin: 0;
+  overflow: hidden;
   color: var(--muted);
   font-size: 1rem;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
 }
 
 .leadPost .postExcerpt {

@@ -22,6 +22,7 @@ describe("minutesToRead", () => {
     expect(
       storyWordCount([
         paragraph("{{photos}}"),
+        paragraph("{{photo-text}}"),
         paragraph("{{table}}"),
         paragraph("one two"),
       ] as RichTextField),

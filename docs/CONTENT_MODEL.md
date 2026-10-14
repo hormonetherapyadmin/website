@@ -158,15 +158,15 @@ in tabs. A tab is a group of fields. The model is in that file.
 
 Tabs:
 
--   Profile — name, kind, logo, short description
--   Links — affiliate link, page, review post, review video
+-   Profile — name, kind, logo, short description, top choice label
+-   Links — affiliate link, page, review post, comparison posts, review video
 -   Price — the price and whether it is per month or one time, the three price-box lines, and the coupon code
--   Care — labs, HSA, states
+-   Care — labs, HSA, states, specialties, how it works
 -   Words — her short quote
 -   Product — the product image
 
 A clinic has no public page and no SEO tab. A clinic page is a Page.
-Slices on that page point at the clinic. The four links sit on the
+Slices on that page point at the clinic. The five links sit on the
 Links tab. Affiliate is the link to the clinic's own site. In the
 editor that field is labeled Affiliate. Its id stays `visit`. The
 button words come from the link when she fills them, and otherwise say
@@ -176,12 +176,16 @@ link for her review. Slices say "Watch my review", and the video plays
 in a modal on the page. Page is a link to
 the site page about this clinic, and it stays blank until that page
 exists. The sidebar name uses Page. My review is a link to the post
-where she reviews this brand. Brand promo says "My review" for that
-post, "Products & pricing" for Page, and "Watch my review" for the
-video. Links written in Brand promo's Overwrite group sit on a second
+where she reviews this brand. My comparison is a repeatable link to
+the posts where she compares this brand with another, one link per
+post. They are blog posts, the same as My review. Brand promo says "My review" for
+that post, "Products & pricing" for Page, and "Watch my review" for the
+video. Each comparison button says its link's display text, such as
+"Musely vs Winona cream", or "My comparison" when that is blank. Links written in Brand promo's Overwrite group sit on a second
 row under those buttons. The product image is on the Product tab. A slice that shows
 the jar or bottle reads it from the clinic. Brand promo uses that
-photo unless a photo is placed on the slice.
+photo unless a photo is placed on the slice, and the photo links to
+the brand's affiliate link.
 
 Field ids are in `docs/SLICE_MODEL.md`. The long review stays on the
 Provider review. A story inserts a clinic with a token such as
@@ -236,9 +240,12 @@ Fields:
 -   Indexability control with safe default
 
 The card reads Title, Image, Subtitle, Published, Category, and the
-minutes to read. Clinics in the sidebar come from provider tokens in
+minutes to read. On a card, the subtitle is limited to three lines.
+Clinics in the sidebar come from provider tokens in
 the story. A paragraph that is only `{{photos}}` places the next two
-photos side by side. Minutes to read, Keep reading, and the document
+photos side by side. A paragraph that is only `{{photo-text}}` places
+the next photo at a third of the width with the paragraph under it
+beside it. Minutes to read, Keep reading, and the document
 tags are derived. Published is the original publish date. There is no updated
 date. Migration writes the Wix excerpt into Subtitle.
 
@@ -372,7 +379,8 @@ specified yet. Candidates:
 -   Editorial Callout
 -   Affiliate CTA
 -   Offer Callout
--   Newsletter CTA (future/optional)
+-   Email signup (planned, EmailOctopus. Not specified yet. See
+    `docs/PROJECT_PLAN.md` section 24, "Email capture")
 -   Related Articles
 -   Sources / References
 -   Video / Embed
@@ -382,7 +390,10 @@ Trim overlapping candidates before building them (for example Provider
 Card / Provider Grid / Provider Comparison / Comparison Table, and
 Affiliate CTA / Offer Callout). The homepage clinic comparison is the
 comparison slice. The trusted-providers clinic card is the Brand promo
-slice. The trusted-providers close band is the Ribbon slice. A post
+slice. The trusted-providers close band is the Ribbon slice. Rich
+Text is the Text slice: writing on its own, for pages that are mostly
+words. The Wix clinic pages' fact block is the Clinic facts slice,
+which reads the Brand. Pros / Cons is the Pros and cons slice. A post
 inserts a clinic offer with a provider token. It does not insert a
 Callout.
 

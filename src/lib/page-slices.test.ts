@@ -4,6 +4,7 @@ import {
   boxClinic,
   brandPromoClinic,
   comparisonClinic,
+  factsClinic,
   gridPage,
   pageClinic,
   postCard,
@@ -78,14 +79,70 @@ describe("sliceClinicIds", () => {
         boxes: [{ clinic: doc("F") }, { clinic: { link_type: "Any" } }],
       }),
       slice("brand_promo", { clinic: doc("G") }),
+      slice("clinic_facts", { clinic: doc("H") }),
     ];
 
-    expect(sliceClinicIds(slices)).toEqual(["A", "B", "C", "D", "E", "F", "G"]);
+    expect(sliceClinicIds(slices)).toEqual([
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+    ]);
+  });
+});
+
+describe("factsClinic", () => {
+  it("reads the Care tab, one specialty per line, and the steps", () => {
+    const clinic = pageClinic(
+      provider({
+        state_availability: " All 50 states ",
+        lab_requirement: "None",
+        hsa_fsa: true,
+        specialties: [
+          { type: "list-item", text: "Menopause", spans: [] },
+          { type: "paragraph", text: "  ", spans: [] },
+          { type: "list-item", text: "PCOS", spans: [] },
+        ] as unknown as RichTextField,
+        how_it_works: [
+          { title: "Health quiz", text: "Complete the quiz." },
+          { title: " ", text: null },
+          { title: null, text: "Start treatment." },
+        ],
+      }),
+    );
+
+    expect(clinic && factsClinic(clinic)).toMatchObject({
+      name: "Inner Balance",
+      availability: "All 50 states",
+      formulation: "Oestra vaginal cream",
+      labs: "None",
+      insurance: false,
+      hsaFsa: true,
+      gettingStarted: "Free consults as needed.",
+      specialties: ["Menopause", "PCOS"],
+      steps: [
+        { title: "Health quiz", text: "Complete the quiz." },
+        { title: undefined, text: "Start treatment." },
+      ],
+    });
+  });
+
+  it("leaves blank facts out", () => {
+    const clinic = pageClinic(provider({ specialties: [], how_it_works: [] }));
+    expect(clinic && factsClinic(clinic)).toMatchObject({
+      availability: undefined,
+      specialties: undefined,
+      steps: undefined,
+    });
   });
 });
 
 describe("sliceTokenUids", () => {
-  it("reads clinic tokens in Side by side writing", () => {
+  it("reads clinic tokens in Side by side and Text writing", () => {
     const slices = [
       slice(
         "side_by_side",
@@ -93,9 +150,11 @@ describe("sliceTokenUids", () => {
         "image",
       ),
       slice("quote", { text: rich("{{provider:alloy:offer}}") }),
+      slice("text", { text: rich("{{provider:winona:facts}}") }),
+      slice("text", { text: rich("{{provider:musely:facts}}") }),
     ];
 
-    expect(sliceTokenUids(slices)).toEqual(["musely"]);
+    expect(sliceTokenUids(slices)).toEqual(["musely", "winona"]);
   });
 });
 
@@ -133,12 +192,12 @@ describe("pageClinic and comparisonClinic", () => {
     });
   });
 
-  it("gives a box the logo, code, and short description", () => {
+  it("gives a box the logo, code, and top choice label", () => {
     expect(boxClinic(pageClinic(provider())!)).toEqual({
       name: "Inner Balance",
       logo: { src: "https://images.prismic.io/logo.png" },
       offerCode: "PEGGY10",
-      shortDescription: "Bioidentical cream by mail.",
+      topChoice: "My 2026 top choice",
     });
   });
 
@@ -189,6 +248,49 @@ describe("pageClinic and comparisonClinic", () => {
     ).toMatchObject({ alt: "Oestra cream jar" });
     expect(
       brandPromoClinic(pageClinic(provider())!).reviewVideoHref,
+    ).toBeUndefined();
+  });
+
+  it("gives a brand promo each comparison post and its display text", () => {
+    const comparison = {
+      link_type: "Document" as const,
+      id: "comparison-id",
+      type: "post",
+      tags: [],
+      lang: "en-us",
+      uid: "musely-vs-winona",
+      url: "/post/musely-vs-winona",
+    };
+
+    expect(
+      brandPromoClinic(
+        pageClinic(
+          provider({
+            comparison: [
+              { ...comparison, text: " Musely vs Winona cream " },
+              { link_type: "Any" },
+              { ...comparison, url: "/post/alloy-vs-musely", text: " " },
+            ],
+          }),
+        )!,
+      ).comparisons,
+    ).toEqual([
+      { href: "/post/musely-vs-winona", text: "Musely vs Winona cream" },
+      { href: "/post/alloy-vs-musely" },
+    ]);
+
+    expect(
+      brandPromoClinic(
+        pageClinic(
+          provider({ comparison: { ...comparison, text: "Winona vs Musely" } }),
+        )!,
+      ).comparisons,
+    ).toEqual([{ href: "/post/musely-vs-winona", text: "Winona vs Musely" }]);
+    expect(
+      brandPromoClinic(pageClinic(provider({ comparison: [] }))!).comparisons,
+    ).toBeUndefined();
+    expect(
+      brandPromoClinic(pageClinic(provider())!).comparisons,
     ).toBeUndefined();
   });
 

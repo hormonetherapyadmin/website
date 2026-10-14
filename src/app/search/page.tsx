@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MockupShell } from "@/app/mockup/_shared/mockup-shell";
+import { SiteShell } from "@/components/site-shell";
 import { isIndexingAllowed } from "@/lib/env";
 import { loadSearchCatalog } from "@/lib/search-catalog";
 import { searchQuery } from "@/lib/search";
@@ -17,20 +17,14 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function SearchPage(props: PageProps<"/search">) {
   const searchParams = await props.searchParams;
   const hits = await loadSearchCatalog();
-  const palette =
-    typeof searchParams.palette === "string" ? searchParams.palette : undefined;
-  const serif =
-    typeof searchParams.serif === "string" ? searchParams.serif : undefined;
 
   return (
-    <MockupShell searchParams={searchParams}>
+    <SiteShell>
       <SearchExperience
         key={searchQuery(searchParams.q)}
         hits={hits}
         initialQuery={searchQuery(searchParams.q)}
-        palette={palette}
-        serif={serif}
       />
-    </MockupShell>
+    </SiteShell>
   );
 }

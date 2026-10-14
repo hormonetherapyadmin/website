@@ -75,7 +75,9 @@ open, and puts Small heading, Intro, and Link in Overwrite.
 
 Small heading, Heading, Intro, and Link are the header. The link sits on
 the heading's row, as "All posts" does. When all four are empty, the
-slice has no header.
+slice has no header. Side by side is the exception: its Intro allows
+many paragraphs, and that header sits in the writing column beside the
+media. See Side by side.
 
 The Hero slice renders Heading as the page title (`h1`). Every other
 slice renders it as a section heading (`h2`). A card title is an `h3`.
@@ -126,7 +128,9 @@ other slice it is the heading. An empty title leaves the section with no
 id. A button uses that id with a hash, such as
 `#eight-online-hrt-clinics-side-by-side` for the comparison heading
 "Eight online HRT clinics, side by side." Changing the title changes the
-id, so the button address has to change with it.
+id, so the button address has to change with it. Clicking that hash, or
+any other anchor on the site, scrolls the page down to the target.
+Someone who prefers reduced motion lands there without the scroll.
 
 ### Rich text
 
@@ -139,7 +143,7 @@ Two toolbars share the component:
 
 | Preset | Allows | Used for |
 | --- | --- | --- |
-| Heading | One block: paragraph, bold, italic, link | Titles, intros, quotes, captions, eyebrows |
+| Heading | One block: paragraph, bold, italic, link | Titles, intros, quotes, captions, eyebrows. Side by side Intro allows many paragraphs |
 | Content | Many blocks: Heading 2, Heading 3, Heading 4, paragraphs, bold, italic, links, lists, image, video embed, labels | Story body and post body |
 
 Heading 1 is not on the content toolbar. The slice chooses the heading
@@ -160,10 +164,12 @@ content field's JSON (`labels`), not in the Type Builder. Handle them in
 A label styles words. It does not insert a document.
 
 Writing is one size everywhere. A post body and every slice's Text field
-(Side by side, Brand promo, Ribbon, and Quote) use the `--text-body`
+(Text, Side by side, Brand promo, Ribbon, and Quote) use the `--text-body`
 token in `globals.css`, 1.3rem with a 1.7 line height, with 1.4rem
-between paragraphs. Intros, captions, card text, the closing line, and
-the note box keep their own sizes.
+between paragraphs. The Ribbon box keeps the 1.3rem size with a 1.5
+line height, so its short lines sit together under the title. Intros,
+captions, card text, the closing line, and the note box keep their own
+sizes.
 
 A link in writing looks the same as a link in a post body: the accent
 color, semibold, no underline, and a tint that grows under the words on
@@ -241,18 +247,18 @@ Each box:
 | --- | --- | --- | --- | --- |
 | Clinic | `clinic` | Content relationship to Provider | No | Inner Balance |
 | Image | `image` | Image | No | Empty, so the clinic logo |
-| Heading | `heading` | Heading rich text | No | Empty, so the short description, such as Improved sleep |
+| Heading | `heading` | Heading rich text | No | Empty, so the top choice label, such as No appointment required |
 | Text | `text` | Heading rich text | No | Empty, so the clinic name |
 | Bottom line | `bottom_line` | Text | No | Empty, so the code PEGGY10. Winona's is "15% off" |
 | Link | `link` | Link, no display text | No | `#inner-balance` |
 
 A written field wins. An empty Image, Heading, Text, or Bottom line
-uses the clinic's logo, short description, name, or code. A box with
-no clinic is written by hand. A box with no heading, no short
-description, no text, and no clinic name is hidden. A clinic
+uses the clinic's logo, top choice label, name, or code. A box with
+no clinic is written by hand. A box with no heading, no top choice
+label, no text, and no clinic name is hidden. A clinic
 with no code and an empty Bottom line shows no bottom line, so write
 "No code" when the box should say it. The relationship fetches `name`,
-`logo`, `code`, and `short_description`.
+`logo`, `code`, and `top_choice_label`.
 
 The whole box is the link. A box with an empty Link is not clickable.
 A jump link is `#` and the id of a section lower on the page, made from
@@ -338,24 +344,30 @@ card stays in view while the writing scrolls on wide screens. Use Stacked when t
 test kits page. On a phone both layouts stack.
 
 The relationship fetches `name`, `kind`, `logo`, `visit`, `page`,
-`review`, `youtube`, `product`, `monthly_price`, `price_unit`,
+`review`, `comparison`, `youtube`, `product`, `monthly_price`, `price_unit`,
 `price_note`,
 `formulation`, `insurance`, `note`, `code`, `code_note`,
 `top_choice_label`, and `quote`. A product leaves out the insurance
 line, and a one-time price has no "/mo". A brand with no logo shows
 its name without the logo tile. Page is the Products & pricing
-button. My review is her post. Review video is Watch my review. A
+button. My review is her post. Each My comparison link is one of her
+comparison posts, and its button says the link's display text, such
+as "Musely vs Winona cream". A blank display text says "My
+comparison". Review video
+is Watch my review. A
 YouTube link plays in the site's video modal. The modal heading reads
 "My review on", then the brand logo and name. Any other video link
 opens in a new tab. A YouTube link written in the slice's extra links
-also plays in the modal. A blank Page, My review, or Review video
-hides that button. The product photo is
-the brand's, unless a photo is placed in Overwrite. Links written in
+also plays in the modal. A blank Page, My review, My comparison, or
+Review video hides that button. The product photo is
+the brand's, unless a photo is placed in Overwrite. When the clinic
+has an affiliate link, that photo opens it in a new tab, with the same
+sponsored rel as the visit button. Links written in
 Overwrite sit on a second row under those buttons.
 
 The logo, the name, the price, the three price-box lines, the visit
 button, the coupon, the product photo, Products & pricing, My
-review, and Watch my review come from the clinic. A photo in
+review, My comparison, and Watch my review come from the clinic. A photo in
 Overwrite replaces the
 brand's product image. A filled Quote replaces the clinic's In my
 words. Is this 1st?, when on, shows the badge, and Place is the words
@@ -363,15 +375,19 @@ beside it, such as "My 2026 top choice". A clinic with a code shows
 "Code PEGGY10" and the code line under it. A clinic with no code shows
 the code line alone, such as Winona's "15% off your first order". The
 brand buttons sit in this order: Products & pricing, My review,
-then Watch my review. A YouTube or Vimeo link gets a play icon. My
-review gets a page icon. Page gets a tag icon. Links written on the
+each My comparison in editor order, then Watch my review. A YouTube or
+Vimeo link gets a play icon. My review gets a page icon. My comparison gets a two-way
+arrow icon. Page gets a tag icon. Links written on the
 slice are a second row of text, grey on a
 light card and white on Navy or Raspberry, each with a chevron. Set
 Space above and Space below to None on the directory cards so they
 stack. A light Beside card draws a rule across the bottom, in the
 middle of the gap after the card, so that gap is even on both sides
 of the line. The gap is Space below, or the next slice's Space above
-when that is larger. Stacked draws no rule. Navy and Raspberry use the light text and the light visit
+when that is larger. Stacked draws no rule. The last card in a run
+draws no rule either: when the next slice is not a Brand promo, or
+nothing follows, the line is left off, so it never doubles up with a
+Divider or trails the page. There is no field for this. Navy and Raspberry use the light text and the light visit
 button.
 
 ### Ribbon
@@ -411,6 +427,103 @@ Ghost is the text button, with an arrow. A button with no words is
 hidden. A button to an affiliate address gets the affiliate `rel`, the
 same as Side by side. An empty title, content, and button list hides the box. The
 section header can still show.
+
+### Text
+
+Writing on its own, in `src/slices/Text`. Use it for a page that is
+mostly words, such as `/costandinsurance`, `/formuations`, or `/faq`.
+The writing is left aligned in a column the width of a post story,
+952 pixels on a wide screen (`--container-story`). The column is
+centered on the page. The section header sits in the same column. A
+Background color still fills the full width, the same as every slice.
+On a narrow screen the column is the screen, less the gutter.
+
+| Label | Id | Kind | Required |
+| --- | --- | --- | --- |
+| Section | The seven Section fields | Shared, open on the slice | |
+| Text | `text` | Content rich text | No |
+
+Text uses the content toolbar: Heading 2, Heading 3, Heading 4,
+paragraphs, lists, photos, video, and the labels. Section Heading is
+the `h2` and the section id. Headings inside Text are for the parts
+under it, so use Heading 3 there when the slice has a heading. A
+paragraph can start with a clinic token, the same
+`{{provider:inner-balance:offer}}` and `{{provider:inner-balance:facts}}`
+tokens as the post. Tables and the `{{photos}}` and `{{photo-text}}`
+rows are post-only. An empty slice shows only its spacing.
+
+Wix pages often fake a heading with a bold paragraph. In Prismic make
+it a Heading 3. The words stay the same.
+
+### Clinic facts
+
+A clinic's fact sheet, in `src/slices/ClinicFacts`. The layout is the
+fact sheet, How it works, and specialties on the Inner Balance
+mockup. Everything in it comes from the Brand. She picks the clinic
+and writes nothing else, so a fact changed on the Brand changes on
+every clinic page.
+
+| Label | Id | Kind | Required | Mockup |
+| --- | --- | --- | --- | --- |
+| Section | The seven Section fields | Shared, open on the slice | | Heading: The facts. Intro: What I confirmed on their page… |
+| Clinic | `clinic` | Content relationship to Provider | Yes | Inner Balance |
+
+The fact cards, in this order, each with a fixed icon:
+
+| Card | Reads | Shows |
+| --- | --- | --- |
+| Availability | `state_availability` | The text |
+| Typically prescribed | `formulation` | The text |
+| Pre-testing | `lab_requirement` | The text |
+| Insurance | `insurance` | Accepted or Not accepted. Not on a product |
+| HSA / FSA | `hsa_fsa` | Yes, only when it is on |
+| To get started | `note` | The text |
+
+An empty field hides its card. A switch in Prismic is off until she
+turns it on, so an HSA / FSA switch that is off hides the card instead
+of saying No. Insurance follows the comparison chart and says Not
+accepted when it is off. The cards are three across, two from 960
+pixels, and one from 640 pixels.
+
+How it works is the Brand's steps, numbered, three across. A step can
+have a title, text, or both. Specialties they list is the Brand's
+Specialties, one pill per line. Each part is hidden when the Brand has
+none. With a Section Heading, the two part titles are `h3`. Without
+one they are `h2`. A slice whose clinic is not published shows only its
+header.
+
+Facts on the Wix clinic pages that are not on the Brand, such as
+"Voted Best For" and the product price list, are written in a Text
+slice on that page. The provider Hero already shows "Voted best for".
+
+### Pros and cons
+
+Pros beside cons, in `src/slices/ProsAndCons`. `/ishrtforme` uses two
+rows, HRT and BHRT. A review uses one row.
+
+| Label | Id | Kind | Required | `/ishrtforme` |
+| --- | --- | --- | --- | --- |
+| Section | The seven Section fields | Shared, open on the slice | | Heading: Pros and Cons |
+| Pros label | `pros_label` | Text | No | Blank, so Pros |
+| Cons label | `cons_label` | Text | No | Blank, so Cons |
+| Rows | `rows` | Repeatable group | Yes | HRT, then BHRT |
+
+Each row:
+
+| Label | Id | Kind | Required | Example |
+| --- | --- | --- | --- | --- |
+| Title | `title` | Text | No | HRT. Blank when there is one row |
+| Pros | `pros` | Rich text: paragraph, bullet, bold, italic, link | No | FDA Approval, one per line |
+| Cons | `cons` | Rich text: paragraph, bullet, bold, italic, link | No | Cost, one per line |
+
+Each line or bullet is one item. A blank label says Pros or Cons, and
+she can write her own, such as "What I liked". The Pros card is light
+green (`--color-pros`) and the Cons card is white. Pros have a check
+mark and Cons a minus sign, so the side does not depend on color. A row
+with no pros and no cons is hidden. A row with only one side shows
+that card alone. A row title is an `h3` under a Section Heading, and
+the Pros and Cons labels are a level below the row title. The two
+cards stack at 640 pixels.
 
 ## Homepage
 
@@ -588,7 +701,10 @@ posts are the newest in the same category, then the newest in any
 category. The current post is left out. There is no Related posts field.
 
 The card reads these fields from a Post. Minutes to read is calculated
-from the story.
+from the story. The subtitle on a card is at most three lines, on every
+variation, including the large homepage card and the featured card. A
+longer subtitle ends in an ellipsis. The post page still shows the full
+subtitle under the title.
 
 | Label | Id | Kind |
 | --- | --- | --- |
@@ -653,12 +769,15 @@ medical advice."
 ### Side by side
 
 One slice, four variations, in `src/slices/side_by_side`. The homepage
-story is the Image variation with the media on the left. Section holds
-the small heading, the title, and the lead sentence. Buttons sit under
-the writing. Solid is the filled button, such as "Read my whole story."
-Ghost is the quieter text button, with an arrow. A button with no words
-is hidden. A button to an affiliate address, such as an Amazon link,
-gets the affiliate `rel` by the same check as a link in post text.
+story is the Image variation with the media on the left. The small
+heading, the heading, and the intro sit in the writing column, beside
+the media. Intro allows many paragraphs, with bold, italic, and links.
+Enter starts another paragraph. A blank intro is hidden. Text continues
+under the intro in that same column. Buttons sit under the writing.
+Solid is the filled button, such as "Read my whole story." Ghost is the
+quieter text button, with an arrow. A button with no words is hidden. A
+button to an affiliate address, such as an Amazon link, gets the
+affiliate `rel` by the same check as a link in post text.
 
 Side is Media left or Media right. Media left matches the story photo.
 On a narrow screen the media stacks above the writing either way.
@@ -706,8 +825,8 @@ words under the photo. A blank Caption hides the line. Video captions
 stay on the video.
 
 On the Image variation, Quote is optional. A filled Quote is the large
-line at the top of the writing side, above Text, with no box and no
-attribution. The test kits page puts Peggy's photo on the left and
+line in the writing column, under the intro and above Text, with no box
+and no attribution. The test kits page puts Peggy's photo on the left and
 "From “I think something is wrong” to “Here is the evidence of my
 hormonal shift.”" above the intro. On the Quote variation, Quote is
 still the boxed sentence on the media side.
@@ -735,7 +854,8 @@ comparison chart, the clinic price card, a facts token, and any later
 slice that lists `monthly_price` all show that same number. On the
 Links tab, Affiliate (`visit`) is a web link. Review video
 (`youtube`) is a web link. Page (`page`) is a Page document. My review
-(`review`) is a Post. Those are the links a slice reads from the
+(`review`) is a Post. My comparison (`comparison`) is a repeatable
+link to Posts, with display text. Those are the links a slice reads from the
 clinic. Product image (`product`) is
 the jar or
 bottle a slice reads from the clinic. A slice lists the field on its
@@ -748,8 +868,9 @@ clinic relationship, the same way it lists `visit`.
 | Clinic comparison | `clinic` | Name, logo, short description, price, price note, insurance, formulation, quote, getting started, top choice label, visit, code, code line. The review link is on the slice row |
 | Quote | `clinic` | Logo, name, visit. A Name on the slice replaces the clinic name |
 | Side by side, clinic | `clinic` | Logo, name, quote, visit |
-| Boxes | `clinic` on each box | Logo, short description, name, code. A written Image, Heading, Text, or Bottom line replaces it |
-| Brand promo | `clinic` | Name, kind, logo, visit, page, my review, review video, product image, price, price is, price note, formulation, insurance, getting started, code, code line, quote. Page is Products & pricing. My review is her post. Review video is Watch my review. A photo in Overwrite replaces the product image. A written Quote replaces the clinic quote. Is this 1st? and Place stay on the slice. Text and extra links are in Overwrite. Extra links are a second row of text |
+| Boxes | `clinic` on each box | Logo, top choice label, name, code. A written Image, Heading, Text, or Bottom line replaces it |
+| Brand promo | `clinic` | Name, kind, logo, visit, page, my review, my comparison, review video, product image, price, price is, price note, formulation, insurance, getting started, code, code line, quote. Page is Products & pricing. My review is her post. Each My comparison is a button with its display text. Review video is Watch my review. A photo in Overwrite replaces the product image. A written Quote replaces the clinic quote. Is this 1st? and Place stay on the slice. Text and extra links are in Overwrite. Extra links are a second row of text |
+| Clinic facts | `clinic` | Kind, state availability, typically prescribed, labs, insurance, HSA / FSA, getting started, how it works, specialties |
 | Post sidebar | `clinic` | Name, logo. The name links to Page when that field is set |
 | Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, code, code line, plus the sentence in that paragraph |
 | Story facts token | `{{provider:uid:facts}}` | Price, price is, price note, insurance (clinics only), formulation |
@@ -768,10 +889,12 @@ this tab.
 | Top choice label | `top_choice_label` | Text | No |
 
 Short description is the one line about the clinic. The comparison
-chart's Description column reads it, a Boxes box with an empty Heading
-shows it, and so does any other clinic summary that needs a short
-line. A blank Top choice label means no badge. A clinic on the site
-is one Peggy has tried. There is no tested checkbox.
+chart's Description column reads it, and so does any other clinic
+summary that needs a short line. A Boxes box with an empty Heading
+shows the top choice label as its title. A blank Top choice label
+means no badge, and that box has no title unless Heading is written.
+A clinic on the site is one Peggy has tried. There is no tested
+checkbox.
 
 Kind is Clinic or Product. An empty Kind is a clinic. A product has
 no insurance line: the Brand promo price box and the story facts
@@ -781,7 +904,7 @@ field, so a product still appears in every brand picker.
 
 #### Links
 
-The second tab. The four links for this brand.
+The second tab. The five links for this brand.
 
 | Label | Id | Kind | Required |
 | --- | --- | --- | --- |
@@ -789,6 +912,7 @@ The second tab. The four links for this brand.
 | Review video | `youtube` | Web link, no display text | No |
 | Page | `page` | Link to a Page document | No |
 | My review | `review` | Link to a Post | No |
+| My comparison | `comparison` | Repeatable link, with display text. Documents are Posts only | No |
 
 An empty Affiliate link means a name that would go to the clinic's
 site is not a link. The placeholder is "Affiliate link". Affiliate
@@ -800,6 +924,16 @@ link. Page is the site page about this clinic.
 The sidebar name links there when Page is set, and a blank Page leaves
 that name as text. My review is the post where she reviews this brand.
 Brand promo says "My review". A blank My review hides that button.
+My comparison holds her blog posts that compare this brand with
+another. She adds one link per post. Brand promo shows each as a
+button after My review, in editor order, and each button says its
+display text, such as "Musely vs Winona cream". A blank display text
+says "My comparison". An empty link is skipped, and an empty My
+comparison shows no comparison buttons. The field allows any link
+kind, which is the repeatable link the type generator supports. Its
+document picker only lists Posts. A web address gets a button too.
+A brand saved before the field was repeatable has a single link, and
+the site reads it as a list of one.
 
 #### Price
 
@@ -831,7 +965,7 @@ quote.
 
 #### Care
 
-Facts that are not in the price box. A clinic page fact list reads
+Facts that are not in the price box. The Clinic facts slice reads
 this tab.
 
 | Label | Id | Kind |
@@ -839,6 +973,12 @@ this tab.
 | Labs | `lab_requirement` | Text |
 | HSA / FSA | `hsa_fsa` | Boolean |
 | State availability | `state_availability` | Text |
+| Specialties | `specialties` | Rich text: paragraph, bullet. One per line |
+| How it works | `how_it_works` | Repeatable group: Step title (`title`), Step text (`text`), both Text |
+
+Specialties and How it works are the "Specialities" and "How it Works"
+blocks on the Wix clinic pages (owner decision, 2026-10-12: typed once
+on the Brand).
 
 #### Words
 
@@ -958,8 +1098,8 @@ the story.
 
 Minutes to read is not a field. The build counts the words in the
 story, at 250 words a minute, and rounds to the nearest minute. A
-story with any words is at least one minute. A clinic token and
-`{{photos}}` are not counted. Wix tags are the document tags at the top of the post, not a
+story with any words is at least one minute. A clinic token,
+`{{photos}}`, and `{{photo-text}}` are not counted. Wix tags are the document tags at the top of the post, not a
 group on this type. Public `/blog/tags/…` addresses still need a
 disposition in the URL manifest.
 
@@ -981,6 +1121,26 @@ first photo is the same file as Image, move its caption into Caption
 and do not repeat the photo. The cover is not a link. A link Wix had
 on that first photo is not kept (81 posts in the 2026-10-08 export,
 17 of them affiliate links). Approved by the owner on 2026-10-09.
+
+A photo on its own in the story is centered. It is never wider than
+the story column or than the photo file itself, and never taller than
+576 pixels; a photo that would be taller shows narrower, at its own
+shape. In the 2026-10-08 export, 380 of 590 story photos were taller
+than that at full column width on a 1440-pixel laptop, and 94 were
+narrower than the column. Wix also kept a size on each photo (154 were
+set to Small); that setting is not imported, and the cap replaces it.
+Photos in a `{{photos}}` row or beside text keep their own layout.
+Approved by the owner on 2026-10-12.
+
+The paragraph directly under a photo on its own shows as its caption:
+smaller, muted, and centered. The caption is 75% of the story column,
+whatever width the photo is. A heading, a
+list, or a token under the photo is not a caption. Nothing in the
+paragraph changes in Prismic, so this can be undone in the layout
+alone. In the 2026-10-08 export, 13 of 590 story photos had no Wix
+caption and were followed by story text, which now shows as a caption.
+Most of those are lines about the photo ("See my YouTube video…"). To
+keep a sentence as story text, move it above the photo.
 
 | Wix block | Becomes |
 | --- | --- |
@@ -1026,6 +1186,16 @@ Before or After. A photo with no token above it stays full width. One
 photo after the token stays full width, and the token is not shown. A
 heading or another token between the photos ends the row. Import does
 not write the token.
+
+### Photo beside text
+
+A paragraph that is only `{{photo-text}}` places the next photo and the
+one paragraph under it in one block. The photo takes a third of the
+width and the paragraph sits to its right. On a phone the block is one
+column, photo first. A photo with no paragraph under it stays full
+width, and the token is not shown. A token with no photo after it is
+not shown. A heading or another token under the photo is not taken as
+its paragraph. Import does not write the token.
 
 ### Clinic tokens
 
@@ -1147,7 +1317,8 @@ unchanged.
 
 The slice zone accepts every shared slice: Hero, Start here, Posts,
 Clinic comparison, Quote, Side by side, Divider, Boxes, Brand promo,
-and Ribbon. A slice added to the library later is connected to Page too.
+Ribbon, Text, Clinic facts, and Pros and cons. A slice added to the
+library later is connected to Page too.
 
 | Label | Id | Kind | Required | Notes |
 | --- | --- | --- | --- | --- |
@@ -1170,8 +1341,8 @@ The page reads what its slices point at before it renders. A slice does
 not fetch. A clinic a slice names is read from the published Clinic, by
 the fields each slice lists under Provider. An unpublished clinic is
 left out of the chart, and a Quote or Side by side without one shows
-its writing only. A clinic token in Side by side writing reads the same
-fields as a story token. Posts loads every Post only when the page has
+its writing only. A clinic token in Side by side or Text writing reads
+the same fields as a story token. Posts loads every Post only when the page has
 a Posts slice. Featured shows the post it points at, or the newest.
 Grid reads `?page=` and `?category=` from the address. Those addresses
 keep the page's canonical.

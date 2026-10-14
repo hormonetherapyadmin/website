@@ -23,7 +23,8 @@ export type BoxClinic = {
   name: string;
   logo?: { src: string };
   offerCode?: string;
-  shortDescription?: string;
+  /** Top choice label. The box title when Heading is empty. */
+  topChoice?: string;
 };
 
 type BoxItem = {
@@ -43,7 +44,7 @@ type BoxesPrimary = Partial<SliceSectionFields> & {
 type ResolvedBox = {
   logo?: { src: string; alt: string };
   heading?: RichTextField;
-  shortDescription?: string;
+  topChoice?: string;
   text?: RichTextField;
   name?: string;
   bottomLine?: string;
@@ -62,7 +63,7 @@ export function boxesAcross(value: string | null | undefined) {
 
 /**
  * What one box shows. A written field wins. An empty Image, Heading,
- * Text, or Bottom line uses the clinic's logo, short description, name,
+ * Text, or Bottom line uses the clinic's logo, top choice label, name,
  * or code. A box with nothing to show is left out.
  */
 export function resolveBox(
@@ -70,10 +71,10 @@ export function resolveBox(
   clinic: BoxClinic | null | undefined,
 ): ResolvedBox | null {
   const heading = isFilled.richText(box.heading) ? box.heading : undefined;
-  const shortDescription = heading ? undefined : text(clinic?.shortDescription);
+  const topChoice = heading ? undefined : text(clinic?.topChoice);
   const written = isFilled.richText(box.text) ? box.text : undefined;
   const name = written ? undefined : text(clinic?.name);
-  if (!heading && !shortDescription && !written && !name) return null;
+  if (!heading && !topChoice && !written && !name) return null;
 
   const image =
     box.image && isFilled.image(box.image)
@@ -86,7 +87,7 @@ export function resolveBox(
   return {
     logo: image,
     heading,
-    shortDescription,
+    topChoice,
     text: written,
     name,
     bottomLine: text(box.bottom_line) ?? clinic?.offerCode,
@@ -118,8 +119,8 @@ function BoxBody({
           unstyled
           className={styles.heading}
         />
-      ) : box.shortDescription ? (
-        <Heading className={styles.heading}>{box.shortDescription}</Heading>
+      ) : box.topChoice ? (
+        <Heading className={styles.heading}>{box.topChoice}</Heading>
       ) : null}
       {box.text ? (
         <RichText field={box.text} as="p" unstyled className={styles.text} />

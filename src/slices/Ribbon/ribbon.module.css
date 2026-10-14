@@ -115,7 +115,7 @@
 }
 
 .title {
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.6rem;
   font-family: var(--font-heading);
   font-size: clamp(1.7rem, 3vw, 2.2rem);
   font-weight: 500;
@@ -125,7 +125,7 @@
 .content {
   max-width: 38rem;
   font-size: var(--text-body);
-  line-height: var(--text-body--line-height);
+  line-height: 1.5;
 }
 
 .actions {

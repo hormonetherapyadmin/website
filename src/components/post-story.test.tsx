@@ -274,6 +274,97 @@ describe("PostStory clinic tokens", () => {
   });
 });
 
+describe("PostStory photo size", () => {
+  const photo = (width: number, height: number) =>
+    renderToStaticMarkup(
+      <PostStory
+        field={[
+          {
+            type: "image",
+            id: "photo",
+            url: "https://images.prismic.io/1shr96di/photo.jpg?auto=format",
+            alt: "Peggy",
+            copyright: null,
+            dimensions: { width, height },
+            edit: { x: 0, y: 0, zoom: 1, background: "transparent" },
+          },
+        ]}
+      />,
+    );
+
+  it("caps a tall photo by its height", () => {
+    const markup = photo(3000, 4000);
+    expect(markup).toContain("--photo-max-width:432px");
+    expect(markup).toContain('sizes="(min-width: 432px) 432px, 100vw"');
+  });
+
+  it("never shows a small photo wider than its file", () => {
+    const markup = photo(300, 150);
+    expect(markup).toContain("--photo-max-width:300px");
+    expect(markup).toContain('sizes="(min-width: 300px) 300px, 100vw"');
+  });
+
+  it("shows the paragraph under a photo as its caption", () => {
+    const markup = renderToStaticMarkup(
+      <PostStory
+        field={[
+          {
+            type: "image",
+            id: "photo",
+            url: "https://images.prismic.io/1shr96di/photo.jpg?auto=format",
+            alt: "Peggy",
+            copyright: null,
+            dimensions: { width: 800, height: 600 },
+            edit: { x: 0, y: 0, zoom: 1, background: "transparent" },
+          },
+          { type: "paragraph", text: "Napa Valley, 2026.", spans: [] },
+        ]}
+      />,
+    );
+
+    expect(markup).toMatch(
+      /<img [^>]*alt="Peggy"[^>]*\/><figcaption><p>Napa Valley, 2026.<\/p><\/figcaption><\/figure>/,
+    );
+  });
+
+  it("lets a wide photo fill the column", () => {
+    const markup = photo(5616, 1800);
+    expect(markup).toContain("--photo-max-width:1797px");
+    expect(markup).toContain('sizes="(min-width: 60rem) 952px, 100vw"');
+  });
+});
+
+describe("PostStory photo beside text", () => {
+  it("puts the photo and the paragraph under it in one block", () => {
+    const markup = renderToStaticMarkup(
+      <PostStory
+        field={[
+          { type: "paragraph", text: "{{photo-text}}", spans: [] },
+          {
+            type: "image",
+            id: "photo",
+            url: "https://images.prismic.io/1shr96di/photo.jpg?auto=format",
+            alt: "Peggy",
+            copyright: null,
+            dimensions: { width: 800, height: 1000 },
+            edit: { x: 0, y: 0, zoom: 1, background: "transparent" },
+          },
+          {
+            type: "paragraph",
+            text: "The week I started.",
+            spans: [{ start: 4, end: 8, type: "strong" }],
+          },
+        ]}
+      />,
+    );
+
+    expect(markup).toMatch(
+      /<div class="[^"]*photoText[^"]*"><figure><img [^>]*alt="Peggy"[^>]*\/><\/figure><div><p>The <strong>week<\/strong> I started.<\/p><\/div><\/div>/,
+    );
+    expect(markup).not.toContain("{{photo-text}}");
+  });
+});
+
 describe("PostStory links", () => {
   const anchor = (markup: string, href: string) =>
     markup.match(new RegExp(`<a [^>]*href="${href}"[^>]*>`))?.[0] ?? "";

@@ -178,6 +178,34 @@ describe("PageSliceZone", () => {
     expect(html).toContain("Watch my review");
   });
 
+  it("drops the bottom rule on the last brand promo in a run", () => {
+    const promo = (id: string, heading: string) => ({
+      ...slice("brand_promo", {
+        ...section(heading),
+        clinic: clinicLink,
+        first: false,
+        overwrite: [],
+      }),
+      id,
+    });
+    const html = render([
+      promo("promo-1", "No pre-testing"),
+      promo("promo-2", "Most comprehensive testing"),
+      slice("divider", {
+        line: "Squiggly",
+        color: "Accent",
+        background: "Transparent",
+        space_above: "None",
+        space_below: "None",
+      }),
+    ]);
+    const layouts = html.match(/<div class="[^"]*layout[^"]*"[^>]*>/g) ?? [];
+
+    expect(layouts).toHaveLength(2);
+    expect(layouts[0]).not.toContain("data-last");
+    expect(layouts[1]).toContain("data-last");
+  });
+
   it("shows the posts the page loaded", () => {
     const html = render(
       [slice("posts", { ...section("Keep reading"), category: "All" }, "row")],

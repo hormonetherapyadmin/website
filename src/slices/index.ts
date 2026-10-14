@@ -3,23 +3,29 @@
 import Boxes from "./boxes";
 import BrandPromo from "./BrandPromo";
 import ClinicComparison from "./clinic_comparison";
+import ClinicFacts from "./ClinicFacts";
 import Divider from "./divider";
 import Hero from "./hero";
 import Posts from "./posts";
+import ProsAndCons from "./ProsAndCons";
 import Quote from "./quote";
 import Ribbon from "./Ribbon";
 import SideBySide from "./side_by_side";
 import StartHere from "./start_here";
+import Text from "./Text";
 
 export const components = {
   boxes: Boxes,
   brand_promo: BrandPromo,
   clinic_comparison: ClinicComparison,
+  clinic_facts: ClinicFacts,
   divider: Divider,
   hero: Hero,
   posts: Posts,
+  pros_cons: ProsAndCons,
   quote: Quote,
   ribbon: Ribbon,
   side_by_side: SideBySide,
   start_here: StartHere,
+  text: Text,
 };

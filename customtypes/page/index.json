@@ -41,6 +41,15 @@
             },
             "ribbon": {
               "type": "SharedSlice"
+            },
+            "text": {
+              "type": "SharedSlice"
+            },
+            "clinic_facts": {
+              "type": "SharedSlice"
+            },
+            "pros_cons": {
+              "type": "SharedSlice"
             }
           }
         },

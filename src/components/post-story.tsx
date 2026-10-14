@@ -17,7 +17,7 @@ import {
   type RichTextComponents,
 } from "@prismicio/react";
 import Image from "next/image";
-import { isValidElement, type ReactNode } from "react";
+import { isValidElement, type CSSProperties, type ReactNode } from "react";
 import {
   parseProviderToken,
   type ProviderToken,
@@ -189,6 +189,53 @@ function StoryImage({
   return picture;
 }
 
+/** The tallest a story photo is shown, in CSS pixels. */
+const PHOTO_MAX_HEIGHT = 576;
+/** The story column at its widest, beside the sidebar (88rem − 24rem − 4.5rem). */
+const STORY_COLUMN_MAX = 952;
+
+/** A photo is never wider than its file, nor taller than PHOTO_MAX_HEIGHT. */
+function photoMaxWidth(image: PhotoCell["image"]) {
+  const width = image.dimensions?.width;
+  const height = image.dimensions?.height;
+  if (!width || !height) return null;
+  return Math.round(Math.min(width, (PHOTO_MAX_HEIGHT * width) / height));
+}
+
+function StoryPhoto({
+  image,
+  caption,
+  sourceId,
+}: {
+  image: PhotoCell["image"];
+  caption?: RichTextField | null;
+  sourceId?: (number: string) => string;
+}) {
+  const max = photoMaxWidth(image);
+  const sizes =
+    max === null || max >= STORY_COLUMN_MAX
+      ? `(min-width: 60rem) ${STORY_COLUMN_MAX}px, 100vw`
+      : `(min-width: ${max}px) ${max}px, 100vw`;
+
+  return (
+    <figure
+      className={styles.storyPhoto}
+      style={
+        max === null
+          ? undefined
+          : ({ "--photo-max-width": `${max}px` } as CSSProperties)
+      }
+    >
+      <StoryImage image={image} sizes={sizes} />
+      {caption && sourceId ? (
+        <figcaption>
+          <PhotoCaption field={caption} sourceId={sourceId} />
+        </figcaption>
+      ) : null}
+    </figure>
+  );
+}
+
 function PhotoCaption({
   field,
   sourceId,
@@ -229,7 +276,7 @@ function PhotoRow({
         <div key={cell.image.url ?? index}>
           <StoryImage
             image={cell.image}
-            sizes="(max-width: 640px) 50vw, 340px"
+            sizes="(min-width: 60rem) 468px, 50vw"
           />
           {cell.caption ? (
             <PhotoCaption field={cell.caption} sourceId={sourceId} />
@@ -237,6 +284,30 @@ function PhotoRow({
         </div>
       ))}
     </figure>
+  );
+}
+
+function PhotoText({
+  image,
+  text,
+  sourceId,
+}: {
+  image: PhotoCell["image"];
+  text: RichTextField;
+  sourceId: (number: string) => string;
+}) {
+  return (
+    <div className={styles.photoText}>
+      <figure>
+        <StoryImage
+          image={image}
+          sizes="(max-width: 640px) 100vw, (min-width: 60rem) 314px, 33vw"
+        />
+      </figure>
+      <div>
+        <PhotoCaption field={text} sourceId={sourceId} />
+      </div>
+    </div>
   );
 }
 
@@ -464,11 +535,7 @@ function RichChunk({
         {children}
       </StoryLabel>
     ),
-    image: ({ node }) => (
-      <figure>
-        <StoryImage image={node} sizes="(min-width: 60rem) 42rem, 100vw" />
-      </figure>
-    ),
+    image: ({ node }) => <StoryPhoto image={node} />,
     embed: ({ node }) => <StoryEmbed oembed={node.oembed} />,
   };
 
@@ -535,8 +602,30 @@ export function PostStory({
       );
     }
 
+    if (segment.kind === "photo") {
+      return (
+        <StoryPhoto
+          key={index}
+          image={segment.image}
+          caption={segment.caption}
+          sourceId={sourceId}
+        />
+      );
+    }
+
     if (segment.kind === "photos") {
       return <PhotoRow key={index} cells={segment.cells} sourceId={sourceId} />;
+    }
+
+    if (segment.kind === "photoText") {
+      return (
+        <PhotoText
+          key={index}
+          image={segment.image}
+          text={segment.text}
+          sourceId={sourceId}
+        />
+      );
     }
 
     if (segment.kind === "sources") {

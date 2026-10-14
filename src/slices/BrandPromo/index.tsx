@@ -22,6 +22,9 @@ import { visitLinkProps } from "@/lib/affiliate-link";
 import { youtubeVideo } from "@/lib/youtube";
 import styles from "./brand-promo.module.css";
 
+/** One comparison post. Blank text reads My comparison. */
+export type BrandPromoComparison = { href: string; text?: string };
+
 /** The clinic this card points at. The page reads it off the Provider. */
 export type BrandPromoClinic = {
   uid: string;
@@ -47,6 +50,8 @@ export type BrandPromoClinic = {
   pageHref?: string;
   /** Her review post. The card labels it My review. */
   reviewHref?: string;
+  /** Her comparison posts. Each is a button labeled with its display text. */
+  comparisons?: readonly BrandPromoComparison[];
   /** The review video. The card labels it Watch my review. */
   reviewVideoHref?: string;
   /** The brand's product photo, used when this slice has none. */
@@ -83,6 +88,7 @@ function cardOverwrite(primary: BrandPromoPrimary): BrandPromoOverwrite {
 
 const PRODUCTS_LABEL = "Products & pricing";
 const REVIEW_LABEL = "My review";
+const COMPARISON_LABEL = "My comparison";
 const WATCH_LABEL = "Watch my review";
 /** The video modal heading. The brand logo and name follow it. */
 const VIDEO_TITLE = "My review on";
@@ -96,31 +102,58 @@ function isVideoUrl(href: string) {
   return /youtu\.?be|vimeo/i.test(href);
 }
 
+type BrandPromoIcon = "page" | "review" | "comparison" | "video";
+
 export type BrandPromoLink = {
   href: string;
   text: string;
   external: boolean;
+  /** Brand buttons only. Slice links have no icon. */
+  icon?: BrandPromoIcon;
 };
 
 /**
  * Products & pricing is the brand's page. My review is her post.
- * Watch my review is the review video.
+ * Each comparison is one of her comparison posts, labeled with its
+ * display text. Watch my review is the review video.
  */
 export function brandPromoLinks(
   clinic?: Pick<
     BrandPromoClinic,
-    "pageHref" | "reviewHref" | "reviewVideoHref"
+    "pageHref" | "reviewHref" | "comparisons" | "reviewVideoHref"
   > | null,
 ): BrandPromoLink[] {
   const page = text(clinic?.pageHref);
   const review = text(clinic?.reviewHref);
   const video = text(clinic?.reviewVideoHref);
+  const comparisons = (clinic?.comparisons ?? []).flatMap(
+    (comparison): BrandPromoLink[] => {
+      const href = text(comparison.href);
+      if (!href) return [];
+      return [
+        {
+          href,
+          text: text(comparison.text) ?? COMPARISON_LABEL,
+          external: false,
+          icon: "comparison",
+        },
+      ];
+    },
+  );
+  const links: (BrandPromoLink | undefined)[] = [
+    page
+      ? { href: page, text: PRODUCTS_LABEL, external: false, icon: "page" }
+      : undefined,
+    review
+      ? { href: review, text: REVIEW_LABEL, external: false, icon: "review" }
+      : undefined,
+    ...comparisons,
+    video
+      ? { href: video, text: WATCH_LABEL, external: true, icon: "video" }
+      : undefined,
+  ];
 
-  return [
-    page ? { href: page, text: PRODUCTS_LABEL, external: false } : undefined,
-    review ? { href: review, text: REVIEW_LABEL, external: false } : undefined,
-    video ? { href: video, text: WATCH_LABEL, external: true } : undefined,
-  ].filter((link): link is BrandPromoLink => link !== undefined);
+  return links.filter((link): link is BrandPromoLink => link !== undefined);
 }
 
 /** Links written on the slice. They sit on a second row under the brand buttons. */
@@ -255,8 +288,27 @@ function FactIcon({ kind }: { kind: "formulation" | "yes" | "no" }) {
   );
 }
 
-function ResourceIcon({ url, label }: { url: string; label: string }) {
-  if (label === REVIEW_LABEL) {
+function ResourceIcon({ url, icon }: { url: string; icon?: BrandPromoIcon }) {
+  if (icon === "comparison") {
+    return (
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M4 8h15M15 4l4 4-4 4" />
+        <path d="M20 16H5M9 12l-4 4 4 4" />
+      </svg>
+    );
+  }
+
+  if (icon === "review") {
     return (
       <svg
         width="16"
@@ -274,7 +326,7 @@ function ResourceIcon({ url, label }: { url: string; label: string }) {
     );
   }
 
-  if (isVideoUrl(url) || label === WATCH_LABEL) {
+  if (isVideoUrl(url) || icon === "video") {
     return (
       <svg
         width="16"
@@ -323,20 +375,25 @@ function Media({ field, sizes }: { field: ImageField; sizes: string }) {
  * Overwrite. Leave that group off and the card uses the brand.
  * A blank Small heading reads "Voted best for".
  * The price, logo, visit link, and coupon come from the clinic.
- * Products & pricing is the brand's page. My review is her post.
+ * Products & pricing is the brand's page. My review is her post. Each
+ * comparison post is a button, labeled with its display text.
  * Watch my review is the review video, and a YouTube link plays in the
  * video modal. Links written here sit under those buttons.
- * The product photo is the brand's, unless one is placed here.
+ * The product photo is the brand's, unless one is placed here. When
+ * the clinic has an affiliate link, that photo opens it.
  */
 export function BrandPromo({
   primary,
   clinic,
   followingSpaceAbove,
+  last = false,
 }: {
   primary: BrandPromoPrimary;
   clinic?: BrandPromoClinic | null;
   /** Space above on the next slice. False means this card is last. */
   followingSpaceAbove?: string | null | false;
+  /** The next slice is not a Brand promo. The last card draws no bottom rule. */
+  last?: boolean;
 }) {
   const labelId = useId();
   const name = text(clinic?.name);
@@ -379,6 +436,8 @@ export function BrandPromo({
     codeNote,
   );
   const showProduct = Boolean(product);
+  const productSizes =
+    written.layout === "Stacked" ? "(max-width: 440px) 100vw, 26rem" : "216px";
 
   return (
     <SliceSection
@@ -392,6 +451,7 @@ export function BrandPromo({
         className={styles.layout}
         data-tone={tone}
         data-layout={written.layout === "Stacked" ? "stacked" : undefined}
+        data-last={last ? "" : undefined}
       >
         <div className={styles.copy}>
           {primary.first ? (
@@ -480,7 +540,7 @@ export function BrandPromo({
                         name ? { name, logo: clinic?.logo?.src } : undefined
                       }
                     >
-                      <ResourceIcon url={link.href} label={link.text} />
+                      <ResourceIcon url={link.href} icon={link.icon} />
                       {link.text}
                       {name ? <span className="sr-only"> — {name}</span> : null}
                     </VideoLink>
@@ -491,7 +551,7 @@ export function BrandPromo({
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
                     >
-                      <ResourceIcon url={link.href} label={link.text} />
+                      <ResourceIcon url={link.href} icon={link.icon} />
                       {link.text}
                       {name ? <span className="sr-only"> — {name}</span> : null}
                       {link.external ? (
@@ -537,14 +597,22 @@ export function BrandPromo({
           <div className={styles.offer}>
             {product ? (
               <figure className={styles.product}>
-                <Media
-                  field={product}
-                  sizes={
-                    written.layout === "Stacked"
-                      ? "(max-width: 440px) 100vw, 26rem"
-                      : "216px"
-                  }
-                />
+                {clinic?.visitHref ? (
+                  <a
+                    href={clinic.visitHref}
+                    className={styles.productLink}
+                    {...visitLinkProps(name ?? "", "brand_promo")}
+                  >
+                    <Media field={product} sizes={productSizes} />
+                    <span className="sr-only">
+                      {text(product.alt)
+                        ? " (affiliate link, opens in a new tab)"
+                        : ` ${name ? `Visit ${name}` : "Visit"} (affiliate link, opens in a new tab)`}
+                    </span>
+                  </a>
+                ) : (
+                  <Media field={product} sizes={productSizes} />
+                )}
               </figure>
             ) : null}
             {showDeal ? (

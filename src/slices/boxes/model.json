@@ -93,7 +93,7 @@
                 "config": {
                   "customtypes": [
                     {
-                      "fields": ["name", "logo", "code", "short_description"],
+                      "fields": ["name", "logo", "code", "top_choice_label"],
                       "id": "provider"
                     }
                   ],
@@ -114,7 +114,7 @@
                   "allowTargetBlank": true,
                   "label": "Heading",
                   "labels": ["superscript"],
-                  "placeholder": "Empty uses the clinic short description, such as Improved sleep",
+                  "placeholder": "Empty uses the clinic top choice label, such as No appointment required",
                   "single": "paragraph,strong,em,hyperlink"
                 },
                 "type": "StructuredText"

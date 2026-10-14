@@ -87,6 +87,16 @@ const winona: BrandPromoClinic = {
   offerCopy: "15% off your first order",
   pageHref: "/winona-review-page",
   reviewHref: "/post/winona-bioidentical-hormone-therapy-review",
+  comparisons: [
+    {
+      href: "/post/musely-estrogen-cream-vs-winona-which-hrt-cream-wins",
+      text: "Musely vs Winona cream",
+    },
+    {
+      href: "/post/winona-vs-alloy-hormone-replacement-side-by-side-comparison",
+      text: "Winona vs Alloy",
+    },
+  ],
   reviewVideoHref: "https://youtu.be/XZD4yvTKScA",
   product: image("/mockup/products/image.png", "Winona treatment jar"),
   quote:
@@ -162,6 +172,7 @@ export default function BrandPromoPreview() {
           first: false,
         }}
         clinic={joi}
+        last
       />
     </>
   );

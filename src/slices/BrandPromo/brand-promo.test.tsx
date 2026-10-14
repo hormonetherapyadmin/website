@@ -6,6 +6,7 @@ import type { SliceSectionFields } from "@/components/slice-section";
 import {
   BrandPromo,
   brandPromoExtraLinks,
+  brandPromoLinks,
   brandPromoProduct,
   brandPromoQuote,
   brandPromoTone,
@@ -227,6 +228,7 @@ describe("BrandPromo", () => {
     expect(html).toContain("Watch my review");
     expect(html).toContain('alt="Oestra cream jar"');
     expect(html).not.toContain("Visit");
+    expect(html).not.toMatch(/<a [^>]*>\s*<img [^>]*alt="Oestra cream jar"/);
   });
 
   it("puts brand buttons first and slice links on the next row", () => {
@@ -268,6 +270,46 @@ describe("BrandPromo", () => {
     );
   });
 
+  it("shows each of the brand's comparisons as a button after My review", () => {
+    const html = render(
+      { ...section() },
+      {
+        ...clinic,
+        reviewHref: "/post/musely-estrogen-boost-review",
+        comparisons: [
+          { href: "/post/musely-vs-winona", text: "Musely vs Winona cream" },
+          { href: "/post/alloy-vs-musely", text: "Alloy vs Musely" },
+        ],
+        reviewVideoHref: "https://youtu.be/_OlA4wXOHdQ",
+      },
+    );
+
+    expect(html).toContain('href="/post/musely-vs-winona"');
+    expect(html).toContain('href="/post/alloy-vs-musely"');
+    expect(html.indexOf("My review")).toBeLessThan(
+      html.indexOf("Musely vs Winona cream"),
+    );
+    expect(html.indexOf("Musely vs Winona cream")).toBeLessThan(
+      html.indexOf("Alloy vs Musely"),
+    );
+    expect(html.indexOf("Alloy vs Musely")).toBeLessThan(
+      html.indexOf("Watch my review"),
+    );
+    expect(
+      brandPromoLinks({
+        comparisons: [{ href: "/post/musely-vs-winona" }, { href: " " }],
+      }),
+    ).toEqual([
+      {
+        href: "/post/musely-vs-winona",
+        text: "My comparison",
+        external: false,
+        icon: "comparison",
+      },
+    ]);
+    expect(render({ ...section() }, clinic)).not.toContain("My comparison");
+  });
+
   it("keeps a slice link when the brand has no page or video", () => {
     expect(
       brandPromoExtraLinks([
@@ -304,6 +346,18 @@ describe("BrandPromo", () => {
       },
     );
     expect(fallback).toContain('alt="Winona treatment jar"');
+    expect(fallback).toMatch(
+      /<a [^>]*href="https:\/\/example\.com\/inner-balance\?ref=peggy"[^>]*data-placement="brand_promo"[^>]*>\s*<img [^>]*alt="Winona treatment jar"[^>]*>\s*<span class="sr-only"> \(affiliate link, opens in a new tab\)/,
+    );
+
+    const unlinked = render(
+      { ...section(), ...written({ product: brand }) },
+      { ...clinic, visitHref: undefined, product: brand },
+    );
+    expect(unlinked).toContain('alt="Winona treatment jar"');
+    expect(unlinked).not.toMatch(
+      /<a [^>]*>\s*<img [^>]*alt="Winona treatment jar"/,
+    );
 
     const override = render(
       { ...section(), ...written({ product: placed }) },
