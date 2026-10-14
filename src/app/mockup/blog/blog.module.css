@@ -378,12 +378,25 @@
 }
 
 .body .storyPhoto {
+  width: 100%;
+  margin-inline: auto;
+}
+
+/* The photo keeps its own width. The caption is 75% of the column. */
+.body .storyPhoto > a,
+.body .storyPhoto > img {
   width: min(100%, var(--photo-max-width, 100%));
   margin-inline: auto;
 }
 
 .storyPhoto > a {
   display: block;
+}
+
+.body .storyPhoto figcaption {
+  width: 75%;
+  margin-inline: auto;
+  text-align: center;
 }
 
 .body .storyPhoto figcaption p {

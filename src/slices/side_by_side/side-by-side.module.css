@@ -1,6 +1,9 @@
 .head {
-  max-width: 44rem;
-  margin-bottom: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 0;
+}
+
+.copy > .head:not(:last-child) {
+  margin-bottom: 1.5rem;
 }
 
 .kicker {
@@ -24,12 +27,21 @@
   line-height: 1.5;
 }
 
+.head > :first-child {
+  margin-top: 0;
+}
+
 .grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   grid-template-areas: "media copy";
   align-items: center;
   gap: 2.5rem clamp(2.5rem, 6vw, 6rem);
+}
+
+.grid[data-media="false"] {
+  grid-template-columns: minmax(0, 38rem);
+  grid-template-areas: "copy";
 }
 
 .grid[data-side="right"] {

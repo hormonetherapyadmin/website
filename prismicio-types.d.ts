@@ -3918,7 +3918,7 @@ export interface SideBySideSliceImagePrimary {
    * Intro field in *Side by side → Image → Primary*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
+   * - **Placeholder**: Press enter for another paragraph. Leave blank to hide it.
    * - **API ID Path**: side_by_side.image.primary.intro
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
@@ -4116,7 +4116,7 @@ export interface SideBySideSliceVideoPrimary {
    * Intro field in *Side by side → Video → Primary*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
+   * - **Placeholder**: Press enter for another paragraph. Leave blank to hide it.
    * - **API ID Path**: side_by_side.video.primary.intro
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
@@ -4293,7 +4293,7 @@ export interface SideBySideSliceQuotePrimary {
    * Intro field in *Side by side → Quote → Primary*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
+   * - **Placeholder**: Press enter for another paragraph. Leave blank to hide it.
    * - **API ID Path**: side_by_side.quote.primary.intro
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
@@ -4470,7 +4470,7 @@ export interface SideBySideSliceClinicPrimary {
    * Intro field in *Side by side → Clinic → Primary*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
+   * - **Placeholder**: Press enter for another paragraph. Leave blank to hide it.
    * - **API ID Path**: side_by_side.clinic.primary.intro
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */

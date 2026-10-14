@@ -75,7 +75,9 @@ open, and puts Small heading, Intro, and Link in Overwrite.
 
 Small heading, Heading, Intro, and Link are the header. The link sits on
 the heading's row, as "All posts" does. When all four are empty, the
-slice has no header.
+slice has no header. Side by side is the exception: its Intro allows
+many paragraphs, and that header sits in the writing column beside the
+media. See Side by side.
 
 The Hero slice renders Heading as the page title (`h1`). Every other
 slice renders it as a section heading (`h2`). A card title is an `h3`.
@@ -141,7 +143,7 @@ Two toolbars share the component:
 
 | Preset | Allows | Used for |
 | --- | --- | --- |
-| Heading | One block: paragraph, bold, italic, link | Titles, intros, quotes, captions, eyebrows |
+| Heading | One block: paragraph, bold, italic, link | Titles, intros, quotes, captions, eyebrows. Side by side Intro allows many paragraphs |
 | Content | Many blocks: Heading 2, Heading 3, Heading 4, paragraphs, bold, italic, links, lists, image, video embed, labels | Story body and post body |
 
 Heading 1 is not on the content toolbar. The slice chooses the heading
@@ -515,7 +517,8 @@ Each row:
 | Cons | `cons` | Rich text: paragraph, bullet, bold, italic, link | No | Cost, one per line |
 
 Each line or bullet is one item. A blank label says Pros or Cons, and
-she can write her own, such as "What I liked". Pros have a check
+she can write her own, such as "What I liked". The Pros card is light
+green (`--color-pros`) and the Cons card is white. Pros have a check
 mark and Cons a minus sign, so the side does not depend on color. A row
 with no pros and no cons is hidden. A row with only one side shows
 that card alone. A row title is an `h3` under a Section Heading, and
@@ -766,12 +769,15 @@ medical advice."
 ### Side by side
 
 One slice, four variations, in `src/slices/side_by_side`. The homepage
-story is the Image variation with the media on the left. Section holds
-the small heading, the title, and the lead sentence. Buttons sit under
-the writing. Solid is the filled button, such as "Read my whole story."
-Ghost is the quieter text button, with an arrow. A button with no words
-is hidden. A button to an affiliate address, such as an Amazon link,
-gets the affiliate `rel` by the same check as a link in post text.
+story is the Image variation with the media on the left. The small
+heading, the heading, and the intro sit in the writing column, beside
+the media. Intro allows many paragraphs, with bold, italic, and links.
+Enter starts another paragraph. A blank intro is hidden. Text continues
+under the intro in that same column. Buttons sit under the writing.
+Solid is the filled button, such as "Read my whole story." Ghost is the
+quieter text button, with an arrow. A button with no words is hidden. A
+button to an affiliate address, such as an Amazon link, gets the
+affiliate `rel` by the same check as a link in post text.
 
 Side is Media left or Media right. Media left matches the story photo.
 On a narrow screen the media stacks above the writing either way.
@@ -819,8 +825,8 @@ words under the photo. A blank Caption hides the line. Video captions
 stay on the video.
 
 On the Image variation, Quote is optional. A filled Quote is the large
-line at the top of the writing side, above Text, with no box and no
-attribution. The test kits page puts Peggy's photo on the left and
+line in the writing column, under the intro and above Text, with no box
+and no attribution. The test kits page puts Peggy's photo on the left and
 "From “I think something is wrong” to “Here is the evidence of my
 hormonal shift.”" above the intro. On the Quote variation, Quote is
 still the boxed sentence on the media side.
@@ -1127,7 +1133,8 @@ Photos in a `{{photos}}` row or beside text keep their own layout.
 Approved by the owner on 2026-10-12.
 
 The paragraph directly under a photo on its own shows as its caption:
-smaller, muted, centered, and no wider than the photo. A heading, a
+smaller, muted, and centered. The caption is 75% of the story column,
+whatever width the photo is. A heading, a
 list, or a token under the photo is not a caption. Nothing in the
 paragraph changes in Prismic, so this can be undone in the layout
 alone. In the 2026-10-08 export, 13 of 590 story photos had no Wix

@@ -277,35 +277,55 @@ export function SideBySide({
   const showQuote = layout === "quote" && isFilled.richText(primary.quote);
   const showStatement = layout === "image" && isFilled.richText(primary.quote);
   const showClinic = layout === "clinic" && Boolean(clinic?.name);
+  const hasMedia = showImage || showVideo || showQuote || showClinic;
+  const showHead =
+    isFilled.richText(primary.small_heading) ||
+    isFilled.richText(heading) ||
+    isFilled.richText(primary.intro);
 
   return (
     <SliceSection section={primary} showHeader={false} labelId={titleId}>
-      <header className={styles.head}>
-        <RichText
-          field={primary.small_heading}
-          as="p"
-          unstyled
-          className={styles.kicker}
-        />
-        <RichText
-          field={heading}
-          as="h2"
-          id={titleId}
-          unstyled
-          className={styles.heading}
-        />
-        <RichText
-          field={primary.intro}
-          as="p"
-          unstyled
-          className={styles.lead}
-        />
-      </header>
       <div
         className={styles.grid}
         data-side={side === "Media right" ? "right" : "left"}
         data-position={position.toLowerCase()}
+        data-media={hasMedia ? "true" : "false"}
       >
+        <div className={styles.copy}>
+          {showHead ? (
+            <header className={styles.head}>
+              <RichText
+                field={primary.small_heading}
+                as="p"
+                unstyled
+                className={styles.kicker}
+              />
+              <RichText
+                field={heading}
+                as="h2"
+                id={titleId}
+                unstyled
+                className={styles.heading}
+              />
+              <RichText
+                field={primary.intro}
+                as="p"
+                unstyled
+                className={styles.lead}
+              />
+            </header>
+          ) : null}
+          {showStatement ? (
+            <RichText
+              field={primary.quote}
+              as="p"
+              unstyled
+              className={styles.statement}
+            />
+          ) : null}
+          <Content field={primary.text} clinics={clinics} tokens={tokens} />
+          <Buttons fields={primary.button} />
+        </div>
         {showImage ? (
           <MediaFigure
             caption={primary.caption}
@@ -335,18 +355,6 @@ export function SideBySide({
           </blockquote>
         ) : null}
         {showClinic && clinic ? <ClinicCard clinic={clinic} /> : null}
-        <div className={styles.copy}>
-          {showStatement ? (
-            <RichText
-              field={primary.quote}
-              as="p"
-              unstyled
-              className={styles.statement}
-            />
-          ) : null}
-          <Content field={primary.text} clinics={clinics} tokens={tokens} />
-          <Buttons fields={primary.button} />
-        </div>
       </div>
     </SliceSection>
   );
