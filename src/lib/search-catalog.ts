@@ -1,6 +1,7 @@
-import { createClient } from "@/prismicio";
+import { loadHomepage } from "@/lib/homepage";
 import { heroClinicId } from "@/lib/page-title";
 import { pageSearchHit, postSearchHit, type SearchHit } from "@/lib/search";
+import { createClient } from "@/prismicio";
 import type { ProviderDocument } from "../../prismicio-types";
 
 type Client = ReturnType<typeof createClient>;
@@ -28,16 +29,26 @@ export async function loadHeroClinicNames(
   );
 }
 
-/** Published pages and posts that are still set to Index. */
+/** Published homepage, pages, and posts that are still set to Index. */
 export async function loadSearchCatalog(): Promise<SearchHit[]> {
   const client = createClient();
-  const [pages, posts] = await Promise.all([
+  const [pages, posts, homepage] = await Promise.all([
     client.getAllByType("page"),
     client.getAllByType("post"),
+    loadHomepage(),
   ]);
-  const clinicNames = await loadHeroClinicNames(client, pages);
+  const clinicNames = await loadHeroClinicNames(
+    client,
+    homepage ? [homepage, ...pages] : pages,
+  );
+
+  const homeId = homepage ? heroClinicId(homepage.data.slices) : undefined;
+  const home = homepage
+    ? pageSearchHit(homepage, homeId && clinicNames.get(homeId))
+    : null;
 
   return [
+    ...(home ? [home] : []),
     ...pages.flatMap((page) => {
       const id = heroClinicId(page.data.slices);
       const hit = pageSearchHit(page, id && clinicNames.get(id));

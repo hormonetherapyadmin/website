@@ -38,14 +38,6 @@
           },
           "type": "StructuredText"
         },
-        "link": {
-          "config": {
-            "allowTargetBlank": true,
-            "allowText": true,
-            "label": "Link"
-          },
-          "type": "Link"
-        },
         "background": {
           "config": {
             "default_value": "Transparent",

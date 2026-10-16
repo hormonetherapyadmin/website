@@ -175,15 +175,14 @@ export function selectPosts(
 
 /**
  * Which post the grid leaves out, and whether this grid draws the
- * feature itself. A category tab shows every post in that category.
+ * feature itself. A category tab keeps that post out of the list too.
  */
 export function gridFeature(options: {
   hideFeatured: boolean | null | undefined;
   pageFeaturedHref?: string | null;
   newestHref?: string;
-  filtering: boolean;
 }) {
-  if (options.filtering || options.hideFeatured === false) {
+  if (options.hideFeatured === false) {
     return { showInline: false as const };
   }
 
@@ -485,7 +484,6 @@ export function Posts({
       ? choice(activeCategory, POST_CATEGORY_OPTIONS, "All")
       : locked;
 
-  const filtering = locked === "All" && viewing !== "All";
   const newest =
     layout === "grid"
       ? selectPosts(posts, {
@@ -499,14 +497,13 @@ export function Posts({
           hideFeatured: primary.hide_featured,
           pageFeaturedHref,
           newestHref: newest?.href,
-          filtering,
         })
       : { showInline: false as const };
   const pinned = layout === "featured" && featured ? featured : null;
   const selected = pinned
     ? { items: [pinned], total: 1, page: 1, pages: 1 }
     : selectPosts(posts, {
-        category: viewing,
+        category: layout === "featured" ? locked : viewing,
         limit: limitFor(layout, primary.count),
         page: layout === "grid" ? page : 1,
         skipHref:

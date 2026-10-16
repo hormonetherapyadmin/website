@@ -174,10 +174,10 @@ filter.
 
 ## Sitemap
 
-`/sitemap.xml` lists the canonical URL of every published Page and Post
-still set to Index, plus the HTML sitemap at `/sitemap`. It leaves out
-`/search`, mockup routes, and the homepage while `/` is still the
-placeholder. `lastmod` is that document's last publication time in
+`/sitemap.xml` lists the canonical URL of the published Homepage and
+every published Page and Post still set to Index, plus the HTML sitemap
+at `/sitemap`. It leaves out `/search` and mockup routes. `lastmod` is
+that document's last publication time in
 Prismic, when one exists. The page at `/sitemap` is built in the app,
 not stored in Prismic, and it also links Home. When indexing is on,
 `robots.txt` points at `/sitemap.xml`.

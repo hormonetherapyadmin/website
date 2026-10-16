@@ -126,7 +126,6 @@ describe("Ribbon", () => {
     const html = render({
       ...section({
         heading: rich("Before you go"),
-        link: button("All clinics", "/providers"),
       }),
       layout: "Centered",
       title: rich("Still lining the prices up?"),
@@ -135,7 +134,6 @@ describe("Ribbon", () => {
     });
 
     const heading = html.indexOf("Before you go");
-    const sectionLink = html.indexOf("All clinics");
     const title = html.indexOf("Still lining the prices up?");
     const chart = html.indexOf("Open the price chart");
 
@@ -143,8 +141,7 @@ describe("Ribbon", () => {
     expect(html).toContain("text-center");
     expect(html).not.toContain("justify-between");
     expect(heading).toBeGreaterThan(-1);
-    expect(sectionLink).toBeGreaterThan(heading);
-    expect(title).toBeGreaterThan(sectionLink);
+    expect(title).toBeGreaterThan(heading);
     expect(chart).toBeGreaterThan(title);
   });
 

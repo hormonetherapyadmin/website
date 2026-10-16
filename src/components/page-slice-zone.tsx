@@ -16,12 +16,7 @@ import { ClinicComparison } from "@/slices/clinic_comparison";
 import { ClinicFacts } from "@/slices/ClinicFacts";
 import { Divider } from "@/slices/divider";
 import { Hero, type HeroSlice as HeroProps } from "@/slices/hero";
-import {
-  featuredPostHref,
-  POST_CATEGORY_OPTIONS,
-  Posts,
-  type PostCardData,
-} from "@/slices/posts";
+import { featuredPostHref, Posts, type PostCardData } from "@/slices/posts";
 import { ProsAndCons } from "@/slices/ProsAndCons";
 import { Quote } from "@/slices/quote";
 import { Ribbon } from "@/slices/Ribbon";
@@ -128,12 +123,6 @@ function StartHereAdapter({ slice }: Props<StartHereSlice>) {
   return <StartHere primary={slice.primary} />;
 }
 
-function visitorCategory(value: string | null | undefined) {
-  return POST_CATEGORY_OPTIONS.find(
-    (option) => option !== "All" && option === value,
-  );
-}
-
 function PostsAdapter({ slice, context }: Props<PostsSlice>) {
   const picked =
     slice.variation === "featured" && isFilled.link(slice.primary.post)
@@ -143,16 +132,6 @@ function PostsAdapter({ slice, context }: Props<PostsSlice>) {
   const featured = pickedUrl
     ? (context.posts.find((post) => post.href === pickedUrl) ?? null)
     : null;
-  const category =
-    "category" in slice.primary ? slice.primary.category : undefined;
-  const browsing = visitorCategory(context.category);
-  if (
-    slice.variation === "featured" &&
-    browsing &&
-    (category === "All" || !category)
-  ) {
-    return null;
-  }
 
   return (
     <Posts

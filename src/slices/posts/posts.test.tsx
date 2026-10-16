@@ -104,7 +104,6 @@ describe("gridFeature", () => {
         hideFeatured: null,
         pageFeaturedHref: "/newest-story",
         newestHref: "/newest-story",
-        filtering: false,
       }),
     ).toEqual({ skipHref: "/newest-story", showInline: false });
   });
@@ -114,7 +113,6 @@ describe("gridFeature", () => {
       gridFeature({
         hideFeatured: true,
         newestHref: "/newest-story",
-        filtering: false,
       }),
     ).toEqual({ skipHref: "/newest-story", showInline: true });
   });
@@ -186,6 +184,20 @@ describe("Posts", () => {
     expect(html).not.toContain("Newest story");
   });
 
+  it("keeps the overall newest as the feature on a category tab", () => {
+    const html = renderToStaticMarkup(
+      <Posts
+        variation="featured"
+        primary={{ ...section(""), category: "All" }}
+        posts={POSTS}
+        activeCategory="Formulations & dosages"
+      />,
+    );
+
+    expect(html).toContain("Newest story");
+    expect(html).not.toContain("Middle comparison");
+  });
+
   it("shows category tabs and a second page on the grid", () => {
     const html = renderToStaticMarkup(
       <Posts
@@ -242,7 +254,7 @@ describe("Posts", () => {
     expect(html).not.toContain("featureLead");
   });
 
-  it("puts the featured post back on a category tab", () => {
+  it("keeps the newest out of the grid on its own category", () => {
     const html = renderToStaticMarkup(
       <Posts
         variation="grid"
@@ -256,7 +268,8 @@ describe("Posts", () => {
       />,
     );
 
-    expect(html).toContain("Newest story");
+    expect(html).toContain("featureLead");
+    expect(html.split('href="/newest-story"').length - 1).toBe(1);
     expect(html).toContain("August story");
     expect(html).not.toContain("Summer review");
   });

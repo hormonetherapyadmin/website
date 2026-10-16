@@ -16,9 +16,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function SitemapPage() {
   const { pages, posts } = organizeSitemap(await loadSitemapLinks());
+  const home = pages.find((page) => page.path === "/");
   const pageLinks = [
-    { title: "Home", path: "/" },
-    ...pages,
+    { title: home?.title ?? "Home", path: "/" },
+    ...pages.filter((page) => page.path !== "/"),
     { title: "Sitemap", path: SITEMAP_PATH, current: true },
   ];
 

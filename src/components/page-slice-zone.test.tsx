@@ -242,9 +242,35 @@ describe("PageSliceZone", () => {
       slices,
       context({ posts, category: "My experience & results" }),
     );
-    expect(repeated).toContain("Latest articles");
+    expect(repeated.indexOf("Newest story")).toBeLessThan(
+      repeated.indexOf("Latest articles"),
+    );
+    expect(repeated.indexOf("Latest articles")).toBeLessThan(
+      repeated.indexOf("August story"),
+    );
     expect(repeated.split("Newest story").length - 1).toBe(1);
-    expect(repeated).toContain("August story");
+
+    const other = render(
+      slices,
+      context({
+        posts: [
+          ...posts,
+          {
+            title: "Dosage note",
+            href: "/post/dosage-note",
+            published: "2026-07-01",
+            category: "Formulations & dosages",
+          },
+        ],
+        category: "Formulations & dosages",
+      }),
+    );
+    expect(other.indexOf("Newest story")).toBeLessThan(
+      other.indexOf("Latest articles"),
+    );
+    expect(other.split("Newest story").length - 1).toBe(1);
+    expect(other).toContain("Dosage note");
+    expect(other).not.toContain("August story");
   });
 
   it("keeps the featured post in the grid when the switch is off", () => {

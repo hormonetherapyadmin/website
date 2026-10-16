@@ -1,28 +1,14 @@
 import { isFilled, NotFoundError, ParsingError } from "@prismicio/client";
 import type { Metadata } from "next";
-import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import { PageSliceZone } from "@/components/page-slice-zone";
 import { SiteShell } from "@/components/site-shell";
 import { isIndexingAllowed } from "@/lib/env";
-import {
-  gridPage,
-  pageClinic,
-  postCard,
-  sliceClinicIds,
-  slicesNeedPosts,
-  sliceTokenUids,
-  type PageClinic,
-} from "@/lib/page-slices";
+import { loadPageSliceContext } from "@/lib/page-slice-context";
 import { heroClinicId, heroTitle } from "@/lib/page-title";
 import { APP_ROUTE_UIDS, SITE_NAME } from "@/lib/site";
-import { tokenClinic } from "@/lib/token-clinic";
 import { createClient } from "@/prismicio";
-import type {
-  PageDocument,
-  PostDocument,
-  ProviderDocument,
-} from "../../../prismicio-types";
+import type { PageDocument, ProviderDocument } from "../../../prismicio-types";
 
 async function loadPage(uid: string) {
   if (APP_ROUTE_UIDS.has(uid)) return null;
@@ -89,44 +75,7 @@ export default async function SitePage(props: PageProps<"/[uid]">) {
   const page = await loadPage(uid);
   if (!page) notFound();
 
-  const client = createClient();
   const slices = page.data.slices;
-  const clinicIds = sliceClinicIds(slices);
-  const tokenUids = sliceTokenUids(slices);
-  const [draft, byId, byUid, posts] = await Promise.all([
-    draftMode(),
-    clinicIds.length
-      ? client.getAllByIDs<ProviderDocument>(clinicIds)
-      : Promise.resolve([] as ProviderDocument[]),
-    tokenUids.length
-      ? client.getAllByUIDs("provider", tokenUids)
-      : Promise.resolve([] as ProviderDocument[]),
-    slicesNeedPosts(slices)
-      ? client.getAllByType("post")
-      : Promise.resolve([] as PostDocument[]),
-  ]);
-
-  const providers = new Map(
-    byId
-      .filter((document) => document.type === "provider")
-      .map((document) => [document.id, document]),
-  );
-  const clinics = new Map<string, PageClinic>();
-  for (const document of providers.values()) {
-    const clinic = pageClinic(document);
-    if (clinic) clinics.set(document.id, clinic);
-  }
-  const tokenClinics = byUid.flatMap((document) => {
-    const clinic = tokenClinic(document);
-    return clinic ? [clinic] : [];
-  });
-  const cards = posts.flatMap((document) => {
-    const card = postCard(document);
-    return card ? [card] : [];
-  });
-  const category =
-    typeof searchParams.category === "string" ? searchParams.category : null;
-
   const title = page.data.meta_title?.trim() ?? "";
   const startsWithHero = slices[0]?.slice_type === "hero";
 
@@ -139,15 +88,7 @@ export default async function SitePage(props: PageProps<"/[uid]">) {
       ) : null}
       <PageSliceZone
         slices={slices}
-        context={{
-          providers,
-          clinics,
-          tokenClinics,
-          posts: cards,
-          page: gridPage(searchParams.page),
-          category,
-          tokens: draft.isEnabled ? "preview" : "public",
-        }}
+        context={await loadPageSliceContext(slices, searchParams)}
       />
     </SiteShell>
   );

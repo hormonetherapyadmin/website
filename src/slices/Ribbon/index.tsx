@@ -105,7 +105,6 @@ export function Ribbon({ primary }: { primary: RibbonPrimary }) {
       title={sectionHeading || boxTitle}
       labelId={labelsSection ? titleId : undefined}
       align={centered ? "center" : "start"}
-      linkPlacement={centered ? "below" : "beside"}
     >
       {hasTitle || hasContent || buttons.length > 0 ? (
         <div

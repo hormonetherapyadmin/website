@@ -1253,16 +1253,6 @@ export interface BoxesSliceDefaultPrimary {
   intro: prismic.RichTextField;
 
   /**
-   * Link field in *Boxes → Default → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: boxes.default.primary.link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
    * Background field in *Boxes → Default → Primary*
    *
    * - **Field Type**: Select
@@ -1383,16 +1373,6 @@ export interface BrandPromoSliceDefaultPrimaryOverwriteItem {
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Brand promo → Default → Primary → Overwrite*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: brand_promo.default.primary.overwrite[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
    * Quote field in *Brand promo → Default → Primary → Overwrite*
@@ -1683,16 +1663,6 @@ export interface ClinicComparisonSliceDefaultPrimary {
   intro: prismic.RichTextField;
 
   /**
-   * Link field in *Clinic comparison → Default → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: clinic_comparison.default.primary.link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
    * Background field in *Clinic comparison → Default → Primary*
    *
    * - **Field Type**: Select
@@ -1853,16 +1823,6 @@ export interface ClinicFactsSliceDefaultPrimary {
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Clinic facts → Default → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: clinic_facts.default.primary.link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
    * Background field in *Clinic facts → Default → Primary*
@@ -2135,16 +2095,6 @@ export interface HeroSliceHomePrimary {
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Hero → Home → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.home.primary.link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
    * Background field in *Hero → Home → Primary*
@@ -2556,16 +2506,6 @@ export interface HeroSliceProviderPrimary {
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Hero → Provider → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.provider.primary.link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
    * Background field in *Hero → Provider → Primary*
@@ -3450,16 +3390,6 @@ export interface ProsConsSliceDefaultPrimary {
   intro: prismic.RichTextField;
 
   /**
-   * Link field in *Pros and cons → Default → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: pros_cons.default.primary.link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
    * Background field in *Pros and cons → Default → Primary*
    *
    * - **Field Type**: Select
@@ -3602,16 +3532,6 @@ export interface QuoteSliceDefaultPrimary {
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Quote → Default → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: quote.default.primary.link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
    * Background field in *Quote → Default → Primary*
@@ -3789,16 +3709,6 @@ export interface RibbonSliceDefaultPrimary {
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Ribbon → Default → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: ribbon.default.primary.link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
    * Background field in *Ribbon → Default → Primary*
@@ -3980,16 +3890,6 @@ export interface SideBySideSliceImagePrimary {
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Side by side → Image → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.image.primary.link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
    * Background field in *Side by side → Image → Primary*
@@ -4180,16 +4080,6 @@ export interface SideBySideSliceVideoPrimary {
   intro: prismic.RichTextField;
 
   /**
-   * Link field in *Side by side → Video → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.video.primary.link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
    * Background field in *Side by side → Video → Primary*
    *
    * - **Field Type**: Select
@@ -4357,16 +4247,6 @@ export interface SideBySideSliceQuotePrimary {
   intro: prismic.RichTextField;
 
   /**
-   * Link field in *Side by side → Quote → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.quote.primary.link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-
-  /**
    * Background field in *Side by side → Quote → Primary*
    *
    * - **Field Type**: Select
@@ -4532,16 +4412,6 @@ export interface SideBySideSliceClinicPrimary {
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Side by side → Clinic → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: side_by_side.clinic.primary.link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
    * Background field in *Side by side → Clinic → Primary*
@@ -4786,16 +4656,6 @@ export interface StartHereSliceDefaultPrimary {
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   intro: prismic.RichTextField;
-
-  /**
-   * Link field in *Start here → Default → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: start_here.default.primary.link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 
   /**
    * Background field in *Start here → Default → Primary*

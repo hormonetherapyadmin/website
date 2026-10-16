@@ -41,14 +41,6 @@
           },
           "type": "StructuredText"
         },
-        "link": {
-          "config": {
-            "allowTargetBlank": true,
-            "allowText": true,
-            "label": "Link"
-          },
-          "type": "Link"
-        },
         "background": {
           "config": {
             "default_value": "Transparent",
@@ -195,14 +187,6 @@
           },
           "type": "StructuredText"
         },
-        "link": {
-          "config": {
-            "allowTargetBlank": true,
-            "allowText": true,
-            "label": "Link"
-          },
-          "type": "Link"
-        },
         "background": {
           "config": {
             "default_value": "Transparent",
@@ -329,14 +313,6 @@
           },
           "type": "StructuredText"
         },
-        "link": {
-          "config": {
-            "allowTargetBlank": true,
-            "allowText": true,
-            "label": "Link"
-          },
-          "type": "Link"
-        },
         "background": {
           "config": {
             "default_value": "Transparent",
@@ -462,14 +438,6 @@
             "placeholder": "Press enter for another paragraph. Leave blank to hide it."
           },
           "type": "StructuredText"
-        },
-        "link": {
-          "config": {
-            "allowTargetBlank": true,
-            "allowText": true,
-            "label": "Link"
-          },
-          "type": "Link"
         },
         "background": {
           "config": {

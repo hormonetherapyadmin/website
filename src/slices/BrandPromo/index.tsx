@@ -62,7 +62,6 @@ export type BrandPromoClinic = {
 export type BrandPromoOverwrite = {
   small_heading?: RichTextField | null;
   intro?: RichTextField | null;
-  link?: LinkField | null;
   quote?: RichTextField | null;
   text?: RichTextField | null;
   product?: ImageField | null;

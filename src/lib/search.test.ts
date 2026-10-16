@@ -145,6 +145,22 @@ describe("pageSearchHit and postSearchHit", () => {
     ).toMatchObject({ href: "/blog" });
   });
 
+  it("includes the homepage at / even when the document has no uid", () => {
+    expect(
+      pageSearchHit({
+        id: "home",
+        type: "homepage",
+        url: null,
+        data: { meta_title: "Hormone Therapy Hub" },
+      }),
+    ).toMatchObject({
+      href: "/",
+      title: "Hormone Therapy Hub",
+      kind: "page",
+      label: "Page",
+    });
+  });
+
   it("drops a page that is not indexed, has no title, or uses a reserved path", () => {
     const data = {
       meta_title: "Search",

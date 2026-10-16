@@ -31,13 +31,13 @@ export const metadata: Metadata = {
 
 const BENEFITS = [
   { label: "Lose weight", href: "/copy-of-weight-gain" },
-  { label: "Enhance mood and mental clarity", href: "/ishrtforme" },
+  { label: "Enhance mood and mental clarity", href: "/mockup/is-hrt-for-me" },
   {
     label: "Diminish hot flashes/night sweats",
     href: "/post/why-do-i-wake-up-hot-and-sweaty",
   },
   // No energy-specific page exists on the live site yet.
-  { label: "Boost energy", href: "/ishrtforme" },
+  { label: "Boost energy", href: "/mockup/is-hrt-for-me" },
   { label: "Improve sleep", href: "/sleep" },
 ];
 
@@ -107,7 +107,7 @@ const START_HERE = [
     forWho: "Brand new to this",
     detail:
       "Perimenopause, menopause, and whether hormone therapy is worth asking about.",
-    href: "/ishrtforme",
+    href: "/mockup/is-hrt-for-me",
     icon: UserQuestion01Icon,
     tone: styles.pick1,
   },
@@ -170,7 +170,7 @@ export default async function HomepageMockup(
             <a href="#compare" className={styles.buttonPrimary}>
               See what each clinic cost me
             </a>
-            <Link href="/ishrtforme" className={styles.buttonText}>
+            <Link href="/mockup/is-hrt-for-me" className={styles.buttonText}>
               New to HRT? Start here
               <ChevronRightIcon />
             </Link>
@@ -552,7 +552,7 @@ export default async function HomepageMockup(
               I am not a medical professional, and this site does not provide
               medical advice or treatment plans.
             </p>
-            <Link href="/about" className={styles.buttonPrimary}>
+            <Link href="/mockup/about" className={styles.buttonPrimary}>
               Read my whole story
             </Link>
           </div>

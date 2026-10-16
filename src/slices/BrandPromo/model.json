@@ -125,14 +125,6 @@
                 },
                 "type": "StructuredText"
               },
-              "link": {
-                "config": {
-                  "allowTargetBlank": true,
-                  "allowText": true,
-                  "label": "Link"
-                },
-                "type": "Link"
-              },
               "quote": {
                 "config": {
                   "allowTargetBlank": true,

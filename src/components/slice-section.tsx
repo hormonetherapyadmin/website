@@ -26,12 +26,16 @@ export const SECTION_SPACING = ["None", "Small", "Medium", "Large"] as const;
 export type SectionBackground = (typeof SECTION_BACKGROUNDS)[number];
 export type SectionSpacing = (typeof SECTION_SPACING)[number];
 
-/** The Section fields copied onto every slice, beside its own fields. */
+/**
+ * The heading, writing, color, and spacing copied onto a slice.
+ * Link is only on Latest posts, Text, and Hero Subpage, Centered,
+ * and Brands. Other slices add their own buttons or card links.
+ */
 export type SliceSectionFields = {
   small_heading: RichTextField;
   heading: RichTextField;
   intro: RichTextField;
-  link: LinkField;
+  link?: LinkField;
   background: SelectField<SectionBackground>;
   space_above: SelectField<SectionSpacing>;
   space_below: SelectField<SectionSpacing>;
