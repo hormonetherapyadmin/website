@@ -14,9 +14,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Small heading",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -25,9 +23,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Heading",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -36,9 +32,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Intro",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -47,14 +41,7 @@
           "config": {
             "default_value": "5",
             "label": "Boxes across",
-            "options": [
-              "2",
-              "3",
-              "4",
-              "5",
-              "6",
-              "7"
-            ]
+            "options": ["2", "3", "4", "5", "6", "7"]
           },
           "type": "Select"
         },
@@ -65,12 +52,7 @@
                 "config": {
                   "customtypes": [
                     {
-                      "fields": [
-                        "name",
-                        "logo",
-                        "code",
-                        "top_choice_label"
-                      ],
+                      "fields": ["name", "logo", "code", "top_choice_label"],
                       "id": "provider"
                     }
                   ],
@@ -90,9 +72,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Heading",
-                  "labels": [
-                    "superscript"
-                  ],
+                  "labels": ["superscript"],
                   "placeholder": "Empty uses the clinic top choice label, such as No appointment required",
                   "single": "paragraph,strong,em,hyperlink"
                 },
@@ -102,9 +82,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Text",
-                  "labels": [
-                    "superscript"
-                  ],
+                  "labels": ["superscript"],
                   "placeholder": "Empty uses the clinic name",
                   "single": "paragraph,strong,em,hyperlink"
                 },
@@ -149,12 +127,7 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         },
@@ -162,12 +135,7 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         }

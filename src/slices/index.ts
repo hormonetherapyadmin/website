@@ -15,17 +15,17 @@ import StartHere from "./start_here";
 import Text from "./Text";
 
 export const components = {
-	boxes: Boxes,
-	brand_promo: BrandPromo,
-	clinic_comparison: ClinicComparison,
-	clinic_facts: ClinicFacts,
-	divider: Divider,
-	hero: Hero,
-	posts: Posts,
-	pros_cons: ProsAndCons,
-	quote: Quote,
-	ribbon: Ribbon,
-	side_by_side: SideBySide,
-	start_here: StartHere,
-	text: Text
+  boxes: Boxes,
+  brand_promo: BrandPromo,
+  clinic_comparison: ClinicComparison,
+  clinic_facts: ClinicFacts,
+  divider: Divider,
+  hero: Hero,
+  posts: Posts,
+  pros_cons: ProsAndCons,
+  quote: Quote,
+  ribbon: Ribbon,
+  side_by_side: SideBySide,
+  start_here: StartHere,
+  text: Text,
 };
