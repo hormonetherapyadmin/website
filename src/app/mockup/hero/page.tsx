@@ -62,12 +62,12 @@ export default function HeroPreview() {
         variation="home"
         primary={{
           ...section({
-            heading: rich("Hormone Therapy Replacement"),
+            small_heading: rich("Hormone Therapy Replacement"),
+            heading: rich("Feel like you again."),
             intro: rich(
               "My goal is to share honest platform reviews, pricing breakdowns, and practical patient insights so you can have more informed, confident conversations with your own prescribing doctor.",
             ),
           }),
-          tagline: rich("Feel like you again."),
           benefits: [
             {
               link_type: "Web",

@@ -14,7 +14,9 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Heading",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "placeholder": "Improved sleep",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -53,39 +55,6 @@
           },
           "type": "Link"
         },
-        "background": {
-          "config": {
-            "default_value": "Transparent",
-            "label": "Background",
-            "options": [
-              "Transparent",
-              "Cream",
-              "Pink",
-              "Blue",
-              "Yellow",
-              "Lavender",
-              "Raspberry",
-              "Navy"
-            ]
-          },
-          "type": "Select"
-        },
-        "space_above": {
-          "config": {
-            "default_value": "Medium",
-            "label": "Space above",
-            "options": ["None", "Small", "Medium", "Large"]
-          },
-          "type": "Select"
-        },
-        "space_below": {
-          "config": {
-            "default_value": "None",
-            "label": "Space below",
-            "options": ["None", "Small", "Medium", "Large"]
-          },
-          "type": "Select"
-        },
         "first": {
           "config": {
             "default_value": false,
@@ -109,7 +78,9 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Small heading",
-                  "labels": ["superscript"],
+                  "labels": [
+                    "superscript"
+                  ],
                   "placeholder": "Voted best for",
                   "single": "paragraph,strong,em,hyperlink"
                 },
@@ -119,7 +90,9 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Intro",
-                  "labels": ["superscript"],
+                  "labels": [
+                    "superscript"
+                  ],
                   "placeholder": "A short line under the clinic name. Leave blank to hide it.",
                   "single": "paragraph,strong,em,hyperlink"
                 },
@@ -129,7 +102,9 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Quote",
-                  "labels": ["superscript"],
+                  "labels": [
+                    "superscript"
+                  ],
                   "placeholder": "Leave blank to use the clinic's In my words.",
                   "single": "paragraph,strong,em,hyperlink"
                 },
@@ -139,7 +114,12 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Text",
-                  "labels": ["highlight", "superscript", "signoff", "note"],
+                  "labels": [
+                    "highlight",
+                    "superscript",
+                    "signoff",
+                    "note"
+                  ],
                   "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
                   "placeholder": "More about this brand, such as what a test kit measures. Leave blank to hide it."
                 },
@@ -156,7 +136,10 @@
                 "config": {
                   "default_value": "Card",
                   "label": "Style",
-                  "options": ["Quote", "Card"],
+                  "options": [
+                    "Quote",
+                    "Card"
+                  ],
                   "placeholder": "Quote puts the logo, her words, and a visit link on the right. Card puts the product photo and price there."
                 },
                 "type": "Select"
@@ -165,7 +148,10 @@
                 "config": {
                   "default_value": "Beside",
                   "label": "Photo and price",
-                  "options": ["Beside", "Stacked"],
+                  "options": [
+                    "Beside",
+                    "Stacked"
+                  ],
                   "placeholder": "Beside puts the price next to the photo. Stacked puts the photo on top and the price under it, as one card. Use Stacked when the card has a lot of writing."
                 },
                 "type": "Select"
@@ -185,6 +171,49 @@
             "repeat": false
           },
           "type": "Group"
+        },
+        "background": {
+          "config": {
+            "default_value": "Transparent",
+            "label": "Background",
+            "options": [
+              "Transparent",
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ]
+          },
+          "type": "Select"
+        },
+        "space_above": {
+          "config": {
+            "default_value": "Medium",
+            "label": "Space above",
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
+          },
+          "type": "Select"
+        },
+        "space_below": {
+          "config": {
+            "default_value": "None",
+            "label": "Space below",
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
+          },
+          "type": "Select"
         }
       },
       "version": ""

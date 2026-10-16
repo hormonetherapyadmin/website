@@ -34,7 +34,6 @@ export type HeroClinicLink = {
 } | null;
 
 type HomePrimary = Partial<SliceSectionFields> & {
-  tagline: RichTextField;
   benefits?: readonly LinkField[] | null;
   button?: readonly LinkField[] | null;
   trust_lines?: readonly { text: KeyTextField }[] | null;
@@ -247,19 +246,19 @@ function HomeHero({ primary }: { primary: HomePrimary }) {
     <SliceSection
       section={primary}
       showHeader={false}
-      title={asText(primary.tagline)}
+      title={asText(primary.heading)}
     >
       <div className={styles.home}>
         <div>
           <RichText
-            field={primary.heading}
-            as="h1"
+            field={primary.small_heading}
+            as="p"
             unstyled
             className={`${styles.kicker} ${styles.homeKicker}`}
           />
           <RichText
-            field={primary.tagline}
-            as="p"
+            field={primary.heading}
+            as="h1"
             unstyled
             className={`${styles.display} ${styles.homeTitle}`}
           />

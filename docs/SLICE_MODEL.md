@@ -55,13 +55,14 @@ slice. One component reads them. The section wrapper is
 
 ### Section
 
-Every slice except the Divider starts with these six fields, directly
-on the slice and before its own fields. They are not in a group. In the
-Page Builder even a non-repeatable group starts empty, and she has to
-add an item before she can type a heading, so the fields stay open
-instead. The Divider has only Background, Space above, and Space below.
-Brand promo keeps Heading, Background, Space above, and Space below
-open, and puts Small heading and Intro in Overwrite.
+Every slice except the Divider has these six fields. They are not in a
+group. In the Page Builder even a non-repeatable group starts empty, and
+she has to add an item before she can type a heading, so the fields stay
+open instead. Small heading, Heading, and Intro come first. Background,
+Space above, and Space below are the last fields on the slice. The
+Divider has only Line, Color, and those three settings. Brand promo
+keeps Heading open, puts Small heading and Intro in Overwrite, and
+still ends with Background, Space above, and Space below.
 
 | Label | Id | Kind | Default |
 | --- | --- | --- | --- |
@@ -94,13 +95,12 @@ one writing field under the heading. Side by side's Intro and Text are
 that same column, so the audit keeps one field, Content, and drops the
 other. A slice with Buttons does not also have Link.
 
-Settings that are not writing or media come last: Background, Space
-above, Space below, and a slice's own placement choices, such as Side
-and Media position.
+Background, Space above, and Space below are the last fields on every
+slice. A slice's own placement choices, such as Side and Media
+position, move to that same end when that slice is audited.
 
-The next slice audit applies this to every slice. The field tables
-below still describe the models as they are until that audit. Side by
-side Image is the order that audit uses:
+The next slice audit applies the rest of this order to every slice.
+Side by side Image is the order that audit uses:
 
 1. Small heading
 2. Heading
@@ -159,8 +159,7 @@ not a field.
 
 **Section id.** Every section gets an id from its title, so a button on the
 same page can scroll to it. "Feel like you again." becomes
-`feel-like-you-again`. On the homepage that title is the tagline. On every
-other slice it is the heading. An empty title leaves the section with no
+`feel-like-you-again`. That title is the heading. An empty title leaves the section with no
 id. A button uses that id with a hash, such as
 `#eight-online-hrt-clinics-side-by-side` for the comparison heading
 "Eight online HRT clinics, side by side." Changing the title changes the
@@ -600,27 +599,35 @@ One slice, five variations. Each variation includes the shared Section
 fields and lays the heading out itself. Section supplies the spacing and
 background. Home and Provider have no Link. Subpage, Centered, and
 Brands do: one text link, such as "Start here" or "Full price chart."
-The homepage section id comes from the tagline. The homepage
+The homepage section id comes from the heading. The homepage
 variation also keeps the mockup's vertical padding, and Space above and
 Space below add to it. The subpage, centered, brands, and provider
 variations do not, so those fields are the whole gap.
 
 #### Home
 
-The homepage. Section Heading is the page title. Section Intro is "My
-goal is to share honest platform reviews…" The large line is Tagline,
-not the title. Benefits and Buttons are the links. There is no Link
-field.
+The homepage. The fields follow the page, and Background, Space above,
+and Space below are last. There is no Link field. Benefits and Buttons
+are the links.
+
+Eyebrow is the small line above the title. Heading (H1) is the page
+title, the huge line. Content is the paragraph under the benefits.
+There is no separate tagline.
 
 | Label | Id | Kind | Required | Mockup |
 | --- | --- | --- | --- | --- |
-| Tagline | `tagline` | Heading rich text | Yes | Feel like you again. |
+| Eyebrow | `small_heading` | Heading rich text | No | Hormone Therapy Replacement |
+| Heading (H1) | `heading` | Heading rich text | Yes | Feel like you again. |
 | Benefits | `benefits` | Repeatable link, with display text | Yes | Lose weight, and the other four |
+| Content | `intro` | Heading rich text | No | My goal is to share honest platform reviews… |
 | Buttons | `button` | Repeatable link, with display text and a style | Yes | Solid: See what each clinic cost me. Ghost: New to HRT? Start here |
 | Trust lines | `trust_lines` | Repeatable group | Yes | Patient since 2019, and the other two |
 | Image | `image` | Image, including its description | Yes | Peggy's portrait |
 | Words on the photo | `photo_greeting` | Text | No | Hi, I'm Peggy! |
 | Caption | `caption` | Heading rich text | Yes | An experienced HRT patient reviewer. Not a doctor. |
+| Background | `background` | Select | No | Transparent |
+| Space above | `space_above` | Select | No | |
+| Space below | `space_below` | Select | No | |
 
 Each trust line is one Text field, `text`. Hide Words on the photo when
 it is empty. Add the buttons in the order they should appear. Solid is
@@ -631,7 +638,7 @@ Image help: "Describe who is in the photo and what they are doing."
 
 #### Subpage
 
-A normal interior page. Section Small heading, Heading, Intro, and Link
+A normal interior page. Eyebrow, Heading (H1), Content, and Link
 are the kicker, the page title, the dek, and the text link.
 
 | Label | Id | Kind | Required |
@@ -643,17 +650,17 @@ the photo and what they are doing."
 
 #### Centered
 
-A short page top with no photo. The Section Small heading, Heading,
-Intro, and Link are centered, in the same type as Subpage. The heading
-spans the container. The intro stays on the shorter measure. It has no
-fields of its own. The test kits page uses it with one intro sentence
-and moves Peggy's photo into the Side by side under it. Keep the intro
-to a sentence or two, because a long centered paragraph is hard to read.
+A short page top with no photo. Eyebrow, Heading (H1),
+Content, and Link are centered, in the same type as Subpage. The heading
+spans the container. Content stays on the shorter measure. It has no
+fields of its own. The test kits page uses it with one content sentence
+and moves Peggy's photo into the Side by side under it. Keep that
+sentence to one or two, because a long centered paragraph is hard to read.
 
 #### Brands
 
-Trusted providers. Section Small heading is "Providers". Section Heading
-is the page title. Section Intro is the dek. Section Link is "Full price
+Trusted providers. Eyebrow is "Providers". Heading (H1)
+is the page title. Content is the dek. Link is "Full price
 chart".
 
 | Label | Id | Kind | Required |
@@ -673,10 +680,10 @@ goes. On trusted providers that is a jump link such as `#inner-balance`.
 #### Provider
 
 The top of a clinic page. There is no Link field. Links are her
-review links. The title is the clinic's name, and Section
-Heading only when the clinic has no name. An empty Meta title, the
+review links. The title is the clinic's name, and Heading (H1) only
+when the clinic has no name. An empty Meta title, the
 search result, and the sitemap entry use that same title, never the
-kicker. The kicker is Section Small heading when that is filled,
+eyebrow. The eyebrow is Eyebrow when that is filled,
 otherwise the clinic's Top choice label. The price, visit button, logo,
 and coupon come from the clinic. The visit button sits on the price
 card, which shows only when the clinic has a price or a code, or the
