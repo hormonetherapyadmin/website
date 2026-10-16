@@ -160,6 +160,15 @@
                 },
                 "type": "Image"
               },
+              "style": {
+                "config": {
+                  "default_value": "Card",
+                  "label": "Style",
+                  "options": ["Quote", "Card"],
+                  "placeholder": "Quote puts the logo, her words, and a visit link on the right. Card puts the product photo and price there."
+                },
+                "type": "Select"
+              },
               "layout": {
                 "config": {
                   "default_value": "Beside",

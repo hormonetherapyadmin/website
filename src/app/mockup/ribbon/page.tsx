@@ -61,6 +61,23 @@ export default function RibbonPreview() {
       />
       <Ribbon
         primary={{
+          ...section({
+            heading: rich("Before you go"),
+            link: button("All clinics", "/providers"),
+            space_above: "Medium",
+          }),
+          layout: "Centered",
+          title: rich("Still lining the prices up?"),
+          content: rich(templateCopy),
+          box_background: "Lavender",
+          button: [
+            button("Open the price chart", "/hrt-price-comparison-chart"),
+            button("Tips for choosing", "/tipstofindprovider", "Ghost"),
+          ],
+        }}
+      />
+      <Ribbon
+        primary={{
           ...section({ background: "Cream", space_above: "Medium" }),
           title: rich("Same ribbon, cream behind it"),
           content: rich(templateCopy),

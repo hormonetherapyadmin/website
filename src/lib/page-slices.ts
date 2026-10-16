@@ -294,7 +294,20 @@ export function quoteClinic(clinic: PageClinic): QuoteClinic {
 }
 
 export function sideClinic(clinic: PageClinic): SideClinic {
-  return { ...quoteClinic(clinic), quote: clinic.quote };
+  return {
+    ...quoteClinic(clinic),
+    quote: clinic.quote,
+    kind: clinic.kind,
+    monthlyPrice: clinic.monthlyPrice,
+    priceUnit: clinic.priceUnit,
+    priceNote: clinic.priceNote,
+    insurance: clinic.insurance,
+    formulation: clinic.formulation,
+    gettingStarted: clinic.gettingStarted,
+    offerCode: clinic.offerCode,
+    offerCopy: clinic.offerCopy,
+    product: clinic.product,
+  };
 }
 
 export function brandPromoClinic(clinic: PageClinic): BrandPromoClinic {

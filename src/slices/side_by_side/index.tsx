@@ -11,7 +11,11 @@ import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { Content } from "@/components/content";
-import type { TokenClinic } from "@/components/content-blocks";
+import type {
+  BrandKind,
+  PriceUnit,
+  TokenClinic,
+} from "@/components/content-blocks";
 import { RichText } from "@/components/rich-text";
 import {
   SliceSection,
@@ -19,6 +23,7 @@ import {
   type SliceSectionFields,
 } from "@/components/slice-section";
 import { storyLinkRel, visitLinkProps } from "@/lib/affiliate-link";
+import { ProductCard } from "@/slices/BrandPromo";
 import styles from "./side-by-side.module.css";
 
 export const SIDES = ["Media left", "Media right"] as const;
@@ -46,13 +51,23 @@ export type SideVideo = {
   url?: string;
 };
 
-/** The clinic on the media side. Logo, name, quote, and visit. */
+/** The clinic on the media side. Logo, name, quote, and visit, or the product card. */
 export type SideClinic = {
   name: string;
   logo?: { src: string };
   quote?: string;
   visitHref?: string;
   visitText?: string;
+  kind?: BrandKind;
+  monthlyPrice?: number | null;
+  priceUnit?: PriceUnit;
+  priceNote?: string;
+  insurance?: boolean;
+  formulation?: string;
+  gettingStarted?: string;
+  offerCode?: string;
+  offerCopy?: string;
+  product?: ImageField | null;
 };
 
 type SideBySidePrimary = Partial<SliceSectionFields> & {
@@ -68,6 +83,8 @@ type SideBySidePrimary = Partial<SliceSectionFields> & {
   quote?: RichTextField | null;
   attribution?: string | null;
   clinic?: LinkField | null;
+  /** Quote is the logo and her words. Card is the product photo and price. */
+  style?: string | null;
 };
 
 function choice<T extends string>(
@@ -79,6 +96,11 @@ function choice<T extends string>(
     if (option === value) return option;
   }
   return fallback;
+}
+
+/** Card is the product photo and price. A blank Style stays the quote panel. */
+export function sideBySideStyle(value: string | null | undefined) {
+  return value === "Card" ? "card" : "quote";
 }
 
 function Chevron() {
@@ -277,6 +299,7 @@ export function SideBySide({
   const showQuote = layout === "quote" && isFilled.richText(primary.quote);
   const showStatement = layout === "image" && isFilled.richText(primary.quote);
   const showClinic = layout === "clinic" && Boolean(clinic?.name);
+  const clinicStyle = showClinic ? sideBySideStyle(primary.style) : undefined;
   const hasMedia = showImage || showVideo || showQuote || showClinic;
   const showHead =
     isFilled.richText(primary.small_heading) ||
@@ -290,6 +313,7 @@ export function SideBySide({
         data-side={side === "Media right" ? "right" : "left"}
         data-position={position.toLowerCase()}
         data-media={hasMedia ? "true" : "false"}
+        data-style={clinicStyle}
       >
         <div className={styles.copy}>
           {showHead ? (
@@ -354,7 +378,14 @@ export function SideBySide({
             ) : null}
           </blockquote>
         ) : null}
-        {showClinic && clinic ? <ClinicCard clinic={clinic} /> : null}
+        {showClinic && clinic && clinicStyle === "card" ? (
+          <div className={styles.productSlot}>
+            <ProductCard clinic={clinic} placement="side_by_side" />
+          </div>
+        ) : null}
+        {showClinic && clinic && clinicStyle !== "card" ? (
+          <ClinicCard clinic={clinic} />
+        ) : null}
       </div>
     </SliceSection>
   );

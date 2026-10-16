@@ -287,12 +287,33 @@ practical.
 
 ### Category
 
-The post's Category field is a select: Review, Comparison, My
-experience, or HRT 101. Wix blog categories are a different list and
-are not copied onto this select. Migration leaves Category empty. Do
-not create Category documents for those four labels, and do not give
-them public pages, until an indexing decision says the blog filter
-should be a real URL.
+The post's Category field is a select:
+
+-   Telehealth brand reviews
+-   Formulations & dosages
+-   My experience & results
+-   Testing, labs & tracking
+-   Cost, insurance & access
+
+These are Peggy's five Wix blog categories, with the wording tightened
+for the kicker and the blog tabs. Her Wix labels stay as she wrote
+them. When the category import runs, it maps them like this:
+
+| Wix label | Category |
+| --- | --- |
+| Telehealth BHRT Brand Reviews | Telehealth brand reviews |
+| Formulations & Dosages | Formulations & dosages |
+| My Experience & Results | My experience & results |
+| Testing, Labs & Tracking | Testing, labs & tracking |
+| Cost, Insurance & Access | Cost, insurance & access |
+
+`scripts/set-post-categories.mts` copies a Wix category onto each
+post that is already in Prismic. It writes Category and leaves the
+story and the other fields as they are. A dry run changes nothing.
+`--write --publish` sends the field and publishes the migration
+release. Do not create Category documents for these labels, and do
+not give them public pages, until an indexing decision says the blog
+filter should be a real URL.
 
 Use a Category document only where it provides a meaningful editorial
 taxonomy of its own. Avoid duplicating Topic semantics.

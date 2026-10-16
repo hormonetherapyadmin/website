@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { RichTextField } from "@prismicio/client";
+import type { LinkField, RichTextField } from "@prismicio/client";
 import type { SliceSectionFields } from "@/components/slice-section";
 import { Hero } from "@/slices/hero";
 import { Text } from "@/slices/Text";
@@ -123,6 +123,26 @@ export default async function TextMockup(props: PageProps<"/mockup/text">) {
             space_below: "Large",
           }),
           text: insurance,
+        }}
+      />
+
+      <Text
+        primary={{
+          ...section({
+            heading: rich("Want the numbers in one place?"),
+            intro: rich("The clinics, the prices, and what I paid."),
+            link: {
+              link_type: "Web",
+              url: "/hrt-price-comparison-chart",
+              text: "Open the price chart",
+            } as LinkField,
+            space_above: "Large",
+            space_below: "Large",
+          }),
+          layout: "Centered",
+          text: rich(
+            "I keep the price chart separate so this page can stay about insurance.",
+          ),
         }}
       />
     </MockupShell>

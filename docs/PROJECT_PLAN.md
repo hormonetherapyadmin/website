@@ -307,7 +307,7 @@ Engineering should establish semantic tokens such as:
 -   background
 -   surface
 -   text
--   muted text
+-   muted text (same color as text; secondary copy is not grey)
 -   border
 -   accent
 -   CTA

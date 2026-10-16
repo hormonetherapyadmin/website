@@ -3,6 +3,23 @@
   line-height: var(--text-body--line-height);
 }
 
+.body[data-align="center"] {
+  text-align: center;
+}
+
+.body[data-align="center"] ul,
+.body[data-align="center"] ol,
+.body[data-align="center"] figure {
+  width: fit-content;
+  margin-inline: auto;
+  text-align: start;
+}
+
+.body[data-align="center"] .offer,
+.body[data-align="center"] .facts {
+  text-align: start;
+}
+
 .body p {
   margin: 0 0 1.4rem;
 }

@@ -3,15 +3,36 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import styles from "./mockup.module.css";
 
-// Stand-in for Article and Provider Review documents. Titles, dates, read
-// times, excerpts, and images come from the live Wix blog (October 2026).
-// The kind labels are a proposed taxonomy; Wix posts have no categories.
+// Stand-in for blog posts. Titles, dates, read times, excerpts, and images
+// come from the live Wix blog (October 2026). The kind labels are the site
+// categories. These 13 cards are a layout sample, not Peggy's assignments.
 
 export const POST_KINDS = [
-  { slug: "reviews", label: "Review", plural: "Reviews" },
-  { slug: "comparisons", label: "Comparison", plural: "Comparisons" },
-  { slug: "my-experience", label: "My experience", plural: "My experience" },
-  { slug: "hrt-101", label: "HRT 101", plural: "HRT 101" },
+  {
+    slug: "telehealth-brand-reviews",
+    label: "Telehealth brand reviews",
+    plural: "Telehealth brand reviews",
+  },
+  {
+    slug: "formulations-dosages",
+    label: "Formulations & dosages",
+    plural: "Formulations & dosages",
+  },
+  {
+    slug: "my-experience-results",
+    label: "My experience & results",
+    plural: "My experience & results",
+  },
+  {
+    slug: "testing-labs-tracking",
+    label: "Testing, labs & tracking",
+    plural: "Testing, labs & tracking",
+  },
+  {
+    slug: "cost-insurance-access",
+    label: "Cost, insurance & access",
+    plural: "Cost, insurance & access",
+  },
 ] as const;
 
 export type PostKind = (typeof POST_KINDS)[number]["label"];
@@ -35,7 +56,7 @@ export const POSTS: Post[] = [
     read: "5 min",
     href: "/post/hrt-skin-before-and-after-my-12-month-results-and-experience",
     image: "/mockup/posts/skin.jpg",
-    kind: "My experience",
+    kind: "My experience & results",
   },
   {
     title:
@@ -46,7 +67,7 @@ export const POSTS: Post[] = [
     read: "6 min",
     href: "/post/alloy-vs-musely-estrogen-creams-patches-tablets-compared",
     image: "/mockup/posts/alloy-vs-musely.jpg",
-    kind: "Comparison",
+    kind: "Telehealth brand reviews",
   },
   {
     title: "Musely Sleep Well Cream Review & Ingredients",
@@ -56,7 +77,7 @@ export const POSTS: Post[] = [
     read: "8 min",
     href: "/post/musely-sleep-well-cream-review-ingredients-fix-menopause-sleep",
     image: "/mockup/posts/sleep-well.jpg",
-    kind: "Review",
+    kind: "Telehealth brand reviews",
   },
   {
     title: "Oestra by Inner Balance: My 1-Year Results & What to Expect",
@@ -66,7 +87,7 @@ export const POSTS: Post[] = [
     read: "6 min",
     href: "/post/oestra-by-inner-balance-my-honest-1-year-review",
     image: "/mockup/posts/oestra.jpg",
-    kind: "Review",
+    kind: "Telehealth brand reviews",
   },
   {
     title: "Musely Estrogen Cream Review: A Gentle HRT Option",
@@ -76,7 +97,7 @@ export const POSTS: Post[] = [
     read: "6 min",
     href: "/post/musely-estrogen-cream-review-a-safer-gentler-hrt-alternative",
     image: "/mockup/posts/musely-cream.jpg",
-    kind: "Review",
+    kind: "Telehealth brand reviews",
   },
   {
     title: "FDA-Approved vs. Compounded BHRT: What’s the Real Difference?",
@@ -86,7 +107,7 @@ export const POSTS: Post[] = [
     read: "6 min",
     href: "/post/fda-approved-vs-compounded-bhrt-what-s-the-real-difference",
     image: "/mockup/posts/fda-vs-compounded.jpg",
-    kind: "HRT 101",
+    kind: "Formulations & dosages",
   },
   {
     title: "Winona vs. Musely: Which HRT Cream Wins?",
@@ -96,7 +117,7 @@ export const POSTS: Post[] = [
     read: "6 min",
     href: "/post/musely-estrogen-cream-vs-winona-which-hrt-cream-wins",
     image: "/mockup/posts/winona-vs-musely.jpg",
-    kind: "Comparison",
+    kind: "Telehealth brand reviews",
   },
   {
     title: "Compounded Testosterone Cream for Women",
@@ -105,7 +126,7 @@ export const POSTS: Post[] = [
     read: "6 min",
     href: "/post/compounded-testosterone-cream-for-women",
     image: "/mockup/posts/testosterone-cream.jpg",
-    kind: "HRT 101",
+    kind: "Formulations & dosages",
   },
   {
     title:
@@ -116,7 +137,7 @@ export const POSTS: Post[] = [
     read: "5 min",
     href: "/post/oestra-by-inner-balance-vs-winona-which-telehealth-bhrt-platform-is-right-for-you",
     image: "/mockup/posts/oestra-vs-winona.jpg",
-    kind: "Comparison",
+    kind: "Telehealth brand reviews",
   },
   {
     title:
@@ -125,7 +146,7 @@ export const POSTS: Post[] = [
     read: "7 min",
     href: "/post/musely-eye-serum-review-can-it-fix-menopausal-dark-circles-wrinkles",
     image: "/mockup/posts/eye-serum.jpg",
-    kind: "Review",
+    kind: "Telehealth brand reviews",
   },
   {
     title:
@@ -135,7 +156,7 @@ export const POSTS: Post[] = [
     read: "5 min",
     href: "/post/ivim-review-hrt-glp-1-menopause-weight-gain",
     image: "/mockup/posts/ivim.jpg",
-    kind: "Review",
+    kind: "Telehealth brand reviews",
   },
   {
     title:
@@ -146,7 +167,7 @@ export const POSTS: Post[] = [
     read: "5 min",
     href: "/post/inner-balance-bodymatched-review-does-finasteride-reduce-facial-hair",
     image: "/mockup/posts/bodymatched.jpg",
-    kind: "Review",
+    kind: "Telehealth brand reviews",
   },
   {
     title: "Why Do I Wake Up Hot and Sweaty?",
@@ -156,7 +177,7 @@ export const POSTS: Post[] = [
     read: "5 min",
     href: "/post/why-do-i-wake-up-hot-and-sweaty",
     image: "/mockup/posts/hot-sweaty.jpg",
-    kind: "HRT 101",
+    kind: "My experience & results",
   },
 ];
 

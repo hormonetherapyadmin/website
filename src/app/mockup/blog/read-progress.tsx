@@ -35,7 +35,8 @@ type Piece = {
   rot: number;
   spin: number;
   color: string;
-  shape: "square" | "diamond";
+  shape: "square" | "diamond" | "circle";
+  radius: number;
   life: number;
   max: number;
 };
@@ -128,6 +129,13 @@ export function celebrate(
     const speed = 4.4 + Math.random() * 4.8;
     const vx = Math.cos(angle) * speed;
     const size = 7 + Math.random() * 6.5;
+    const roll = Math.random();
+    const shape: Piece["shape"] =
+      roll < 0.28 ? "circle" : roll < 0.62 ? "diamond" : "square";
+    const width =
+      shape === "circle" ? size : size * (0.85 + Math.random() * 0.35);
+    const height =
+      shape === "circle" ? size : size * (0.55 + Math.random() * 0.7);
     pieces.push({
       x: ORIGIN_X + (Math.random() - 0.5) * 8,
       y: ORIGIN_Y,
@@ -135,12 +143,13 @@ export function celebrate(
       vy: Math.sin(angle) * speed,
       ax: Math.sign(vx || 1) * (0.006 + Math.abs(vx) * 0.004),
       gravity: 0.12 + Math.random() * 0.045,
-      w: size,
-      h: size * (0.7 + Math.random() * 0.5),
+      w: width,
+      h: height,
       rot: Math.random() * Math.PI,
       spin: (Math.random() - 0.5) * 0.1,
       color: palette[index] ?? colors[0],
-      shape: Math.random() < 0.5 ? "diamond" : "square",
+      shape,
+      radius: Math.min(width, height) * (0.28 + Math.random() * 0.22),
       life: 0,
       max: 130 + Math.random() * 50,
     });
@@ -170,10 +179,17 @@ export function celebrate(
       context.fillStyle = piece.color;
       context.save();
       context.translate(piece.x, piece.y);
-      context.rotate(
-        piece.shape === "diamond" ? piece.rot + Math.PI / 4 : piece.rot,
-      );
-      context.fillRect(-piece.w / 2, -piece.h / 2, piece.w, piece.h);
+      context.beginPath();
+      if (piece.shape === "circle") {
+        context.arc(0, 0, piece.w / 2, 0, Math.PI * 2);
+      } else {
+        context.rotate(
+          piece.shape === "diamond" ? piece.rot + Math.PI / 4 : piece.rot,
+        );
+        const radius = Math.min(piece.radius, piece.w / 2, piece.h / 2);
+        context.roundRect(-piece.w / 2, -piece.h / 2, piece.w, piece.h, radius);
+      }
+      context.fill();
       context.restore();
     }
 

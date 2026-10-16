@@ -727,7 +727,11 @@ interface PostDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   category: prismic.SelectField<
-    "Review" | "Comparison" | "My experience" | "HRT 101"
+    | "Telehealth brand reviews"
+    | "Formulations & dosages"
+    | "My experience & results"
+    | "Testing, labs & tracking"
+    | "Cost, insurance & access"
   >;
 
   /**
@@ -1419,6 +1423,17 @@ export interface BrandPromoSliceDefaultPrimaryOverwriteItem {
    * - **Documentation**: https://prismic.io/docs/fields/image
    */
   product: prismic.ImageField<never>;
+
+  /**
+   * Style field in *Brand promo → Default → Primary → Overwrite*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Quote puts the logo, her words, and a visit link on the right. Card puts the product photo and price there.
+   * - **Default Value**: Card
+   * - **API ID Path**: brand_promo.default.primary.overwrite[].style
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  style: prismic.SelectField<"Quote" | "Card", "filled">;
 
   /**
    * Photo and price field in *Brand promo → Default → Primary → Overwrite*
@@ -2915,7 +2930,12 @@ export interface PostsSliceHomePrimary {
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   category: prismic.SelectField<
-    "All" | "Review" | "Comparison" | "My experience" | "HRT 101",
+    | "All"
+    | "Telehealth brand reviews"
+    | "Formulations & dosages"
+    | "My experience & results"
+    | "Testing, labs & tracking"
+    | "Cost, insurance & access",
     "filled"
   >;
 }
@@ -3036,7 +3056,12 @@ export interface PostsSliceFeaturedPrimary {
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   category: prismic.SelectField<
-    "All" | "Review" | "Comparison" | "My experience" | "HRT 101",
+    | "All"
+    | "Telehealth brand reviews"
+    | "Formulations & dosages"
+    | "My experience & results"
+    | "Testing, labs & tracking"
+    | "Cost, insurance & access",
     "filled"
   >;
 
@@ -3170,7 +3195,12 @@ export interface PostsSliceGridPrimary {
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   category: prismic.SelectField<
-    "All" | "Review" | "Comparison" | "My experience" | "HRT 101",
+    | "All"
+    | "Telehealth brand reviews"
+    | "Formulations & dosages"
+    | "My experience & results"
+    | "Testing, labs & tracking"
+    | "Cost, insurance & access",
     "filled"
   >;
 
@@ -3183,6 +3213,17 @@ export interface PostsSliceGridPrimary {
    * - **Documentation**: https://prismic.io/docs/fields/number
    */
   count: prismic.NumberField;
+
+  /**
+   * Hide the featured post field in *Posts → Grid → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: posts.grid.primary.hide_featured
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  hide_featured: prismic.BooleanField;
 }
 
 /**
@@ -3301,7 +3342,12 @@ export interface PostsSliceRowPrimary {
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   category: prismic.SelectField<
-    "All" | "Review" | "Comparison" | "My experience" | "HRT 101",
+    | "All"
+    | "Telehealth brand reviews"
+    | "Formulations & dosages"
+    | "My experience & results"
+    | "Testing, labs & tracking"
+    | "Cost, insurance & access",
     "filled"
   >;
 }
@@ -3802,6 +3848,17 @@ export interface RibbonSliceDefaultPrimary {
     "None" | "Small" | "Medium" | "Large",
     "filled"
   >;
+
+  /**
+   * Layout field in *Ribbon → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: On the right keeps the words on the left and the buttons beside them. Centered centers the words and puts the buttons under them.
+   * - **Default Value**: On the right
+   * - **API ID Path**: ribbon.default.primary.layout
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  layout: prismic.SelectField<"On the right" | "Centered", "filled">;
 
   /**
    * Title field in *Ribbon → Default → Primary*
@@ -4568,6 +4625,17 @@ export interface SideBySideSliceClinicPrimary {
   clinic: prismic.ContentRelationshipField<"provider">;
 
   /**
+   * Style field in *Side by side → Clinic → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Quote puts the logo, her words, and a visit link on this side. Card puts the product photo and price there.
+   * - **Default Value**: Quote
+   * - **API ID Path**: side_by_side.clinic.primary.style
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  style: prismic.SelectField<"Quote" | "Card", "filled">;
+
+  /**
    * Text field in *Side by side → Clinic → Primary*
    *
    * - **Field Type**: Rich Text
@@ -4911,6 +4979,17 @@ export interface TextSliceDefaultPrimary {
     "None" | "Small" | "Medium" | "Large",
     "filled"
   >;
+
+  /**
+   * Layout field in *Text → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: On the right keeps the writing on the left and the link beside the heading. Centered centers the writing and puts the link under it.
+   * - **Default Value**: On the right
+   * - **API ID Path**: text.default.primary.layout
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  layout: prismic.SelectField<"On the right" | "Centered", "filled">;
 
   /**
    * Text field in *Text → Default → Primary*

@@ -206,6 +206,83 @@ describe("PageSliceZone", () => {
     expect(layouts[1]).toContain("data-last");
   });
 
+  it("features the newest post and leaves it out of the grid", () => {
+    const posts = [
+      {
+        title: "Newest story",
+        href: "/post/newest-story",
+        published: "2026-09-29",
+        category: "My experience & results",
+      },
+      {
+        title: "August story",
+        href: "/post/august-story",
+        published: "2026-08-01",
+        category: "My experience & results",
+      },
+    ];
+    const slices = [
+      slice(
+        "posts",
+        { ...section(""), category: "All", post: { link_type: "Any" } },
+        "featured",
+      ),
+      slice(
+        "posts",
+        { ...section("Latest articles"), category: "All" },
+        "grid",
+      ),
+    ];
+
+    const html = render(slices, context({ posts }));
+    expect(html.split("Newest story").length - 1).toBe(1);
+    expect(html).toContain("August story");
+
+    const repeated = render(
+      slices,
+      context({ posts, category: "My experience & results" }),
+    );
+    expect(repeated).toContain("Latest articles");
+    expect(repeated.split("Newest story").length - 1).toBe(1);
+    expect(repeated).toContain("August story");
+  });
+
+  it("keeps the featured post in the grid when the switch is off", () => {
+    const posts = [
+      {
+        title: "Newest story",
+        href: "/post/newest-story",
+        published: "2026-09-29",
+      },
+      {
+        title: "August story",
+        href: "/post/august-story",
+        published: "2026-08-01",
+      },
+    ];
+    const html = render(
+      [
+        slice(
+          "posts",
+          { ...section(""), category: "All", post: { link_type: "Any" } },
+          "featured",
+        ),
+        slice(
+          "posts",
+          {
+            ...section("Latest articles"),
+            category: "All",
+            hide_featured: false,
+          },
+          "grid",
+        ),
+      ],
+      context({ posts }),
+    );
+
+    expect(html.split("Newest story").length - 1).toBe(2);
+  });
+
   it("shows the posts the page loaded", () => {
     const html = render(
       [slice("posts", { ...section("Keep reading"), category: "All" }, "row")],

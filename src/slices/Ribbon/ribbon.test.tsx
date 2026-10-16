@@ -102,6 +102,7 @@ describe("Ribbon", () => {
     expect(html).toContain('data-box="Pink"');
     expect(html).toContain('data-behind="Transparent"');
     expect(html).toContain('data-tone="light"');
+    expect(html).toContain('data-layout="right"');
     expect(html).toContain('data-wave="true"');
     expect(html).toContain('id="still-lining-the-prices-up"');
   });
@@ -119,6 +120,32 @@ describe("Ribbon", () => {
     expect(html).toContain('data-tone="dark"');
     expect(html).not.toContain("data-wave");
     expect(html).toContain('rel="sponsored nofollow noopener noreferrer"');
+  });
+
+  it("centers the words and stacks the buttons under them", () => {
+    const html = render({
+      ...section({
+        heading: rich("Before you go"),
+        link: button("All clinics", "/providers"),
+      }),
+      layout: "Centered",
+      title: rich("Still lining the prices up?"),
+      content: rich("The comparison chart includes Midi Health too."),
+      button: [button("Open the price chart", "/hrt-price-comparison-chart")],
+    });
+
+    const heading = html.indexOf("Before you go");
+    const sectionLink = html.indexOf("All clinics");
+    const title = html.indexOf("Still lining the prices up?");
+    const chart = html.indexOf("Open the price chart");
+
+    expect(html).toContain('data-layout="centered"');
+    expect(html).toContain("text-center");
+    expect(html).not.toContain("justify-between");
+    expect(heading).toBeGreaterThan(-1);
+    expect(sectionLink).toBeGreaterThan(heading);
+    expect(title).toBeGreaterThan(sectionLink);
+    expect(chart).toBeGreaterThan(title);
   });
 
   it("drops the box title to a card heading under a section heading", () => {

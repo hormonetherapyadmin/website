@@ -107,7 +107,13 @@
       "category": {
         "config": {
           "label": "Category",
-          "options": ["Review", "Comparison", "My experience", "HRT 101"],
+          "options": [
+            "Telehealth brand reviews",
+            "Formulations & dosages",
+            "My experience & results",
+            "Testing, labs & tracking",
+            "Cost, insurance & access"
+          ],
           "placeholder": "Shown above the title. Leave blank if none of these fit."
         },
         "type": "Select"

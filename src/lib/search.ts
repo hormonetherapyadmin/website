@@ -33,6 +33,7 @@ const SKIP_KEYS = new Set([
   "box_background",
   "space_above",
   "space_below",
+  "layout",
 ]);
 
 export type SearchKind = "page" | "post";

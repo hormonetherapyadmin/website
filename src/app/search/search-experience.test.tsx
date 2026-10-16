@@ -25,7 +25,7 @@ const hits: SearchHit[] = [
     kind: "post",
     title: "My Inner Balance review",
     href: "/post/inner-balance-review",
-    label: "Review",
+    label: "Telehealth brand reviews",
     date: "Mar 2, 2026",
     published: "2026-03-02",
     text: "my inner balance review",
@@ -53,7 +53,7 @@ describe("SearchExperience", () => {
     expect(html).toContain("Blog");
     expect(html).toContain('href="/inner-balance"');
     expect(html).toContain('href="/post/inner-balance-review"');
-    expect(html).toContain("Review");
+    expect(html).toContain("Telehealth brand reviews");
     expect(html).toContain("Mar 2, 2026");
     expect(html.indexOf("Pages")).toBeLessThan(html.indexOf("Blog"));
   });

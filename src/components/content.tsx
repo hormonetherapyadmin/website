@@ -130,17 +130,23 @@ export function Content({
   field,
   clinics,
   tokens = "public",
+  align = "start",
 }: {
   field: RichTextField | null | undefined;
   clinics?: readonly TokenClinic[];
   /** Preview names a missing clinic. The public page drops the token. */
   tokens?: "preview" | "public";
+  /** Centered centers the writing. Cards and lists stay in their own blocks. */
+  align?: "start" | "center";
 }) {
   const pieces = contentPieces(field);
   if (!pieces.length) return null;
 
   return (
-    <div className={styles.body}>
+    <div
+      className={styles.body}
+      data-align={align === "center" ? "center" : undefined}
+    >
       {pieces.map((piece, index) => {
         if (
           piece.kind === "rich" ||

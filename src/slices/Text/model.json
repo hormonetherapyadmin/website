@@ -78,6 +78,15 @@
           },
           "type": "Select"
         },
+        "layout": {
+          "config": {
+            "default_value": "On the right",
+            "label": "Layout",
+            "options": ["On the right", "Centered"],
+            "placeholder": "On the right keeps the writing on the left and the link beside the heading. Centered centers the writing and puts the link under it."
+          },
+          "type": "Select"
+        },
         "text": {
           "config": {
             "allowTargetBlank": true,

@@ -185,7 +185,7 @@ describe("pageSearchHit and postSearchHit", () => {
           title: rich("Winona review"),
           sub_title: rich("A cream I used for a year."),
           image: image("https://images.prismic.io/winona.jpg"),
-          category: "Review",
+          category: "Telehealth brand reviews",
           published_date: "2026-03-02",
           indexing: true,
           body: rich("Night sweats eased in the second month."),
@@ -195,7 +195,7 @@ describe("pageSearchHit and postSearchHit", () => {
       kind: "post",
       href: "/post/winona-review",
       excerpt: "A cream I used for a year.",
-      label: "Review",
+      label: "Telehealth brand reviews",
       published: "2026-03-02",
       date: "Mar 2, 2026",
     });

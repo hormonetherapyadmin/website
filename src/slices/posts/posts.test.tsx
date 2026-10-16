@@ -5,7 +5,9 @@ import { describe, expect, it, vi } from "vitest";
 import type { SliceSectionFields } from "@/components/slice-section";
 import {
   Posts,
+  featuredPostHref,
   formatPostDate,
+  gridFeature,
   pageSize,
   pageWindow,
   selectPosts,
@@ -37,7 +39,7 @@ function section(heading: string): SliceSectionFields {
 function post(
   title: string,
   published: string,
-  category = "Review",
+  category = "Telehealth brand reviews",
 ): PostCardData {
   return {
     title,
@@ -51,12 +53,12 @@ function post(
 }
 
 const POSTS = [
-  post("Older review", "2026-01-01", "Review"),
-  post("Newest story", "2026-09-29", "My experience"),
-  post("Middle comparison", "2026-06-01", "Comparison"),
-  post("Spring guide", "2026-03-01", "HRT 101"),
-  post("Summer review", "2026-07-01", "Review"),
-  post("August story", "2026-08-01", "My experience"),
+  post("Older review", "2026-01-01", "Telehealth brand reviews"),
+  post("Newest story", "2026-09-29", "My experience & results"),
+  post("Middle comparison", "2026-06-01", "Formulations & dosages"),
+  post("Spring guide", "2026-03-01", "Testing, labs & tracking"),
+  post("Summer review", "2026-07-01", "Telehealth brand reviews"),
+  post("August story", "2026-08-01", "My experience & results"),
 ];
 
 describe("selectPosts", () => {
@@ -77,7 +79,7 @@ describe("selectPosts", () => {
 
   it("keeps one category and leaves out the featured post", () => {
     const selected = selectPosts(POSTS, {
-      category: "Review",
+      category: "Telehealth brand reviews",
       limit: 12,
       skipHref: "/older-review",
     });
@@ -92,6 +94,40 @@ describe("selectPosts", () => {
       "Middle comparison",
     ]);
     expect(selected.pages).toBe(1);
+  });
+});
+
+describe("gridFeature", () => {
+  it("leaves the featured post out while the switch is empty", () => {
+    expect(
+      gridFeature({
+        hideFeatured: null,
+        pageFeaturedHref: "/newest-story",
+        newestHref: "/newest-story",
+        filtering: false,
+      }),
+    ).toEqual({ skipHref: "/newest-story", showInline: false });
+  });
+
+  it("shows the newest itself when the switch is on and nothing else features it", () => {
+    expect(
+      gridFeature({
+        hideFeatured: true,
+        newestHref: "/newest-story",
+        filtering: false,
+      }),
+    ).toEqual({ skipHref: "/newest-story", showInline: true });
+  });
+});
+
+describe("featuredPostHref", () => {
+  it("uses the newest post when Featured has no post picked", () => {
+    expect(
+      featuredPostHref(
+        { variation: "featured", primary: { category: "All", post: null } },
+        POSTS,
+      ),
+    ).toBe("/newest-story");
   });
 });
 
@@ -129,7 +165,7 @@ describe("Posts", () => {
     expect(html).not.toContain("Older review");
     expect(html).toContain("Sep 29, 2026");
     expect(html).toContain("5 min read");
-    expect(html).toContain("My experience");
+    expect(html).toContain("My experience &amp; results");
   });
 
   it("features a picked post", () => {
@@ -138,7 +174,11 @@ describe("Posts", () => {
         variation="featured"
         primary={{ ...section(""), category: "All" }}
         posts={POSTS}
-        featured={post("Pinned comparison", "2020-01-01", "Comparison")}
+        featured={post(
+          "Pinned comparison",
+          "2020-01-01",
+          "Formulations & dosages",
+        )}
       />,
     );
 
@@ -157,10 +197,67 @@ describe("Posts", () => {
     );
 
     expect(html).toContain("All posts");
-    expect(html).toContain("Reviews");
+    expect(html).toContain("Telehealth brand reviews");
     expect(html).toContain('aria-current="true"');
     expect(html).toContain("Older posts");
     expect(html).toContain("Newest story");
+    expect(html).not.toContain("Summer review");
+  });
+
+  it("shows the newest as the feature and leaves it out of the grid", () => {
+    const html = renderToStaticMarkup(
+      <Posts
+        variation="grid"
+        primary={{
+          ...section("Latest articles"),
+          category: "All",
+          count: 2,
+          hide_featured: true,
+        }}
+        posts={POSTS}
+      />,
+    );
+
+    expect(html.split('href="/newest-story"').length - 1).toBe(1);
+    expect(html).toContain("August story");
+    expect(html).toContain("Summer review");
+    expect(html).not.toContain("No posts yet.");
+  });
+
+  it("repeats the featured post when the switch is off", () => {
+    const html = renderToStaticMarkup(
+      <Posts
+        variation="grid"
+        primary={{
+          ...section("Latest articles"),
+          category: "All",
+          hide_featured: false,
+        }}
+        posts={POSTS}
+        pageFeaturedHref="/newest-story"
+      />,
+    );
+
+    expect(html).toContain("Newest story");
+    expect(html).not.toContain("featureLead");
+  });
+
+  it("puts the featured post back on a category tab", () => {
+    const html = renderToStaticMarkup(
+      <Posts
+        variation="grid"
+        primary={{
+          ...section("Latest articles"),
+          category: "All",
+          hide_featured: true,
+        }}
+        posts={POSTS}
+        activeCategory="My experience & results"
+      />,
+    );
+
+    expect(html).toContain("Newest story");
+    expect(html).toContain("August story");
     expect(html).not.toContain("Summer review");
   });
 
@@ -168,9 +265,12 @@ describe("Posts", () => {
     const html = renderToStaticMarkup(
       <Posts
         variation="grid"
-        primary={{ ...section("Reviews"), category: "Review" }}
+        primary={{
+          ...section("Reviews"),
+          category: "Telehealth brand reviews",
+        }}
         posts={POSTS}
-        activeCategory="Comparison"
+        activeCategory="Formulations & dosages"
       />,
     );
 
@@ -183,8 +283,13 @@ describe("Posts", () => {
     const html = renderToStaticMarkup(
       <Posts
         variation="row"
-        primary={{ ...section("Keep reading"), category: "HRT 101" }}
-        posts={POSTS.filter((item) => item.category !== "HRT 101")}
+        primary={{
+          ...section("Keep reading"),
+          category: "Testing, labs & tracking",
+        }}
+        posts={POSTS.filter(
+          (item) => item.category !== "Testing, labs & tracking",
+        )}
       />,
     );
 
