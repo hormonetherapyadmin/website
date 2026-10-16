@@ -125,14 +125,6 @@
                 },
                 "type": "StructuredText"
               },
-              "link": {
-                "config": {
-                  "allowTargetBlank": true,
-                  "allowText": true,
-                  "label": "Link"
-                },
-                "type": "Link"
-              },
               "quote": {
                 "config": {
                   "allowTargetBlank": true,
@@ -159,6 +151,15 @@
                   "placeholder": "Empty uses the brand's product image. Describe the product."
                 },
                 "type": "Image"
+              },
+              "style": {
+                "config": {
+                  "default_value": "Card",
+                  "label": "Style",
+                  "options": ["Quote", "Card"],
+                  "placeholder": "Quote puts the logo, her words, and a visit link on the right. Card puts the product photo and price there."
+                },
+                "type": "Select"
               },
               "layout": {
                 "config": {

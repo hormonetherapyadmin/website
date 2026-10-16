@@ -163,7 +163,23 @@ migration release. It never publishes the release.
 
 Once Peggy edits imported posts in Prismic, do not re-import them. For
 the final sync, export again and import only posts that are new or
-changed in Wix since the last export, using `--only`.
+changed in Wix since the last export, using `--only`. A full re-import
+still does not write Category. Use the category script below for that
+field. Re-importing a post with `--only` or `--replace` sends the post
+again without Category, so run the category script again afterwards
+for those posts.
+
+### Post categories
+
+`scripts/set-post-categories.mts` reads the live Wix categories and
+sets Category on posts already published in Prismic. The labels are
+the tightened names in `src/migration/post-category.ts`. It does not
+create the two Wix posts that are not in Prismic, and it does not
+change the story.
+
+-   `node scripts/set-post-categories.mts` is a dry run.
+-   `--write` puts the category updates in the migration release.
+    `--publish` publishes that release. `--only <slug>` limits the run.
 
 ## URL Manifest
 

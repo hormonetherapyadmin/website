@@ -62,11 +62,12 @@ export type BrandPromoClinic = {
 export type BrandPromoOverwrite = {
   small_heading?: RichTextField | null;
   intro?: RichTextField | null;
-  link?: LinkField | null;
   quote?: RichTextField | null;
   text?: RichTextField | null;
   product?: ImageField | null;
-  /** Stacked puts the photo above the price, as one card. */
+  /** Quote is her words on the right. Card is the product photo and price. */
+  style?: string | null;
+  /** Stacked puts the photo above the price, as one card. Card style only. */
   layout?: string | null;
   links?: readonly LinkField[] | null;
 };
@@ -200,6 +201,11 @@ export function brandPromoTone(background: string | null | undefined) {
  * The sentence under the clinic name. A written Quote wins. An empty
  * Quote uses the clinic's In my words.
  */
+/** Quote is the logo and her words. Anything else, including a blank, is the product card. */
+export function brandPromoStyle(value: string | null | undefined) {
+  return value === "Quote" ? "quote" : "card";
+}
+
 export function brandPromoQuote(
   field: RichTextField | null | undefined,
   clinicQuote: string | undefined,
@@ -371,8 +377,10 @@ function Media({ field, sizes }: { field: ImageField; sizes: string }) {
  * One clinic card. Trusted providers stacks one of these per clinic.
  * Navy is the featured card. Is this 1st? shows the badge.
  * Place is the line beside that badge. Small heading, Intro, Quote,
- * Text, the product photo, Photo and price, and extra links live in
+ * Text, the product photo, Style, Photo and price, and extra links live in
  * Overwrite. Leave that group off and the card uses the brand.
+ * Style Quote puts the logo, her words, and a visit link on the right.
+ * Style Card, the default, puts the product photo and price there.
  * A blank Small heading reads "Voted best for".
  * The price, logo, visit link, and coupon come from the clinic.
  * Products & pricing is the brand's page. My review is her post. Each
@@ -405,6 +413,7 @@ export function BrandPromo({
     isFilled.richText(written.small_heading) &&
     Boolean(asText(written.small_heading).trim());
   const quote = brandPromoQuote(written.quote, clinic?.quote);
+  const style = brandPromoStyle(written.style);
   const links = brandPromoLinks(clinic);
   const extraLinks = brandPromoExtraLinks(written.links);
   const product = brandPromoProduct(written.product, clinic?.product);
@@ -450,7 +459,12 @@ export function BrandPromo({
       <div
         className={styles.layout}
         data-tone={tone}
-        data-layout={written.layout === "Stacked" ? "stacked" : undefined}
+        data-style={style === "quote" ? "quote" : undefined}
+        data-layout={
+          style === "card" && written.layout === "Stacked"
+            ? "stacked"
+            : undefined
+        }
         data-last={last ? "" : undefined}
       >
         <div className={styles.copy}>
@@ -483,7 +497,7 @@ export function BrandPromo({
               className={styles.title}
             />
           ) : null}
-          {clinic && name ? (
+          {style === "card" && clinic && name ? (
             <p
               className={styles.brandName}
               id={headingFilled ? undefined : labelId}
@@ -515,14 +529,14 @@ export function BrandPromo({
             unstyled
             className={styles.detail}
           />
-          {quote.field ? (
+          {style === "card" && quote.field ? (
             <RichText
               field={quote.field}
               as="p"
               unstyled
               className={styles.quote}
             />
-          ) : quote.text ? (
+          ) : style === "card" && quote.text ? (
             <p className={styles.quote}>{quote.text}</p>
           ) : null}
           {written.text && isFilled.richText(written.text) ? (
@@ -593,7 +607,16 @@ export function BrandPromo({
             </ul>
           ) : null}
         </div>
-        {showProduct || showDeal ? (
+        {style === "quote" ? (
+          <QuoteCard
+            clinic={clinic}
+            name={name}
+            nameId={!headingFilled && name ? labelId : undefined}
+            quote={quote}
+            visitHref={clinic?.visitHref}
+          />
+        ) : null}
+        {style === "card" && (showProduct || showDeal) ? (
           <div className={styles.offer}>
             {product ? (
               <figure className={styles.product}>
@@ -672,12 +695,201 @@ export function BrandPromo({
   );
 }
 
-function Logo({ clinic }: { clinic: BrandPromoClinic }) {
+function Logo({
+  clinic,
+  roomy = false,
+}: {
+  clinic: BrandPromoClinic;
+  roomy?: boolean;
+}) {
   if (!clinic.logo?.src) return null;
   return (
-    <span className={styles.logo}>
+    <span className={roomy ? styles.logoRoomy : styles.logo}>
       <Image src={clinic.logo.src} alt="" width={64} height={64} />
     </span>
+  );
+}
+
+function QuoteCard({
+  clinic,
+  name,
+  nameId,
+  quote,
+  visitHref,
+}: {
+  clinic?: BrandPromoClinic | null;
+  name?: string;
+  nameId?: string;
+  quote: { field?: RichTextField; text?: string };
+  visitHref?: string;
+}) {
+  const visit = name ? `Visit ${name}` : "";
+  const words = Boolean(quote.field || quote.text);
+
+  if (!name && !words && !visitHref) return null;
+
+  return (
+    <aside className={styles.quoteCard} aria-label={name ?? "Quote"}>
+      {name ? (
+        <p className={styles.quoteBrand} id={nameId}>
+          {clinic ? <Logo clinic={clinic} roomy /> : null}
+          <span>{name}</span>
+        </p>
+      ) : null}
+      {words ? (
+        <blockquote className={styles.quoteWords}>
+          {quote.field ? (
+            <RichText field={quote.field} as="p" unstyled />
+          ) : (
+            <p>{quote.text}</p>
+          )}
+        </blockquote>
+      ) : null}
+      {visitHref && visit ? (
+        <a
+          href={visitHref}
+          className={styles.quoteVisit}
+          {...visitLinkProps(name ?? "", "brand_promo")}
+        >
+          {visit}
+          <Chevron />
+          <span className="sr-only"> (affiliate link, opens in a new tab)</span>
+        </a>
+      ) : null}
+    </aside>
+  );
+}
+
+/** The product photo and price, as one card. Side by side uses this for Style Card. */
+export type ProductCardClinic = {
+  name?: string;
+  visitHref?: string;
+  visitText?: string;
+  kind?: BrandKind;
+  monthlyPrice?: number | null;
+  priceUnit?: PriceUnit;
+  priceNote?: string;
+  insurance?: boolean;
+  formulation?: string;
+  gettingStarted?: string;
+  offerCode?: string;
+  offerCopy?: string;
+  product?: ImageField | null;
+};
+
+export function ProductCard({
+  clinic,
+  placement,
+}: {
+  clinic: ProductCardClinic;
+  placement: string;
+}) {
+  const name = text(clinic.name);
+  const product =
+    clinic.product && isFilled.image(clinic.product) ? clinic.product : null;
+  const price =
+    typeof clinic.monthlyPrice === "number" ? clinic.monthlyPrice : undefined;
+  const priceNote = text(clinic.priceNote);
+  const formulation = text(clinic.formulation);
+  const gettingStarted = text(clinic.gettingStarted);
+  const code = text(clinic.offerCode);
+  const codeNote = text(clinic.offerCopy);
+  const visitText = text(clinic.visitText) || (name ? `Visit ${name}` : "");
+  const facts = [
+    formulation
+      ? { kind: "formulation" as const, text: formulation }
+      : undefined,
+    clinic.kind !== "Product" && typeof clinic.insurance === "boolean"
+      ? {
+          kind: clinic.insurance ? ("yes" as const) : ("no" as const),
+          text: clinic.insurance ? "Takes insurance" : "Doesn't take insurance",
+        }
+      : undefined,
+    gettingStarted ? { kind: "yes" as const, text: gettingStarted } : undefined,
+  ].filter((fact) => fact !== undefined);
+  const showDeal = Boolean(
+    price !== undefined ||
+    facts.length ||
+    (clinic.visitHref && visitText) ||
+    code ||
+    codeNote,
+  );
+
+  if (!product && !showDeal) return null;
+
+  return (
+    <div className={styles.stackedCard}>
+      {product ? (
+        <figure className={styles.product}>
+          {clinic.visitHref ? (
+            <a
+              href={clinic.visitHref}
+              className={styles.productLink}
+              {...visitLinkProps(name ?? "", placement)}
+            >
+              <Media field={product} sizes="(max-width: 960px) 100vw, 26rem" />
+              <span className="sr-only">
+                {text(product.alt)
+                  ? " (affiliate link, opens in a new tab)"
+                  : ` ${name ? `Visit ${name}` : "Visit"} (affiliate link, opens in a new tab)`}
+              </span>
+            </a>
+          ) : (
+            <Media field={product} sizes="(max-width: 960px) 100vw, 26rem" />
+          )}
+        </figure>
+      ) : null}
+      {showDeal ? (
+        <aside
+          className={styles.deal}
+          aria-label={name ? `${name} price` : "Price"}
+        >
+          {price !== undefined ? (
+            <p className={styles.price}>
+              <span className={styles.amount}>{priceLabel(price)}</span>
+              {clinic.priceUnit === "One time" ? null : (
+                <span className={styles.per}>/mo</span>
+              )}
+              {priceNote ? (
+                <span className={styles.priceNote}>{priceNote}</span>
+              ) : null}
+            </p>
+          ) : null}
+          {facts.length > 0 ? (
+            <ul className={styles.facts}>
+              {facts.map((fact) => (
+                <li key={fact.text}>
+                  <FactIcon kind={fact.kind} />
+                  {fact.text}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          {clinic.visitHref && visitText ? (
+            <div className={styles.actions}>
+              <a
+                href={clinic.visitHref}
+                className={styles.visit}
+                {...visitLinkProps(name ?? "", placement)}
+              >
+                {visitText}
+                <Chevron />
+                <span className="sr-only">
+                  {" "}
+                  (affiliate link, opens in a new tab)
+                </span>
+              </a>
+            </div>
+          ) : null}
+          {code || codeNote ? (
+            <p className={styles.code}>
+              {code ? <b>Code {code}</b> : <b>{codeNote}</b>}
+              {code && codeNote ? <span>{codeNote}</span> : null}
+            </p>
+          ) : null}
+        </aside>
+      ) : null}
+    </div>
   );
 }
 

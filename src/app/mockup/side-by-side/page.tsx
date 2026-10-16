@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { LinkField, RichTextField } from "@prismicio/client";
+import type { ImageField, LinkField, RichTextField } from "@prismicio/client";
 import type { TokenClinic } from "@/components/content-blocks";
 import type { SliceSectionFields } from "@/components/slice-section";
 import { CLINICS } from "@/app/mockup/_shared/clinics";
@@ -183,9 +183,10 @@ export default function SideBySidePreview() {
           ...section(
             "A clinic card",
             "Or the media can be the clinic itself.",
-            "The logo, the quote, and the visit link come from the clinic. This page does not invent a destination, so the visit link is a stand-in.",
+            "The logo, the quote, and the visit link come from the clinic. Style is Quote. This page does not invent a destination, so the visit link is a stand-in.",
           ),
           side: "Media right",
+          style: "Quote",
           text: rich(
             "Finding a product that treats my symptoms of menopause and helps with sleep was a clear winner for me.",
           ),
@@ -197,6 +198,45 @@ export default function SideBySidePreview() {
                 logo: inner.logo ? { src: inner.logo } : undefined,
                 quote: inner.quote,
                 visitHref: "#affiliate-link",
+              }
+            : null
+        }
+      />
+      <SideBySide
+        variation="clinic"
+        primary={{
+          ...section(
+            "A product card",
+            "Or that same clinic can be the product card.",
+            "Style is Card. The photo, the price, and the visit button come from the clinic.",
+          ),
+          side: "Media right",
+          style: "Card",
+          text: rich(
+            "The price and the photo are the clinic's. The writing on this side stays hers.",
+          ),
+        }}
+        clinic={
+          inner
+            ? {
+                name: inner.name,
+                logo: inner.logo ? { src: inner.logo } : undefined,
+                quote: inner.quote,
+                visitHref: "#affiliate-link",
+                visitText: "Visit Inner Balance",
+                monthlyPrice: inner.monthly,
+                priceNote: inner.priceNote,
+                insurance: inner.insurance,
+                formulation: inner.formulation,
+                gettingStarted: inner.note,
+                product: {
+                  id: "/mockup/products/oestra_rnieuz.webp",
+                  url: "/mockup/products/oestra_rnieuz.webp",
+                  alt: "Oestra cream jar",
+                  copyright: null,
+                  dimensions: { width: 800, height: 800 },
+                  edit: { x: 0, y: 0, zoom: 1, background: "transparent" },
+                } satisfies ImageField,
               }
             : null
         }

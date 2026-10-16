@@ -37,14 +37,6 @@
           },
           "type": "StructuredText"
         },
-        "link": {
-          "config": {
-            "allowTargetBlank": true,
-            "allowText": true,
-            "label": "Link"
-          },
-          "type": "Link"
-        },
         "background": {
           "config": {
             "default_value": "Transparent",
@@ -76,6 +68,15 @@
             "default_value": "None",
             "label": "Space below",
             "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "layout": {
+          "config": {
+            "default_value": "On the right",
+            "label": "Layout",
+            "options": ["On the right", "Centered"],
+            "placeholder": "On the right keeps the words on the left and the buttons beside them. Centered centers the words and puts the buttons under them."
           },
           "type": "Select"
         },

@@ -307,7 +307,7 @@ Engineering should establish semantic tokens such as:
 -   background
 -   surface
 -   text
--   muted text
+-   muted text (same color as text; secondary copy is not grey)
 -   border
 -   accent
 -   CTA
@@ -977,10 +977,9 @@ inventory.
 -   `/search` stays `noindex` even when indexing is enabled. A query
     is `?q=` on that address and is not its own page. The canonical
     is `/search`.
--   `/sitemap.xml` lists published Pages and Posts still set to Index,
-    plus the HTML sitemap at `/sitemap`. It omits `/search` and the
-    placeholder homepage. When indexing is on, `robots.txt` names that
-    file.
+-   `/sitemap.xml` lists the published Homepage, published Pages and
+    Posts still set to Index, plus the HTML sitemap at `/sitemap`. It
+    omits `/search`. When indexing is on, `robots.txt` names that file.
 -   `/sitemap` is the HTML sitemap. It is an app route, not a Prismic
     document. It is indexable when indexing is on, and it also links
     Home.

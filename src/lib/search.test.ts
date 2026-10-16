@@ -145,6 +145,22 @@ describe("pageSearchHit and postSearchHit", () => {
     ).toMatchObject({ href: "/blog" });
   });
 
+  it("includes the homepage at / even when the document has no uid", () => {
+    expect(
+      pageSearchHit({
+        id: "home",
+        type: "homepage",
+        url: null,
+        data: { meta_title: "Hormone Therapy Hub" },
+      }),
+    ).toMatchObject({
+      href: "/",
+      title: "Hormone Therapy Hub",
+      kind: "page",
+      label: "Page",
+    });
+  });
+
   it("drops a page that is not indexed, has no title, or uses a reserved path", () => {
     const data = {
       meta_title: "Search",
@@ -185,7 +201,7 @@ describe("pageSearchHit and postSearchHit", () => {
           title: rich("Winona review"),
           sub_title: rich("A cream I used for a year."),
           image: image("https://images.prismic.io/winona.jpg"),
-          category: "Review",
+          category: "Telehealth brand reviews",
           published_date: "2026-03-02",
           indexing: true,
           body: rich("Night sweats eased in the second month."),
@@ -195,7 +211,7 @@ describe("pageSearchHit and postSearchHit", () => {
       kind: "post",
       href: "/post/winona-review",
       excerpt: "A cream I used for a year.",
-      label: "Review",
+      label: "Telehealth brand reviews",
       published: "2026-03-02",
       date: "Mar 2, 2026",
     });

@@ -16,7 +16,7 @@ import { ClinicComparison } from "@/slices/clinic_comparison";
 import { ClinicFacts } from "@/slices/ClinicFacts";
 import { Divider } from "@/slices/divider";
 import { Hero, type HeroSlice as HeroProps } from "@/slices/hero";
-import { Posts, type PostCardData } from "@/slices/posts";
+import { featuredPostHref, Posts, type PostCardData } from "@/slices/posts";
 import { ProsAndCons } from "@/slices/ProsAndCons";
 import { Quote } from "@/slices/quote";
 import { Ribbon } from "@/slices/Ribbon";
@@ -52,6 +52,8 @@ export type PageSliceContext = {
   /** Grid page and category tab, from the address. */
   page: number;
   category: string | null;
+  /** The post a Featured slice on this page is showing. */
+  pageFeaturedHref?: string;
   tokens: "preview" | "public";
   /**
    * Space above on the slice after each slice id.
@@ -139,6 +141,7 @@ function PostsAdapter({ slice, context }: Props<PostsSlice>) {
       featured={featured}
       page={context.page}
       activeCategory={context.category}
+      pageFeaturedHref={context.pageFeaturedHref}
     />
   );
 }
@@ -293,6 +296,9 @@ export function PageSliceZone({
       slices[index + 1]?.slice_type ?? false,
     ]),
   );
+  const featuredSlice = slices.find(
+    (slice) => slice.slice_type === "posts" && slice.variation === "featured",
+  );
 
   return (
     <SliceZone
@@ -300,6 +306,10 @@ export function PageSliceZone({
       components={components}
       context={{
         ...context,
+        pageFeaturedHref:
+          featuredSlice?.slice_type === "posts"
+            ? featuredPostHref(featuredSlice, context.posts)
+            : undefined,
         followingSpaceAbove: following,
         followingSliceType: followingType,
       }}

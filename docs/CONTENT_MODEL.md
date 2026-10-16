@@ -74,14 +74,12 @@ blog posts, as cards. The list filters as you type. A shared search is
 `?q=` on that same address, and `/search` is always noindex (see
 `docs/SEO_AEO_GEO.md`). A match looks at the title, the subtitle or
 meta description, the post category, and the opening of the page or
-story (the first 2,000 characters). The homepage is left out while
-`/` is still the placeholder. A clinic is left out because a clinic
-has no public page.
+story (the first 2,000 characters). The Homepage is included. A clinic
+is left out because a clinic has no public page.
 
 `/sitemap` is an app route, not a Prismic document. It lists those same
-Pages and Posts, plus Home. `/sitemap.xml` lists the Pages, the Posts,
-and `/sitemap`. Home stays out of the XML file while `/` is still the
-placeholder, and `/search` stays out of both.
+pages and posts, with Home first. `/sitemap.xml` lists the Homepage,
+the Pages, the Posts, and `/sitemap`. `/search` stays out of both.
 
 The conceptual list in `docs/PROJECT_PLAN.md` (Treatments, Reviews,
 Compare, and the rest) is the product direction, not the menu. The
@@ -94,8 +92,9 @@ renders.
 
 ### Homepage
 
-The homepage is one single page type. Its slices, the shared Section
-fields, and the rich text rules are specified in `docs/SLICE_MODEL.md`.
+The homepage is one single page type. `/` renders its slices. Its
+slices, the shared Section fields, and the rich text rules are
+specified in `docs/SLICE_MODEL.md`.
 
 ### Blog
 
@@ -136,9 +135,16 @@ Fields:
     author card
 -   About
 -   Profile
+-   Author link — a web address for a guest author. On that author's
+    posts it is the "Read my story" link and opens in a new tab.
+    Leave it empty on Peggy B.
 
 Peggy B. is the author document. A post with an empty Author field
 uses her. Choose another author only when the post is not hers.
+On her posts the byline goes to the about page, and the author card
+links to "Read my whole story" and "How I review." On a guest post
+the byline jumps to the author card at the bottom of the post, and
+that card links to "Read my story."
 
 Do not create credential fields that imply medical expertise unless
 actually applicable.
@@ -287,12 +293,33 @@ practical.
 
 ### Category
 
-The post's Category field is a select: Review, Comparison, My
-experience, or HRT 101. Wix blog categories are a different list and
-are not copied onto this select. Migration leaves Category empty. Do
-not create Category documents for those four labels, and do not give
-them public pages, until an indexing decision says the blog filter
-should be a real URL.
+The post's Category field is a select:
+
+-   Telehealth brand reviews
+-   Formulations & dosages
+-   My experience & results
+-   Testing, labs & tracking
+-   Cost, insurance & access
+
+These are Peggy's five Wix blog categories, with the wording tightened
+for the kicker and the blog tabs. Her Wix labels stay as she wrote
+them. When the category import runs, it maps them like this:
+
+| Wix label | Category |
+| --- | --- |
+| Telehealth BHRT Brand Reviews | Telehealth brand reviews |
+| Formulations & Dosages | Formulations & dosages |
+| My Experience & Results | My experience & results |
+| Testing, Labs & Tracking | Testing, labs & tracking |
+| Cost, Insurance & Access | Cost, insurance & access |
+
+`scripts/set-post-categories.mts` copies a Wix category onto each
+post that is already in Prismic. It writes Category and leaves the
+story and the other fields as they are. A dry run changes nothing.
+`--write --publish` sends the field and publishes the migration
+release. Do not create Category documents for these labels, and do
+not give them public pages, until an indexing decision says the blog
+filter should be a real URL.
 
 Use a Category document only where it provides a meaningful editorial
 taxonomy of its own. Avoid duplicating Topic semantics.
@@ -353,7 +380,8 @@ Keep this intentionally small.
 
 The homepage slices, the shared Section fields, and the shared rich text
 component are specified in `docs/SLICE_MODEL.md`. Copy those Section fields
-and those rich text presets onto later slices.
+and those rich text presets onto later slices. Link is not one of them.
+A later slice gets a link field only when its design needs one.
 
 The post and the blog index do not use slices. A post pulls a
 clinic's offer or facts into the story with a provider token. The

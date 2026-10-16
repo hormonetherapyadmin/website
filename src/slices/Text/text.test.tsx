@@ -1,5 +1,5 @@
 import { renderToStaticMarkup } from "react-dom/server";
-import type { RichTextField } from "@prismicio/client";
+import type { LinkField, RichTextField } from "@prismicio/client";
 import { describe, expect, it } from "vitest";
 import type { SliceSectionFields } from "@/components/slice-section";
 import { Text } from "./index";
@@ -41,6 +41,54 @@ describe("Text", () => {
     expect(markup).toMatch(/<h2[^>]*>Cost of Hormone Replacement Therapy/);
     expect(markup).toMatch(/<h3[^>]*>Prior Authorization<\/h3>/);
     expect(markup).toContain("Check your plan.");
+  });
+
+  it("keeps the link beside the heading", () => {
+    const markup = renderToStaticMarkup(
+      <Text
+        primary={{
+          ...section("Cost of Hormone Replacement Therapy"),
+          link: {
+            link_type: "Web",
+            url: "/chart",
+            text: "See the chart",
+          } as LinkField,
+          text: rich("Check your plan."),
+        }}
+      />,
+    );
+    const heading = markup.indexOf("Cost of Hormone Replacement Therapy");
+    const link = markup.indexOf("See the chart");
+    const body = markup.indexOf("Check your plan.");
+
+    expect(markup).toContain("justify-between");
+    expect(markup).not.toContain('data-align="center"');
+    expect(link).toBeGreaterThan(heading);
+    expect(link).toBeLessThan(body);
+  });
+
+  it("centers the writing and stacks the link under it", () => {
+    const markup = renderToStaticMarkup(
+      <Text
+        primary={{
+          ...section("Cost of Hormone Replacement Therapy"),
+          link: {
+            link_type: "Web",
+            url: "/chart",
+            text: "See the chart",
+          } as LinkField,
+          layout: "Centered",
+          text: rich("Check your plan."),
+        }}
+      />,
+    );
+    const body = markup.indexOf("Check your plan.");
+    const link = markup.indexOf("See the chart");
+
+    expect(markup).toContain("text-center");
+    expect(markup).toContain('data-align="center"');
+    expect(markup).not.toContain("justify-between");
+    expect(link).toBeGreaterThan(body);
   });
 
   it("shows a clinic token from the writing", () => {

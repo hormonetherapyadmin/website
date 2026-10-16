@@ -1,14 +1,15 @@
 /**
  * Canonical URLs for sitemap.xml and the /sitemap page.
- * Same published Pages and Posts as search. See docs/SEO_AEO_GEO.md.
+ * Same published Homepage, Pages, and Posts as search. See docs/SEO_AEO_GEO.md.
  */
 
 import type { MetadataRoute } from "next";
-import { createClient } from "@/prismicio";
+import { loadHomepage } from "@/lib/homepage";
 import { heroClinicId } from "@/lib/page-title";
 import { pageSearchHit, postSearchHit } from "@/lib/search";
 import { loadHeroClinicNames } from "@/lib/search-catalog";
 import { SITE_URL } from "@/lib/site";
+import { createClient } from "@/prismicio";
 
 export const SITEMAP_PATH = "/sitemap";
 
@@ -66,7 +67,7 @@ export function organizeSitemap(links: readonly SitemapLink[]) {
   };
 }
 
-/** Absolute URLs for sitemap.xml. Home stays off while `/` is the placeholder. */
+/** Absolute URLs for sitemap.xml. Home is included when the Homepage is published. */
 export function xmlSitemap(
   links: readonly SitemapLink[],
 ): MetadataRoute.Sitemap {
@@ -88,13 +89,22 @@ export function sitemapUrl(path: string) {
 
 export async function loadSitemapLinks(): Promise<SitemapLink[]> {
   const client = createClient();
-  const [pages, posts] = await Promise.all([
+  const [pages, posts, homepage] = await Promise.all([
     client.getAllByType("page"),
     client.getAllByType("post"),
+    loadHomepage(),
   ]);
-  const clinicNames = await loadHeroClinicNames(client, pages);
+  const clinicNames = await loadHeroClinicNames(
+    client,
+    homepage ? [homepage, ...pages] : pages,
+  );
+  const homeId = homepage ? heroClinicId(homepage.data.slices) : undefined;
+  const home = homepage
+    ? pageSitemapLink(homepage, homeId && clinicNames.get(homeId))
+    : null;
 
   return [
+    ...(home ? [home] : []),
     ...pages.flatMap((page) => {
       const id = heroClinicId(page.data.slices);
       const link = pageSitemapLink(page, id && clinicNames.get(id));

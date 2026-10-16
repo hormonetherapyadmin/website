@@ -314,7 +314,7 @@ describe("postCard", () => {
           sub_title: rich("Two creams, one year."),
           image: { url: "https://images.prismic.io/cover.jpg", alt: "Jars" },
           published_date: "2026-09-01",
-          category: "Comparison",
+          category: "Telehealth brand reviews",
           body: rich("word ".repeat(500)),
         },
       }),
@@ -325,7 +325,7 @@ describe("postCard", () => {
       excerpt: "Two creams, one year.",
       published: "2026-09-01",
       readTime: 2,
-      category: "Comparison",
+      category: "Telehealth brand reviews",
     });
   });
 

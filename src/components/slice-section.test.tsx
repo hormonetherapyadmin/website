@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import {
   SliceSection,
   sectionAnchor,
+  sliceLayout,
   type SliceSectionFields,
 } from "./slice-section";
 
@@ -41,6 +42,16 @@ describe("sectionAnchor", () => {
     expect(sectionAnchor("")).toBeUndefined();
     expect(sectionAnchor("9lives")).toBeUndefined();
     expect(sectionAnchor(null)).toBeUndefined();
+  });
+});
+
+describe("sliceLayout", () => {
+  it("treats only Centered as the stacked layout", () => {
+    expect(sliceLayout("Centered")).toBe("centered");
+    expect(sliceLayout("On the right")).toBe("right");
+    expect(sliceLayout(null)).toBe("right");
+    expect(sliceLayout("")).toBe("right");
+    expect(sliceLayout("Stacked")).toBe("right");
   });
 });
 
@@ -88,6 +99,46 @@ describe("SliceSection", () => {
     expect(html).toContain("Menopause isn’t a dirty word.");
     expect(html).toContain("All posts");
     expect(html).toContain('href="/blog"');
+    expect(html).toContain("justify-between");
+  });
+
+  it("can center the header and place the link under the writing", () => {
+    const below = renderToStaticMarkup(
+      <SliceSection
+        align="center"
+        linkPlacement="below"
+        section={fields({
+          heading: text("Before you go"),
+          link: { link_type: "Web", url: "/providers", text: "All clinics" },
+        })}
+      >
+        <p>The box</p>
+      </SliceSection>,
+    );
+    const end = renderToStaticMarkup(
+      <SliceSection
+        align="center"
+        linkPlacement="end"
+        section={fields({
+          heading: text("Cost"),
+          link: { link_type: "Web", url: "/chart", text: "See the chart" },
+        })}
+      >
+        <p>Check your plan.</p>
+      </SliceSection>,
+    );
+
+    expect(below).toContain("text-center");
+    expect(below).not.toContain("justify-between");
+    expect(below.indexOf("All clinics")).toBeGreaterThan(
+      below.indexOf("Before you go"),
+    );
+    expect(below.indexOf("The box")).toBeGreaterThan(
+      below.indexOf("All clinics"),
+    );
+    expect(end.indexOf("See the chart")).toBeGreaterThan(
+      end.indexOf("Check your plan."),
+    );
   });
 
   it("paints the color choices and sets the small heading color", () => {

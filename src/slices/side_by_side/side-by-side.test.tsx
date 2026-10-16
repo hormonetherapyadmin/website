@@ -1,11 +1,11 @@
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import type { LinkField, RichTextField } from "@prismicio/client";
+import type { ImageField, LinkField, RichTextField } from "@prismicio/client";
 import { describe, expect, it, vi } from "vitest";
 import type { TokenClinic } from "@/components/content-blocks";
 import { Content } from "@/components/content";
 import type { SliceSectionFields } from "@/components/slice-section";
-import { SideBySide } from "./index";
+import { SideBySide, sideBySideStyle } from "./index";
 
 vi.mock("next/image", () => ({
   default: (props: { alt?: string; src?: string }) =>
@@ -298,6 +298,45 @@ describe("SideBySide", () => {
     expect(markup).toContain("Visit Inner Balance");
     expect(markup).toContain('data-placement="side_by_side"');
     expect(markup).toContain('target="_blank"');
+    expect(markup).toContain('data-style="quote"');
+  });
+
+  it("switches the clinic panel from her words to the product card", () => {
+    expect(sideBySideStyle("Card")).toBe("card");
+    expect(sideBySideStyle(undefined)).toBe("quote");
+
+    const markup = renderToStaticMarkup(
+      <SideBySide
+        variation="clinic"
+        primary={{
+          ...section(),
+          style: "Card",
+          text: rich("What I use now."),
+        }}
+        clinic={{
+          name: "Mira",
+          quote: "Should stay off the card.",
+          visitHref: "https://example.com/mira",
+          visitText: "See Mira on Amazon",
+          monthlyPrice: 179,
+          priceUnit: "One time",
+          kind: "Product",
+          formulation: "Perimenopause Kit",
+          product: {
+            url: "/mockup/test-kits/mira-monitor.jpg",
+            alt: "Mira hormone monitor",
+          } as ImageField,
+        }}
+      />,
+    );
+
+    expect(markup).toContain('data-style="card"');
+    expect(markup).toContain("$179</span></p>");
+    expect(markup).toContain("See Mira on Amazon");
+    expect(markup).toContain("Perimenopause Kit");
+    expect(markup).toContain('alt="Mira hormone monitor"');
+    expect(markup).not.toContain("Should stay off the card.");
+    expect(markup).toContain('data-placement="side_by_side"');
   });
 
   it("embeds a video only when the markup is an iframe", () => {

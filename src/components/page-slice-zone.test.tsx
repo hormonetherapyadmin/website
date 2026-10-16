@@ -206,6 +206,109 @@ describe("PageSliceZone", () => {
     expect(layouts[1]).toContain("data-last");
   });
 
+  it("features the newest post and leaves it out of the grid", () => {
+    const posts = [
+      {
+        title: "Newest story",
+        href: "/post/newest-story",
+        published: "2026-09-29",
+        category: "My experience & results",
+      },
+      {
+        title: "August story",
+        href: "/post/august-story",
+        published: "2026-08-01",
+        category: "My experience & results",
+      },
+    ];
+    const slices = [
+      slice(
+        "posts",
+        { ...section(""), category: "All", post: { link_type: "Any" } },
+        "featured",
+      ),
+      slice(
+        "posts",
+        { ...section("Latest articles"), category: "All" },
+        "grid",
+      ),
+    ];
+
+    const html = render(slices, context({ posts }));
+    expect(html.split("Newest story").length - 1).toBe(1);
+    expect(html).toContain("August story");
+
+    const repeated = render(
+      slices,
+      context({ posts, category: "My experience & results" }),
+    );
+    expect(repeated.indexOf("Newest story")).toBeLessThan(
+      repeated.indexOf("Latest articles"),
+    );
+    expect(repeated.indexOf("Latest articles")).toBeLessThan(
+      repeated.indexOf("August story"),
+    );
+    expect(repeated.split("Newest story").length - 1).toBe(1);
+
+    const other = render(
+      slices,
+      context({
+        posts: [
+          ...posts,
+          {
+            title: "Dosage note",
+            href: "/post/dosage-note",
+            published: "2026-07-01",
+            category: "Formulations & dosages",
+          },
+        ],
+        category: "Formulations & dosages",
+      }),
+    );
+    expect(other.indexOf("Newest story")).toBeLessThan(
+      other.indexOf("Latest articles"),
+    );
+    expect(other.split("Newest story").length - 1).toBe(1);
+    expect(other).toContain("Dosage note");
+    expect(other).not.toContain("August story");
+  });
+
+  it("keeps the featured post in the grid when the switch is off", () => {
+    const posts = [
+      {
+        title: "Newest story",
+        href: "/post/newest-story",
+        published: "2026-09-29",
+      },
+      {
+        title: "August story",
+        href: "/post/august-story",
+        published: "2026-08-01",
+      },
+    ];
+    const html = render(
+      [
+        slice(
+          "posts",
+          { ...section(""), category: "All", post: { link_type: "Any" } },
+          "featured",
+        ),
+        slice(
+          "posts",
+          {
+            ...section("Latest articles"),
+            category: "All",
+            hide_featured: false,
+          },
+          "grid",
+        ),
+      ],
+      context({ posts }),
+    );
+
+    expect(html.split("Newest story").length - 1).toBe(2);
+  });
+
   it("shows the posts the page loaded", () => {
     const html = render(
       [slice("posts", { ...section("Keep reading"), category: "All" }, "row")],

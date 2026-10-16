@@ -1,5 +1,5 @@
 /**
- * Site search over published Pages and Posts.
+ * Site search over the published Homepage, Pages, and Posts.
  * The browser filters this catalog as you type. See docs/CONTENT_MODEL.md.
  */
 
@@ -33,6 +33,7 @@ const SKIP_KEYS = new Set([
   "box_background",
   "space_above",
   "space_below",
+  "layout",
 ]);
 
 export type SearchKind = "page" | "post";
@@ -61,6 +62,7 @@ export type SearchGroup = {
 
 type SearchSource = {
   id: string;
+  type?: string;
   uid?: string | null;
   url?: string | null;
 };
@@ -139,7 +141,10 @@ export function pageSearchHit(
     page.data.meta_title?.trim() ||
     sliceHeading(page.data.slices) ||
     "";
-  const href = publicPath(page.url, page.uid ? `/${page.uid}` : "");
+  const href = publicPath(
+    page.url,
+    page.uid ? `/${page.uid}` : page.type === "homepage" ? "/" : "",
+  );
   if (!title || !href) return null;
 
   const description = page.data.meta_description?.trim() || "";

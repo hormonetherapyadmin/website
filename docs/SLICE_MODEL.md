@@ -55,29 +55,65 @@ slice. One component reads them. The section wrapper is
 
 ### Section
 
-Every slice except the Divider starts with these seven fields, directly
+Every slice except the Divider starts with these six fields, directly
 on the slice and before its own fields. They are not in a group. In the
 Page Builder even a non-repeatable group starts empty, and she has to
 add an item before she can type a heading, so the fields stay open
 instead. The Divider has only Background, Space above, and Space below.
 Brand promo keeps Heading, Background, Space above, and Space below
-open, and puts Small heading, Intro, and Link in Overwrite.
+open, and puts Small heading and Intro in Overwrite.
 
 | Label | Id | Kind | Default |
 | --- | --- | --- | --- |
 | Small heading | `small_heading` | Heading rich text | Empty |
 | Heading | `heading` | Heading rich text | Empty |
 | Intro | `intro` | Heading rich text | Empty |
-| Link | `link` | Link, with display text | Empty |
 | Background | `background` | Select | Transparent |
 | Space above | `space_above` | Select | Medium |
 | Space below | `space_below` | Select | None |
 
-Small heading, Heading, Intro, and Link are the header. The link sits on
-the heading's row, as "All posts" does. When all four are empty, the
-slice has no header. Side by side is the exception: its Intro allows
-many paragraphs, and that header sits in the writing column beside the
-media. See Side by side.
+Small heading, Heading, and Intro are the header. When all three are
+empty, the slice has no header. Side by side is the exception: its
+Intro allows many paragraphs, and that header sits in the writing
+column beside the media. See Side by side.
+
+Link is not copied onto every slice. A slice gets one only when the
+design is a single text link. Latest posts, Text, and the Hero
+Subpage, Centered, and Brands variations have that field, `link`, with
+display text. It sits on the heading's row, as "All posts" does. Text
+can move it with Layout: On the right keeps it beside the heading, and
+Centered puts it under the writing. A slice that needs several links
+has its own field, such as Buttons, Benefits, or the link on a card.
+It does not also get Link.
+
+### Field order
+
+The Page Builder lists fields in the order the slice is assembled, top
+to bottom. Peggy fills what she sees on the page first. One slice has
+one writing field under the heading. Side by side's Intro and Text are
+that same column, so the audit keeps one field, Content, and drops the
+other. A slice with Buttons does not also have Link.
+
+Settings that are not writing or media come last: Background, Space
+above, Space below, and a slice's own placement choices, such as Side
+and Media position.
+
+The next slice audit applies this to every slice. The field tables
+below still describe the models as they are until that audit. Side by
+side Image is the order that audit uses:
+
+1. Small heading
+2. Heading
+3. Content
+4. Quote
+5. Buttons
+6. Image
+7. Caption
+8. Caption on the photo
+9. Space above, Space below, Side, Media position, Background
+
+Video, Quote, and Clinic follow the same idea: the writing, then that
+variation's media, then the settings.
 
 The Hero slice renders Heading as the page title (`h1`). Every other
 slice renders it as a section heading (`h2`). A card title is an `h3`.
@@ -298,7 +334,7 @@ Overwrite is one optional group. It starts empty. She adds it only when
 this card should differ from the brand, or from the built-in line
 "Voted best for". The card reads the first item. Small heading, Intro,
 Quote, Text, the product photo, Photo and price, and the extra links
-are in that group. The section Link is in the group and is not shown.
+are in that group.
 The section id is the clinic's UID, so a Boxes jump link of
 `#inner-balance` lands on this card.
 
@@ -325,18 +361,24 @@ Overwrite fields:
 | --- | --- | --- | --- | --- |
 | Small heading | `small_heading` | Heading rich text | No | Blank still says Voted best for |
 | Intro | `intro` | Heading rich text | No | Blank hides it |
-| Link | `link` | Link, with display text | No | Not shown |
 | Quote | `quote` | Heading rich text | No | Blank uses the clinic's In my words. Write a sentence here when this card should say something else. |
 | Text | `text` | Content rich text | No | Empty. On test kits, the paragraphs about each kit |
 | Product image | `product` | Image | No | Empty uses the brand's product image. A photo here replaces it. The description is the alt text. |
-| Photo and price | `layout` | Select: Beside, Stacked | No | Beside. Off the group, the card is Beside. |
+| Style | `style` | Select: Quote, Card | No | Card. Quote puts the logo, her words, and a visit link on the right. Card puts the product photo and price there. |
+| Photo and price | `layout` | Select: Beside, Stacked | No | Beside. Used when Style is Card. Off the group, the card is Beside. |
 | Links | `links` | Repeatable link, with display text | No | A second row under the brand buttons, such as a comparison |
 
 Text is more writing under the quote, with the content toolbar. Leave
 it blank to hide it. The test kits page uses it for the paragraphs
 about each kit, because a product card has more to say than one line.
 
-Photo and price sets the card on the right. Beside, the default, puts
+Style chooses the right side. Quote is a soft panel: the logo, the
+brand name, her words, and a text link that reads "Visit" plus the
+brand name. The logo tile has extra padding so the mark sits in a
+clear margin. Card, the default, is the product photo and price. A
+blank Style is Card, so a card saved before this field existed stays
+a product card. Photo and price applies only when Style is Card.
+Beside, the default, puts
 the price box next to the product image, as on Trusted providers.
 Stacked puts the image on top and the price box under it, as one
 card centered in the right half, with no line. The
@@ -370,7 +412,8 @@ button, the coupon, the product photo, Products & pricing, My
 review, My comparison, and Watch my review come from the clinic. A photo in
 Overwrite replaces the
 brand's product image. A filled Quote replaces the clinic's In my
-words. Is this 1st?, when on, shows the badge, and Place is the words
+words. On Quote style those words sit in the panel on the right. On
+Card style they sit under the brand name. Is this 1st?, when on, shows the badge, and Place is the words
 beside it, such as "My 2026 top choice". A clinic with a code shows
 "Code PEGGY10" and the code line under it. A clinic with no code shows
 the code line alone, such as Winona's "15% off your first order". The
@@ -378,7 +421,7 @@ brand buttons sit in this order: Products & pricing, My review,
 each My comparison in editor order, then Watch my review. A YouTube or
 Vimeo link gets a play icon. My review gets a page icon. My comparison gets a two-way
 arrow icon. Page gets a tag icon. Links written on the
-slice are a second row of text, grey on a
+slice are a second row of text, in the body color on a
 light card and white on Navy or Raspberry, each with a chevron. Set
 Space above and Space below to None on the directory cards so they
 stack. A light Beside card draws a rule across the bottom, in the
@@ -393,11 +436,15 @@ button.
 ### Ribbon
 
 The close band from the trusted-providers mockup, in `src/slices/Ribbon`.
-A rounded box sits on the section. Title and content are on the left.
-Buttons are on the right, in the order she adds them.
+A rounded box sits on the section. Layout chooses where the words and
+the buttons sit. On the right, the default, title and content are on
+the left and buttons are on the right, in the order she adds them. An
+empty choice is On the right, so a ribbon saved before this field keeps
+that arrangement. Centered centers the title and content and stacks the
+buttons under them. The section header centers too.
 
-Section is the seven shared fields. Background is the color behind the
-box. Leave Small heading, Heading, Intro, and Link empty for the
+Section is the shared fields. Background is the color behind the
+box. Leave Small heading, Heading, and Intro empty for the
 template, which has no header above the box. Heading, when she fills
 it, is the header above the box. Title is the line inside the box.
 
@@ -415,7 +462,8 @@ transparent band has no wave.
 
 | Label | Id | Kind | Required | Template |
 | --- | --- | --- | --- | --- |
-| Section | The seven Section fields | Shared, open on the slice | | Background is the color behind the box. Default Transparent |
+| Section | The Section fields | Shared, open on the slice | | Background is the color behind the box. Default Transparent |
+| Layout | `layout` | Select: On the right, Centered. Default On the right | No | On the right |
 | Title | `title` | Heading rich text | No | Still lining the prices up? |
 | Content | `content` | Content rich text | No | The comparison chart includes Midi Health too. |
 | Box background | `box_background` | Select. Same choices as Background. Default Pink | No | Pink |
@@ -432,15 +480,20 @@ section header can still show.
 
 Writing on its own, in `src/slices/Text`. Use it for a page that is
 mostly words, such as `/costandinsurance`, `/formuations`, or `/faq`.
-The writing is left aligned in a column the width of a post story,
-952 pixels on a wide screen (`--container-story`). The column is
-centered on the page. The section header sits in the same column. A
-Background color still fills the full width, the same as every slice.
-On a narrow screen the column is the screen, less the gutter.
+The writing sits in a column the width of a post story, 952 pixels on
+a wide screen (`--container-story`). The column is centered on the
+page. The section header sits in the same column. Layout chooses how
+the words and the link sit in that column. On the right, the default,
+the writing is left aligned and the link sits beside the heading. An
+empty choice is On the right. Centered centers the heading, intro, and
+writing, and puts the link under the writing. A Background color still
+fills the full width, the same as every slice. On a narrow screen the
+column is the screen, less the gutter.
 
 | Label | Id | Kind | Required |
 | --- | --- | --- | --- |
-| Section | The seven Section fields | Shared, open on the slice | |
+| Section | The Section fields, plus Link | Shared, open on the slice | |
+| Layout | `layout` | Select: On the right, Centered. Default On the right | No |
 | Text | `text` | Content rich text | No |
 
 Text uses the content toolbar: Heading 2, Heading 3, Heading 4,
@@ -465,7 +518,7 @@ every clinic page.
 
 | Label | Id | Kind | Required | Mockup |
 | --- | --- | --- | --- | --- |
-| Section | The seven Section fields | Shared, open on the slice | | Heading: The facts. Intro: What I confirmed on their page… |
+| Section | The Section fields | Shared, open on the slice | | Heading: The facts. Intro: What I confirmed on their page… |
 | Clinic | `clinic` | Content relationship to Provider | Yes | Inner Balance |
 
 The fact cards, in this order, each with a fixed icon:
@@ -503,7 +556,7 @@ rows, HRT and BHRT. A review uses one row.
 
 | Label | Id | Kind | Required | `/ishrtforme` |
 | --- | --- | --- | --- | --- |
-| Section | The seven Section fields | Shared, open on the slice | | Heading: Pros and Cons |
+| Section | The Section fields | Shared, open on the slice | | Heading: Pros and Cons |
 | Pros label | `pros_label` | Text | No | Blank, so Pros |
 | Cons label | `cons_label` | Text | No | Blank, so Cons |
 | Rows | `rows` | Repeatable group | Yes | HRT, then BHRT |
@@ -545,7 +598,9 @@ Each slice below lists only its own fields. Section is on all of them.
 
 One slice, five variations. Each variation includes the shared Section
 fields and lays the heading out itself. Section supplies the spacing and
-background. The homepage section id comes from the tagline. The homepage
+background. Home and Provider have no Link. Subpage, Centered, and
+Brands do: one text link, such as "Start here" or "Full price chart."
+The homepage section id comes from the tagline. The homepage
 variation also keeps the mockup's vertical padding, and Space above and
 Space below add to it. The subpage, centered, brands, and provider
 variations do not, so those fields are the whole gap.
@@ -554,7 +609,8 @@ variations do not, so those fields are the whole gap.
 
 The homepage. Section Heading is the page title. Section Intro is "My
 goal is to share honest platform reviews…" The large line is Tagline,
-not the title.
+not the title. Benefits and Buttons are the links. There is no Link
+field.
 
 | Label | Id | Kind | Required | Mockup |
 | --- | --- | --- | --- | --- |
@@ -616,7 +672,8 @@ goes. On trusted providers that is a jump link such as `#inner-balance`.
 
 #### Provider
 
-The top of a clinic page. The title is the clinic's name, and Section
+The top of a clinic page. There is no Link field. Links are her
+review links. The title is the clinic's name, and Section
 Heading only when the clinic has no name. An empty Meta title, the
 search result, and the sitemap entry use that same title, never the
 kicker. The kicker is Section Small heading when that is filled,
@@ -672,9 +729,10 @@ posts and passes them in. The slice does not store a hand-picked list.
 Every variation lists them newest first by Published. Category limits
 that list. All uses every post.
 
-The grid tabs are this Category: Review, Comparison, My experience, and
-HRT 101. That is the label on the card. Topic documents stay the browse
-links on the blog page.
+The grid tabs are this Category: Telehealth brand reviews, Formulations
+& dosages, My experience & results, Testing, labs & tracking, and
+Cost, insurance & access. That is the label on the card. Topic
+documents stay the browse links on the blog page.
 
 | Variation | Id | What it shows |
 | --- | --- | --- |
@@ -685,13 +743,20 @@ links on the blog page.
 
 | Label | Id | Kind | Variations |
 | --- | --- | --- | --- |
-| Section | The seven Section fields | Shared, open on the slice | All |
-| Category | `category` | Select: All, Review, Comparison, My experience, HRT 101. Default All | All |
+| Section | The Section fields, plus Link | Shared, open on the slice | All |
+| Category | `category` | Select: All, then the five post categories. Default All | All |
 | Post | `post` | Content relationship to Post, Provider review, and Comparison | Featured |
 | Posts per page | `count` | Number. Empty means 12 | Grid |
+| Hide the featured post | `hide_featured` | Boolean. Default No | Grid |
 
-On the blog page, the featured post is left out of the grid. A selected
-category hides the featured card, and that post can appear in the grid.
+On the blog page, Featured shows the newest post, or the post it points
+at. Hide the featured post leaves that post out of the grid. Yes leaves
+it out. No repeats it under the feature. Empty leaves it out when
+Featured is on the page. Yes, with no Featured slice on the page, shows
+the newest post as the feature and leaves it out of the grid. A selected
+category keeps the featured card on the newest post overall, or on the
+post Featured points at. That post stays out of the grid, including on
+its own category.
 Page addresses are `/blog` and `/blog/page/N`. The category tabs do not
 get their own public URL until the indexing decision in
 `docs/SEO_AEO_GEO.md`.
@@ -705,6 +770,11 @@ from the story. The subtitle on a card is at most three lines, on every
 variation, including the large homepage card and the featured card. A
 longer subtitle ends in an ellipsis. The post page still shows the full
 subtitle under the title.
+
+Every card image is one frame. Peggy can upload any shape. The picture
+is centered in that frame and the rest is clipped. The homepage lead
+and the featured post use a larger frame. The grid and the row use the
+same frame, and those frames are the same size across the row.
 
 | Label | Id | Kind |
 | --- | --- | --- |
@@ -768,6 +838,11 @@ medical advice."
 
 ### Side by side
 
+The editor still lists Intro and Text as two writing fields, and the
+settings sit in the middle of the form. Field order, above, is the
+order the next audit uses. Until then, the behavior below is what the
+slice does.
+
 One slice, four variations, in `src/slices/side_by_side`. The homepage
 story is the Image variation with the media on the left. The small
 heading, the heading, and the intro sit in the writing column, beside
@@ -794,11 +869,11 @@ narrow screen the media stacks above the writing and never sticks.
 | Image | `image` | Image and Caption. The description is the image's alt text. Caption on the photo, the default, puts the words on the picture. Off centers them under it. |
 | Video | `video` | Video, a YouTube or Vimeo embed, and Caption |
 | Quote | `quote` | Quote, and Attribution under it |
-| Clinic | `clinic` | A clinic. Logo, name, quote, and the visit link come from the clinic |
+| Clinic | `clinic` | A clinic. Style chooses the panel. Quote, the default, is the logo, her words, and a visit link. Card is the product photo and price. |
 
 | Label | Id | Kind | Variations |
 | --- | --- | --- | --- |
-| Section | The seven Section fields | Shared, open on the slice | All |
+| Section | The Section fields | Shared, open on the slice | All |
 | Side | `side` | Select: Media left, Media right. Default Media left | All |
 | Media position | `media_position` | Select: Center, Top, Sticky. Default Center | All |
 | Text | `text` | Content rich text | All |
@@ -810,6 +885,15 @@ narrow screen the media stacks above the writing and never sticks.
 | Quote | `quote` | Heading rich text | Quote, Image |
 | Attribution | `attribution` | Text | Quote |
 | Clinic | `clinic` | Content relationship to Provider | Clinic |
+| Style | `style` | Select: Quote, Card. Default Quote | Clinic |
+
+On the Clinic variation, Style chooses the media. Quote, the default, is
+the soft panel: the logo, the brand name, her words, and the visit link.
+The logo tile has extra padding so the mark sits in a clear margin. A
+blank Style is Quote, so a clinic panel saved before this field existed
+stays a quote. Card replaces that panel with the product photo and the
+price, the same card Brand promo uses when its Style is Card. The photo,
+the price, and the visit button come from the clinic.
 
 Text uses the content toolbar. A Signoff label on a whole paragraph is
 the large closing line. A Note label on a whole paragraph is the tint
@@ -867,9 +951,9 @@ clinic relationship, the same way it lists `visit`.
 | Hero, provider | `clinic` | Name, logo, formulation, visit, price, price is, price note, top choice label, code, code line |
 | Clinic comparison | `clinic` | Name, logo, short description, price, price note, insurance, formulation, quote, getting started, top choice label, visit, code, code line. The review link is on the slice row |
 | Quote | `clinic` | Logo, name, visit. A Name on the slice replaces the clinic name |
-| Side by side, clinic | `clinic` | Logo, name, quote, visit |
+| Side by side, clinic | `clinic` | Logo, name, quote, visit, and, when Style is Card, kind, product image, price, price is, price note, formulation, insurance, getting started, code, code line. Style stays on the slice. Quote is the logo panel. Card is the product photo and price. |
 | Boxes | `clinic` on each box | Logo, top choice label, name, code. A written Image, Heading, Text, or Bottom line replaces it |
-| Brand promo | `clinic` | Name, kind, logo, visit, page, my review, my comparison, review video, product image, price, price is, price note, formulation, insurance, getting started, code, code line, quote. Page is Products & pricing. My review is her post. Each My comparison is a button with its display text. Review video is Watch my review. A photo in Overwrite replaces the product image. A written Quote replaces the clinic quote. Is this 1st? and Place stay on the slice. Text and extra links are in Overwrite. Extra links are a second row of text |
+| Brand promo | `clinic` | Name, kind, logo, visit, page, my review, my comparison, review video, product image, price, price is, price note, formulation, insurance, getting started, code, code line, quote. Page is Products & pricing. My review is her post. Each My comparison is a button with its display text. Review video is Watch my review. A photo in Overwrite replaces the product image. A written Quote replaces the clinic quote. Style on the slice chooses the quote panel or the product card. Is this 1st? and Place stay on the slice. Text and extra links are in Overwrite. Extra links are a second row of text |
 | Clinic facts | `clinic` | Kind, state availability, typically prescribed, labs, insurance, HSA / FSA, getting started, how it works, specialties |
 | Post sidebar | `clinic` | Name, logo. The name links to Page when that field is set |
 | Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, code, code line, plus the sentence in that paragraph |
@@ -1037,9 +1121,22 @@ in Subtitle.
 Sampled from the live site in October 2026, then checked against the
 Wix API on 2026-10-08: the post sitemap lists 142 posts, the feed lists
 the latest 20, and 18 posts were read in full. The categories sitemap
-contains only `/blog`. The API also returns five Wix blog categories
-on 42 posts. Those are not the Category select, and migration leaves
-Category empty. Every post has a cover image. One of the 142 excerpts
+contained only `/blog`. The API returned five Wix blog categories on
+42 posts.
+
+Checked again on 2026-10-15: all 144 posts have one of those five
+categories, and the categories sitemap lists their pages. The select
+uses the tightened labels in `docs/CONTENT_MODEL.md`.
+`scripts/set-post-categories.mts` wrote those labels onto the 142
+posts already in Prismic. On that same day the Wix label
+"My Experience &  Results" was corrected to "My Experience & Results".
+Its public path stayed `/blog/categories/patient-experience-results`.
+The formulations category path changed from
+`/blog/categories/comparisons-1-1` to
+`/blog/categories/formulations-dosages`. The old path returns 404 and
+still needs a redirect.
+
+Every post has a cover image. One of the 142 excerpts
 matches its meta description, so those stay separate fields. Tags are
 sparse and messy. Migration writes each Wix tag label onto the
 document's Prismic tags, once per post when two differ only in
@@ -1066,7 +1163,7 @@ corrected in Prismic.
 | Caption | `caption` | Heading rich text | No | The line under the cover, when that photo has one |
 | Author | `author` | Content relationship to Author | No | Left empty. Empty means Peggy B. Two posts are corrected in Prismic |
 | Published | `published_date` | Date | Yes | The date on the Wix article. Wix first published date |
-| Category | `category` | Select | No | Left empty. Wix blog categories are not this select |
+| Category | `category` | Select | No | Peggy's five Wix categories, with the tightened labels. Set by `scripts/set-post-categories.mts` |
 | Sources | `sources` | Repeatable group | No | Mockup only |
 | Canonical | `canonical` | Link, no display text | No | Only when the post should point elsewhere |
 | Indexing | `indexing` | Boolean | Yes | On. Turn it off only to hide a post |
@@ -1074,7 +1171,9 @@ corrected in Prismic.
 Every post is `/post/<uid>`. There is no URL section field. The UID is
 the Wix slug.
 
-Category choices are Review, Comparison, My experience, and HRT 101.
+Category choices are Telehealth brand reviews, Formulations & dosages,
+My experience & results, Testing, labs & tracking, and Cost, insurance
+& access.
 Empty means no kicker. These are not Category documents and they are
 not public pages. The `?type=` filter on the blog mockup stays off
 the public site until an indexing decision says otherwise.
@@ -1133,7 +1232,7 @@ Photos in a `{{photos}}` row or beside text keep their own layout.
 Approved by the owner on 2026-10-12.
 
 The paragraph directly under a photo on its own shows as its caption:
-smaller, muted, and centered. The caption is 75% of the story column,
+smaller and centered, in the body color. The caption is 75% of the story column,
 whatever width the photo is. A heading, a
 list, or a token under the photo is not a caption. Nothing in the
 paragraph changes in Prismic, so this can be undone in the layout
@@ -1261,9 +1360,12 @@ field.
 Breadcrumbs are Home, Blog, and the title. Minutes to read and Keep
 reading are calculated, as above. An empty Author field uses Peggy B.
 The byline and the author block read that document: name, profile,
-and about. "Read my
-whole story" and "How I review" are the about page and the editorial
-standards page. The disclosure line is the site affiliate disclosure.
+and about. On Peggy's posts the byline goes to the about page, and
+"Read my whole story" and "How I review" are the about page and the
+editorial standards page. On a guest post the byline jumps to the
+author card on the same page. That card's link is "Read my story,"
+the Author link on that person, and it opens in a new tab. The
+disclosure line is the site affiliate disclosure.
 Share has no fields.
 
 ### Wix fields this page does not store

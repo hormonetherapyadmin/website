@@ -12,7 +12,8 @@
   --color-background: #faf7f2;
   --color-surface: #edf0f5;
   --color-text: #182033;
-  --color-text-muted: #4b5367;
+  /* Same as text. Dates, excerpts, and captions stay this color. */
+  --color-text-muted: #182033;
   --color-border: #d6dae3;
   --color-accent: #9a2347;
   --color-cta: #9a2347;

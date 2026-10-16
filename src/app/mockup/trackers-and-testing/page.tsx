@@ -11,10 +11,13 @@ import { MockupShell } from "../_shared/mockup-shell";
 /*
   Test kits mockup for the live URL /trackersandtesting, built only from
   page slices. Copy and photos are from that Wix page (October 2026).
-  The kit headings, kickers, card links, and pull quote are layout added
-  here. The live intro's first sentence stays in the Hero, and the rest
-  of it opens the photo section. The Amazon links use the shared
-  #affiliate-link placeholder.
+  The kit headings, kickers, card links, pull quote, and the Mira
+  quote-panel sentence are layout added here. Mira's Style is Quote
+  and Proov's Style is Card, so both right-hand panels are on this
+  page. The Mira wordmark is a stand-in until the brand logo is on
+  the Provider. The live intro's first sentence stays in the Hero,
+  and the rest of it opens the photo section. The Amazon links use
+  the shared #affiliate-link placeholder.
 */
 
 export const metadata: Metadata = {
@@ -36,6 +39,7 @@ const MIRA: BrandPromoClinic = {
   uid: "mira",
   name: "Mira",
   kind: "Product",
+  logo: { src: "/mockup/logos/mira.png" },
   visitHref: "#affiliate-link",
   visitText: "See Mira on Amazon",
   monthlyPrice: 179,
@@ -221,6 +225,10 @@ export default async function TrackersAndTestingMockup(
                 1400,
                 1211,
               ),
+              style: "Quote",
+              quote: rich(
+                "With my Mira Hormone Tracker I was able to see my estrogen, progesterone and LH levels.",
+              ),
               layout: "Stacked",
               links: [
                 button("Read my Proov vs. Mira comparison", POST),
@@ -249,6 +257,7 @@ export default async function TrackersAndTestingMockup(
                 1142,
                 1400,
               ),
+              style: "Card",
               layout: "Stacked",
               links: [button("Read my Proov vs. Mira comparison", POST)],
             },

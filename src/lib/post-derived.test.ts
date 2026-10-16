@@ -40,10 +40,26 @@ describe("minutesToRead", () => {
 
 describe("relatedPosts", () => {
   const posts = [
-    { id: "current", category: "Review", published: "2026-03-01" },
-    { id: "older-review", category: "Review", published: "2026-01-01" },
-    { id: "newer-review", category: "Review", published: "2026-04-01" },
-    { id: "recent", category: "HRT 101", published: "2026-05-01" },
+    {
+      id: "current",
+      category: "Telehealth brand reviews",
+      published: "2026-03-01",
+    },
+    {
+      id: "older-review",
+      category: "Telehealth brand reviews",
+      published: "2026-01-01",
+    },
+    {
+      id: "newer-review",
+      category: "Telehealth brand reviews",
+      published: "2026-04-01",
+    },
+    {
+      id: "recent",
+      category: "Formulations & dosages",
+      published: "2026-05-01",
+    },
     { id: "older", category: null, published: "2025-12-01" },
   ];
 

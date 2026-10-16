@@ -1,4 +1,4 @@
-import type { LinkField, SelectField } from "@prismicio/client";
+import { isFilled, type LinkField, type SelectField } from "@prismicio/client";
 import Image from "next/image";
 import {
   SliceSection,
@@ -7,23 +7,20 @@ import {
 import styles from "./posts.module.css";
 
 export const POST_CATEGORIES = [
-  "Review",
-  "Comparison",
-  "My experience",
-  "HRT 101",
+  "Telehealth brand reviews",
+  "Formulations & dosages",
+  "My experience & results",
+  "Testing, labs & tracking",
+  "Cost, insurance & access",
 ] as const;
 
 export const POST_CATEGORY_OPTIONS = ["All", ...POST_CATEGORIES] as const;
 
 export type PostCategoryOption = (typeof POST_CATEGORY_OPTIONS)[number];
 
-const TAB_LABEL: Record<PostCategoryOption, string> = {
-  All: "All posts",
-  Review: "Reviews",
-  Comparison: "Comparisons",
-  "My experience": "My experience",
-  "HRT 101": "HRT 101",
-};
+function tabLabel(category: PostCategoryOption) {
+  return category === "All" ? "All posts" : category;
+}
 
 export const POST_VARIATIONS = ["home", "featured", "grid", "row"] as const;
 
@@ -47,6 +44,11 @@ type PostsPrimary = Partial<SliceSectionFields> & {
   post?: LinkField | null;
   /** Grid only. Empty means 12. */
   count?: number | null;
+  /**
+   * Grid only. Yes leaves the featured post out of the list. No repeats
+   * it. Empty leaves it out when this page has a Featured slice.
+   */
+  hide_featured?: boolean | null;
 };
 
 export type PostsProps = {
@@ -65,6 +67,11 @@ export type PostsProps = {
   activeCategory?: string | null;
   /** Left out of the list. The blog page passes the featured post. */
   skipHref?: string;
+  /**
+   * The post a Featured slice on this page is showing. The grid uses it
+   * when Hide the featured post is on, or still empty.
+   */
+  pageFeaturedHref?: string | null;
   /**
    * Keep the given order and category mix. Keep reading passes its
    * computed posts in this order.
@@ -164,6 +171,62 @@ export function selectPosts(
     page,
     pages,
   };
+}
+
+/**
+ * Which post the grid leaves out, and whether this grid draws the
+ * feature itself. A category tab keeps that post out of the list too.
+ */
+export function gridFeature(options: {
+  hideFeatured: boolean | null | undefined;
+  pageFeaturedHref?: string | null;
+  newestHref?: string;
+}) {
+  if (options.hideFeatured === false) {
+    return { showInline: false as const };
+  }
+
+  if (options.hideFeatured === true) {
+    if (options.pageFeaturedHref) {
+      return {
+        skipHref: options.pageFeaturedHref,
+        showInline: false as const,
+      };
+    }
+    return {
+      skipHref: options.newestHref,
+      showInline: Boolean(options.newestHref),
+    };
+  }
+
+  if (options.pageFeaturedHref) {
+    return { skipHref: options.pageFeaturedHref, showInline: false as const };
+  }
+
+  return { showInline: false as const };
+}
+
+/** The post a Featured slice shows. An empty Post is the newest. */
+export function featuredPostHref(
+  slice:
+    | {
+        variation: string;
+        primary: {
+          category?: string | null;
+          post?: LinkField | null;
+        };
+      }
+    | undefined,
+  posts: readonly PostCardData[],
+) {
+  if (!slice || slice.variation !== "featured") return undefined;
+  const picked = slice.primary.post;
+  if (isFilled.link(picked) && picked.url) return picked.url;
+
+  return selectPosts(posts, {
+    category: slice.primary.category,
+    limit: 1,
+  }).items[0]?.href;
 }
 
 /** Page numbers for the grid. A gap stands in for a skipped run. */
@@ -337,7 +400,7 @@ function Tabs({
               href={hrefFor(category)}
               aria-current={category === active ? "true" : undefined}
             >
-              {TAB_LABEL[category]}
+              {tabLabel(category)}
             </a>
           </li>
         ))}
@@ -409,6 +472,7 @@ export function Posts({
   page,
   activeCategory,
   skipHref,
+  pageFeaturedHref,
   keepOrder = false,
   categoryHref = postCategoryHref,
   pageHref,
@@ -420,27 +484,53 @@ export function Posts({
       ? choice(activeCategory, POST_CATEGORY_OPTIONS, "All")
       : locked;
 
+  const newest =
+    layout === "grid"
+      ? selectPosts(posts, {
+          category: locked === "All" ? null : locked,
+          limit: 1,
+        }).items[0]
+      : undefined;
+  const feature =
+    layout === "grid"
+      ? gridFeature({
+          hideFeatured: primary.hide_featured,
+          pageFeaturedHref,
+          newestHref: newest?.href,
+        })
+      : { showInline: false as const };
   const pinned = layout === "featured" && featured ? featured : null;
   const selected = pinned
     ? { items: [pinned], total: 1, page: 1, pages: 1 }
     : selectPosts(posts, {
-        category: viewing,
+        category: layout === "featured" ? locked : viewing,
         limit: limitFor(layout, primary.count),
         page: layout === "grid" ? page : 1,
-        skipHref: viewing === "All" ? skipHref : undefined,
+        skipHref:
+          ("skipHref" in feature ? feature.skipHref : undefined) ??
+          (viewing === "All" ? skipHref : undefined),
         keepOrder,
       });
 
   const hrefForPage =
     pageHref ?? ((next: number) => postPageHref(next, viewing));
 
+  const inlineFeature = feature.showInline ? newest : undefined;
+
   return (
     <SliceSection section={primary}>
+      {inlineFeature ? (
+        <div className={styles.featureLead}>
+          <FeaturedCard post={inlineFeature} />
+        </div>
+      ) : null}
       {layout === "grid" && locked === "All" ? (
         <Tabs active={viewing} hrefFor={categoryHref} />
       ) : null}
       {selected.items.length === 0 ? (
-        <Empty category={viewing} />
+        inlineFeature ? null : (
+          <Empty category={viewing} />
+        )
       ) : layout === "featured" ? (
         <FeaturedCard post={selected.items[0]} />
       ) : layout === "home" ? (

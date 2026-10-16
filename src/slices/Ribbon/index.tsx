@@ -11,6 +11,7 @@ import {
   SECTION_BACKGROUNDS,
   SliceSection,
   sectionBackground,
+  sliceLayout,
   type SectionBackground,
   type SliceSectionFields,
 } from "@/components/slice-section";
@@ -22,6 +23,7 @@ type RibbonPrimary = Partial<SliceSectionFields> & {
   content?: RichTextField | null;
   box_background?: string | null;
   button?: readonly LinkField[] | null;
+  layout?: string | null;
 };
 
 /** An empty Box background is Pink, the ribbon in the template. */
@@ -78,12 +80,14 @@ function Chevron() {
 }
 
 /**
- * A colored box on a section band. Title and content sit on the left.
- * Buttons sit on the right, in the order they are added. Solid is the
- * filled button. Ghost is the text button with an arrow.
+ * A colored box on a section band. On the right, title and content sit
+ * on the left and buttons sit on the right. Centered centers the words
+ * and stacks the buttons under them. Solid is the filled button. Ghost
+ * is the text button with an arrow.
  */
 export function Ribbon({ primary }: { primary: RibbonPrimary }) {
   const titleId = useId();
+  const centered = sliceLayout(primary.layout) === "centered";
   const box = ribbonBoxBackground(primary.box_background);
   const behind = sectionBackground(primary.background);
   const buttons = (primary.button ?? []).filter(
@@ -100,6 +104,7 @@ export function Ribbon({ primary }: { primary: RibbonPrimary }) {
       section={primary}
       title={sectionHeading || boxTitle}
       labelId={labelsSection ? titleId : undefined}
+      align={centered ? "center" : "start"}
     >
       {hasTitle || hasContent || buttons.length > 0 ? (
         <div
@@ -107,6 +112,7 @@ export function Ribbon({ primary }: { primary: RibbonPrimary }) {
           data-box={box}
           data-behind={behind}
           data-tone={ribbonTone(box, behind)}
+          data-layout={centered ? "centered" : "right"}
           data-wave={ribbonShowsWave(box, behind) ? "true" : undefined}
         >
           <div className={styles.copy}>

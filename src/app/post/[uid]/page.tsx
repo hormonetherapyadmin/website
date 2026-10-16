@@ -100,6 +100,7 @@ async function loadPost(uid: string) {
         "author.name_title",
         "author.about",
         "author.profile",
+        "author.author_link",
       ],
     });
   } catch (error) {
@@ -242,6 +243,11 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
   const dek = textOf(post.data.sub_title);
   const name = authorName(author);
   const nameTitle = authorTitle(author);
+  const isPeggy = resolveAuthorId(post.data.author) === DEFAULT_AUTHOR_ID;
+  const guestStory =
+    !isPeggy && author && isFilled.link(author.author_link)
+      ? author.author_link
+      : null;
   const published = post.data.published_date;
   const minutes = minutesToRead(post.data.body);
   const sections = headingAnchors(post.data.body).filter(
@@ -372,19 +378,23 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
             <h1 className={styles.title}>{title}</h1>
             {dek ? <p className={styles.dek}>{dek}</p> : null}
             <div className={styles.byline}>
-              <Link href="/about" className={styles.bylineAuthor}>
-                <AuthorPhoto
-                  profile={profile}
-                  className={styles.avatar}
-                  size={56}
-                />
-                <span className={styles.bylineText}>
-                  <span className={styles.bylineName}>{name}</span>
-                  {nameTitle ? (
-                    <span className={styles.bylineTitle}>{nameTitle}</span>
-                  ) : null}
-                </span>
-              </Link>
+              {isPeggy ? (
+                <Link href="/about" className={styles.bylineAuthor}>
+                  <BylineIdentity
+                    profile={profile}
+                    name={name}
+                    nameTitle={nameTitle}
+                  />
+                </Link>
+              ) : (
+                <a href="#author" className={styles.bylineAuthor}>
+                  <BylineIdentity
+                    profile={profile}
+                    name={name}
+                    nameTitle={nameTitle}
+                  />
+                </a>
+              )}
             </div>
           </div>
           {isFilled.image(post.data.image) ? (
@@ -482,7 +492,12 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
               </nav>
             ) : null}
 
-            <section className={styles.author} aria-labelledby="author-title">
+            <section
+              id="author"
+              className={styles.author}
+              aria-labelledby="author-title"
+              tabIndex={-1}
+            >
               <AuthorPhoto
                 profile={profile}
                 className={styles.authorPhoto}
@@ -498,10 +513,22 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
                 {author && isFilled.richText(author.about) ? (
                   <PrismicRichText field={author.about} />
                 ) : null}
-                <p className={styles.authorLinks}>
-                  <Link href="/about">Read my whole story</Link>
-                  <a href="#">How I review</a>
-                </p>
+                {isPeggy ? (
+                  <p className={styles.authorLinks}>
+                    <Link href="/about">Read my whole story</Link>
+                    <a href="#">How I review</a>
+                  </p>
+                ) : guestStory ? (
+                  <p className={styles.authorLinks}>
+                    <PrismicNextLink
+                      field={guestStory}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Read my story
+                    </PrismicNextLink>
+                  </p>
+                ) : null}
               </div>
             </section>
             <p className={styles.disclosure}>
@@ -634,6 +661,28 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
         </>
       ) : null}
     </SiteShell>
+  );
+}
+
+function BylineIdentity({
+  profile,
+  name,
+  nameTitle,
+}: {
+  profile: ImageField | null;
+  name: string;
+  nameTitle: string;
+}) {
+  return (
+    <>
+      <AuthorPhoto profile={profile} className={styles.avatar} size={56} />
+      <span className={styles.bylineText}>
+        <span className={styles.bylineName}>{name}</span>
+        {nameTitle ? (
+          <span className={styles.bylineTitle}>{nameTitle}</span>
+        ) : null}
+      </span>
+    </>
   );
 }
 

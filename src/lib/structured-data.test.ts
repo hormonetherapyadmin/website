@@ -29,7 +29,7 @@ describe("blogPosting", () => {
         description: "Experienced HRT Patient Reviewer",
         path: "/about",
       }),
-      category: "Review",
+      category: "Telehealth brand reviews",
       tags: ["Inner Balance", " "],
     });
 
@@ -63,7 +63,7 @@ describe("blogPosting", () => {
         url: SITE,
       },
       isPartOf: { "@id": WEBSITE_ID },
-      articleSection: "Review",
+      articleSection: "Telehealth brand reviews",
       keywords: ["Inner Balance"],
       inLanguage: "en",
     });

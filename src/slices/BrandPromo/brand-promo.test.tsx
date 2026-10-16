@@ -9,6 +9,7 @@ import {
   brandPromoLinks,
   brandPromoProduct,
   brandPromoQuote,
+  brandPromoStyle,
   brandPromoTone,
   type BrandPromoClinic,
   type BrandPromoOverwrite,
@@ -80,6 +81,15 @@ describe("brandPromoQuote", () => {
       text: clinic.quote,
     });
     expect(brandPromoQuote(emptyRich, "  ")).toEqual({});
+  });
+});
+
+describe("brandPromoStyle", () => {
+  it("treats Quote as the quote panel and everything else as the product card", () => {
+    expect(brandPromoStyle("Quote")).toBe("quote");
+    expect(brandPromoStyle("Card")).toBe("card");
+    expect(brandPromoStyle(undefined)).toBe("card");
+    expect(brandPromoStyle("")).toBe("card");
   });
 });
 
@@ -171,6 +181,65 @@ describe("BrandPromo", () => {
     expect(html).toContain('id="winona"');
     expect(html).toContain("15% off your first order");
     expect(html).not.toContain("Code ");
+  });
+
+  it("switches the right side from her words to the product card", () => {
+    const words = "With my Mira Hormone Tracker I was able to see my levels.";
+    const quote = render(
+      {
+        ...section({ heading: rich("Mira Hormone Monitor") }),
+        ...written({
+          style: "Quote",
+          quote: rich(words),
+          text: rich("The kit measures four hormones."),
+          layout: "Stacked",
+          product: {
+            url: "/mockup/test-kits/mira-monitor.jpg",
+            alt: "Mira hormone monitor",
+          } as ImageField,
+        }),
+      },
+      {
+        ...clinic,
+        name: "Mira",
+        visitText: "See Mira on Amazon",
+        monthlyPrice: 179,
+      },
+    );
+
+    expect(quote).toContain('data-style="quote"');
+    expect(quote).not.toContain("data-layout");
+    expect(quote).toContain("<blockquote");
+    expect(quote).toContain(words);
+    expect(quote).toContain("Visit Mira");
+    expect(quote).not.toContain("See Mira on Amazon");
+    expect(quote).not.toContain("$179");
+    expect(quote).not.toContain("Mira hormone monitor");
+    expect(quote.match(/With my Mira/g)).toHaveLength(1);
+
+    const card = render(
+      {
+        ...section({ heading: rich("Mira Hormone Monitor") }),
+        ...written({
+          style: "Card",
+          quote: rich(words),
+          layout: "Stacked",
+        }),
+      },
+      {
+        ...clinic,
+        name: "Mira",
+        visitText: "See Mira on Amazon",
+        monthlyPrice: 179,
+        priceUnit: "One time",
+      },
+    );
+
+    expect(card).not.toContain("data-style");
+    expect(card).toContain('data-layout="stacked"');
+    expect(card).toContain("$179");
+    expect(card).toContain("See Mira on Amazon");
+    expect(card).not.toContain("<blockquote");
   });
 
   it("drops /mo for a one-time price and the insurance line for a product", () => {

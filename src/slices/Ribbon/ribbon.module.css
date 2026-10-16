@@ -128,12 +128,44 @@
   line-height: 1.5;
 }
 
+.box[data-layout="centered"] {
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.75rem;
+  text-align: center;
+}
+
+.box[data-layout="centered"] .copy {
+  flex: none;
+  max-width: 40rem;
+}
+
+.box[data-layout="centered"] .content {
+  margin-inline: auto;
+}
+
+.box[data-layout="centered"] .title {
+  text-wrap: balance;
+}
+
+.box[data-layout="centered"] .content ul,
+.box[data-layout="centered"] .content ol,
+.box[data-layout="centered"] .content figure {
+  width: fit-content;
+  margin-inline: auto;
+  text-align: start;
+}
+
 .actions {
   display: flex;
   flex: 0 1 auto;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.85rem 1.35rem;
+}
+
+.box[data-layout="centered"] .actions {
+  justify-content: center;
 }
 
 .button {

@@ -143,8 +143,14 @@ describe("organizeSitemap", () => {
 });
 
 describe("xmlSitemap", () => {
-  it("lists canonical page and post URLs plus the sitemap page, and leaves home out", () => {
+  it("lists home, canonical page and post URLs, and the sitemap page", () => {
     const xml = xmlSitemap([
+      {
+        group: "page",
+        title: "Home",
+        path: "/",
+        lastModified: "2026-10-02T12:00:00.000Z",
+      },
       {
         group: "page",
         title: "Trusted providers",
@@ -160,13 +166,16 @@ describe("xmlSitemap", () => {
 
     expect(xml).toEqual([
       {
+        url: "https://www.hormonetherapyhub.com/",
+        lastModified: "2026-10-02T12:00:00.000Z",
+      },
+      {
         url: "https://www.hormonetherapyhub.com/trusted-providers",
         lastModified: "2026-10-01T12:00:00.000Z",
       },
       { url: "https://www.hormonetherapyhub.com/post/alloy-review" },
       { url: "https://www.hormonetherapyhub.com/sitemap" },
     ]);
-    expect(xml.map((entry) => entry.url)).not.toContain(sitemapUrl("/"));
     expect(xml.map((entry) => entry.url)).not.toContain(sitemapUrl("/search"));
   });
 });

@@ -87,10 +87,11 @@
             "label": "Category",
             "options": [
               "All",
-              "Review",
-              "Comparison",
-              "My experience",
-              "HRT 101"
+              "Telehealth brand reviews",
+              "Formulations & dosages",
+              "My experience & results",
+              "Testing, labs & tracking",
+              "Cost, insurance & access"
             ]
           },
           "type": "Select"
@@ -181,10 +182,11 @@
             "label": "Category",
             "options": [
               "All",
-              "Review",
-              "Comparison",
-              "My experience",
-              "HRT 101"
+              "Telehealth brand reviews",
+              "Formulations & dosages",
+              "My experience & results",
+              "Testing, labs & tracking",
+              "Cost, insurance & access"
             ]
           },
           "type": "Select"
@@ -283,10 +285,11 @@
             "label": "Category",
             "options": [
               "All",
-              "Review",
-              "Comparison",
-              "My experience",
-              "HRT 101"
+              "Telehealth brand reviews",
+              "Formulations & dosages",
+              "My experience & results",
+              "Testing, labs & tracking",
+              "Cost, insurance & access"
             ]
           },
           "type": "Select"
@@ -297,6 +300,15 @@
             "placeholder": "12"
           },
           "type": "Number"
+        },
+        "hide_featured": {
+          "config": {
+            "default_value": false,
+            "label": "Hide the featured post",
+            "placeholder_false": "No",
+            "placeholder_true": "Yes"
+          },
+          "type": "Boolean"
         }
       },
       "version": "initial"
@@ -384,10 +396,11 @@
             "label": "Category",
             "options": [
               "All",
-              "Review",
-              "Comparison",
-              "My experience",
-              "HRT 101"
+              "Telehealth brand reviews",
+              "Formulations & dosages",
+              "My experience & results",
+              "Testing, labs & tracking",
+              "Cost, insurance & access"
             ]
           },
           "type": "Select"

@@ -26,12 +26,16 @@ export const SECTION_SPACING = ["None", "Small", "Medium", "Large"] as const;
 export type SectionBackground = (typeof SECTION_BACKGROUNDS)[number];
 export type SectionSpacing = (typeof SECTION_SPACING)[number];
 
-/** The Section fields copied onto every slice, beside its own fields. */
+/**
+ * The heading, writing, color, and spacing copied onto a slice.
+ * Link is only on Latest posts, Text, and Hero Subpage, Centered,
+ * and Brands. Other slices add their own buttons or card links.
+ */
 export type SliceSectionFields = {
   small_heading: RichTextField;
   heading: RichTextField;
   intro: RichTextField;
-  link: LinkField;
+  link?: LinkField;
   background: SelectField<SectionBackground>;
   space_above: SelectField<SectionSpacing>;
   space_below: SelectField<SectionSpacing>;
@@ -157,8 +161,24 @@ function hasHeader(fields: Partial<SliceSectionFields>) {
   );
 }
 
+/**
+ * Centered stacks the call to action under the writing. Any other
+ * value, including an empty one, keeps it on the right.
+ */
+export function sliceLayout(
+  value: string | null | undefined,
+): "right" | "centered" {
+  return value === "Centered" ? "centered" : "right";
+}
+
+function filledSectionLink(
+  field: LinkField | null | undefined,
+): field is LinkField & { text: string } {
+  return Boolean(field && isFilled.link(field) && field.text);
+}
+
 function SectionLink({ field }: { field: LinkField | null | undefined }) {
-  if (!field || !isFilled.link(field) || !field.text) return null;
+  if (!filledSectionLink(field)) return null;
 
   return (
     <PrismicNextLink
@@ -208,6 +228,14 @@ type SliceSectionProps = {
   followingSpaceAbove?: string | null | false;
   /** Story keeps the header and children to the post story column, centered. */
   width?: "wrap" | "story";
+  /** Centers the header. The default keeps it on the left. */
+  align?: "start" | "center";
+  /**
+   * Where the section link sits. Beside is the heading row.
+   * Below is under the header, before the children.
+   * End is after the children.
+   */
+  linkPlacement?: "beside" | "below" | "end";
   children?: ReactNode;
 };
 
@@ -225,6 +253,8 @@ export function SliceSection({
   labelId,
   followingSpaceAbove,
   width = "wrap",
+  align = "start",
+  linkPlacement = "beside",
   children,
 }: SliceSectionProps) {
   const headingId = useId();
@@ -240,6 +270,18 @@ export function SliceSection({
     spaceRank[nextAbove] > spaceRank[spaceBelow] ? nextAbove : spaceBelow;
   const band = background !== "Transparent" && background !== "Cream";
   const header = showHeader && fields && hasHeader(fields) ? fields : null;
+  const centered = align === "center";
+  const sectionLink =
+    header && filledSectionLink(header.link) ? header.link : null;
+  const headerCopy = Boolean(
+    header &&
+    (isFilled.richText(header.small_heading) ||
+      isFilled.richText(header.heading) ||
+      isFilled.richText(header.intro)),
+  );
+  const linkBeside = linkPlacement === "beside" && sectionLink;
+  const linkBelow = linkPlacement === "below" && sectionLink;
+  const linkEnd = linkPlacement === "end" && sectionLink;
   const anchor = sectionAnchor(title ?? (fields ? asText(fields.heading) : ""));
 
   return (
@@ -271,33 +313,76 @@ export function SliceSection({
           .filter(Boolean)
           .join(" ")}
       >
-        {header ? (
-          <div className={children ? "mb-8" : undefined}>
+        {header && (headerCopy || linkBeside || linkBelow) ? (
+          <div
+            className={
+              [
+                children || linkEnd ? "mb-8" : undefined,
+                centered ? "text-center" : undefined,
+              ]
+                .filter(Boolean)
+                .join(" ") || undefined
+            }
+          >
             <RichText
               field={header.small_heading}
               as="p"
               className="mb-3 text-sm font-bold text-(color:--section-kicker)"
             />
-            <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
-              {isFilled.richText(header.heading) ? (
-                <div className="min-w-0 flex-1">
-                  <RichText
-                    field={header.heading}
-                    as={headingLevel}
-                    id={headingId}
-                  />
-                </div>
-              ) : null}
-              <SectionLink field={header.link} />
-            </div>
+            {linkBeside ? (
+              <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
+                {isFilled.richText(header.heading) ? (
+                  <div className="min-w-0 flex-1">
+                    <RichText
+                      field={header.heading}
+                      as={headingLevel}
+                      id={headingId}
+                    />
+                  </div>
+                ) : null}
+                <SectionLink field={sectionLink} />
+              </div>
+            ) : isFilled.richText(header.heading) ? (
+              <div className={centered ? "text-balance" : undefined}>
+                <RichText
+                  field={header.heading}
+                  as={headingLevel}
+                  id={headingId}
+                />
+              </div>
+            ) : null}
             <RichText
               field={header.intro}
               as="p"
-              className="mt-4 max-w-prose text-lg"
+              className={[
+                "mt-4 max-w-prose text-lg",
+                centered ? "mx-auto" : undefined,
+              ]
+                .filter(Boolean)
+                .join(" ")}
             />
+            {linkBelow ? (
+              <div className={headerCopy ? "mt-6" : undefined}>
+                <SectionLink field={sectionLink} />
+              </div>
+            ) : null}
           </div>
         ) : null}
         {children}
+        {linkEnd ? (
+          <div
+            className={
+              [
+                children || headerCopy ? "mt-8" : undefined,
+                centered ? "text-center" : undefined,
+              ]
+                .filter(Boolean)
+                .join(" ") || undefined
+            }
+          >
+            <SectionLink field={sectionLink} />
+          </div>
+        ) : null}
       </div>
     </section>
   );

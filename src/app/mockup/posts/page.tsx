@@ -59,8 +59,6 @@ function section(heading: string, linkText?: string): SliceSectionFields {
 
 function gridHeading(category: PostCategoryOption) {
   if (category === "All") return "More posts";
-  if (category === "Review") return "Reviews";
-  if (category === "Comparison") return "Comparisons";
   return category;
 }
 
