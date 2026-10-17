@@ -16,7 +16,9 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Eyebrow",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "placeholder": "Hormone Therapy Replacement",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -26,7 +28,9 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Heading (H1)",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "placeholder": "Feel like you again.",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -44,7 +48,9 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Content",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -55,7 +61,10 @@
             "label": "Buttons",
             "placeholder": "See what each clinic cost me",
             "repeat": true,
-            "variants": ["Solid", "Ghost"]
+            "variants": [
+              "Solid",
+              "Ghost"
+            ]
           },
           "type": "Link"
         },
@@ -93,7 +102,9 @@
         "caption": {
           "config": {
             "label": "Caption",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -119,7 +130,12 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         },
@@ -127,7 +143,12 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         }
@@ -145,7 +166,9 @@
         "small_heading": {
           "config": {
             "label": "Eyebrow",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "placeholder": "Learn",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -154,7 +177,9 @@
         "heading": {
           "config": {
             "label": "Heading (H1)",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "placeholder": "New to hormone therapy",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -164,7 +189,9 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Content",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -172,7 +199,7 @@
         "link": {
           "config": {
             "allowText": true,
-            "label": "Link",
+            "label": "Link under content",
             "placeholder": "Start here"
           },
           "type": "Link"
@@ -206,7 +233,12 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         },
@@ -214,7 +246,12 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         }
@@ -232,7 +269,9 @@
         "small_heading": {
           "config": {
             "label": "Eyebrow",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "placeholder": "Providers",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -241,7 +280,9 @@
         "heading": {
           "config": {
             "label": "Heading (H1)",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "placeholder": "Trusted providers",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -251,7 +292,9 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Content",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -259,7 +302,7 @@
         "link": {
           "config": {
             "allowText": true,
-            "label": "Link",
+            "label": "Link under content",
             "placeholder": "Full price chart"
           },
           "type": "Link"
@@ -271,7 +314,10 @@
                 "config": {
                   "customtypes": [
                     {
-                      "fields": ["name", "logo"],
+                      "fields": [
+                        "name",
+                        "logo"
+                      ],
                       "id": "provider"
                     }
                   ],
@@ -314,7 +360,12 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         },
@@ -322,7 +373,12 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         }
@@ -340,7 +396,9 @@
         "small_heading": {
           "config": {
             "label": "Eyebrow",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "placeholder": "Optional. Otherwise the clinic's top choice label is used.",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -349,7 +407,9 @@
         "heading": {
           "config": {
             "label": "Heading (H1)",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "placeholder": "Optional. The clinic name is the title.",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -358,7 +418,9 @@
         "intro": {
           "config": {
             "label": "Content",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -391,7 +453,9 @@
         "voted": {
           "config": {
             "label": "Voted best for",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "placeholder": "Voted best for sleep",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -400,7 +464,9 @@
         "quote": {
           "config": {
             "label": "Quote",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -443,7 +509,12 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         },
@@ -451,7 +522,12 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         }
@@ -468,7 +544,9 @@
         "small_heading": {
           "config": {
             "label": "Eyebrow",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "placeholder": "Learn",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -477,7 +555,9 @@
         "heading": {
           "config": {
             "label": "Heading (H1)",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "placeholder": "New to hormone therapy",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -487,7 +567,9 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Content",
-            "labels": ["superscript"],
+            "labels": [
+              "superscript"
+            ],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -495,7 +577,7 @@
         "link": {
           "config": {
             "allowText": true,
-            "label": "Link",
+            "label": "Link under content",
             "placeholder": "Start here"
           },
           "type": "Link"
@@ -521,7 +603,12 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         },
@@ -529,7 +616,12 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         }

@@ -45,15 +45,11 @@ function block(text: string, label: "signoff" | "note") {
   ]);
 }
 
-function section(
-  small: string,
-  heading: string,
-  intro = "",
-): SliceSectionFields {
+function section(small: string, heading: string): SliceSectionFields {
   return {
     small_heading: small ? rich(small) : emptyRich,
     heading: rich(heading),
-    intro: intro ? rich(intro) : emptyRich,
+    intro: emptyRich,
     link: { link_type: "Any" },
     background: "Transparent",
     space_above: "Medium",
@@ -98,7 +94,7 @@ const story = [
     "I am not a medical professional, and this site does not provide medical advice or treatment plans.",
     "note",
   ),
-] as unknown as RichTextField;
+];
 
 export default function SideBySidePreview() {
   return (
@@ -109,11 +105,15 @@ export default function SideBySidePreview() {
           ...section(
             "My hormone replacement story",
             "Menopause isn’t a dirty word.",
-            "I’ll say that again: menopause isn’t something to be ashamed of, or a subject you should feel embarrassed to talk about.",
           ),
           side: "Media left",
           media_position: "Sticky",
-          text: story,
+          text: [
+            paragraph(
+              "I’ll say that again: menopause isn’t something to be ashamed of, or a subject you should feel embarrassed to talk about.",
+            ),
+            ...story,
+          ] as unknown as RichTextField,
           button: [
             {
               link_type: "Web",
@@ -135,13 +135,17 @@ export default function SideBySidePreview() {
           ...section(
             "Same slice, other side",
             "The photo can sit on the right.",
-            "Media right keeps the writing first on a wide screen. On a phone the photo still comes first.",
           ),
           side: "Media right",
           media_position: "Top",
-          text: rich(
-            "I’m your typical late-50’s woman. I love Jesus! I’m married, I have three grown children, three grandchildren, and my full-time gig is in the banking industry.",
-          ),
+          text: [
+            paragraph(
+              "Media right keeps the writing first on a wide screen. On a phone the photo still comes first.",
+            ),
+            paragraph(
+              "I’m your typical late-50’s woman. I love Jesus! I’m married, I have three grown children, three grandchildren, and my full-time gig is in the banking industry.",
+            ),
+          ] as unknown as RichTextField,
           caption: rich("Peggy, at home."),
           caption_on_photo: false,
         }}
@@ -180,16 +184,17 @@ export default function SideBySidePreview() {
       <SideBySide
         variation="clinic"
         primary={{
-          ...section(
-            "A clinic card",
-            "Or the media can be the clinic itself.",
-            "The logo, the quote, and the visit link come from the clinic. Style is Quote. This page does not invent a destination, so the visit link is a stand-in.",
-          ),
+          ...section("A clinic card", "Or the media can be the clinic itself."),
           side: "Media right",
           style: "Quote",
-          text: rich(
-            "Finding a product that treats my symptoms of menopause and helps with sleep was a clear winner for me.",
-          ),
+          text: [
+            paragraph(
+              "The logo, the quote, and the visit link come from the clinic. Style is Quote. This page does not invent a destination, so the visit link is a stand-in.",
+            ),
+            paragraph(
+              "Finding a product that treats my symptoms of menopause and helps with sleep was a clear winner for me.",
+            ),
+          ] as unknown as RichTextField,
         }}
         clinic={
           inner
@@ -208,13 +213,17 @@ export default function SideBySidePreview() {
           ...section(
             "A product card",
             "Or that same clinic can be the product card.",
-            "Style is Card. The photo, the price, and the visit button come from the clinic.",
           ),
           side: "Media right",
           style: "Card",
-          text: rich(
-            "The price and the photo are the clinic's. The writing on this side stays hers.",
-          ),
+          text: [
+            paragraph(
+              "Style is Card. The photo, the price, and the visit button come from the clinic.",
+            ),
+            paragraph(
+              "The price and the photo are the clinic's. The writing on this side stays hers.",
+            ),
+          ] as unknown as RichTextField,
         }}
         clinic={
           inner

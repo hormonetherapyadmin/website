@@ -15,8 +15,10 @@
         "small_heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Small heading",
-            "labels": ["superscript"],
+            "label": "Eyebrow",
+            "labels": [
+              "superscript"
+            ],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -24,8 +26,10 @@
         "heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Heading",
-            "labels": ["superscript"],
+            "label": "Heading (H2)",
+            "labels": [
+              "superscript"
+            ],
             "placeholder": "Latest reviews and posts",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -34,8 +38,10 @@
         "intro": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Intro",
-            "labels": ["superscript"],
+            "label": "Content",
+            "labels": [
+              "superscript"
+            ],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -44,7 +50,7 @@
           "config": {
             "allowTargetBlank": true,
             "allowText": true,
-            "label": "Link"
+            "label": "Link right of heading"
           },
           "type": "Link"
         },
@@ -84,7 +90,12 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         },
@@ -92,7 +103,12 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         }
@@ -110,8 +126,10 @@
         "small_heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Small heading",
-            "labels": ["superscript"],
+            "label": "Eyebrow",
+            "labels": [
+              "superscript"
+            ],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -119,8 +137,10 @@
         "heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Heading",
-            "labels": ["superscript"],
+            "label": "Heading (H2)",
+            "labels": [
+              "superscript"
+            ],
             "placeholder": "Latest reviews and posts",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -129,8 +149,10 @@
         "intro": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Intro",
-            "labels": ["superscript"],
+            "label": "Content",
+            "labels": [
+              "superscript"
+            ],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -139,7 +161,7 @@
           "config": {
             "allowTargetBlank": true,
             "allowText": true,
-            "label": "Link"
+            "label": "Link right of heading"
           },
           "type": "Link"
         },
@@ -160,7 +182,11 @@
         },
         "post": {
           "config": {
-            "customtypes": ["post", "provider_review", "comparison"],
+            "customtypes": [
+              "post",
+              "provider_review",
+              "comparison"
+            ],
             "label": "Post",
             "select": "document"
           },
@@ -187,7 +213,12 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         },
@@ -195,7 +226,12 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         }
@@ -213,8 +249,10 @@
         "small_heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Small heading",
-            "labels": ["superscript"],
+            "label": "Eyebrow",
+            "labels": [
+              "superscript"
+            ],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -222,8 +260,10 @@
         "heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Heading",
-            "labels": ["superscript"],
+            "label": "Heading (H2)",
+            "labels": [
+              "superscript"
+            ],
             "placeholder": "Latest reviews and posts",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -232,8 +272,10 @@
         "intro": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Intro",
-            "labels": ["superscript"],
+            "label": "Content",
+            "labels": [
+              "superscript"
+            ],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -242,7 +284,7 @@
           "config": {
             "allowTargetBlank": true,
             "allowText": true,
-            "label": "Link"
+            "label": "Link right of heading"
           },
           "type": "Link"
         },
@@ -298,7 +340,12 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         },
@@ -306,7 +353,12 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         }
@@ -324,8 +376,10 @@
         "small_heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Small heading",
-            "labels": ["superscript"],
+            "label": "Eyebrow",
+            "labels": [
+              "superscript"
+            ],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -333,8 +387,10 @@
         "heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Heading",
-            "labels": ["superscript"],
+            "label": "Heading (H2)",
+            "labels": [
+              "superscript"
+            ],
             "placeholder": "Latest reviews and posts",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -343,8 +399,10 @@
         "intro": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Intro",
-            "labels": ["superscript"],
+            "label": "Content",
+            "labels": [
+              "superscript"
+            ],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -353,7 +411,7 @@
           "config": {
             "allowTargetBlank": true,
             "allowText": true,
-            "label": "Link"
+            "label": "Link right of heading"
           },
           "type": "Link"
         },
@@ -393,7 +451,12 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         },
@@ -401,7 +464,12 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": ["None", "Small", "Medium", "Large"]
+            "options": [
+              "None",
+              "Small",
+              "Medium",
+              "Large"
+            ]
           },
           "type": "Select"
         }

@@ -21,12 +21,6 @@
   text-wrap: balance;
 }
 
-.lead {
-  margin: 1.25rem 0 0;
-  font-size: 1.25rem;
-  line-height: 1.5;
-}
-
 .head > :first-child {
   margin-top: 0;
 }
@@ -154,12 +148,16 @@
 }
 
 .statement {
-  margin: 0 0 1.5rem;
+  margin: 1.5rem 0;
   font-family: var(--font-heading);
   font-size: clamp(1.6rem, 2.6vw, 2.1rem);
   font-weight: 500;
   line-height: 1.25;
   text-wrap: balance;
+}
+
+.copy > .head + .statement {
+  margin-top: 0;
 }
 
 .attribution {

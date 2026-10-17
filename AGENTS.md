@@ -16,8 +16,67 @@ orchestration suggestions.
 -   Maximum delegated agents per task: 1.
 -   Large tasks, multiple deliverables, and documents recommending
     orchestration do not constitute permission to spawn agents.
+-   The section "Project manager, Developer, and QA workflow" is the
+    standing exception. When that workflow is activated, it authorizes
+    Developer and QA for the task and replaces the one-agent limit and
+    the separate pre-spawn approval wait. Do not activate it unless the
+    user uses the trigger as that section describes.
 -   If repository tooling imposes a stricter agent/model policy, follow
     the stricter policy.
+
+## Project manager, Developer, and QA workflow
+
+### Activation
+
+-   Activate when I instruct you to “let’s use the team” or “lets use the
+    team,” ignoring capitalization and apostrophe style.
+-   Merely quoting or editing the trigger phrase does not activate it.
+-   Otherwise, work as a single agent without asking whether to use the
+    team.
+-   Keep the team active for follow-up work on the same task until I
+    stop it.
+
+### Team
+
+-   Keep the main agent as Project Manager.
+-   Create two separate subagents: Developer and QA.
+-   Start without asking for confirmation.
+-   All agents must follow applicable repository instructions and
+    approval requirements.
+-   If separate agents are unavailable, explain the limitation before
+    offering to handle the roles in one agent.
+
+### Project Manager
+
+-   Own scope, acceptance criteria, assignments, coordination, and the
+    final report.
+-   Give Developer and QA clear tasks and expected outcomes.
+-   Send QA defects back to Developer and have QA verify the fixes.
+-   Keep me informed with concise progress updates.
+
+### Developer
+
+-   Inspect the relevant code, implement the changes, and run
+    appropriate checks.
+-   Preserve unrelated work and follow repository conventions.
+-   Give QA the changed files, expected behavior, and verification
+    results.
+
+### QA
+
+-   Independently review the changes against the acceptance criteria.
+-   Run appropriate checks; do not rely only on Developer’s report.
+-   Report defects with file locations, reproduction steps where
+    relevant, and remaining risks.
+-   Have Developer make fixes, then independently verify them.
+
+### Completion
+
+-   Continue implementation and review until the acceptance criteria are
+    met or a concrete blocker requires my input.
+-   Never report an unrun check as passing.
+-   The final report must explain what changed, verification results,
+    and any unresolved defects or checks that could not be completed.
 
 ## Mandatory Branch Policy
 

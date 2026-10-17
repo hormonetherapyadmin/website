@@ -130,7 +130,6 @@ export default async function TextMockup(props: PageProps<"/mockup/text">) {
         primary={{
           ...section({
             heading: rich("Want the numbers in one place?"),
-            intro: rich("The clinics, the prices, and what I paid."),
             link: {
               link_type: "Web",
               url: "/hrt-price-comparison-chart",
@@ -140,9 +139,13 @@ export default async function TextMockup(props: PageProps<"/mockup/text">) {
             space_below: "Large",
           }),
           layout: "Centered",
-          text: rich(
-            "I keep the price chart separate so this page can stay about insurance.",
-          ),
+          text: [
+            block("paragraph", "The clinics, the prices, and what I paid."),
+            block(
+              "paragraph",
+              "I keep the price chart separate so this page can stay about insurance.",
+            ),
+          ] as unknown as RichTextField,
         }}
       />
     </MockupShell>
