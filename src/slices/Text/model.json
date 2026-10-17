@@ -14,9 +14,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Eyebrow",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -25,9 +23,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Heading (H2)",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -45,12 +41,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Content",
-            "labels": [
-              "highlight",
-              "superscript",
-              "signoff",
-              "note"
-            ],
+            "labels": ["highlight", "superscript", "signoff", "note"],
             "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
             "placeholder": "The writing. Headings, lists, photos, and videos are allowed."
           },
@@ -60,10 +51,7 @@
           "config": {
             "default_value": "On the right",
             "label": "Layout",
-            "options": [
-              "On the right",
-              "Centered"
-            ],
+            "options": ["On the right", "Centered"],
             "placeholder": "On the right keeps the writing on the left and the link beside the heading. Centered centers the writing and puts the link under it."
           },
           "type": "Select"
@@ -89,12 +77,7 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         },
@@ -102,12 +85,7 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         }

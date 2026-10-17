@@ -16,9 +16,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Eyebrow",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -27,9 +25,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Heading (H2)",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "placeholder": "Where should I start?",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -39,9 +35,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Content",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -53,9 +47,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Small heading",
-                  "labels": [
-                    "superscript"
-                  ],
+                  "labels": ["superscript"],
                   "placeholder": "Brand new to this",
                   "single": "paragraph,strong,em,hyperlink"
                 },
@@ -65,9 +57,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Heading",
-                  "labels": [
-                    "superscript"
-                  ],
+                  "labels": ["superscript"],
                   "placeholder": "Is HRT for me?",
                   "single": "paragraph,strong,em,hyperlink"
                 },
@@ -77,9 +67,7 @@
                 "config": {
                   "allowTargetBlank": true,
                   "label": "Sentence",
-                  "labels": [
-                    "superscript"
-                  ],
+                  "labels": ["superscript"],
                   "placeholder": "The sentence under the title",
                   "single": "paragraph,strong,em,hyperlink"
                 },
@@ -95,12 +83,7 @@
               "icon": {
                 "config": {
                   "label": "Icon",
-                  "options": [
-                    "Question",
-                    "Lightbulb",
-                    "Medicine",
-                    "Wallet"
-                  ]
+                  "options": ["Question", "Lightbulb", "Medicine", "Wallet"]
                 },
                 "type": "Select"
               }
@@ -131,12 +114,7 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         },
@@ -144,12 +122,7 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         }

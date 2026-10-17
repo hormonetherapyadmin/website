@@ -16,9 +16,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Eyebrow",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -27,9 +25,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Heading (H2)",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "placeholder": "Menopause isn't a dirty word.",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -39,12 +35,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Content",
-            "labels": [
-              "highlight",
-              "superscript",
-              "signoff",
-              "note"
-            ],
+            "labels": ["highlight", "superscript", "signoff", "note"],
             "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
             "placeholder": "Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in."
           },
@@ -53,9 +44,7 @@
         "quote": {
           "config": {
             "label": "Quote",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "placeholder": "A large sentence at the top of the writing side. Leave blank to hide it.",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -68,10 +57,7 @@
             "label": "Buttons",
             "placeholder": "Read my whole story",
             "repeat": true,
-            "variants": [
-              "Solid",
-              "Ghost"
-            ]
+            "variants": ["Solid", "Ghost"]
           },
           "type": "Link"
         },
@@ -86,9 +72,7 @@
         "caption": {
           "config": {
             "label": "Caption",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "placeholder": "The line about this photo. Me and Winston, my Bernedoodle.",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -107,10 +91,7 @@
           "config": {
             "default_value": "Media left",
             "label": "Side",
-            "options": [
-              "Media left",
-              "Media right"
-            ],
+            "options": ["Media left", "Media right"],
             "placeholder": "Media left puts the photo on the left."
           },
           "type": "Select"
@@ -119,11 +100,7 @@
           "config": {
             "default_value": "Center",
             "label": "Media position",
-            "options": [
-              "Center",
-              "Top",
-              "Sticky"
-            ],
+            "options": ["Center", "Top", "Sticky"],
             "placeholder": "Center lines the media up with the middle of the writing. Top lines it up with the first line. Sticky keeps it in view while long writing scrolls."
           },
           "type": "Select"
@@ -149,12 +126,7 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         },
@@ -162,12 +134,7 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         }
@@ -186,9 +153,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Eyebrow",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -197,9 +162,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Heading (H2)",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -208,12 +171,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Content",
-            "labels": [
-              "highlight",
-              "superscript",
-              "signoff",
-              "note"
-            ],
+            "labels": ["highlight", "superscript", "signoff", "note"],
             "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
             "placeholder": "Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in."
           },
@@ -226,10 +184,7 @@
             "label": "Buttons",
             "placeholder": "Read my whole story",
             "repeat": true,
-            "variants": [
-              "Solid",
-              "Ghost"
-            ]
+            "variants": ["Solid", "Ghost"]
           },
           "type": "Link"
         },
@@ -243,9 +198,7 @@
         "caption": {
           "config": {
             "label": "Caption",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "placeholder": "Sits on the video.",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -255,10 +208,7 @@
           "config": {
             "default_value": "Media left",
             "label": "Side",
-            "options": [
-              "Media left",
-              "Media right"
-            ]
+            "options": ["Media left", "Media right"]
           },
           "type": "Select"
         },
@@ -266,11 +216,7 @@
           "config": {
             "default_value": "Center",
             "label": "Media position",
-            "options": [
-              "Center",
-              "Top",
-              "Sticky"
-            ],
+            "options": ["Center", "Top", "Sticky"],
             "placeholder": "Center lines the media up with the middle of the writing. Top lines it up with the first line. Sticky keeps it in view while long writing scrolls."
           },
           "type": "Select"
@@ -296,12 +242,7 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         },
@@ -309,12 +250,7 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         }
@@ -333,9 +269,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Eyebrow",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -344,9 +278,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Heading (H2)",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -355,12 +287,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Content",
-            "labels": [
-              "highlight",
-              "superscript",
-              "signoff",
-              "note"
-            ],
+            "labels": ["highlight", "superscript", "signoff", "note"],
             "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
             "placeholder": "Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in."
           },
@@ -373,19 +300,14 @@
             "label": "Buttons",
             "placeholder": "Read my whole story",
             "repeat": true,
-            "variants": [
-              "Solid",
-              "Ghost"
-            ]
+            "variants": ["Solid", "Ghost"]
           },
           "type": "Link"
         },
         "quote": {
           "config": {
             "label": "Quote",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "placeholder": "The large sentence on the media side.",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -402,10 +324,7 @@
           "config": {
             "default_value": "Media left",
             "label": "Side",
-            "options": [
-              "Media left",
-              "Media right"
-            ]
+            "options": ["Media left", "Media right"]
           },
           "type": "Select"
         },
@@ -413,11 +332,7 @@
           "config": {
             "default_value": "Center",
             "label": "Media position",
-            "options": [
-              "Center",
-              "Top",
-              "Sticky"
-            ],
+            "options": ["Center", "Top", "Sticky"],
             "placeholder": "Center lines the media up with the middle of the writing. Top lines it up with the first line. Sticky keeps it in view while long writing scrolls."
           },
           "type": "Select"
@@ -443,12 +358,7 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         },
@@ -456,12 +366,7 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         }
@@ -480,9 +385,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Eyebrow",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -491,9 +394,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Heading (H2)",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -502,12 +403,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Content",
-            "labels": [
-              "highlight",
-              "superscript",
-              "signoff",
-              "note"
-            ],
+            "labels": ["highlight", "superscript", "signoff", "note"],
             "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
             "placeholder": "Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in."
           },
@@ -520,18 +416,13 @@
             "label": "Buttons",
             "placeholder": "Read my whole story",
             "repeat": true,
-            "variants": [
-              "Solid",
-              "Ghost"
-            ]
+            "variants": ["Solid", "Ghost"]
           },
           "type": "Link"
         },
         "clinic": {
           "config": {
-            "customtypes": [
-              "provider"
-            ],
+            "customtypes": ["provider"],
             "label": "Clinic",
             "select": "document"
           },
@@ -541,10 +432,7 @@
           "config": {
             "default_value": "Quote",
             "label": "Style",
-            "options": [
-              "Quote",
-              "Card"
-            ],
+            "options": ["Quote", "Card"],
             "placeholder": "Quote puts the logo, her words, and a visit link on this side. Card puts the product photo and price there."
           },
           "type": "Select"
@@ -553,10 +441,7 @@
           "config": {
             "default_value": "Media right",
             "label": "Side",
-            "options": [
-              "Media left",
-              "Media right"
-            ]
+            "options": ["Media left", "Media right"]
           },
           "type": "Select"
         },
@@ -564,11 +449,7 @@
           "config": {
             "default_value": "Center",
             "label": "Media position",
-            "options": [
-              "Center",
-              "Top",
-              "Sticky"
-            ],
+            "options": ["Center", "Top", "Sticky"],
             "placeholder": "Center lines the media up with the middle of the writing. Top lines it up with the first line. Sticky keeps it in view while long writing scrolls."
           },
           "type": "Select"
@@ -594,12 +475,7 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         },
@@ -607,12 +483,7 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         }

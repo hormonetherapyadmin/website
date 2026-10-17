@@ -16,9 +16,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Eyebrow",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -27,9 +25,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Heading (H2)",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "placeholder": "Peggy's take: what I'm using now",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -39,9 +35,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Content",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -50,9 +44,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Quote",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "placeholder": "The large sentence.",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -67,9 +59,7 @@
         },
         "clinic": {
           "config": {
-            "customtypes": [
-              "provider"
-            ],
+            "customtypes": ["provider"],
             "label": "Clinic",
             "select": "document"
           },
@@ -79,9 +69,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Note under the name",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "placeholder": "The note under the name.",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -91,9 +79,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Reminder",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "placeholder": "This is my personal experience, not medical advice.",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -128,12 +114,7 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         },
@@ -141,12 +122,7 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         }

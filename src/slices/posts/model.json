@@ -16,9 +16,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Eyebrow",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -27,9 +25,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Heading (H2)",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "placeholder": "Latest reviews and posts",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -39,9 +35,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Content",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -90,12 +84,7 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         },
@@ -103,12 +92,7 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         }
@@ -127,9 +111,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Eyebrow",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -138,9 +120,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Heading (H2)",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "placeholder": "Latest reviews and posts",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -150,9 +130,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Content",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -182,11 +160,7 @@
         },
         "post": {
           "config": {
-            "customtypes": [
-              "post",
-              "provider_review",
-              "comparison"
-            ],
+            "customtypes": ["post", "provider_review", "comparison"],
             "label": "Post",
             "select": "document"
           },
@@ -213,12 +187,7 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         },
@@ -226,12 +195,7 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         }
@@ -250,9 +214,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Eyebrow",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -261,9 +223,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Heading (H2)",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "placeholder": "Latest reviews and posts",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -273,9 +233,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Content",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -340,12 +298,7 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         },
@@ -353,12 +306,7 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         }
@@ -377,9 +325,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Eyebrow",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -388,9 +334,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Heading (H2)",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "placeholder": "Latest reviews and posts",
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -400,9 +344,7 @@
           "config": {
             "allowTargetBlank": true,
             "label": "Content",
-            "labels": [
-              "superscript"
-            ],
+            "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
@@ -451,12 +393,7 @@
           "config": {
             "default_value": "Medium",
             "label": "Space above",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         },
@@ -464,12 +401,7 @@
           "config": {
             "default_value": "None",
             "label": "Space below",
-            "options": [
-              "None",
-              "Small",
-              "Medium",
-              "Large"
-            ]
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         }
