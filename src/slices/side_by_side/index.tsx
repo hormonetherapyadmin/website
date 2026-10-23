@@ -302,9 +302,7 @@ export function SideBySide({
   const clinicStyle = showClinic ? sideBySideStyle(primary.style) : undefined;
   const hasMedia = showImage || showVideo || showQuote || showClinic;
   const showHead =
-    isFilled.richText(primary.small_heading) ||
-    isFilled.richText(heading) ||
-    isFilled.richText(primary.intro);
+    isFilled.richText(primary.small_heading) || isFilled.richText(heading);
 
   return (
     <SliceSection section={primary} showHeader={false} labelId={titleId}>
@@ -331,14 +329,9 @@ export function SideBySide({
                 unstyled
                 className={styles.heading}
               />
-              <RichText
-                field={primary.intro}
-                as="p"
-                unstyled
-                className={styles.lead}
-              />
             </header>
           ) : null}
+          <Content field={primary.text} clinics={clinics} tokens={tokens} />
           {showStatement ? (
             <RichText
               field={primary.quote}
@@ -347,7 +340,6 @@ export function SideBySide({
               className={styles.statement}
             />
           ) : null}
-          <Content field={primary.text} clinics={clinics} tokens={tokens} />
           <Buttons fields={primary.button} />
         </div>
         {showImage ? (

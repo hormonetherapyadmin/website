@@ -2,9 +2,11 @@
 
 import Boxes from "./boxes";
 import BrandPromo from "./BrandPromo";
+import Buttons from "./Buttons";
 import ClinicComparison from "./clinic_comparison";
 import ClinicFacts from "./ClinicFacts";
 import Divider from "./divider";
+import Faq from "./Faq";
 import Hero from "./hero";
 import Posts from "./posts";
 import ProsAndCons from "./ProsAndCons";
@@ -17,9 +19,11 @@ import Text from "./Text";
 export const components = {
   boxes: Boxes,
   brand_promo: BrandPromo,
+  buttons: Buttons,
   clinic_comparison: ClinicComparison,
   clinic_facts: ClinicFacts,
   divider: Divider,
+  faq: Faq,
   hero: Hero,
   posts: Posts,
   pros_cons: ProsAndCons,

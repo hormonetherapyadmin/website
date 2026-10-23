@@ -38,16 +38,16 @@ function image(url: string, alt: string): ImageField {
 }
 
 describe("Hero", () => {
-  it("renders the homepage title, tagline, and benefit, and hides a blank greeting", () => {
+  it("renders the homepage title and benefit, and hides a blank greeting", () => {
     const html = renderToStaticMarkup(
       <Hero
         variation="home"
         primary={{
           ...section({
-            heading: rich("Hormone Therapy Replacement"),
+            small_heading: rich("Hormone Therapy Replacement"),
+            heading: rich("Feel like you again."),
             intro: rich("My goal is to share honest platform reviews."),
           }),
-          tagline: rich("Feel like you again."),
           benefits: [
             { link_type: "Web", url: "/sleep", text: "Improve sleep" },
           ],

@@ -13,7 +13,7 @@
         "heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Heading",
+            "label": "Heading (H2)",
             "labels": ["superscript"],
             "placeholder": "Improved sleep",
             "single": "paragraph,strong,em,hyperlink"
@@ -53,39 +53,6 @@
           },
           "type": "Link"
         },
-        "background": {
-          "config": {
-            "default_value": "Transparent",
-            "label": "Background",
-            "options": [
-              "Transparent",
-              "Cream",
-              "Pink",
-              "Blue",
-              "Yellow",
-              "Lavender",
-              "Raspberry",
-              "Navy"
-            ]
-          },
-          "type": "Select"
-        },
-        "space_above": {
-          "config": {
-            "default_value": "Medium",
-            "label": "Space above",
-            "options": ["None", "Small", "Medium", "Large"]
-          },
-          "type": "Select"
-        },
-        "space_below": {
-          "config": {
-            "default_value": "None",
-            "label": "Space below",
-            "options": ["None", "Small", "Medium", "Large"]
-          },
-          "type": "Select"
-        },
         "first": {
           "config": {
             "default_value": false,
@@ -108,7 +75,7 @@
               "small_heading": {
                 "config": {
                   "allowTargetBlank": true,
-                  "label": "Small heading",
+                  "label": "Eyebrow",
                   "labels": ["superscript"],
                   "placeholder": "Voted best for",
                   "single": "paragraph,strong,em,hyperlink"
@@ -118,7 +85,7 @@
               "intro": {
                 "config": {
                   "allowTargetBlank": true,
-                  "label": "Intro",
+                  "label": "Line under the name",
                   "labels": ["superscript"],
                   "placeholder": "A short line under the clinic name. Leave blank to hide it.",
                   "single": "paragraph,strong,em,hyperlink"
@@ -138,7 +105,7 @@
               "text": {
                 "config": {
                   "allowTargetBlank": true,
-                  "label": "Text",
+                  "label": "Text under the quote",
                   "labels": ["highlight", "superscript", "signoff", "note"],
                   "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
                   "placeholder": "More about this brand, such as what a test kit measures. Leave blank to hide it."
@@ -185,6 +152,39 @@
             "repeat": false
           },
           "type": "Group"
+        },
+        "background": {
+          "config": {
+            "default_value": "Transparent",
+            "label": "Background",
+            "options": [
+              "Transparent",
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ]
+          },
+          "type": "Select"
+        },
+        "space_above": {
+          "config": {
+            "default_value": "Medium",
+            "label": "Space above",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "space_below": {
+          "config": {
+            "default_value": "None",
+            "label": "Space below",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
         }
       },
       "version": ""

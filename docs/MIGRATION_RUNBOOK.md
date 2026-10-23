@@ -181,6 +181,77 @@ change the story.
 -   `--write` puts the category updates in the migration release.
     `--publish` publishes that release. `--only <slug>` limits the run.
 
+### Site pages
+
+The composed pages go to the same kind of migration release as the
+posts. `scripts/import-site-pages.mts` reads `src/migration/site-pages.ts`
+and never publishes. A dry run writes a report under
+`migration/reports/` and changes nothing. `--write` sends the pages.
+`--only <uid,uid>` limits the run and is the only way to overwrite a
+page already in the release. `--replace <uid,uid>` overwrites a
+published page. `migration/state/site-pages.json` records the Prismic
+id of each unpublished page. Commit it after every `--write`.
+
+Checked against the published repository on 2026-10-23. A page that
+is already published is skipped. `--replace` is the only way to
+overwrite it, and that also overwrites edits made in Prismic.
+
+Already published, so this import does not send them:
+
+-   `/about`. The hero is filled. The story beside the photo is empty.
+    The document also has a divider and a posts row that the About
+    mockup does not. Leave it until those extra slices are kept on
+    purpose or removed.
+-   `/blog`, as a Page. The content model still describes Blog as its
+    own single page type. That type does not exist. The published page
+    is Hero, a featured post, and the post grid.
+-   `/trusted-providers`. Hero, boxes, one brand promo per clinic, a
+    posts row, and a ribbon.
+-   `/trackers-and-testing`. Hero, the kit story, Mira, Proov, and a
+    ribbon. Its UID is not the Wix slug `trackersandtesting`. That URL
+    decision is still open. Do not create a second page at the Wix slug
+    until it is made.
+-   The homepage, with a hero and a divider. The rest of the specified
+    slices are not on it yet.
+
+Still to send, in this order:
+
+1.  FAQ (`/faq`) and Is HRT for me (`/ishrtforme`). These are slices
+    and do not point at a Brand. The copy is the October 2026 Wix
+    page, including its typos. The Wix stock photos stay off. Peggy's
+    portrait opens Is HRT for me, and the Winston photo sits beside
+    "Is it Safe?". A squiggly Divider sits under each Hero. Buttons
+    point at `/trusted-providers`. `/faq` is the
+    address blog posts already use. The questions are one FAQ slice.
+    Each answer is paired with the question it actually answers, and
+    each question starts closed. The close is one centered button, the
+    Buttons slice, with no box. The words are unchanged.
+2.  Finish `/about` by filling the empty story, without dropping the
+    divider and posts row, once that composition is confirmed.
+3.  Inner Balance (`/inner-balance`). The Inner Balance brand is
+    already published. This page is the pattern for the other clinic
+    pages, which are not composed yet. The visit link has to be the
+    real affiliate URL. The mockup placeholder `#affiliate-link` is
+    not a destination.
+4.  Finish the homepage. It reads the brands and the posts. The
+    published Alloy document's name currently reads Musely, the same
+    as the Musely document. Check that before a comparison slice reads
+    it.
+5.  The old trusted-providers address. `/copy-of-trusted-providers`
+    redirects to `/trusted-providers`. The Redirect type is not built
+    yet, so that redirect is a later document.
+
+The live signup form on the trusted-providers page has no slice yet.
+The published page does not include it.
+
+Editorial Standards and Affiliate Disclosure are still listed as
+singletons in `docs/CONTENT_MODEL.md` and have no custom type yet.
+They are not part of this order.
+
+The other Wix site pages, including privacy, contact, and the clinic
+pages that have no slice composition, stay out until each one is
+composed. Their copy is not rewritten to fill a page.
+
 ## URL Manifest
 
 No production cutover until every crawled public URL has a disposition.

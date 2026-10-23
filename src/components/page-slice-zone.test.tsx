@@ -352,6 +352,55 @@ describe("PageSliceZone", () => {
     expect(html).toContain('data-box="Pink"');
   });
 
+  it("renders Buttons as a row with no box", () => {
+    const html = render([
+      slice("buttons", {
+        ...section(""),
+        heading: emptyRich,
+        layout: "Centered",
+        button: [
+          {
+            link_type: "Web",
+            url: "/trusted-providers",
+            text: "Trusted HRT Docs/Clinics - Start my Journey",
+            variant: "Solid",
+          },
+        ],
+      }),
+    ]);
+
+    expect(html).toContain("Trusted HRT Docs/Clinics - Start my Journey");
+    expect(html).toContain('href="/trusted-providers"');
+    expect(html).toContain('data-layout="centered"');
+    expect(html).not.toContain("data-box");
+  });
+
+  it("renders FAQ questions closed unless Start opened is on", () => {
+    const html = render([
+      slice("faq", {
+        ...section("Common questions"),
+        questions: [
+          {
+            question: rich("Is BHRT safe?"),
+            answer: rich("Generally."),
+          },
+          {
+            question: rich("Can I stop BHRT once I start?"),
+            answer: rich("Ask your clinician."),
+            open: true,
+          },
+        ],
+      }),
+    ]);
+
+    const opened = html.match(/<details[^>]*>/g) ?? [];
+    expect(opened).toHaveLength(2);
+    expect(opened.filter((tag) => tag.includes("open"))).toHaveLength(1);
+    expect(html).toContain("Is BHRT safe?");
+    expect(html).toContain("Generally.");
+    expect(html).toContain("Ask your clinician.");
+  });
+
   it("renders the Divider and Start here as written", () => {
     const html = render([
       slice("divider", {

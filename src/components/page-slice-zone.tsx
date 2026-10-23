@@ -12,9 +12,11 @@ import {
 } from "@/lib/page-slices";
 import { BrandPromo } from "@/slices/BrandPromo";
 import { Boxes } from "@/slices/boxes";
+import { Buttons } from "@/slices/Buttons";
 import { ClinicComparison } from "@/slices/clinic_comparison";
 import { ClinicFacts } from "@/slices/ClinicFacts";
 import { Divider } from "@/slices/divider";
+import { Faq } from "@/slices/Faq";
 import { Hero, type HeroSlice as HeroProps } from "@/slices/hero";
 import { featuredPostHref, Posts, type PostCardData } from "@/slices/posts";
 import { ProsAndCons } from "@/slices/ProsAndCons";
@@ -26,9 +28,11 @@ import { Text } from "@/slices/Text";
 import type {
   BrandPromoSlice,
   BoxesSlice,
+  ButtonsSlice,
   ClinicComparisonSlice,
   ClinicFactsSlice,
   DividerSlice,
+  FaqSlice,
   HeroSlice,
   PageDocumentDataSlicesSlice,
   PostsSlice,
@@ -200,8 +204,22 @@ function DividerAdapter({ slice }: Props<DividerSlice>) {
   return <Divider primary={slice.primary} />;
 }
 
+function FaqAdapter({ slice, context }: Props<FaqSlice>) {
+  return (
+    <Faq
+      primary={slice.primary}
+      clinics={context.tokenClinics}
+      tokens={context.tokens}
+    />
+  );
+}
+
 function RibbonAdapter({ slice }: Props<RibbonSlice>) {
   return <Ribbon primary={slice.primary} />;
+}
+
+function ButtonsAdapter({ slice }: Props<ButtonsSlice>) {
+  return <Buttons primary={slice.primary} />;
 }
 
 function ClinicFactsAdapter({ slice, context }: Props<ClinicFactsSlice>) {
@@ -262,7 +280,9 @@ const components = {
   quote: QuoteAdapter,
   side_by_side: SideBySideAdapter,
   divider: DividerAdapter,
+  faq: FaqAdapter,
   ribbon: RibbonAdapter,
+  buttons: ButtonsAdapter,
   boxes: BoxesAdapter,
   brand_promo: BrandPromoAdapter,
   clinic_facts: ClinicFactsAdapter,

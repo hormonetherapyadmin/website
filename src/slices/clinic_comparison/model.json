@@ -15,7 +15,7 @@
         "small_heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Small heading",
+            "label": "Eyebrow",
             "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -24,7 +24,7 @@
         "heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Heading",
+            "label": "Heading (H2)",
             "labels": ["superscript"],
             "placeholder": "Eight online HRT clinics, side by side",
             "single": "paragraph,strong,em,hyperlink"
@@ -34,44 +34,11 @@
         "intro": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Intro",
+            "label": "Content",
             "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
-        },
-        "background": {
-          "config": {
-            "default_value": "Transparent",
-            "label": "Background",
-            "options": [
-              "Transparent",
-              "Cream",
-              "Pink",
-              "Blue",
-              "Yellow",
-              "Lavender",
-              "Raspberry",
-              "Navy"
-            ]
-          },
-          "type": "Select"
-        },
-        "space_above": {
-          "config": {
-            "default_value": "Medium",
-            "label": "Space above",
-            "options": ["None", "Small", "Medium", "Large"]
-          },
-          "type": "Select"
-        },
-        "space_below": {
-          "config": {
-            "default_value": "None",
-            "label": "Space below",
-            "options": ["None", "Small", "Medium", "Large"]
-          },
-          "type": "Select"
         },
         "prices_checked": {
           "config": {
@@ -121,6 +88,39 @@
             "repeat": true
           },
           "type": "Group"
+        },
+        "background": {
+          "config": {
+            "default_value": "Transparent",
+            "label": "Background",
+            "options": [
+              "Transparent",
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ]
+          },
+          "type": "Select"
+        },
+        "space_above": {
+          "config": {
+            "default_value": "Medium",
+            "label": "Space above",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "space_below": {
+          "config": {
+            "default_value": "None",
+            "label": "Space below",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
         }
       },
       "version": "initial"

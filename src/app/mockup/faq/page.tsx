@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import type { LinkField, RichTextField } from "@prismicio/client";
 import type { SliceSectionFields } from "@/components/slice-section";
+import { Buttons } from "@/slices/Buttons";
+import { Divider } from "@/slices/divider";
+import { Faq } from "@/slices/Faq";
 import { Hero } from "@/slices/hero";
-import { Ribbon } from "@/slices/Ribbon";
-import { Text } from "@/slices/Text";
 import { MockupShell } from "../_shared/mockup-shell";
 
 /*
@@ -24,10 +25,6 @@ const emptyRich = [] as RichTextField;
 
 function paragraph(text: string) {
   return { type: "paragraph" as const, text, spans: [] };
-}
-
-function heading(text: string) {
-  return { type: "heading2" as const, text, spans: [] };
 }
 
 function rich(text: string) {
@@ -94,10 +91,10 @@ const questions = [
     "Are there any contraindications for BHRT?",
     "Individuals with a history of certain cancers, blood clots, or certain medical conditions may have contraindications for BHRT. A thorough medical evaluation is necessary.",
   ],
-].flatMap(([question, answer]) => [
-  heading(question),
-  paragraph(answer),
-]) as unknown as RichTextField;
+].map(([question, answer]) => ({
+  question: rich(question),
+  answer: rich(answer),
+}));
 
 export default async function FaqMockup(props: PageProps<"/mockup/faq">) {
   const searchParams = await props.searchParams;
@@ -113,18 +110,27 @@ export default async function FaqMockup(props: PageProps<"/mockup/faq">) {
         })}
       />
 
-      <Text
+      <Divider
         primary={{
-          ...section(),
-          text: questions,
+          line: "Squiggly",
+          color: "Accent",
+          background: "Transparent",
+          space_above: "Medium",
+          space_below: "None",
         }}
       />
 
-      <Ribbon
+      <Faq
+        primary={{
+          ...section(),
+          questions,
+        }}
+      />
+
+      <Buttons
         primary={{
           ...section({ space_below: "Large" }),
           layout: "Centered",
-          box_background: "Pink",
           button: [
             button(
               "Trusted HRT Docs/Clinics - Start my Journey",

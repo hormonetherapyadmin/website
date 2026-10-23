@@ -47,7 +47,7 @@
         },
         "space_above": {
           "config": {
-            "default_value": "None",
+            "default_value": "Medium",
             "label": "Space above",
             "options": ["None", "Small", "Medium", "Large"]
           },
@@ -55,7 +55,7 @@
         },
         "space_below": {
           "config": {
-            "default_value": "None",
+            "default_value": "Medium",
             "label": "Space below",
             "options": ["None", "Small", "Medium", "Large"]
           },

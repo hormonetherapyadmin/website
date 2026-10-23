@@ -15,7 +15,7 @@
         "small_heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Small heading",
+            "label": "Eyebrow",
             "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -24,7 +24,7 @@
         "heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Heading",
+            "label": "Heading (H2)",
             "labels": ["superscript"],
             "placeholder": "Latest reviews and posts",
             "single": "paragraph,strong,em,hyperlink"
@@ -34,7 +34,7 @@
         "intro": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Intro",
+            "label": "Content",
             "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -44,9 +44,24 @@
           "config": {
             "allowTargetBlank": true,
             "allowText": true,
-            "label": "Link"
+            "label": "Link right of heading"
           },
           "type": "Link"
+        },
+        "category": {
+          "config": {
+            "default_value": "All",
+            "label": "Category",
+            "options": [
+              "All",
+              "Telehealth brand reviews",
+              "Formulations & dosages",
+              "My experience & results",
+              "Testing, labs & tracking",
+              "Cost, insurance & access"
+            ]
+          },
+          "type": "Select"
         },
         "background": {
           "config": {
@@ -78,21 +93,6 @@
             "default_value": "None",
             "label": "Space below",
             "options": ["None", "Small", "Medium", "Large"]
-          },
-          "type": "Select"
-        },
-        "category": {
-          "config": {
-            "default_value": "All",
-            "label": "Category",
-            "options": [
-              "All",
-              "Telehealth brand reviews",
-              "Formulations & dosages",
-              "My experience & results",
-              "Testing, labs & tracking",
-              "Cost, insurance & access"
-            ]
           },
           "type": "Select"
         }
@@ -110,7 +110,7 @@
         "small_heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Small heading",
+            "label": "Eyebrow",
             "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -119,7 +119,7 @@
         "heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Heading",
+            "label": "Heading (H2)",
             "labels": ["superscript"],
             "placeholder": "Latest reviews and posts",
             "single": "paragraph,strong,em,hyperlink"
@@ -129,7 +129,7 @@
         "intro": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Intro",
+            "label": "Content",
             "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -139,42 +139,9 @@
           "config": {
             "allowTargetBlank": true,
             "allowText": true,
-            "label": "Link"
+            "label": "Link right of heading"
           },
           "type": "Link"
-        },
-        "background": {
-          "config": {
-            "default_value": "Transparent",
-            "label": "Background",
-            "options": [
-              "Transparent",
-              "Cream",
-              "Pink",
-              "Blue",
-              "Yellow",
-              "Lavender",
-              "Raspberry",
-              "Navy"
-            ]
-          },
-          "type": "Select"
-        },
-        "space_above": {
-          "config": {
-            "default_value": "Medium",
-            "label": "Space above",
-            "options": ["None", "Small", "Medium", "Large"]
-          },
-          "type": "Select"
-        },
-        "space_below": {
-          "config": {
-            "default_value": "None",
-            "label": "Space below",
-            "options": ["None", "Small", "Medium", "Large"]
-          },
-          "type": "Select"
         },
         "category": {
           "config": {
@@ -198,53 +165,6 @@
             "select": "document"
           },
           "type": "Link"
-        }
-      },
-      "version": "initial"
-    },
-    {
-      "description": "A page of posts. Empty Posts per page means 12. All adds the category tabs.",
-      "docURL": "",
-      "id": "grid",
-      "imageUrl": "",
-      "items": {},
-      "name": "Grid",
-      "primary": {
-        "small_heading": {
-          "config": {
-            "allowTargetBlank": true,
-            "label": "Small heading",
-            "labels": ["superscript"],
-            "single": "paragraph,strong,em,hyperlink"
-          },
-          "type": "StructuredText"
-        },
-        "heading": {
-          "config": {
-            "allowTargetBlank": true,
-            "label": "Heading",
-            "labels": ["superscript"],
-            "placeholder": "Latest reviews and posts",
-            "single": "paragraph,strong,em,hyperlink"
-          },
-          "type": "StructuredText"
-        },
-        "intro": {
-          "config": {
-            "allowTargetBlank": true,
-            "label": "Intro",
-            "labels": ["superscript"],
-            "single": "paragraph,strong,em,hyperlink"
-          },
-          "type": "StructuredText"
-        },
-        "link": {
-          "config": {
-            "allowTargetBlank": true,
-            "allowText": true,
-            "label": "Link"
-          },
-          "type": "Link"
         },
         "background": {
           "config": {
@@ -278,6 +198,53 @@
             "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
+        }
+      },
+      "version": "initial"
+    },
+    {
+      "description": "A page of posts. Empty Posts per page means 12. All adds the category tabs.",
+      "docURL": "",
+      "id": "grid",
+      "imageUrl": "",
+      "items": {},
+      "name": "Grid",
+      "primary": {
+        "small_heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Eyebrow",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Heading (H2)",
+            "labels": ["superscript"],
+            "placeholder": "Latest reviews and posts",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "intro": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Content",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "link": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Link right of heading"
+          },
+          "type": "Link"
         },
         "category": {
           "config": {
@@ -309,53 +276,6 @@
             "placeholder_true": "Yes"
           },
           "type": "Boolean"
-        }
-      },
-      "version": "initial"
-    },
-    {
-      "description": "Three posts across. Category limits the list.",
-      "docURL": "",
-      "id": "row",
-      "imageUrl": "",
-      "items": {},
-      "name": "Row",
-      "primary": {
-        "small_heading": {
-          "config": {
-            "allowTargetBlank": true,
-            "label": "Small heading",
-            "labels": ["superscript"],
-            "single": "paragraph,strong,em,hyperlink"
-          },
-          "type": "StructuredText"
-        },
-        "heading": {
-          "config": {
-            "allowTargetBlank": true,
-            "label": "Heading",
-            "labels": ["superscript"],
-            "placeholder": "Latest reviews and posts",
-            "single": "paragraph,strong,em,hyperlink"
-          },
-          "type": "StructuredText"
-        },
-        "intro": {
-          "config": {
-            "allowTargetBlank": true,
-            "label": "Intro",
-            "labels": ["superscript"],
-            "single": "paragraph,strong,em,hyperlink"
-          },
-          "type": "StructuredText"
-        },
-        "link": {
-          "config": {
-            "allowTargetBlank": true,
-            "allowText": true,
-            "label": "Link"
-          },
-          "type": "Link"
         },
         "background": {
           "config": {
@@ -389,6 +309,53 @@
             "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
+        }
+      },
+      "version": "initial"
+    },
+    {
+      "description": "Three posts across. Category limits the list.",
+      "docURL": "",
+      "id": "row",
+      "imageUrl": "",
+      "items": {},
+      "name": "Row",
+      "primary": {
+        "small_heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Eyebrow",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Heading (H2)",
+            "labels": ["superscript"],
+            "placeholder": "Latest reviews and posts",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "intro": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Content",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "link": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Link right of heading"
+          },
+          "type": "Link"
         },
         "category": {
           "config": {
@@ -402,6 +369,39 @@
               "Testing, labs & tracking",
               "Cost, insurance & access"
             ]
+          },
+          "type": "Select"
+        },
+        "background": {
+          "config": {
+            "default_value": "Transparent",
+            "label": "Background",
+            "options": [
+              "Transparent",
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ]
+          },
+          "type": "Select"
+        },
+        "space_above": {
+          "config": {
+            "default_value": "Medium",
+            "label": "Space above",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "space_below": {
+          "config": {
+            "default_value": "None",
+            "label": "Space below",
+            "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
         }

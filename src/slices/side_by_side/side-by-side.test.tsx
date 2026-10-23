@@ -24,16 +24,24 @@ const labeled = (value: string, label: "signoff" | "note") =>
     },
   ] as RichTextField;
 
+const emptyRich = [] as RichTextField;
+const lead = rich("I’ll say that again.");
+
 function section(): SliceSectionFields {
   return {
     small_heading: rich("My hormone replacement story"),
     heading: rich("Menopause isn’t a dirty word."),
-    intro: rich("I’ll say that again."),
+    intro: emptyRich,
     link: { link_type: "Any" },
     background: "Transparent",
     space_above: "None",
     space_below: "None",
   };
+}
+
+/** The old intro paragraphs, then the rest of the writing. */
+function content(body: RichTextField): RichTextField {
+  return [...lead, ...body] as RichTextField;
 }
 
 const button = {
@@ -63,7 +71,7 @@ describe("SideBySide", () => {
         primary={{
           ...section(),
           side: "Media left",
-          text: [
+          text: content([
             ...rich("I’ve personally tested more than 9 providers."),
             ...labeled(
               "I created HormoneTherapyHub to offer transparent telemetry.",
@@ -73,7 +81,7 @@ describe("SideBySide", () => {
               "I am not a medical professional, and this site does not provide medical advice.",
               "note",
             ),
-          ] as RichTextField,
+          ] as RichTextField),
           button: [
             button,
             {
@@ -107,6 +115,9 @@ describe("SideBySide", () => {
     );
     expect(markup).toContain("Me and Winston, my Bernedoodle.");
     expect(markup).toContain('data-caption="on"');
+    expect(markup.indexOf("I’ll say that again.")).toBeLessThan(
+      markup.indexOf("I’ve personally tested more than 9 providers."),
+    );
     expect(markup).toContain("I’ve personally tested more than 9 providers.");
     expect(markup).toContain(
       "I created HormoneTherapyHub to offer transparent telemetry.",
@@ -124,7 +135,7 @@ describe("SideBySide", () => {
         variation="image"
         primary={{
           ...section(),
-          text: rich("Hi."),
+          text: content(rich("Hi.")),
           caption: rich("Peggy, at home."),
           caption_on_photo: false,
         }}
@@ -139,7 +150,7 @@ describe("SideBySide", () => {
     const markup = renderToStaticMarkup(
       <SideBySide
         variation="image"
-        primary={{ ...section(), text: rich("Hi."), caption: [] }}
+        primary={{ ...section(), text: content(rich("Hi.")), caption: [] }}
         image={{ src: "/photo.jpg", alt: "Peggy" }}
       />,
     );
@@ -151,7 +162,11 @@ describe("SideBySide", () => {
     const markup = renderToStaticMarkup(
       <SideBySide
         variation="image"
-        primary={{ ...section(), side: "Media right", text: rich("Hi.") }}
+        primary={{
+          ...section(),
+          side: "Media right",
+          text: content(rich("Hi.")),
+        }}
         image={{ src: "/photo.jpg", alt: "Peggy" }}
       />,
     );
@@ -163,7 +178,7 @@ describe("SideBySide", () => {
       renderToStaticMarkup(
         <SideBySide
           variation="image"
-          primary={{ ...section(), media_position, text: rich("Hi.") }}
+          primary={{ ...section(), media_position, text: content(rich("Hi.")) }}
           image={{ src: "/photo.jpg", alt: "Peggy" }}
         />,
       );
@@ -173,13 +188,13 @@ describe("SideBySide", () => {
     expect(render("Sticky")).toContain('data-position="sticky"');
   });
 
-  it("renders every intro paragraph in the writing column", () => {
+  it("renders every content paragraph in the writing column", () => {
     const markup = renderToStaticMarkup(
       <SideBySide
         variation="image"
         primary={{
           ...section(),
-          intro: [
+          text: [
             ...rich("First signs aren’t always obvious."),
             ...rich("Proactive tracking is the tool for advocacy."),
           ] as RichTextField,
@@ -201,29 +216,34 @@ describe("SideBySide", () => {
     const markup = renderToStaticMarkup(
       <SideBySide
         variation="image"
-        primary={{ ...section(), intro: rich("Only the writing.") }}
+        primary={{ ...section(), text: rich("Only the writing.") }}
       />,
     );
     expect(markup).toContain('data-media="false"');
     expect(markup).toContain("Only the writing.");
   });
 
-  it("puts a quote above the writing beside the photo", () => {
+  it("puts the optional quote after the content beside the photo", () => {
     const markup = renderToStaticMarkup(
       <SideBySide
         variation="image"
         primary={{
           ...section(),
           quote: rich("Here is the evidence of my hormonal shift."),
-          text: rich("For many women, the first signs aren’t always obvious."),
+          text: content(
+            rich("For many women, the first signs aren’t always obvious."),
+          ),
         }}
         image={{ src: "/photo.jpg", alt: "Peggy" }}
       />,
     );
     expect(markup).toContain('alt="Peggy"');
     expect(markup).not.toContain("<blockquote");
-    expect(markup.indexOf("Here is the evidence")).toBeLessThan(
+    expect(markup.indexOf("I’ll say that again.")).toBeLessThan(
       markup.indexOf("For many women"),
+    );
+    expect(markup.indexOf("For many women")).toBeLessThan(
+      markup.indexOf("Here is the evidence"),
     );
   });
 
@@ -233,7 +253,7 @@ describe("SideBySide", () => {
         variation="image"
         primary={{
           ...section(),
-          text: rich("Hi."),
+          text: content(rich("Hi.")),
           button: [
             {
               link_type: "Web",
@@ -267,7 +287,7 @@ describe("SideBySide", () => {
         variation="quote"
         primary={{
           ...section(),
-          text: rich("Why this line stayed with me."),
+          text: content(rich("Why this line stayed with me.")),
           quote: rich("Menopause isn’t something to be ashamed of."),
           attribution: "Peggy",
         }}
@@ -283,7 +303,7 @@ describe("SideBySide", () => {
     const markup = renderToStaticMarkup(
       <SideBySide
         variation="clinic"
-        primary={{ ...section(), text: rich("What I use now.") }}
+        primary={{ ...section(), text: content(rich("What I use now.")) }}
         clinic={{
           name: "Inner Balance",
           logo: { src: "/mockup/logos/inner-balance.png" },
@@ -311,7 +331,7 @@ describe("SideBySide", () => {
         primary={{
           ...section(),
           style: "Card",
-          text: rich("What I use now."),
+          text: content(rich("What I use now.")),
         }}
         clinic={{
           name: "Mira",
@@ -345,7 +365,7 @@ describe("SideBySide", () => {
         variation="video"
         primary={{
           ...section(),
-          text: rich("Watch with me."),
+          text: content(rich("Watch with me.")),
           caption: rich("On the video."),
         }}
         video={{
@@ -363,7 +383,7 @@ describe("SideBySide", () => {
     const markup = renderToStaticMarkup(
       <SideBySide
         variation="video"
-        primary={{ ...section(), text: rich("Watch with me.") }}
+        primary={{ ...section(), text: content(rich("Watch with me.")) }}
         video={{ url: "https://example.com/watch", title: "My HRT story" }}
       />,
     );

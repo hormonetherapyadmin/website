@@ -213,7 +213,7 @@ type SliceSectionProps = {
   showHeader?: boolean;
   /**
    * Title used for the section id. Defaults to the heading.
-   * The homepage hero passes its tagline.
+   * The homepage hero passes its heading.
    */
   title?: string | null;
   /**

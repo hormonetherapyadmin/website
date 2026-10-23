@@ -13,7 +13,7 @@
         "small_heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Small heading",
+            "label": "Eyebrow",
             "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -22,16 +22,7 @@
         "heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Heading",
-            "labels": ["superscript"],
-            "single": "paragraph,strong,em,hyperlink"
-          },
-          "type": "StructuredText"
-        },
-        "intro": {
-          "config": {
-            "allowTargetBlank": true,
-            "label": "Intro",
+            "label": "Heading (H2)",
             "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -41,9 +32,29 @@
           "config": {
             "allowTargetBlank": true,
             "allowText": true,
-            "label": "Link"
+            "label": "Link right of heading",
+            "placeholder": "Centered layout puts this under the writing."
           },
           "type": "Link"
+        },
+        "text": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Content",
+            "labels": ["highlight", "superscript", "signoff", "note"],
+            "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
+            "placeholder": "The writing. Headings, lists, photos, and videos are allowed."
+          },
+          "type": "StructuredText"
+        },
+        "layout": {
+          "config": {
+            "default_value": "On the right",
+            "label": "Layout",
+            "options": ["On the right", "Centered"],
+            "placeholder": "On the right keeps the writing on the left and the link beside the heading. Centered centers the writing and puts the link under it."
+          },
+          "type": "Select"
         },
         "background": {
           "config": {
@@ -77,25 +88,6 @@
             "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
-        },
-        "layout": {
-          "config": {
-            "default_value": "On the right",
-            "label": "Layout",
-            "options": ["On the right", "Centered"],
-            "placeholder": "On the right keeps the writing on the left and the link beside the heading. Centered centers the writing and puts the link under it."
-          },
-          "type": "Select"
-        },
-        "text": {
-          "config": {
-            "allowTargetBlank": true,
-            "label": "Text",
-            "labels": ["highlight", "superscript", "signoff", "note"],
-            "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
-            "placeholder": "The writing. Headings, lists, photos, and videos are allowed."
-          },
-          "type": "StructuredText"
         }
       },
       "version": ""

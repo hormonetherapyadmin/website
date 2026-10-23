@@ -15,7 +15,7 @@
         "small_heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Small heading",
+            "label": "Eyebrow",
             "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -24,7 +24,7 @@
         "heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Heading",
+            "label": "Heading (H2)",
             "labels": ["superscript"],
             "placeholder": "Where should I start?",
             "single": "paragraph,strong,em,hyperlink"
@@ -34,11 +34,64 @@
         "intro": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Intro",
+            "label": "Content",
             "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
+        },
+        "cards": {
+          "config": {
+            "fields": {
+              "small_heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Small heading",
+                  "labels": ["superscript"],
+                  "placeholder": "Brand new to this",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "heading": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Heading",
+                  "labels": ["superscript"],
+                  "placeholder": "Is HRT for me?",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "text": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Sentence",
+                  "labels": ["superscript"],
+                  "placeholder": "The sentence under the title",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "link": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Link"
+                },
+                "type": "Link"
+              },
+              "icon": {
+                "config": {
+                  "label": "Icon",
+                  "options": ["Question", "Lightbulb", "Medicine", "Wallet"]
+                },
+                "type": "Select"
+              }
+            },
+            "label": "Cards",
+            "repeat": true
+          },
+          "type": "Group"
         },
         "background": {
           "config": {
@@ -72,59 +125,6 @@
             "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
-        },
-        "cards": {
-          "config": {
-            "fields": {
-              "small_heading": {
-                "config": {
-                  "allowTargetBlank": true,
-                  "label": "Small heading",
-                  "labels": ["superscript"],
-                  "placeholder": "Brand new to this",
-                  "single": "paragraph,strong,em,hyperlink"
-                },
-                "type": "StructuredText"
-              },
-              "heading": {
-                "config": {
-                  "allowTargetBlank": true,
-                  "label": "Heading",
-                  "labels": ["superscript"],
-                  "placeholder": "Is HRT for me?",
-                  "single": "paragraph,strong,em,hyperlink"
-                },
-                "type": "StructuredText"
-              },
-              "text": {
-                "config": {
-                  "allowTargetBlank": true,
-                  "label": "Text",
-                  "labels": ["superscript"],
-                  "placeholder": "The sentence under the title",
-                  "single": "paragraph,strong,em,hyperlink"
-                },
-                "type": "StructuredText"
-              },
-              "link": {
-                "config": {
-                  "allowTargetBlank": true,
-                  "label": "Link"
-                },
-                "type": "Link"
-              },
-              "icon": {
-                "config": {
-                  "label": "Icon",
-                  "options": ["Question", "Lightbulb", "Medicine", "Wallet"]
-                },
-                "type": "Select"
-              }
-            },
-            "label": "Cards",
-            "repeat": true
-          },
-          "type": "Group"
         }
       },
       "version": "initial"

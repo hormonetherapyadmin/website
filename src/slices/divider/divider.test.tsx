@@ -4,6 +4,25 @@ import { Divider } from "./index";
 import styles from "./divider.module.css";
 
 describe("Divider", () => {
+  it("uses a medium gap when spacing is unset", () => {
+    const html = renderToStaticMarkup(
+      <Divider
+        primary={{
+          line: "Squiggly",
+          color: "Accent",
+          background: "Transparent",
+          space_above: null,
+          space_below: null,
+        }}
+      />,
+    );
+
+    expect(html).toContain("pt-slice");
+    expect(html).toContain("pb-slice");
+    expect(html).not.toContain("pt-0");
+    expect(html).not.toContain("pb-0");
+  });
+
   it("draws a squiggly accent line with no extra gap", () => {
     const html = renderToStaticMarkup(
       <Divider

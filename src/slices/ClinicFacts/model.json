@@ -13,7 +13,7 @@
         "small_heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Small heading",
+            "label": "Eyebrow",
             "labels": ["superscript"],
             "single": "paragraph,strong,em,hyperlink"
           },
@@ -22,7 +22,7 @@
         "heading": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Heading",
+            "label": "Heading (H2)",
             "labels": ["superscript"],
             "placeholder": "The facts",
             "single": "paragraph,strong,em,hyperlink"
@@ -32,12 +32,20 @@
         "intro": {
           "config": {
             "allowTargetBlank": true,
-            "label": "Intro",
+            "label": "Content",
             "labels": ["superscript"],
             "placeholder": "What I confirmed on their page. This is my experience as a patient, not a medical review.",
             "single": "paragraph,strong,em,hyperlink"
           },
           "type": "StructuredText"
+        },
+        "clinic": {
+          "config": {
+            "customtypes": ["provider"],
+            "label": "Clinic",
+            "select": "document"
+          },
+          "type": "Link"
         },
         "background": {
           "config": {
@@ -71,14 +79,6 @@
             "options": ["None", "Small", "Medium", "Large"]
           },
           "type": "Select"
-        },
-        "clinic": {
-          "config": {
-            "customtypes": ["provider"],
-            "label": "Clinic",
-            "select": "document"
-          },
-          "type": "Link"
         }
       },
       "version": ""

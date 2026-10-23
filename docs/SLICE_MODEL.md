@@ -55,69 +55,95 @@ slice. One component reads them. The section wrapper is
 
 ### Section
 
-Every slice except the Divider starts with these six fields, directly
-on the slice and before its own fields. They are not in a group. In the
-Page Builder even a non-repeatable group starts empty, and she has to
-add an item before she can type a heading, so the fields stay open
-instead. The Divider has only Background, Space above, and Space below.
-Brand promo keeps Heading, Background, Space above, and Space below
-open, and puts Small heading and Intro in Overwrite.
+Every slice except the Divider has these six fields. They are not in a
+group. In the Page Builder even a non-repeatable group starts empty, and
+she has to add an item before she can type a heading, so the fields stay
+open instead. Eyebrow and Heading come first, then Content where the
+slice has that field. Background, Space above, and Space below are the
+last fields on the slice. The Divider has only Line, Color, and those
+three settings. Brand promo keeps Heading (H2) open. Eyebrow, Line
+under the name, and Text under the quote are in Overwrite. It still
+ends with Background, Space above, and Space below.
 
 | Label | Id | Kind | Default |
 | --- | --- | --- | --- |
-| Small heading | `small_heading` | Heading rich text | Empty |
-| Heading | `heading` | Heading rich text | Empty |
-| Intro | `intro` | Heading rich text | Empty |
+| Eyebrow | `small_heading` | Heading rich text | Empty |
+| Heading (H2) | `heading` | Heading rich text | Empty |
+| Content | `intro` | Heading rich text | Empty |
 | Background | `background` | Select | Transparent |
 | Space above | `space_above` | Select | Medium |
 | Space below | `space_below` | Select | None |
 
-Small heading, Heading, and Intro are the header. When all three are
-empty, the slice has no header. Side by side is the exception: its
-Intro allows many paragraphs, and that header sits in the writing
-column beside the media. See Side by side.
+Hero labels the heading Heading (H1). Every other slice that has the
+section heading labels it Heading (H2). Ribbon does not label `intro`
+Content. That line is "Line above the box". Text and Side by side do
+not have `intro`. Their writing is Content, id `text`. Buttons has
+neither: the buttons are the slice. Quote keeps
+`intro` as Content. Its other field, id `text`, is "Note under the
+name".
+
+Eyebrow, Heading, and Content are the header. When all three are
+empty, the slice has no header. Side by side puts that header in the
+writing column beside the media, and Content there is the `text`
+field. See Side by side.
 
 Link is not copied onto every slice. A slice gets one only when the
-design is a single text link. Latest posts, Text, and the Hero
-Subpage, Centered, and Brands variations have that field, `link`, with
-display text. It sits on the heading's row, as "All posts" does. Text
-can move it with Layout: On the right keeps it beside the heading, and
-Centered puts it under the writing. A slice that needs several links
-has its own field, such as Buttons, Benefits, or the link on a card.
-It does not also get Link.
+design is a single text link. The label says where it sits. Latest
+posts and Text label it "Link right of heading". On Text, Centered
+layout moves that same link under the writing. Hero Subpage, Centered,
+and Brands label it "Link under content", because it sits under the
+paragraph. A slice that needs several links has its own field, such as
+Buttons, Benefits, or the link on a card. It does not also get this
+link.
 
 ### Field order
 
 The Page Builder lists fields in the order the slice is assembled, top
-to bottom. Peggy fills what she sees on the page first. One slice has
-one writing field under the heading. Side by side's Intro and Text are
-that same column, so the audit keeps one field, Content, and drops the
-other. A slice with Buttons does not also have Link.
+to bottom. Peggy fills what she sees on the page first. The writing
+under a section heading is one field, labeled Content. Side by side and
+Text keep that writing in `text` and do not have `intro`. A slice with
+Buttons does not also have Link.
 
-Settings that are not writing or media come last: Background, Space
-above, Space below, and a slice's own placement choices, such as Side
-and Media position.
+Some slices keep a second short field that is not that writing. Quote's
+`text` is "Note under the name". Each Start here card's `text` is
+Sentence. Each Boxes box's `text` is "Line under the heading". Brand
+promo Overwrite labels `intro` "Line under the name" and `text` "Text
+under the quote". Ribbon's box field `content` stays Content, and the
+section `intro` is "Line above the box".
 
-The next slice audit applies this to every slice. The field tables
-below still describe the models as they are until that audit. Side by
-side Image is the order that audit uses:
+Background, Space above, and Space below are the last fields on every
+slice. A slice's own placement choices, such as Side and Media
+position, sit just before those settings.
 
-1. Small heading
-2. Heading
+Side by side Image:
+
+1. Eyebrow
+2. Heading (H2)
 3. Content
 4. Quote
 5. Buttons
 6. Image
 7. Caption
 8. Caption on the photo
-9. Space above, Space below, Side, Media position, Background
+9. Side
+10. Media position
+11. Background
+12. Space above
+13. Space below
 
-Video, Quote, and Clinic follow the same idea: the writing, then that
-variation's media, then the settings.
+Video is Eyebrow, Heading (H2), Content, Buttons, Video, Caption, then
+Side, Media position, Background, Space above, Space below. The Quote
+variation is Eyebrow, Heading (H2), Content, Buttons, Quote,
+Attribution, then Side, Media position, Background, Space above, Space
+below. Clinic is Eyebrow, Heading (H2), Content, Buttons, Clinic,
+Style, then Side, Media position, Background, Space above, Space below.
+
+Text is Eyebrow, Heading (H2), Link right of heading, Content, Layout,
+Background, Space above, Space below.
 
 The Hero slice renders Heading as the page title (`h1`). Every other
 slice renders it as a section heading (`h2`). A card title is an `h3`.
-The small heading is a line above the title. She does not pick the level.
+The eyebrow is a line above the title. She does not pick the level.
 
 **Background** choices are the site colors, by name. Each maps to a
 color token:
@@ -135,18 +161,18 @@ color token:
 - Navy, the quote band (`panel`)
 
 The four pastels are the Start here card colors. Raspberry and Navy use
-light text. The small heading is raspberry on Transparent, Cream, and
+light text. The eyebrow is raspberry on Transparent, Cream, and
 the pastels,
 light blue (`card-2`) on Raspberry, and pink (`panel-accent`) on Navy.
-Slices that draw their own small heading (Hero, Side by side, Quote)
-follow the same rule. Brand promo's small heading on Navy is light blue
+Slices that draw their own eyebrow (Hero, Side by side, Quote)
+follow the same rule. Brand promo's eyebrow on Navy is light blue
 (`card-2`) and sits close above the heading. A later palette
 change to a token updates every section that uses it. A brand change
 that makes a name wrong, such as a new accent that is not raspberry,
 renames the choice, and pages that stored the old name fall back to
 Transparent until they are set again. Do not use a free color picker.
 
-Pieces a slice draws in raspberry, other than the small heading, are
+Pieces a slice draws in raspberry, other than the eyebrow, are
 not changed on a Raspberry band. A hero button is one example. Use Raspberry for writing and quotes.
 A card keeps its own color on any band.
 
@@ -159,8 +185,7 @@ not a field.
 
 **Section id.** Every section gets an id from its title, so a button on the
 same page can scroll to it. "Feel like you again." becomes
-`feel-like-you-again`. On the homepage that title is the tagline. On every
-other slice it is the heading. An empty title leaves the section with no
+`feel-like-you-again`. That title is the heading. An empty title leaves the section with no
 id. A button uses that id with a hash, such as
 `#eight-online-hrt-clinics-side-by-side` for the comparison heading
 "Eight online HRT clinics, side by side." Changing the title changes the
@@ -179,8 +204,8 @@ Two toolbars share the component:
 
 | Preset | Allows | Used for |
 | --- | --- | --- |
-| Heading | One block: paragraph, bold, italic, link | Titles, intros, quotes, captions, eyebrows. Side by side Intro allows many paragraphs |
-| Content | Many blocks: Heading 2, Heading 3, Heading 4, paragraphs, bold, italic, links, lists, image, video embed, labels | Story body and post body |
+| Heading | One block: paragraph, bold, italic, link | Titles, the section Content under a heading, quotes, captions, eyebrows |
+| Content | Many blocks: Heading 2, Heading 3, Heading 4, paragraphs, bold, italic, links, lists, image, video embed, labels | Story body, post body, and Content on Text and Side by side |
 
 Heading 1 is not on the content toolbar. The slice chooses the heading
 tag for a Heading field, so a section title cannot become a second page
@@ -199,18 +224,20 @@ content field's JSON (`labels`), not in the Type Builder. Handle them in
 
 A label styles words. It does not insert a document.
 
-Writing is one size everywhere. A post body and every slice's Text field
-(Text, Side by side, Brand promo, Ribbon, and Quote) use the `--text-body`
-token in `globals.css`, 1.3rem with a 1.7 line height, with 1.4rem
-between paragraphs. The Ribbon box keeps the 1.3rem size with a 1.5
-line height, so its short lines sit together under the title. Intros,
-captions, card text, the closing line, and the note box keep their own
-sizes.
+Writing is one size everywhere. A post body and the long writing on
+Text, Side by side, Brand promo (Text under the quote), the Ribbon box,
+and Quote (Note under the name) use the `--text-body` token in
+`globals.css`, 1.3rem with a 1.7 line height, with 1.4rem between
+paragraphs. The Ribbon box keeps the 1.3rem size with a 1.5 line
+height, so its short lines sit together under the title. The section
+Content under a heading (`intro`), captions, card sentences, the
+closing line, and the note box keep their own sizes. Text and Side by
+side Content (`text`) uses the body size above.
 
 A link in writing looks the same as a link in a post body: the accent
 color, semibold, no underline, and a tint that grows under the words on
 hover or keyboard focus. On a Raspberry or Navy section the color is
-that section's small heading color, so the link stays readable.
+that section's eyebrow color, so the link stays readable.
 
 Lists in writing look the same as lists in a post body. A bullet is a
 navy dot (`marker`) with a pale navy ring. A number is a heading-font
@@ -248,23 +275,32 @@ posts is a repeatable group with one content relationship in each row.
 
 A line between slices. It does not use the Section header. Background,
 Space above, and Space below are fields on the slice, with the same
-choices as Section. Both spacing fields default to None, so the line does
-not add a gap until she asks for one. That gap is added around the line,
-on top of the space on the slices beside it. A margin would collapse into
-the neighbor's margin, and None and Small would look the same.
+choices as Section. Both spacing fields default to Medium. That gap is
+added around the line, on top of the space on the slices beside it. A
+margin would collapse into the neighbor's margin, and None and Small
+would look the same.
 
 | Label | Id | Kind | Default |
 | --- | --- | --- | --- |
 | Line | `line` | Select | Squiggly |
 | Color | `color` | Select | Accent |
 | Background | `background` | Select | Transparent |
-| Space above | `space_above` | Select | None |
-| Space below | `space_below` | Select | None |
+| Space above | `space_above` | Select | Medium |
+| Space below | `space_below` | Select | Medium |
 
 Line is Squiggly or Straight. Those are the two rules in the mockups.
 Color is Accent, Soft, Border, or Text. Soft is the lighter accent used
 by the homepage wave. Accent, Border, and Text use those color tokens.
 There is no free color picker.
+
+On a site page the Divider usually sits directly under the Hero. That
+is the usual placement, and it is not required. When the slice under
+the Hero still belongs with the opening, the line can sit under that
+second slice instead. Trusted providers is the named exception for
+that placement. The published document still has its first line
+directly under the hero, before the jump boxes. A later Divider, such
+as the one above Keep reading, is a separate line and does not change
+where the first one sits.
 
 ### Boxes
 
@@ -284,14 +320,14 @@ Each box:
 | Clinic | `clinic` | Content relationship to Provider | No | Inner Balance |
 | Image | `image` | Image | No | Empty, so the clinic logo |
 | Heading | `heading` | Heading rich text | No | Empty, so the top choice label, such as No appointment required |
-| Text | `text` | Heading rich text | No | Empty, so the clinic name |
+| Line under the heading | `text` | Heading rich text | No | Empty, so the clinic name |
 | Bottom line | `bottom_line` | Text | No | Empty, so the code PEGGY10. Winona's is "15% off" |
 | Link | `link` | Link, no display text | No | `#inner-balance` |
 
-A written field wins. An empty Image, Heading, Text, or Bottom line
-uses the clinic's logo, top choice label, name, or code. A box with
-no clinic is written by hand. A box with no heading, no top choice
-label, no text, and no clinic name is hidden. A clinic
+A written field wins. An empty Image, Heading, Line under the heading,
+or Bottom line uses the clinic's logo, top choice label, name, or code.
+A box with no clinic is written by hand. A box with no heading, no top
+choice label, no line under the heading, and no clinic name is hidden. A clinic
 with no code and an empty Bottom line shows no bottom line, so write
 "No code" when the box should say it. The relationship fetches `name`,
 `logo`, `code`, and `top_choice_label`.
@@ -314,7 +350,7 @@ screens use fewer boxes per row:
 | 3 | 3 | 3 | 3 | 2 |
 | 2 | 2 | 2 | 2 | 2 |
 
-A box heading is an `h3` when Section Heading is filled. Without a
+A box heading is an `h3` when Heading (H2) is filled. Without a
 section heading it is a paragraph, so a jump band does not add
 headings to the page outline.
 
@@ -325,28 +361,28 @@ one slice per clinic. The featured card is this slice with Background
 Navy and Is this 1st? turned on. Each card under it is the same slice
 on a transparent background, with Is this 1st? left off.
 
-The open fields are the ones she fills on every card. Heading is the
+The open fields are the ones she fills on every card. Heading (H2) is the
 specialty, such as "Improved sleep", and it is an `h2`. Clinic is the
 brand. Background, Space above, and Space below are the section.
 Is this 1st? shows the badge. Place is the words beside it.
 
 Overwrite is one optional group. It starts empty. She adds it only when
 this card should differ from the brand, or from the built-in line
-"Voted best for". The card reads the first item. Small heading, Intro,
-Quote, Text, the product photo, Photo and price, and the extra links
-are in that group.
+"Voted best for". The card reads the first item. Eyebrow, Line under
+the name, Quote, Text under the quote, the product photo, Photo and
+price, and the extra links are in that group.
 The section id is the clinic's UID, so a Boxes jump link of
 `#inner-balance` lands on this card.
 
-Small heading is "Voted best for" when Overwrite is off or that field
+Eyebrow is "Voted best for" when Overwrite is off or that field
 is blank. On a Navy card that line is light blue. On every other
-background it uses the usual small-heading color. Intro is a short line
-under the clinic name, such as Effecty's "Choose a consult or not, and
-choose patch or gel." Leave Intro blank to hide it.
+background it uses the usual small-heading color. Line under the name
+is a short line under the clinic name, such as Effecty's "Choose a
+consult or not, and choose patch or gel." Leave it blank to hide it.
 
 | Label | Id | Kind | Required | Trusted providers |
 | --- | --- | --- | --- | --- |
-| Heading | `heading` | Heading rich text | No | Improved sleep |
+| Heading (H2) | `heading` | Heading rich text | No | Improved sleep |
 | Clinic | `clinic` | Content relationship to Provider | Yes | Inner Balance |
 | Background | `background` | Select | No | Navy on the featured card. Transparent on the cards under it. |
 | Space above | `space_above` | Select | No | None on the directory cards |
@@ -359,17 +395,17 @@ Overwrite fields:
 
 | Label | Id | Kind | Required | Trusted providers |
 | --- | --- | --- | --- | --- |
-| Small heading | `small_heading` | Heading rich text | No | Blank still says Voted best for |
-| Intro | `intro` | Heading rich text | No | Blank hides it |
+| Eyebrow | `small_heading` | Heading rich text | No | Blank still says Voted best for |
+| Line under the name | `intro` | Heading rich text | No | Blank hides it |
 | Quote | `quote` | Heading rich text | No | Blank uses the clinic's In my words. Write a sentence here when this card should say something else. |
-| Text | `text` | Content rich text | No | Empty. On test kits, the paragraphs about each kit |
+| Text under the quote | `text` | Content rich text | No | Empty. On test kits, the paragraphs about each kit |
 | Product image | `product` | Image | No | Empty uses the brand's product image. A photo here replaces it. The description is the alt text. |
 | Style | `style` | Select: Quote, Card | No | Card. Quote puts the logo, her words, and a visit link on the right. Card puts the product photo and price there. |
 | Photo and price | `layout` | Select: Beside, Stacked | No | Beside. Used when Style is Card. Off the group, the card is Beside. |
 | Links | `links` | Repeatable link, with display text | No | A second row under the brand buttons, such as a comparison |
 
-Text is more writing under the quote, with the content toolbar. Leave
-it blank to hide it. The test kits page uses it for the paragraphs
+Text under the quote is more writing under the quote, with the content
+toolbar. Leave it blank to hide it. The test kits page uses it for the paragraphs
 about each kit, because a product card has more to say than one line.
 
 Style chooses the right side. Quote is a soft panel: the logo, the
@@ -444,9 +480,9 @@ that arrangement. Centered centers the title and content and stacks the
 buttons under them. The section header centers too.
 
 Section is the shared fields. Background is the color behind the
-box. Leave Small heading, Heading, and Intro empty for the
-template, which has no header above the box. Heading, when she fills
-it, is the header above the box. Title is the line inside the box.
+box. Leave Eyebrow, Heading (H2), and Line above the box empty for the
+template, which has no header above the box. Heading (H2), when she
+fills it, is the header above the box. Title is the line inside the box.
 
 Box background uses the same choices as Background. The default is
 Pink, the template. An empty choice is Pink. A retired color name falls
@@ -462,43 +498,80 @@ transparent band has no wave.
 
 | Label | Id | Kind | Required | Template |
 | --- | --- | --- | --- | --- |
-| Section | The Section fields | Shared, open on the slice | | Background is the color behind the box. Default Transparent |
+| Section | Eyebrow, Heading (H2), and Line above the box | Shared, open on the slice | | Background is the color behind the box. Default Transparent |
 | Layout | `layout` | Select: On the right, Centered. Default On the right | No | On the right |
 | Title | `title` | Heading rich text | No | Still lining the prices up? |
 | Content | `content` | Content rich text | No | The comparison chart includes Midi Health too. |
 | Box background | `box_background` | Select. Same choices as Background. Default Pink | No | Pink |
 | Buttons | `button` | Repeatable link, with display text and a style | No | Solid: Open the price chart. Ghost: Tips for choosing |
 
-Title is an `h2`, and the section id, when Section Heading is empty.
-Under a Section Heading it is an `h3`. Solid is the filled button.
+Title is an `h2`, and the section id, when Heading (H2) is empty.
+Under a Heading (H2) it is an `h3`. Solid is the filled button.
 Ghost is the text button, with an arrow. A button with no words is
 hidden. A button to an affiliate address gets the affiliate `rel`, the
 same as Side by side. An empty title, content, and button list hides the box. The
 section header can still show.
 
+### Buttons
+
+A row of buttons with no box, in `src/slices/Buttons`. Use it when the
+close is only a button, such as the end of `/faq`. A close that has a
+sentence in a colored box stays a Ribbon.
+
+The row sits in the story column, the same width as Text and FAQ. A
+Background color still fills the full width. Layout On the left, the
+default, lines the buttons up with the writing. An empty choice is On
+the left. Centered centers the heading and the buttons. Solid is the
+filled button. Ghost is the text button, with an arrow. A button with
+no words is hidden. A button to an affiliate address gets the affiliate
+`rel`, the same as the Ribbon. An empty heading and an empty button
+list hide the slice.
+
+Page Builder order: Eyebrow, Heading (H2), Buttons, Layout, Background,
+Space above, Space below. There is no Content field.
+
+| Label | Id | Kind | Required | `/faq` |
+| --- | --- | --- | --- | --- |
+| Eyebrow | `small_heading` | Heading rich text | No | Empty |
+| Heading (H2) | `heading` | Heading rich text | No | Empty |
+| Buttons | `button` | Repeatable link, with display text and a style | No | Solid: Trusted HRT Docs/Clinics - Start my Journey |
+| Layout | `layout` | Select: On the left, Centered. Default On the left | No | Centered |
+| Background | `background` | Select | No | Transparent |
+| Space above | `space_above` | Select | No | Medium |
+| Space below | `space_below` | Select | No | Large |
+
 ### Text
 
 Writing on its own, in `src/slices/Text`. Use it for a page that is
-mostly words, such as `/costandinsurance`, `/formuations`, or `/faq`.
+mostly words, such as `/costandinsurance` or `/formuations`. Questions
+and answers use the FAQ slice.
 The writing sits in a column the width of a post story, 952 pixels on
 a wide screen (`--container-story`). The column is centered on the
 page. The section header sits in the same column. Layout chooses how
 the words and the link sit in that column. On the right, the default,
-the writing is left aligned and the link sits beside the heading. An
-empty choice is On the right. Centered centers the heading, intro, and
-writing, and puts the link under the writing. A Background color still
+the writing is left aligned and the link sits to the right of the
+heading. An empty choice is On the right. Centered centers the heading
+and the writing, and puts that same link under the writing. A Background color still
 fills the full width, the same as every slice. On a narrow screen the
 column is the screen, less the gutter.
 
+Page Builder order: Eyebrow, Heading (H2), Link right of heading,
+Content, Layout, Background, Space above, Space below.
+
 | Label | Id | Kind | Required |
 | --- | --- | --- | --- |
-| Section | The Section fields, plus Link | Shared, open on the slice | |
+| Eyebrow | `small_heading` | Heading rich text | No |
+| Heading (H2) | `heading` | Heading rich text | No |
+| Link right of heading | `link` | Link, with display text | No |
+| Content | `text` | Content rich text | No |
 | Layout | `layout` | Select: On the right, Centered. Default On the right | No |
-| Text | `text` | Content rich text | No |
+| Background | `background` | Select | No |
+| Space above | `space_above` | Select | No |
+| Space below | `space_below` | Select | No |
 
-Text uses the content toolbar: Heading 2, Heading 3, Heading 4,
-paragraphs, lists, photos, video, and the labels. Section Heading is
-the `h2` and the section id. Headings inside Text are for the parts
+Content uses the content toolbar: Heading 2, Heading 3, Heading 4,
+paragraphs, lists, photos, video, and the labels. Heading (H2) is
+the `h2` and the section id. Headings inside Content are for the parts
 under it, so use Heading 3 there when the slice has a heading. A
 paragraph can start with a clinic token, the same
 `{{provider:inner-balance:offer}}` and `{{provider:inner-balance:facts}}`
@@ -518,7 +591,7 @@ every clinic page.
 
 | Label | Id | Kind | Required | Mockup |
 | --- | --- | --- | --- | --- |
-| Section | The Section fields | Shared, open on the slice | | Heading: The facts. Intro: What I confirmed on their page… |
+| Section | Eyebrow, Heading (H2), and Content | Shared, open on the slice | | Heading (H2): The facts. Content: What I confirmed on their page… |
 | Clinic | `clinic` | Content relationship to Provider | Yes | Inner Balance |
 
 The fact cards, in this order, each with a fixed icon:
@@ -541,7 +614,7 @@ pixels, and one from 640 pixels.
 How it works is the Brand's steps, numbered, three across. A step can
 have a title, text, or both. Specialties they list is the Brand's
 Specialties, one pill per line. Each part is hidden when the Brand has
-none. With a Section Heading, the two part titles are `h3`. Without
+none. With a Heading (H2), the two part titles are `h3`. Without
 one they are `h2`. A slice whose clinic is not published shows only its
 header.
 
@@ -556,7 +629,7 @@ rows, HRT and BHRT. A review uses one row.
 
 | Label | Id | Kind | Required | `/ishrtforme` |
 | --- | --- | --- | --- | --- |
-| Section | The Section fields | Shared, open on the slice | | Heading: Pros and Cons |
+| Section | Eyebrow, Heading (H2), and Content | Shared, open on the slice | | Heading (H2): Pros and Cons |
 | Pros label | `pros_label` | Text | No | Blank, so Pros |
 | Cons label | `cons_label` | Text | No | Blank, so Cons |
 | Rows | `rows` | Repeatable group | Yes | HRT, then BHRT |
@@ -574,9 +647,42 @@ she can write her own, such as "What I liked". The Pros card is light
 green (`--color-pros`) and the Cons card is white. Pros have a check
 mark and Cons a minus sign, so the side does not depend on color. A row
 with no pros and no cons is hidden. A row with only one side shows
-that card alone. A row title is an `h3` under a Section Heading, and
+that card alone. A row title is an `h3` under a Heading (H2), and
 the Pros and Cons labels are a level below the row title. The two
 cards stack at 640 pixels.
+
+### FAQ
+
+Questions that open and close, in `src/slices/Faq`. `/faq` uses one
+slice for the whole list. The title of that page stays on the Hero.
+
+| Label | Id | Kind | Required |
+| --- | --- | --- | --- |
+| Section | Eyebrow, Heading (H2), and Content | Shared, open on the slice | |
+| Questions | `questions` | Repeatable group | No |
+
+Each question:
+
+| Label | Id | Kind | Required |
+| --- | --- | --- | --- |
+| Question | `question` | Heading rich text | No |
+| Answer | `answer` | Content rich text | No |
+| Start opened | `open` | Boolean. Default Closed | No |
+
+A question with no words is hidden. An empty answer still shows the
+question. Start opened is Closed unless she turns that question on.
+Any number can start opened, and a reader can open more than one.
+The answer is in the page even while the question is closed.
+
+The list sits in the story column, centered, the same width as Text.
+A Background color still fills the full width. A question is an `h3`
+under a Heading (H2). Without one it is an `h2`, so a page whose
+title is the Hero still has headings for the questions. Answer uses
+the content toolbar. A paragraph can start with a clinic token, the
+same as Text.
+
+The chevron is raspberry on a light band. On Raspberry or Navy it
+uses that section's eyebrow color.
 
 ## Homepage
 
@@ -600,27 +706,35 @@ One slice, five variations. Each variation includes the shared Section
 fields and lays the heading out itself. Section supplies the spacing and
 background. Home and Provider have no Link. Subpage, Centered, and
 Brands do: one text link, such as "Start here" or "Full price chart."
-The homepage section id comes from the tagline. The homepage
+The homepage section id comes from the heading. The homepage
 variation also keeps the mockup's vertical padding, and Space above and
 Space below add to it. The subpage, centered, brands, and provider
 variations do not, so those fields are the whole gap.
 
 #### Home
 
-The homepage. Section Heading is the page title. Section Intro is "My
-goal is to share honest platform reviews…" The large line is Tagline,
-not the title. Benefits and Buttons are the links. There is no Link
-field.
+The homepage. The fields follow the page, and Background, Space above,
+and Space below are last. There is no Link field. Benefits and Buttons
+are the links.
+
+Eyebrow is the small line above the title. Heading (H1) is the page
+title, the huge line. Content is the paragraph under the benefits.
+There is no separate tagline.
 
 | Label | Id | Kind | Required | Mockup |
 | --- | --- | --- | --- | --- |
-| Tagline | `tagline` | Heading rich text | Yes | Feel like you again. |
+| Eyebrow | `small_heading` | Heading rich text | No | Hormone Therapy Replacement |
+| Heading (H1) | `heading` | Heading rich text | Yes | Feel like you again. |
 | Benefits | `benefits` | Repeatable link, with display text | Yes | Lose weight, and the other four |
+| Content | `intro` | Heading rich text | No | My goal is to share honest platform reviews… |
 | Buttons | `button` | Repeatable link, with display text and a style | Yes | Solid: See what each clinic cost me. Ghost: New to HRT? Start here |
 | Trust lines | `trust_lines` | Repeatable group | Yes | Patient since 2019, and the other two |
 | Image | `image` | Image, including its description | Yes | Peggy's portrait |
 | Words on the photo | `photo_greeting` | Text | No | Hi, I'm Peggy! |
 | Caption | `caption` | Heading rich text | Yes | An experienced HRT patient reviewer. Not a doctor. |
+| Background | `background` | Select | No | Transparent |
+| Space above | `space_above` | Select | No | |
+| Space below | `space_below` | Select | No | |
 
 Each trust line is one Text field, `text`. Hide Words on the photo when
 it is empty. Add the buttons in the order they should appear. Solid is
@@ -631,8 +745,8 @@ Image help: "Describe who is in the photo and what they are doing."
 
 #### Subpage
 
-A normal interior page. Section Small heading, Heading, Intro, and Link
-are the kicker, the page title, the dek, and the text link.
+A normal interior page. Eyebrow, Heading (H1), Content, and Link under
+content are the kicker, the page title, the paragraph, and the text link.
 
 | Label | Id | Kind | Required |
 | --- | --- | --- | --- |
@@ -643,17 +757,17 @@ the photo and what they are doing."
 
 #### Centered
 
-A short page top with no photo. The Section Small heading, Heading,
-Intro, and Link are centered, in the same type as Subpage. The heading
-spans the container. The intro stays on the shorter measure. It has no
-fields of its own. The test kits page uses it with one intro sentence
-and moves Peggy's photo into the Side by side under it. Keep the intro
-to a sentence or two, because a long centered paragraph is hard to read.
+A short page top with no photo. Eyebrow, Heading (H1),
+Content, and Link under content are centered, in the same type as Subpage. The heading
+spans the container. Content stays on the shorter measure. It has no
+fields of its own. The test kits page uses it with one content sentence
+and moves Peggy's photo into the Side by side under it. Keep that
+sentence to one or two, because a long centered paragraph is hard to read.
 
 #### Brands
 
-Trusted providers. Section Small heading is "Providers". Section Heading
-is the page title. Section Intro is the dek. Section Link is "Full price
+Trusted providers. Eyebrow is "Providers". Heading (H1)
+is the page title. Content is the paragraph. Link under content is "Full price
 chart".
 
 | Label | Id | Kind | Required |
@@ -673,10 +787,10 @@ goes. On trusted providers that is a jump link such as `#inner-balance`.
 #### Provider
 
 The top of a clinic page. There is no Link field. Links are her
-review links. The title is the clinic's name, and Section
-Heading only when the clinic has no name. An empty Meta title, the
+review links. The title is the clinic's name, and Heading (H1) only
+when the clinic has no name. An empty Meta title, the
 search result, and the sitemap entry use that same title, never the
-kicker. The kicker is Section Small heading when that is filled,
+eyebrow. The eyebrow is Eyebrow when that is filled,
 otherwise the clinic's Top choice label. The price, visit button, logo,
 and coupon come from the clinic. The visit button sits on the price
 card, which shows only when the clinic has a price or a code, or the
@@ -700,7 +814,7 @@ image and its own links, including "Watch my review".
 
 ### Start here
 
-Section Heading is "Where should I start?"
+Heading (H2) is "Where should I start?" Content is the writing under it.
 
 | Label | Id | Kind | Required |
 | --- | --- | --- | --- |
@@ -712,7 +826,7 @@ Each card:
 | --- | --- | --- | --- | --- |
 | Small heading | `small_heading` | Heading rich text | Yes | Brand new to this |
 | Heading | `heading` | Heading rich text | Yes | Is HRT for me? |
-| Text | `text` | Heading rich text | Yes | The sentence under the title |
+| Sentence | `text` | Heading rich text | Yes | The sentence under the title |
 | Link | `link` | Link, no display text | Yes | `/ishrtforme` |
 | Icon | `icon` | Select | Yes | Question, Lightbulb, Medicine, or Wallet |
 
@@ -743,7 +857,7 @@ documents stay the browse links on the blog page.
 
 | Label | Id | Kind | Variations |
 | --- | --- | --- | --- |
-| Section | The Section fields, plus Link | Shared, open on the slice | All |
+| Section | Eyebrow, Heading (H2), Content, and Link right of heading | Shared, open on the slice | All |
 | Category | `category` | Select: All, then the five post categories. Default All | All |
 | Post | `post` | Content relationship to Post, Provider review, and Comparison | Featured |
 | Posts per page | `count` | Number. Empty means 12 | Grid |
@@ -786,7 +900,7 @@ same frame, and those frames are the same size across the row.
 
 ### Clinic comparison
 
-Section Heading and Section Intro are the title and the HSA sentence.
+Heading (H2) and Content are the title and the HSA sentence.
 The section id is the heading, and the hero button scrolls to it.
 
 | Label | Id | Kind | Required | Mockup |
@@ -813,24 +927,28 @@ the Provider fields in the next section, including `code` and
 
 ### Quote
 
-Section Heading in the mockup is "Peggy's take: what I'm using now."
-Background is Navy.
+Heading (H2) in the mockup is "Peggy's take: what I'm using now."
+Content is the writing under that heading. Background is Navy.
 
 The slice is in `src/slices/quote`. The page resolves the clinic.
 
 | Label | Id | Kind | Required |
 | --- | --- | --- | --- |
+| Eyebrow | `small_heading` | Heading rich text | No |
+| Heading (H2) | `heading` | Heading rich text | No |
+| Content | `intro` | Heading rich text | No |
 | Quote | `quote` | Heading rich text | Yes |
 | Name | `name` | Text | No |
 | Clinic | `clinic` | Content relationship to Provider | Yes |
-| Text | `text` | Heading rich text | Yes |
+| Note under the name | `text` | Heading rich text | Yes |
 | Reminder | `reminder` | Heading rich text | Yes |
 | Review button | `review_button` | Link, with display text | No |
 
 The logo and the visit button come from the clinic. The visit button is
 the clinic's `visit` link, including its display text. She changes the
 affiliate address on the clinic. Name is the line beside the logo. Leave
-it empty to use the clinic name. The chart says "Inner Balance." This
+it empty to use the clinic name. Note under the name is the line under
+that name. The chart says "Inner Balance." This
 band says "Oestra by Inner Balance."
 
 The reminder in the mockup is "This is my personal experience, not
@@ -838,17 +956,15 @@ medical advice."
 
 ### Side by side
 
-The editor still lists Intro and Text as two writing fields, and the
-settings sit in the middle of the form. Field order, above, is the
-order the next audit uses. Until then, the behavior below is what the
-slice does.
+One writing field. Content, id `text`, keeps the content toolbar.
+There is no `intro` field. Field order is in Field order, above.
 
 One slice, four variations, in `src/slices/side_by_side`. The homepage
-story is the Image variation with the media on the left. The small
-heading, the heading, and the intro sit in the writing column, beside
-the media. Intro allows many paragraphs, with bold, italic, and links.
-Enter starts another paragraph. A blank intro is hidden. Text continues
-under the intro in that same column. Buttons sit under the writing.
+story is the Image variation with the media on the left. Eyebrow,
+Heading (H2), and Content sit in the writing column, beside the media.
+On the Image variation the optional Quote is the large line after
+Content, then Buttons. A blank Content is hidden. Buttons sit under
+the writing.
 Solid is the filled button, such as "Read my whole story." Ghost is the
 quieter text button, with an arrow. A button with no words is hidden. A
 button to an affiliate address, such as an Amazon link, gets the
@@ -871,21 +987,26 @@ narrow screen the media stacks above the writing and never sticks.
 | Quote | `quote` | Quote, and Attribution under it |
 | Clinic | `clinic` | A clinic. Style chooses the panel. Quote, the default, is the logo, her words, and a visit link. Card is the product photo and price. |
 
+The field list below follows the Image variation. Video, Quote, and Clinic put
+their own media where Field order says, and Side and Media position
+stay at the end on every variation.
+
 | Label | Id | Kind | Variations |
 | --- | --- | --- | --- |
-| Section | The Section fields | Shared, open on the slice | All |
-| Side | `side` | Select: Media left, Media right. Default Media left | All |
-| Media position | `media_position` | Select: Center, Top, Sticky. Default Center | All |
-| Text | `text` | Content rich text | All |
+| Eyebrow | `small_heading` | Heading rich text | All |
+| Heading (H2) | `heading` | Heading rich text | All |
+| Content | `text` | Content rich text | All |
+| Quote | `quote` | Heading rich text | Image, Quote |
 | Buttons | `button` | Repeatable link, with display text and a style | All |
 | Image | `image` | Image | Image |
 | Caption | `caption` | Heading rich text | Image, Video |
 | Caption on the photo | `caption_on_photo` | Boolean. On the photo, or under the photo. Default On the photo | Image |
 | Video | `video` | Embed | Video |
-| Quote | `quote` | Heading rich text | Quote, Image |
 | Attribution | `attribution` | Text | Quote |
 | Clinic | `clinic` | Content relationship to Provider | Clinic |
 | Style | `style` | Select: Quote, Card. Default Quote | Clinic |
+| Side | `side` | Select: Media left, Media right. Default Media left | All |
+| Media position | `media_position` | Select: Center, Top, Sticky. Default Center | All |
 
 On the Clinic variation, Style chooses the media. Quote, the default, is
 the soft panel: the logo, the brand name, her words, and the visit link.
@@ -895,7 +1016,7 @@ stays a quote. Card replaces that panel with the product photo and the
 price, the same card Brand promo uses when its Style is Card. The photo,
 the price, and the visit button come from the clinic.
 
-Text uses the content toolbar. A Signoff label on a whole paragraph is
+Content uses the content toolbar. A Signoff label on a whole paragraph is
 the large closing line. A Note label on a whole paragraph is the tint
 box. The story's note is "I am not a medical professional, and this site
 does not provide medical advice or treatment plans." A paragraph can
@@ -909,11 +1030,11 @@ words under the photo. A blank Caption hides the line. Video captions
 stay on the video.
 
 On the Image variation, Quote is optional. A filled Quote is the large
-line in the writing column, under the intro and above Text, with no box
-and no attribution. The test kits page puts Peggy's photo on the left and
-"From “I think something is wrong” to “Here is the evidence of my
-hormonal shift.”" above the intro. On the Quote variation, Quote is
-still the boxed sentence on the media side.
+line in the writing column, after Content and before Buttons, with no
+box and no attribution. The test kits page puts Peggy's photo on the
+left and "From “I think something is wrong” to “Here is the evidence of
+my hormonal shift.”" after the writing. On the Quote variation, Quote
+is still the boxed sentence on the media side.
 
 ## Provider, Offer, and Callout
 
@@ -952,8 +1073,8 @@ clinic relationship, the same way it lists `visit`.
 | Clinic comparison | `clinic` | Name, logo, short description, price, price note, insurance, formulation, quote, getting started, top choice label, visit, code, code line. The review link is on the slice row |
 | Quote | `clinic` | Logo, name, visit. A Name on the slice replaces the clinic name |
 | Side by side, clinic | `clinic` | Logo, name, quote, visit, and, when Style is Card, kind, product image, price, price is, price note, formulation, insurance, getting started, code, code line. Style stays on the slice. Quote is the logo panel. Card is the product photo and price. |
-| Boxes | `clinic` on each box | Logo, top choice label, name, code. A written Image, Heading, Text, or Bottom line replaces it |
-| Brand promo | `clinic` | Name, kind, logo, visit, page, my review, my comparison, review video, product image, price, price is, price note, formulation, insurance, getting started, code, code line, quote. Page is Products & pricing. My review is her post. Each My comparison is a button with its display text. Review video is Watch my review. A photo in Overwrite replaces the product image. A written Quote replaces the clinic quote. Style on the slice chooses the quote panel or the product card. Is this 1st? and Place stay on the slice. Text and extra links are in Overwrite. Extra links are a second row of text |
+| Boxes | `clinic` on each box | Logo, top choice label, name, code. A written Image, Heading, Line under the heading, or Bottom line replaces it |
+| Brand promo | `clinic` | Name, kind, logo, visit, page, my review, my comparison, review video, product image, price, price is, price note, formulation, insurance, getting started, code, code line, quote. Page is Products & pricing. My review is her post. Each My comparison is a button with its display text. Review video is Watch my review. A photo in Overwrite replaces the product image. A written Quote replaces the clinic quote. Style on the slice chooses the quote panel or the product card. Is this 1st? and Place stay on the slice. Text under the quote and extra links are in Overwrite. Extra links are a second row of text |
 | Clinic facts | `clinic` | Kind, state availability, typically prescribed, labs, insurance, HSA / FSA, getting started, how it works, specialties |
 | Post sidebar | `clinic` | Name, logo. The name links to Page when that field is set |
 | Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, code, code line, plus the sentence in that paragraph |
@@ -1419,7 +1540,7 @@ unchanged.
 
 The slice zone accepts every shared slice: Hero, Start here, Posts,
 Clinic comparison, Quote, Side by side, Divider, Boxes, Brand promo,
-Ribbon, Text, Clinic facts, and Pros and cons. A slice added to the
+Ribbon, Text, Clinic facts, Pros and cons, FAQ, and Buttons. A slice added to the
 library later is connected to Page too.
 
 | Label | Id | Kind | Required | Notes |
