@@ -151,6 +151,17 @@ function slice(
   return { slice_type, variation, primary, items: [] };
 }
 
+/** The usual line under a Hero. Squiggly and accent, as on the published pages. */
+function divider(space_below: "None" | "Medium" = "None"): Slice {
+  return slice("divider", "default", {
+    line: "Squiggly",
+    color: "Accent",
+    background: "Transparent",
+    space_above: "Medium",
+    space_below,
+  });
+}
+
 const journey = button(
   "Trusted HRT Docs/Clinics - Start my Journey",
   "/trusted-providers",
@@ -384,14 +395,14 @@ export const SITE_PAGES: SitePage[] = [
           space_above: "Medium",
         }),
       ),
+      divider(),
       slice("faq", "default", {
         ...section(),
         questions: faqQuestions,
       }),
-      slice("ribbon", "default", {
+      slice("buttons", "default", {
         ...section({ space_below: "Large" }),
         layout: "Centered",
-        box_background: "Pink",
         button: [journey],
       }),
     ],
@@ -423,6 +434,7 @@ export const SITE_PAGES: SitePage[] = [
           "Peggy, smiling, in a dark sweater",
         ),
       }),
+      divider("Medium"),
       slice("text", "default", {
         ...section({
           heading: "Am I a Candidate for Hormone Replacement Therapy?",

@@ -220,10 +220,12 @@ Still to send, in this order:
     and do not point at a Brand. The copy is the October 2026 Wix
     page, including its typos. The Wix stock photos stay off. Peggy's
     portrait opens Is HRT for me, and the Winston photo sits beside
-    "Is it Safe?". Buttons point at `/trusted-providers`. `/faq` is the
+    "Is it Safe?". A squiggly Divider sits under each Hero. Buttons
+    point at `/trusted-providers`. `/faq` is the
     address blog posts already use. The questions are one FAQ slice.
     Each answer is paired with the question it actually answers, and
-    each question starts closed. The words are unchanged.
+    each question starts closed. The close is one centered button, the
+    Buttons slice, with no box. The words are unchanged.
 2.  Finish `/about` by filling the empty story, without dropping the
     divider and posts row, once that composition is confirmed.
 3.  Inner Balance (`/inner-balance`). The Inner Balance brand is

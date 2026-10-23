@@ -2,6 +2,7 @@
 
 import Boxes from "./boxes";
 import BrandPromo from "./BrandPromo";
+import Buttons from "./Buttons";
 import ClinicComparison from "./clinic_comparison";
 import ClinicFacts from "./ClinicFacts";
 import Divider from "./divider";
@@ -18,6 +19,7 @@ import Text from "./Text";
 export const components = {
   boxes: Boxes,
   brand_promo: BrandPromo,
+  buttons: Buttons,
   clinic_comparison: ClinicComparison,
   clinic_facts: ClinicFacts,
   divider: Divider,

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import type { LinkField, RichTextField } from "@prismicio/client";
 import type { SliceSectionFields } from "@/components/slice-section";
+import { Buttons } from "@/slices/Buttons";
+import { Divider } from "@/slices/divider";
 import { Faq } from "@/slices/Faq";
 import { Hero } from "@/slices/hero";
-import { Ribbon } from "@/slices/Ribbon";
 import { MockupShell } from "../_shared/mockup-shell";
 
 /*
@@ -109,6 +110,16 @@ export default async function FaqMockup(props: PageProps<"/mockup/faq">) {
         })}
       />
 
+      <Divider
+        primary={{
+          line: "Squiggly",
+          color: "Accent",
+          background: "Transparent",
+          space_above: "Medium",
+          space_below: "None",
+        }}
+      />
+
       <Faq
         primary={{
           ...section(),
@@ -116,11 +127,10 @@ export default async function FaqMockup(props: PageProps<"/mockup/faq">) {
         }}
       />
 
-      <Ribbon
+      <Buttons
         primary={{
           ...section({ space_below: "Large" }),
           layout: "Centered",
-          box_background: "Pink",
           button: [
             button(
               "Trusted HRT Docs/Clinics - Start my Journey",

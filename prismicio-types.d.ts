@@ -500,7 +500,8 @@ type PageDocumentDataSlicesSlice =
   | TextSlice
   | ClinicFactsSlice
   | ProsConsSlice
-  | FaqSlice;
+  | FaqSlice
+  | ButtonsSlice;
 
 /**
  * Content for Page documents
@@ -1605,6 +1606,139 @@ export type BrandPromoSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Primary content in *Buttons → Default → Primary*
+ */
+export interface ButtonsSliceDefaultPrimary {
+  /**
+   * Eyebrow field in *Buttons → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: buttons.default.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading (H2) field in *Buttons → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: buttons.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Buttons field in *Buttons → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Start my journey
+   * - **API ID Path**: buttons.default.primary.button
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  button: prismic.Repeatable<
+    prismic.LinkField<
+      string,
+      string,
+      unknown,
+      prismic.FieldState,
+      "Solid" | "Ghost"
+    >
+  >;
+
+  /**
+   * Layout field in *Buttons → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: On the left lines the buttons up with the writing. Centered centers them.
+   * - **Default Value**: On the left
+   * - **API ID Path**: buttons.default.primary.layout
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  layout: prismic.SelectField<"On the left" | "Centered", "filled">;
+
+  /**
+   * Background field in *Buttons → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: The color behind the buttons.
+   * - **Default Value**: Transparent
+   * - **API ID Path**: buttons.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Buttons → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: buttons.default.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Buttons → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: buttons.default.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+}
+
+/**
+ * Default variation for Buttons Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ButtonsSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ButtonsSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Buttons*
+ */
+type ButtonsSliceVariation = ButtonsSliceDefault;
+
+/**
+ * Buttons Shared Slice
+ *
+ * - **API ID**: `buttons`
+ * - **Description**: *None*
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ButtonsSlice = prismic.SharedSlice<
+  "buttons",
+  ButtonsSliceVariation
+>;
+
+/**
  * Item in *Clinic comparison → Default → Primary → Clinics*
  */
 export interface ClinicComparisonSliceDefaultPrimaryClinicsItem {
@@ -1967,7 +2101,7 @@ export interface DividerSliceDefaultPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: None
+   * - **Default Value**: Medium
    * - **API ID Path**: divider.default.primary.space_above
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
@@ -1981,7 +2115,7 @@ export interface DividerSliceDefaultPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: *None*
-   * - **Default Value**: None
+   * - **Default Value**: Medium
    * - **API ID Path**: divider.default.primary.space_below
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
@@ -5040,6 +5174,10 @@ declare module "@prismicio/client" {
       BrandPromoSliceDefaultPrimary,
       BrandPromoSliceVariation,
       BrandPromoSliceDefault,
+      ButtonsSlice,
+      ButtonsSliceDefaultPrimary,
+      ButtonsSliceVariation,
+      ButtonsSliceDefault,
       ClinicComparisonSlice,
       ClinicComparisonSliceDefaultPrimaryClinicsItem,
       ClinicComparisonSliceDefaultPrimary,

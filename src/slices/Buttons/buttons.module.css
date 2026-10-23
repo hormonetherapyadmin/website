@@ -1,0 +1,53 @@
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem 1.35rem;
+}
+
+.actions[data-layout="centered"] {
+  justify-content: center;
+}
+
+.button {
+  display: inline-block;
+  max-width: 100%;
+  padding: 0.6rem 1.35rem;
+  border-radius: 0.75rem;
+  background: var(--color-cta);
+  color: var(--color-cta-text);
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+}
+
+.button:hover {
+  background: var(--color-cta-hover);
+}
+
+.ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ghost svg {
+  transition: transform 0.15s ease;
+}
+
+.ghost:hover svg {
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ghost svg {
+    transition: none;
+  }
+
+  .ghost:hover svg {
+    transform: none;
+  }
+}

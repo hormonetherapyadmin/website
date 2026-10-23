@@ -352,6 +352,29 @@ describe("PageSliceZone", () => {
     expect(html).toContain('data-box="Pink"');
   });
 
+  it("renders Buttons as a row with no box", () => {
+    const html = render([
+      slice("buttons", {
+        ...section(""),
+        heading: emptyRich,
+        layout: "Centered",
+        button: [
+          {
+            link_type: "Web",
+            url: "/trusted-providers",
+            text: "Trusted HRT Docs/Clinics - Start my Journey",
+            variant: "Solid",
+          },
+        ],
+      }),
+    ]);
+
+    expect(html).toContain("Trusted HRT Docs/Clinics - Start my Journey");
+    expect(html).toContain('href="/trusted-providers"');
+    expect(html).toContain('data-layout="centered"');
+    expect(html).not.toContain("data-box");
+  });
+
   it("renders FAQ questions closed unless Start opened is on", () => {
     const html = render([
       slice("faq", {

@@ -67,8 +67,8 @@ export function Divider({ primary }: { primary: DividerPrimary }) {
   const line = choice(primary.line, LINES, "Squiggly");
   const color = choice(primary.color, COLORS, "Accent");
   const background = sectionBackground(primary.background);
-  const spaceAbove = choice(primary.space_above, SECTION_SPACING, "None");
-  const spaceBelow = choice(primary.space_below, SECTION_SPACING, "None");
+  const spaceAbove = choice(primary.space_above, SECTION_SPACING, "Medium");
+  const spaceBelow = choice(primary.space_below, SECTION_SPACING, "Medium");
   const band = background !== "Transparent" && background !== "Cream";
 
   return (

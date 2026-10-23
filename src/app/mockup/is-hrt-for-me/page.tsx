@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ImageField, LinkField, RichTextField } from "@prismicio/client";
 import type { SliceSectionFields } from "@/components/slice-section";
+import { Divider } from "@/slices/divider";
 import { Hero } from "@/slices/hero";
 import { ProsAndCons } from "@/slices/ProsAndCons";
 import { Ribbon } from "@/slices/Ribbon";
@@ -210,6 +211,16 @@ export default async function IsHrtForMeMockup(
             1389,
             1600,
           ),
+        }}
+      />
+
+      <Divider
+        primary={{
+          line: "Squiggly",
+          color: "Accent",
+          background: "Transparent",
+          space_above: "Medium",
+          space_below: "Medium",
         }}
       />
 

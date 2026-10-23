@@ -77,7 +77,8 @@ ends with Background, Space above, and Space below.
 Hero labels the heading Heading (H1). Every other slice that has the
 section heading labels it Heading (H2). Ribbon does not label `intro`
 Content. That line is "Line above the box". Text and Side by side do
-not have `intro`. Their writing is Content, id `text`. Quote keeps
+not have `intro`. Their writing is Content, id `text`. Buttons has
+neither: the buttons are the slice. Quote keeps
 `intro` as Content. Its other field, id `text`, is "Note under the
 name".
 
@@ -274,23 +275,32 @@ posts is a repeatable group with one content relationship in each row.
 
 A line between slices. It does not use the Section header. Background,
 Space above, and Space below are fields on the slice, with the same
-choices as Section. Both spacing fields default to None, so the line does
-not add a gap until she asks for one. That gap is added around the line,
-on top of the space on the slices beside it. A margin would collapse into
-the neighbor's margin, and None and Small would look the same.
+choices as Section. Both spacing fields default to Medium. That gap is
+added around the line, on top of the space on the slices beside it. A
+margin would collapse into the neighbor's margin, and None and Small
+would look the same.
 
 | Label | Id | Kind | Default |
 | --- | --- | --- | --- |
 | Line | `line` | Select | Squiggly |
 | Color | `color` | Select | Accent |
 | Background | `background` | Select | Transparent |
-| Space above | `space_above` | Select | None |
-| Space below | `space_below` | Select | None |
+| Space above | `space_above` | Select | Medium |
+| Space below | `space_below` | Select | Medium |
 
 Line is Squiggly or Straight. Those are the two rules in the mockups.
 Color is Accent, Soft, Border, or Text. Soft is the lighter accent used
 by the homepage wave. Accent, Border, and Text use those color tokens.
 There is no free color picker.
+
+On a site page the Divider usually sits directly under the Hero. That
+is the usual placement, and it is not required. When the slice under
+the Hero still belongs with the opening, the line can sit under that
+second slice instead. Trusted providers is the named exception for
+that placement. The published document still has its first line
+directly under the hero, before the jump boxes. A later Divider, such
+as the one above Keep reading, is a separate line and does not change
+where the first one sits.
 
 ### Boxes
 
@@ -501,6 +511,34 @@ Ghost is the text button, with an arrow. A button with no words is
 hidden. A button to an affiliate address gets the affiliate `rel`, the
 same as Side by side. An empty title, content, and button list hides the box. The
 section header can still show.
+
+### Buttons
+
+A row of buttons with no box, in `src/slices/Buttons`. Use it when the
+close is only a button, such as the end of `/faq`. A close that has a
+sentence in a colored box stays a Ribbon.
+
+The row sits in the story column, the same width as Text and FAQ. A
+Background color still fills the full width. Layout On the left, the
+default, lines the buttons up with the writing. An empty choice is On
+the left. Centered centers the heading and the buttons. Solid is the
+filled button. Ghost is the text button, with an arrow. A button with
+no words is hidden. A button to an affiliate address gets the affiliate
+`rel`, the same as the Ribbon. An empty heading and an empty button
+list hide the slice.
+
+Page Builder order: Eyebrow, Heading (H2), Buttons, Layout, Background,
+Space above, Space below. There is no Content field.
+
+| Label | Id | Kind | Required | `/faq` |
+| --- | --- | --- | --- | --- |
+| Eyebrow | `small_heading` | Heading rich text | No | Empty |
+| Heading (H2) | `heading` | Heading rich text | No | Empty |
+| Buttons | `button` | Repeatable link, with display text and a style | No | Solid: Trusted HRT Docs/Clinics - Start my Journey |
+| Layout | `layout` | Select: On the left, Centered. Default On the left | No | Centered |
+| Background | `background` | Select | No | Transparent |
+| Space above | `space_above` | Select | No | Medium |
+| Space below | `space_below` | Select | No | Large |
 
 ### Text
 
@@ -1502,7 +1540,7 @@ unchanged.
 
 The slice zone accepts every shared slice: Hero, Start here, Posts,
 Clinic comparison, Quote, Side by side, Divider, Boxes, Brand promo,
-Ribbon, Text, Clinic facts, Pros and cons, and FAQ. A slice added to the
+Ribbon, Text, Clinic facts, Pros and cons, FAQ, and Buttons. A slice added to the
 library later is connected to Page too.
 
 | Label | Id | Kind | Required | Notes |

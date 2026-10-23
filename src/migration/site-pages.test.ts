@@ -44,10 +44,11 @@ describe("site pages", () => {
     const faq = page("faq");
     expect(faq.slices.map((slice) => slice.slice_type)).toEqual([
       "hero",
+      "divider",
       "faq",
-      "ribbon",
+      "buttons",
     ]);
-    const writing = textOf(faq.slices[1]);
+    const writing = textOf(faq.slices[2]);
     const safety = writing.indexOf("Is BHRT safe?");
     const insurance = writing.indexOf("Is BHRT covered lby insurance?");
     expect(safety).toBeGreaterThan(-1);
@@ -62,6 +63,7 @@ describe("site pages", () => {
       guide.slices.map((slice) => [slice.slice_type, slice.variation]),
     ).toEqual([
       ["hero", "subpage"],
+      ["divider", "default"],
       ["text", "default"],
       ["text", "default"],
       ["side_by_side", "image"],
@@ -82,7 +84,10 @@ describe("site pages", () => {
       "peggy-portrait.jpg",
       "peggy-winston.jpg",
     ]);
-    expect(guide.slices[3]?.primary.side).toBe("Media left");
+    expect(
+      guide.slices.find((slice) => slice.slice_type === "side_by_side")?.primary
+        .side,
+    ).toBe("Media left");
   });
 
   it("uses public addresses and the photos that are already in the repo", () => {

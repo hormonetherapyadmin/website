@@ -423,7 +423,8 @@ Text is the Text slice: writing on its own, for pages that are mostly
 words. The Wix clinic pages' fact block is the Clinic facts slice,
 which reads the Brand. Pros / Cons is the Pros and cons slice. FAQ is
 the FAQ slice: questions that open and close, each one closed unless
-Start opened is on. A post
+Start opened is on. A row of buttons with no box is the Buttons slice.
+A close band that has a sentence stays the Ribbon. A post
 inserts a clinic offer with a provider token. It does not insert a
 Callout.
 

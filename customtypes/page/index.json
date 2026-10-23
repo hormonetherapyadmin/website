@@ -53,6 +53,9 @@
             },
             "faq": {
               "type": "SharedSlice"
+            },
+            "buttons": {
+              "type": "SharedSlice"
             }
           }
         },
