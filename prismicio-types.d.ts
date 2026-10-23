@@ -499,7 +499,8 @@ type PageDocumentDataSlicesSlice =
   | RibbonSlice
   | TextSlice
   | ClinicFactsSlice
-  | ProsConsSlice;
+  | ProsConsSlice
+  | FaqSlice;
 
 /**
  * Content for Page documents
@@ -2019,6 +2020,163 @@ export type DividerSlice = prismic.SharedSlice<
   "divider",
   DividerSliceVariation
 >;
+
+/**
+ * Item in *FAQ → Default → Primary → Questions*
+ */
+export interface FaqSliceDefaultPrimaryQuestionsItem {
+  /**
+   * Question field in *FAQ → Default → Primary → Questions*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The question readers see.
+   * - **API ID Path**: faq.default.primary.questions[].question
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  question: prismic.RichTextField;
+
+  /**
+   * Answer field in *FAQ → Default → Primary → Questions*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The answer. It stays on the page when this question starts closed.
+   * - **API ID Path**: faq.default.primary.questions[].answer
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  answer: prismic.RichTextField;
+
+  /**
+   * Start opened field in *FAQ → Default → Primary → Questions*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: faq.default.primary.questions[].open
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  open: prismic.BooleanField;
+}
+
+/**
+ * Primary content in *FAQ → Default → Primary*
+ */
+export interface FaqSliceDefaultPrimary {
+  /**
+   * Eyebrow field in *FAQ → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: faq.default.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading (H2) field in *FAQ → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: faq.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Content field in *FAQ → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: faq.default.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Questions field in *FAQ → Default → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: faq.default.primary.questions[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  questions: prismic.GroupField<Simplify<FaqSliceDefaultPrimaryQuestionsItem>>;
+
+  /**
+   * Background field in *FAQ → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Transparent
+   * - **API ID Path**: faq.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *FAQ → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: faq.default.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *FAQ → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: faq.default.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+}
+
+/**
+ * Default variation for FAQ Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FaqSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<FaqSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *FAQ*
+ */
+type FaqSliceVariation = FaqSliceDefault;
+
+/**
+ * FAQ Shared Slice
+ *
+ * - **API ID**: `faq`
+ * - **Description**: *None*
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FaqSlice = prismic.SharedSlice<"faq", FaqSliceVariation>;
 
 /**
  * Item in *Hero → Home → Primary → Trust lines*
@@ -4895,6 +5053,11 @@ declare module "@prismicio/client" {
       DividerSliceDefaultPrimary,
       DividerSliceVariation,
       DividerSliceDefault,
+      FaqSlice,
+      FaqSliceDefaultPrimaryQuestionsItem,
+      FaqSliceDefaultPrimary,
+      FaqSliceVariation,
+      FaqSliceDefault,
       HeroSlice,
       HeroSliceHomePrimaryTrustLinesItem,
       HeroSliceHomePrimary,

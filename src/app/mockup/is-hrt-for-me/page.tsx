@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import type { LinkField, RichTextField } from "@prismicio/client";
+import type { ImageField, LinkField, RichTextField } from "@prismicio/client";
 import type { SliceSectionFields } from "@/components/slice-section";
 import { Hero } from "@/slices/hero";
 import { ProsAndCons } from "@/slices/ProsAndCons";
 import { Ribbon } from "@/slices/Ribbon";
+import { SideBySide } from "@/slices/side_by_side";
 import { Text } from "@/slices/Text";
 import { MockupShell } from "../_shared/mockup-shell";
 
@@ -14,8 +15,10 @@ import { MockupShell } from "../_shared/mockup-shell";
   unfinished "make any necessary." Wix shows the sub-topics as bold
   paragraphs. Here they are Heading 3 and Heading 4, the way she would
   set them. The live page's two photos are stock: a beach reader and a
-  doctor weighing her hands. Both are left off. This site is not a
-  clinic, and neither photo is Peggy.
+  doctor weighing her hands. Both stay off. This site is not a clinic,
+  and neither photo is Peggy. Her portrait opens the page, and the
+  Winston photo sits on the left of "Is it Safe?" so the two photos
+  don't stack on the same side.
 */
 
 export const metadata: Metadata = {
@@ -42,6 +45,17 @@ function heading(level: "heading3" | "heading4", text: string) {
 
 function rich(text: string) {
   return [paragraph(text)] as unknown as RichTextField;
+}
+
+function image(url: string, alt: string, width: number, height: number) {
+  return {
+    id: url,
+    url,
+    alt,
+    copyright: null,
+    dimensions: { width, height },
+    edit: { x: 0, y: 0, zoom: 1, background: "transparent" },
+  } as ImageField;
 }
 
 function linked(text: string, phrase: string, url: string) {
@@ -180,15 +194,23 @@ export default async function IsHrtForMeMockup(
   return (
     <MockupShell searchParams={searchParams}>
       <Hero
-        variation="centered"
-        primary={section({
-          small_heading: rich("HRT 101"),
-          heading: rich("Is Hormone Replacement Therapy Safe?"),
-          intro: rich(
-            "Always consult with a qualified healthcare professional to discuss your specific health situation and determine whether hormone replacement therapy is suitable for you. Individualized care and a thorough evaluation are key factors in making informed decisions about BHRT or HRT.",
+        variation="subpage"
+        primary={{
+          ...section({
+            small_heading: rich("HRT 101"),
+            heading: rich("Is Hormone Replacement Therapy Safe?"),
+            intro: rich(
+              "Always consult with a qualified healthcare professional to discuss your specific health situation and determine whether hormone replacement therapy is suitable for you. Individualized care and a thorough evaluation are key factors in making informed decisions about BHRT or HRT.",
+            ),
+            space_above: "Medium",
+          }),
+          image: image(
+            "/mockup/peggy-portrait.jpg",
+            "Peggy, smiling, in a dark sweater",
+            1389,
+            1600,
           ),
-          space_above: "Medium",
-        })}
+        }}
       />
 
       <Text
@@ -211,9 +233,16 @@ export default async function IsHrtForMeMockup(
         }}
       />
 
-      <Text
+      <SideBySide
+        variation="image"
+        image={{
+          src: "/mockup/peggy-winston.jpg",
+          alt: "Peggy on a wooded trail holding her Bernedoodle puppy, Winston",
+        }}
         primary={{
-          ...section({ heading: rich("Is it Safe?") }),
+          ...section({ heading: rich("Is it Safe?"), space_below: "Large" }),
+          side: "Media left",
+          media_position: "Sticky",
           text: safety,
         }}
       />

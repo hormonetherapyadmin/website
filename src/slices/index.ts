@@ -5,6 +5,7 @@ import BrandPromo from "./BrandPromo";
 import ClinicComparison from "./clinic_comparison";
 import ClinicFacts from "./ClinicFacts";
 import Divider from "./divider";
+import Faq from "./Faq";
 import Hero from "./hero";
 import Posts from "./posts";
 import ProsAndCons from "./ProsAndCons";
@@ -20,6 +21,7 @@ export const components = {
   clinic_comparison: ClinicComparison,
   clinic_facts: ClinicFacts,
   divider: Divider,
+  faq: Faq,
   hero: Hero,
   posts: Posts,
   pros_cons: ProsAndCons,

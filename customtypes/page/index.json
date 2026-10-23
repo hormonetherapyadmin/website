@@ -50,6 +50,9 @@
             },
             "pros_cons": {
               "type": "SharedSlice"
+            },
+            "faq": {
+              "type": "SharedSlice"
             }
           }
         },

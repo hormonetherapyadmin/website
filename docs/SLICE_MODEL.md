@@ -505,7 +505,8 @@ section header can still show.
 ### Text
 
 Writing on its own, in `src/slices/Text`. Use it for a page that is
-mostly words, such as `/costandinsurance`, `/formuations`, or `/faq`.
+mostly words, such as `/costandinsurance` or `/formuations`. Questions
+and answers use the FAQ slice.
 The writing sits in a column the width of a post story, 952 pixels on
 a wide screen (`--container-story`). The column is centered on the
 page. The section header sits in the same column. Layout chooses how
@@ -611,6 +612,39 @@ with no pros and no cons is hidden. A row with only one side shows
 that card alone. A row title is an `h3` under a Heading (H2), and
 the Pros and Cons labels are a level below the row title. The two
 cards stack at 640 pixels.
+
+### FAQ
+
+Questions that open and close, in `src/slices/Faq`. `/faq` uses one
+slice for the whole list. The title of that page stays on the Hero.
+
+| Label | Id | Kind | Required |
+| --- | --- | --- | --- |
+| Section | Eyebrow, Heading (H2), and Content | Shared, open on the slice | |
+| Questions | `questions` | Repeatable group | No |
+
+Each question:
+
+| Label | Id | Kind | Required |
+| --- | --- | --- | --- |
+| Question | `question` | Heading rich text | No |
+| Answer | `answer` | Content rich text | No |
+| Start opened | `open` | Boolean. Default Closed | No |
+
+A question with no words is hidden. An empty answer still shows the
+question. Start opened is Closed unless she turns that question on.
+Any number can start opened, and a reader can open more than one.
+The answer is in the page even while the question is closed.
+
+The list sits in the story column, centered, the same width as Text.
+A Background color still fills the full width. A question is an `h3`
+under a Heading (H2). Without one it is an `h2`, so a page whose
+title is the Hero still has headings for the questions. Answer uses
+the content toolbar. A paragraph can start with a clinic token, the
+same as Text.
+
+The chevron is raspberry on a light band. On Raspberry or Navy it
+uses that section's eyebrow color.
 
 ## Homepage
 
@@ -1468,7 +1502,7 @@ unchanged.
 
 The slice zone accepts every shared slice: Hero, Start here, Posts,
 Clinic comparison, Quote, Side by side, Divider, Boxes, Brand promo,
-Ribbon, Text, Clinic facts, and Pros and cons. A slice added to the
+Ribbon, Text, Clinic facts, Pros and cons, and FAQ. A slice added to the
 library later is connected to Page too.
 
 | Label | Id | Kind | Required | Notes |

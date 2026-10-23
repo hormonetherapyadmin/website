@@ -1,0 +1,67 @@
+/*
+  A stack of questions in the story column. The rule separates them.
+  The chevron uses the section eyebrow color, so it stays raspberry
+  on a light band and readable on Raspberry or Navy.
+*/
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.item {
+  border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.05rem 0.1rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary:hover .question,
+.summary:focus-visible .question {
+  color: var(--section-kicker, var(--color-accent));
+}
+
+.question {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.28rem, 2vw, 1.55rem);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.chevron {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: color-mix(
+    in srgb,
+    var(--section-kicker, var(--color-accent)) 16%,
+    transparent
+  );
+  color: var(--section-kicker, var(--color-accent));
+  transition: transform 160ms ease;
+}
+
+.item[open] .chevron {
+  transform: rotate(180deg);
+}
+
+.answer {
+  padding: 0 0.1rem 1.25rem;
+}

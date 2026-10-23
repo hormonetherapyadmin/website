@@ -1,0 +1,114 @@
+{
+  "id": "faq",
+  "name": "FAQ",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "small_heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Eyebrow",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Heading (H2)",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "intro": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Content",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "questions": {
+          "config": {
+            "fields": {
+              "question": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Question",
+                  "labels": ["superscript"],
+                  "placeholder": "The question readers see.",
+                  "single": "paragraph,strong,em,hyperlink"
+                },
+                "type": "StructuredText"
+              },
+              "answer": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "label": "Answer",
+                  "labels": ["highlight", "superscript", "signoff", "note"],
+                  "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
+                  "placeholder": "The answer. It stays on the page when this question starts closed."
+                },
+                "type": "StructuredText"
+              },
+              "open": {
+                "config": {
+                  "default_value": false,
+                  "label": "Start opened",
+                  "placeholder_false": "Closed",
+                  "placeholder_true": "Opened"
+                },
+                "type": "Boolean"
+              }
+            },
+            "label": "Questions"
+          },
+          "type": "Group"
+        },
+        "background": {
+          "config": {
+            "default_value": "Transparent",
+            "label": "Background",
+            "options": [
+              "Transparent",
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ]
+          },
+          "type": "Select"
+        },
+        "space_above": {
+          "config": {
+            "default_value": "Medium",
+            "label": "Space above",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "space_below": {
+          "config": {
+            "default_value": "None",
+            "label": "Space below",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        }
+      },
+      "version": ""
+    }
+  ]
+}
