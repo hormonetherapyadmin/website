@@ -55,13 +55,16 @@ slice. One component reads them. The section wrapper is
 
 ### Section
 
-Every slice except the Divider has these six fields. They are not in a
-group. In the Page Builder even a non-repeatable group starts empty, and
-she has to add an item before she can type a heading, so the fields stay
-open instead. Eyebrow and Heading come first, then Content where the
-slice has that field. Background, Space above, and Space below are the
-last fields on the slice. The Divider has only Line, Color, and those
-three settings. Brand promo keeps Heading (H2) open. Eyebrow, Line
+Every slice except the Divider and Full width image has these six
+fields. They are not in a group. In the Page Builder even a
+non-repeatable group starts empty, and she has to add an item before
+she can type a heading, so the fields stay open instead. Eyebrow and
+Heading come first, then Content where the slice has that field.
+Background, Space above, and Space below are the last fields on the
+slice. The Divider has only Line, Color, and those three settings.
+Full width image has only Image, Edge to edge, and those three
+settings. Brand promo
+keeps Heading (H2) open. Eyebrow, Line
 under the name, and Text under the quote are in Overwrite. It still
 ends with Background, Space above, and Space below.
 
@@ -301,6 +304,31 @@ that placement. The published document still has its first line
 directly under the hero, before the jump boxes. A later Divider, such
 as the one above Keep reading, is a separate line and does not change
 where the first one sits.
+
+### Full width image
+
+One photo. It does not use the Section header. Edge to edge chooses
+the width. Off, the photo is as wide as the writing and lines up with
+the headings. On, it runs to the edges of the window. A background
+color still paints the full band. On a colored band the photo keeps
+the band's vertical padding and loses the side padding. Background,
+Space above, and Space below are the last fields, with the same
+choices as Section. Space above defaults to Medium. Space below
+defaults to None, so the next slice sets the gap under the photo.
+
+| Label | Id | Kind | Default |
+| --- | --- | --- | --- |
+| Image | `image` | Image, including its description | Empty |
+| Edge to edge | `edge_to_edge` | Boolean | Off. On is "Full width of the screen". Off is "As wide as the writing" |
+| Background | `background` | Select | Transparent |
+| Space above | `space_above` | Select | Medium |
+| Space below | `space_below` | Select | None |
+
+An empty Image renders nothing. The description on the image is the
+alt text. The photo keeps its own shape. There is no crop, caption, or
+heading.
+
+Image help: "Describe what is in the photo."
 
 ### Boxes
 
@@ -619,8 +647,11 @@ one they are `h2`. A slice whose clinic is not published shows only its
 header.
 
 Facts on the Wix clinic pages that are not on the Brand, such as
-"Voted Best For" and the product price list, are written in a Text
-slice on that page. The provider Hero already shows "Voted best for".
+"Voted Best For", can be written in a Text slice on that page. The
+provider Hero already shows "Voted best for" and the price. A clinic
+page does not get a "What it cost me" section. The price and the price
+note stay on the Brand. The first-year average stays on the homepage
+comparison.
 
 ### Pros and cons
 
@@ -689,14 +720,15 @@ uses that section's eyebrow color.
 Single page type. Use the page type's built-in metadata for the SEO
 title, meta description, and social image.
 
-Slices, in mockup order:
+Slices, in order:
 
 1. Hero
-2. Start here
-3. Latest posts
-4. Clinic comparison
-5. Quote
-6. Side by side
+2. Divider, the squiggly accent line already published under the hero
+3. Start here
+4. Latest posts
+5. Clinic comparison
+6. Quote
+7. Side by side
 
 Each slice below lists only its own fields. Section is on all of them.
 
@@ -1540,8 +1572,8 @@ unchanged.
 
 The slice zone accepts every shared slice: Hero, Start here, Posts,
 Clinic comparison, Quote, Side by side, Divider, Boxes, Brand promo,
-Ribbon, Text, Clinic facts, Pros and cons, FAQ, and Buttons. A slice added to the
-library later is connected to Page too.
+Ribbon, Text, Clinic facts, Pros and cons, FAQ, Buttons, and Full width
+image. A slice added to the library later is connected to Page too.
 
 | Label | Id | Kind | Required | Notes |
 | --- | --- | --- | --- | --- |

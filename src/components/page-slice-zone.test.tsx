@@ -427,4 +427,26 @@ describe("PageSliceZone", () => {
     expect(html).toContain("Where should I start?");
     expect(html).toContain("New to HRT");
   });
+
+  it("renders a full width image inside the page container", () => {
+    const html = render([
+      slice("full_width_image", {
+        image: {
+          id: "photo",
+          url: "/mockup/posts/oestra-vs-winona.jpg",
+          alt: "Oestra and Winona",
+          dimensions: { width: 800, height: 500 },
+        },
+        background: "Transparent",
+        space_above: "None",
+        space_below: "None",
+      }),
+    ]);
+
+    expect(html).toContain('alt="Oestra and Winona"');
+    expect(html).toContain('src="/mockup/posts/oestra-vs-winona.jpg"');
+    expect(html).toContain("max-w-wrap");
+    expect(html).toContain("px-gutter");
+    expect(html).not.toContain("<h2");
+  });
 });

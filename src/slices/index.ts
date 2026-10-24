@@ -7,6 +7,7 @@ import ClinicComparison from "./clinic_comparison";
 import ClinicFacts from "./ClinicFacts";
 import Divider from "./divider";
 import Faq from "./Faq";
+import FullWidthImage from "./FullWidthImage";
 import Hero from "./hero";
 import Posts from "./posts";
 import ProsAndCons from "./ProsAndCons";
@@ -24,6 +25,7 @@ export const components = {
   clinic_facts: ClinicFacts,
   divider: Divider,
   faq: Faq,
+  full_width_image: FullWidthImage,
   hero: Hero,
   posts: Posts,
   pros_cons: ProsAndCons,

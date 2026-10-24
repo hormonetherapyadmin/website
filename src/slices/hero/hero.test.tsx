@@ -182,7 +182,7 @@ describe("Hero", () => {
       top_choice_label: "My 2026 top choice",
       monthly_price: 199,
       price_note: "First six months, then $99.",
-      code: "PEGGY10",
+      code: "Code PEGGY10",
       code_note: "10% off your first order",
       visit: {
         link_type: "Web",
@@ -219,6 +219,7 @@ describe("Hero", () => {
     expect(html).toContain("My 2026 top choice");
     expect(html).toContain("$199");
     expect(html).toContain("Code PEGGY10");
+    expect(html).not.toContain("Code Code");
     expect(html).toContain("Visit Inner Balance");
     expect(html).not.toContain("<img");
   });

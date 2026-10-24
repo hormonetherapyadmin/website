@@ -17,6 +17,7 @@ import { ClinicComparison } from "@/slices/clinic_comparison";
 import { ClinicFacts } from "@/slices/ClinicFacts";
 import { Divider } from "@/slices/divider";
 import { Faq } from "@/slices/Faq";
+import { FullWidthImage } from "@/slices/FullWidthImage";
 import { Hero, type HeroSlice as HeroProps } from "@/slices/hero";
 import { featuredPostHref, Posts, type PostCardData } from "@/slices/posts";
 import { ProsAndCons } from "@/slices/ProsAndCons";
@@ -33,6 +34,7 @@ import type {
   ClinicFactsSlice,
   DividerSlice,
   FaqSlice,
+  FullWidthImageSlice,
   HeroSlice,
   PageDocumentDataSlicesSlice,
   PostsSlice,
@@ -204,6 +206,10 @@ function DividerAdapter({ slice }: Props<DividerSlice>) {
   return <Divider primary={slice.primary} />;
 }
 
+function FullWidthImageAdapter({ slice }: Props<FullWidthImageSlice>) {
+  return <FullWidthImage primary={slice.primary} />;
+}
+
 function FaqAdapter({ slice, context }: Props<FaqSlice>) {
   return (
     <Faq
@@ -281,6 +287,7 @@ const components = {
   side_by_side: SideBySideAdapter,
   divider: DividerAdapter,
   faq: FaqAdapter,
+  full_width_image: FullWidthImageAdapter,
   ribbon: RibbonAdapter,
   buttons: ButtonsAdapter,
   boxes: BoxesAdapter,

@@ -226,8 +226,11 @@ type SliceSectionProps = {
    * Omit it outside a slice list. An empty field uses the Medium default.
    */
   followingSpaceAbove?: string | null | false;
-  /** Story keeps the header and children to the post story column, centered. */
-  width?: "wrap" | "story";
+  /**
+   * Story keeps the header and children to the post story column.
+   * Screen runs the children to the edges of the window.
+   */
+  width?: "wrap" | "story" | "screen";
   /** Centers the header. The default keeps it on the left. */
   align?: "start" | "center";
   /**
@@ -306,8 +309,12 @@ export function SliceSection({
     >
       <div
         className={[
-          "mx-auto w-full px-gutter",
-          width === "story" ? "max-w-story-wrap" : "max-w-wrap",
+          width === "screen" ? "w-full" : "mx-auto w-full px-gutter",
+          width === "story"
+            ? "max-w-story-wrap"
+            : width === "screen"
+              ? ""
+              : "max-w-wrap",
           band ? "py-slice" : "",
         ]
           .filter(Boolean)

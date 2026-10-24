@@ -459,7 +459,7 @@ function ProviderHero({ primary }: { primary: ProviderPrimary }) {
       ? clinic.monthly_price
       : undefined;
   const priceNote = text(clinic?.price_note);
-  const code = text(clinic?.code);
+  const code = text(clinic?.code)?.replace(/^code\s+/i, "");
   const codeNote = text(clinic?.code_note);
   const visitHref =
     clinic?.visit &&

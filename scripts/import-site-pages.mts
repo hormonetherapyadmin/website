@@ -17,10 +17,15 @@ import {
   type PrismicMigrationAsset,
   type PrismicMigrationDocument,
 } from "@prismicio/client";
-import type { PageDocument } from "../prismicio-types";
+import type {
+  HomepageDocument,
+  PageDocument,
+  ProviderDocument,
+} from "../prismicio-types";
 import prismicConfig from "../prismic.config.json" with { type: "json" };
 import { planPost, type ImportState } from "../src/migration/post-plan.ts";
 import {
+  HOMEPAGE,
   SITE_PAGES,
   pageImages,
   replaceImages,
@@ -114,7 +119,10 @@ function libraryImage(asset: Asset, alt: string) {
   };
 }
 
-const known = new Set(SITE_PAGES.map((page) => page.uid));
+const ALLOY_ID = "asz9cxcAADEAer1m";
+const INNER_BALANCE_ID = "asf4zhEAAC4AYFel";
+
+const known = new Set([...SITE_PAGES.map((page) => page.uid), HOMEPAGE.uid]);
 const only = list(args.only);
 const replace = list(args.replace);
 for (const uid of [...only, ...replace]) {
@@ -143,6 +151,24 @@ const published = new Map(
     document.uid ? [[document.uid, document.id] as const] : [],
   ),
 );
+const [homepageDocument, alloy, innerBalance] = await Promise.all([
+  client.getSingle<HomepageDocument>("homepage").catch(() => null),
+  client.getByID<ProviderDocument>(ALLOY_ID).catch(() => null),
+  client.getByID<ProviderDocument>(INNER_BALANCE_ID).catch(() => null),
+]);
+if (homepageDocument && homepageDocument.id !== HOMEPAGE.id) {
+  throw new Error(
+    `Homepage id is ${homepageDocument.id}, expected ${HOMEPAGE.id}`,
+  );
+}
+if (alloy && alloy.uid !== "alloy") {
+  throw new Error(`Document ${ALLOY_ID} is ${alloy.uid}, not alloy`);
+}
+if (innerBalance && innerBalance.uid !== "inner-balance") {
+  throw new Error(
+    `Document ${INNER_BALANCE_ID} is ${innerBalance.uid}, not inner-balance`,
+  );
+}
 const state = readState();
 const library = await libraryAssets(writeToken);
 
@@ -161,12 +187,37 @@ const plans = selected.map((page) => {
     ),
   };
 });
-const blocked = plans.filter(({ page }) =>
+const homepageMissing = pageImages(HOMEPAGE)
+  .filter((image) => !existsSync(image.path))
+  .map((image) => `missing photo ${image.path}`);
+const homepagePlan =
+  !only.size || only.has(HOMEPAGE.uid)
+    ? {
+        page: HOMEPAGE,
+        plan: planPost(
+          {
+            sourceId: HOMEPAGE.sourceId,
+            uid: HOMEPAGE.uid,
+            problems: homepageMissing,
+          },
+          new Map(
+            homepageDocument
+              ? [[HOMEPAGE.uid, homepageDocument.id] as const]
+              : [],
+          ),
+          state,
+          replace,
+          only,
+        ),
+      }
+    : null;
+const jobs = homepagePlan ? [...plans, homepagePlan] : plans;
+const blocked = jobs.filter(({ page }) =>
   pageImages(page).some((image) => !existsSync(image.path)),
 );
 
 const photos = new Map<string, LocalImage>();
-for (const { page, plan } of plans) {
+for (const { page, plan } of jobs) {
   if (plan.action === "skip") continue;
   for (const image of pageImages(page)) photos.set(image.filename, image);
 }
@@ -178,14 +229,14 @@ const report = {
   ranAt: new Date().toISOString(),
   write: Boolean(args.write),
   summary: {
-    pages: plans.length,
-    actions: counts(plans.map(({ plan }) => plan.action)),
+    pages: jobs.length,
+    actions: counts(jobs.map(({ plan }) => plan.action)),
     photos: photos.size,
     photosAlreadyInPrismic: reused.length,
     photosToUpload: photos.size - reused.length,
     blocked: blocked.length,
   },
-  pages: plans.map(({ page, plan }) => ({
+  pages: jobs.map(({ page, plan }) => ({
     uid: page.uid,
     title: page.title,
     ...plan,
@@ -209,12 +260,17 @@ function writeReport() {
   return file;
 }
 
-console.log(`${plans.length} site pages`);
+console.log(`${jobs.length} site pages`);
 console.log(report.summary.actions);
 console.log(
   `photos: ${photos.size} (${reused.length} already in Prismic, ${photos.size - reused.length} to upload)`,
 );
-for (const { page, plan } of plans) {
+if (alloy) {
+  const next =
+    alloy.data.name === "Alloy" ? "already Alloy" : "will become Alloy";
+  console.log(`alloy name: ${alloy.data.name ?? "(empty)"} (${next})`);
+}
+for (const { page, plan } of jobs) {
   if (plan.action === "skip") console.log(`  skip ${page.uid}: ${plan.reason}`);
   if (plan.action === "update")
     console.log(`  update ${page.uid} (${plan.reason})`);
@@ -263,10 +319,23 @@ function pageDocument(page: SitePage) {
   };
 }
 
+function homepageDocumentData() {
+  return {
+    ...(homepageDocument?.data ?? {
+      footer_copyright_text: HOMEPAGE.footer_copyright_text,
+      footer_cookies_link: HOMEPAGE.footer_cookies_link,
+      footer_social_links: HOMEPAGE.footer_social_links,
+    }),
+    meta_title: HOMEPAGE.meta_title,
+    meta_description: HOMEPAGE.meta_description,
+    slices: replaceImages(HOMEPAGE.slices, (image) => imageField(image)),
+  };
+}
+
 const sent: Array<{
   page: SitePage;
   plan: (typeof plans)[number]["plan"];
-  document: PrismicMigrationDocument<PageDocument>;
+  document: PrismicMigrationDocument<PageDocument | HomepageDocument>;
 }> = [];
 for (const { page, plan } of plans) {
   if (plan.action === "skip") continue;
@@ -285,6 +354,73 @@ for (const { page, plan } of plans) {
             page.title,
           ),
   });
+}
+
+if (homepagePlan && homepagePlan.plan.action !== "skip") {
+  const data = homepageDocumentData();
+  const document = {
+    type: "homepage" as const,
+    lang,
+    data,
+  };
+  sent.push({
+    page: HOMEPAGE,
+    plan: homepagePlan.plan,
+    document:
+      homepagePlan.plan.action === "create"
+        ? migration.createDocument(
+            document as PendingPrismicDocument<HomepageDocument>,
+            HOMEPAGE.title,
+          )
+        : migration.updateDocument(
+            {
+              ...document,
+              id: homepagePlan.plan.prismicId,
+            } as ExistingPrismicDocument<HomepageDocument>,
+            HOMEPAGE.title,
+          ),
+  });
+}
+
+const innerBalanceSent = sent.some((item) => item.page.uid === "inner-balance");
+if (innerBalanceSent && innerBalance) {
+  const visit = innerBalance.data.visit;
+  const visitHasText =
+    visit &&
+    "text" in visit &&
+    typeof visit.text === "string" &&
+    visit.text.trim().length > 0;
+  migration.updateDocument(
+    {
+      ...innerBalance,
+      data: {
+        ...innerBalance.data,
+        ...(visit && visit.link_type === "Web" && !visitHasText
+          ? { visit: { ...visit, text: "Visit Inner Balance" } }
+          : {}),
+        page: {
+          link_type: "Document" as const,
+          id: () => migration.getByUID("page", "inner-balance"),
+        },
+      },
+    } as ExistingPrismicDocument<ProviderDocument>,
+    innerBalance.data.name || "Inner Balance",
+  );
+  console.log("inner-balance brand page will point at the new page");
+}
+
+const homepageSent = sent.some((item) => item.page.uid === "homepage");
+if (homepageSent && alloy && alloy.data.name !== "Alloy") {
+  migration.updateDocument(
+    {
+      ...alloy,
+      data: { ...alloy.data, name: "Alloy" },
+    } as ExistingPrismicDocument<ProviderDocument>,
+    "Alloy",
+  );
+  console.log(
+    `alloy name will change from ${alloy.data.name ?? "(empty)"} to Alloy`,
+  );
 }
 
 if (sent.length === 0) {

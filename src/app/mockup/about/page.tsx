@@ -1,17 +1,22 @@
 import type { Metadata } from "next";
 import type { ImageField, LinkField, RichTextField } from "@prismicio/client";
 import type { SliceSectionFields } from "@/components/slice-section";
+import { postCard } from "@/lib/page-slices";
+import { createClient } from "@/prismicio";
+import { Divider } from "@/slices/divider";
 import { Hero } from "@/slices/hero";
+import { Posts } from "@/slices/posts";
 import { SideBySide } from "@/slices/side_by_side";
 import { MockupShell } from "../_shared/mockup-shell";
 
 /*
   About mockup for the live URL /about, built only from page slices.
   Copy is from that Wix page (October 2026), word for word, including
-  "to for someone" and "bog pages". The portrait and the Winston photo
-  are the two photos of Peggy on that page. The washed-out stock doctor
-  banner is left off: it is a clinic portrait, and this site is not a
-  clinic.
+  "to for someone" and "bog pages". The hero uses the portrait already
+  published on that page. Winston sits on the left of the story so the
+  two photos do not stack. The washed-out stock doctor banner is left
+  off: it is a clinic portrait, and this site is not a clinic. The
+  divider under the hero and the posts row stay.
 */
 
 export const metadata: Metadata = {
@@ -117,6 +122,11 @@ const story = [
 
 export default async function AboutMockup(props: PageProps<"/mockup/about">) {
   const searchParams = await props.searchParams;
+  const documents = await createClient().getAllByType("post");
+  const posts = documents.flatMap((document) => {
+    const card = postCard(document);
+    return card ? [card] : [];
+  });
 
   return (
     <MockupShell searchParams={searchParams}>
@@ -124,19 +134,30 @@ export default async function AboutMockup(props: PageProps<"/mockup/about">) {
         variation="subpage"
         primary={{
           ...section({
-            small_heading: rich("About"),
+            small_heading: rich("About Peggy"),
             heading: rich("My Hormone Replacement Story"),
             intro: rich(
               "I'm your typical late-50's woman. I love Jesus! I'm married, I have three grown children, three grandchildren, a Bernedoodle named Winston and my full-time gig is in the banking industry.",
             ),
             space_above: "Medium",
+            space_below: "Medium",
           }),
           image: image(
-            "/mockup/peggy-portrait.jpg",
-            "Peggy, smiling, in a dark sweater",
-            1389,
-            1600,
+            "https://images.prismic.io/1shr96di/XYNQOFoQwb5OYLsz_eb9223_eb8a2908d66c45d8b805ae5191010342~mv2.jpg?auto=format,compress",
+            "Image of Peggy B patient reviewer and owner of HormoneTherapyhub.com",
+            2250,
+            2590,
           ),
+        }}
+      />
+
+      <Divider
+        primary={{
+          line: "Squiggly",
+          color: "Accent",
+          background: "Transparent",
+          space_above: "Medium",
+          space_below: "None",
         }}
       />
 
@@ -147,12 +168,21 @@ export default async function AboutMockup(props: PageProps<"/mockup/about">) {
           alt: "Peggy on a wooded trail holding her Bernedoodle puppy, Winston",
         }}
         primary={{
-          ...section({ space_below: "Large" }),
-          side: "Media right",
+          ...section({ space_above: "None", space_below: "Medium" }),
+          side: "Media left",
           media_position: "Sticky",
           text: story,
           button: [button("Is HRT for Me?", "/mockup/is-hrt-for-me")],
         }}
+      />
+
+      <Posts
+        variation="row"
+        primary={{
+          ...section({ space_above: "None", space_below: "Medium" }),
+          category: "All",
+        }}
+        posts={posts}
       />
     </MockupShell>
   );

@@ -1,0 +1,67 @@
+{
+  "id": "full_width_image",
+  "name": "Full width image",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "image": {
+          "config": {
+            "label": "Image",
+            "placeholder": "Describe what is in the photo."
+          },
+          "type": "Image"
+        },
+        "edge_to_edge": {
+          "config": {
+            "default_value": false,
+            "label": "Edge to edge",
+            "placeholder_false": "As wide as the writing",
+            "placeholder_true": "Full width of the screen"
+          },
+          "type": "Boolean"
+        },
+        "background": {
+          "config": {
+            "default_value": "Transparent",
+            "label": "Background",
+            "options": [
+              "Transparent",
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ],
+            "placeholder": "The color behind the image."
+          },
+          "type": "Select"
+        },
+        "space_above": {
+          "config": {
+            "default_value": "Medium",
+            "label": "Space above",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "space_below": {
+          "config": {
+            "default_value": "None",
+            "label": "Space below",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

@@ -501,7 +501,8 @@ type PageDocumentDataSlicesSlice =
   | ClinicFactsSlice
   | ProsConsSlice
   | FaqSlice
-  | ButtonsSlice;
+  | ButtonsSlice
+  | FullWidthImageSlice;
 
 /**
  * Content for Page documents
@@ -2311,6 +2312,111 @@ type FaqSliceVariation = FaqSliceDefault;
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type FaqSlice = prismic.SharedSlice<"faq", FaqSliceVariation>;
+
+/**
+ * Primary content in *Full width image → Default → Primary*
+ */
+export interface FullWidthImageSliceDefaultPrimary {
+  /**
+   * Image field in *Full width image → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: Describe what is in the photo.
+   * - **API ID Path**: full_width_image.default.primary.image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Edge to edge field in *Full width image → Default → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: full_width_image.default.primary.edge_to_edge
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  edge_to_edge: prismic.BooleanField;
+
+  /**
+   * Background field in *Full width image → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: The color behind the image.
+   * - **Default Value**: Transparent
+   * - **API ID Path**: full_width_image.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Full width image → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: full_width_image.default.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Full width image → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: full_width_image.default.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+}
+
+/**
+ * Default variation for Full width image Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FullWidthImageSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<FullWidthImageSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Full width image*
+ */
+type FullWidthImageSliceVariation = FullWidthImageSliceDefault;
+
+/**
+ * Full width image Shared Slice
+ *
+ * - **API ID**: `full_width_image`
+ * - **Description**: *None*
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FullWidthImageSlice = prismic.SharedSlice<
+  "full_width_image",
+  FullWidthImageSliceVariation
+>;
 
 /**
  * Item in *Hero → Home → Primary → Trust lines*
@@ -5196,6 +5302,10 @@ declare module "@prismicio/client" {
       FaqSliceDefaultPrimary,
       FaqSliceVariation,
       FaqSliceDefault,
+      FullWidthImageSlice,
+      FullWidthImageSliceDefaultPrimary,
+      FullWidthImageSliceVariation,
+      FullWidthImageSliceDefault,
       HeroSlice,
       HeroSliceHomePrimaryTrustLinesItem,
       HeroSliceHomePrimary,
