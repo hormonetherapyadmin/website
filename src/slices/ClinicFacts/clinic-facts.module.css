@@ -1,6 +1,8 @@
 /*
   Layout copied from the fact sheet, How it works, and specialties on
-  the Inner Balance mockup. A card keeps its own color on any band.
+  the Inner Balance mockup. The photo is the full width of those cards.
+  The offer box matches the post offer callout. A card keeps its own
+  color on any band.
 */
 
 .facts {
@@ -49,12 +51,180 @@
   line-height: 1.2;
 }
 
-.part {
+.part,
+.photo,
+.callout {
   margin-top: 3rem;
 }
 
-.part:first-child {
+.part:first-child,
+.photo:first-child,
+.callout:first-child {
   margin-top: 0;
+}
+
+.photo {
+  margin-bottom: 0;
+}
+
+.photoImg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 1.25rem;
+}
+
+.callout {
+  --callout-band: var(--color-background);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 1.35rem;
+  padding: 1.4rem 1.5rem;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: var(--color-card-3);
+  color: var(--color-text);
+}
+
+.callout[data-background="Pink"] {
+  --callout-band: var(--color-card-1);
+}
+
+.callout[data-background="Blue"] {
+  --callout-band: var(--color-card-2);
+}
+
+.callout[data-background="Yellow"] {
+  --callout-band: var(--color-card-3);
+}
+
+.callout[data-background="Lavender"] {
+  --callout-band: var(--color-card-4);
+}
+
+.callout[data-background="Raspberry"] {
+  --callout-band: var(--color-accent);
+}
+
+.callout[data-background="Navy"] {
+  --callout-band: var(--color-panel);
+}
+
+.callout > * {
+  position: relative;
+  z-index: 1;
+}
+
+.logo {
+  box-sizing: border-box;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 4.75rem;
+  height: 4.75rem;
+  padding: 0.7rem;
+  overflow: hidden;
+  border-radius: 1.05rem;
+  background: var(--color-paper);
+  box-shadow: 0 0 0 1px var(--color-border);
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.4rem;
+  object-fit: contain;
+}
+
+/* The same corner wave as the post offer box, in this band's color. */
+.callout::after {
+  --wave: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='288' height='76' viewBox='0 0 288 76'><defs><linearGradient id='g' x1='0' y1='38' x2='288' y2='38' gradientUnits='userSpaceOnUse'><stop offset='0' stop-color='black' stop-opacity='0'/><stop offset='0.22' stop-color='black' stop-opacity='0'/><stop offset='0.62' stop-color='black' stop-opacity='0.85'/><stop offset='1' stop-color='black' stop-opacity='1'/></linearGradient></defs><g fill='none' stroke='url(%23g)' stroke-width='1.65' stroke-linecap='round'><path d='M0 14 C4.5 14 4.5 9.5 9 9.5 S13.5 14 18 14 S22.5 18.5 27 18.5 S31.5 14 36 14 S40.5 9.5 45 9.5 S49.5 14 54 14 S58.5 18.5 63 18.5 S67.5 14 72 14 S76.5 9.5 81 9.5 S85.5 14 90 14 S94.5 18.5 99 18.5 S103.5 14 108 14 S112.5 9.5 117 9.5 S121.5 14 126 14 S130.5 18.5 135 18.5 S139.5 14 144 14 S148.5 9.5 153 9.5 S157.5 14 162 14 S166.5 18.5 171 18.5 S175.5 14 180 14 S184.5 9.5 189 9.5 S193.5 14 198 14 S202.5 18.5 207 18.5 S211.5 14 216 14 S220.5 9.5 225 9.5 S229.5 14 234 14 S238.5 18.5 243 18.5 S247.5 14 252 14 S256.5 9.5 261 9.5 S265.5 14 270 14 S274.5 18.5 279 18.5 S283.5 14 288 14'/><path d='M-18 30 C-13.5 30 -13.5 25.5 -9 25.5 S-4.5 30 0 30 S4.5 34.5 9 34.5 S13.5 30 18 30 S22.5 25.5 27 25.5 S31.5 30 36 30 S40.5 34.5 45 34.5 S49.5 30 54 30 S58.5 25.5 63 25.5 S67.5 30 72 30 S76.5 34.5 81 34.5 S85.5 30 90 30 S94.5 25.5 99 25.5 S103.5 30 108 30 S112.5 34.5 117 34.5 S121.5 30 126 30 S130.5 25.5 135 25.5 S139.5 30 144 30 S148.5 34.5 153 34.5 S157.5 30 162 30 S166.5 25.5 171 25.5 S175.5 30 180 30 S184.5 34.5 189 34.5 S193.5 30 198 30 S202.5 25.5 207 25.5 S211.5 30 216 30 S220.5 34.5 225 34.5 S229.5 30 234 30 S238.5 25.5 243 25.5 S247.5 30 252 30 S256.5 34.5 261 34.5 S265.5 30 270 30 S274.5 25.5 279 25.5 S283.5 30 288 30'/><path d='M0 46 C4.5 46 4.5 41.5 9 41.5 S13.5 46 18 46 S22.5 50.5 27 50.5 S31.5 46 36 46 S40.5 41.5 45 41.5 S49.5 46 54 46 S58.5 50.5 63 50.5 S67.5 46 72 46 S76.5 41.5 81 41.5 S85.5 46 90 46 S94.5 50.5 99 50.5 S103.5 46 108 46 S112.5 41.5 117 41.5 S121.5 46 126 46 S130.5 50.5 135 50.5 S139.5 46 144 46 S148.5 41.5 153 41.5 S157.5 46 162 46 S166.5 50.5 171 50.5 S175.5 46 180 46 S184.5 41.5 189 41.5 S193.5 46 198 46 S202.5 50.5 207 50.5 S211.5 46 216 46 S220.5 41.5 225 41.5 S229.5 46 234 46 S238.5 50.5 243 50.5 S247.5 46 252 46 S256.5 41.5 261 41.5 S265.5 46 270 46 S274.5 50.5 279 50.5 S283.5 46 288 46'/><path d='M-18 62 C-13.5 62 -13.5 57.5 -9 57.5 S-4.5 62 0 62 S4.5 66.5 9 66.5 S13.5 62 18 62 S22.5 57.5 27 57.5 S31.5 62 36 62 S40.5 66.5 45 66.5 S49.5 62 54 62 S58.5 57.5 63 57.5 S67.5 62 72 62 S76.5 66.5 81 66.5 S85.5 62 90 62 S94.5 57.5 99 57.5 S103.5 62 108 62 S112.5 66.5 117 66.5 S121.5 62 126 62 S130.5 57.5 135 57.5 S139.5 62 144 62 S148.5 66.5 153 66.5 S157.5 62 162 62 S166.5 57.5 171 57.5 S175.5 62 180 62 S184.5 66.5 189 66.5 S193.5 62 198 62 S202.5 57.5 207 57.5 S211.5 62 216 62 S220.5 66.5 225 66.5 S229.5 62 234 62 S238.5 57.5 243 57.5 S247.5 62 252 62 S256.5 66.5 261 66.5 S265.5 62 270 62 S274.5 57.5 279 57.5 S283.5 62 288 62'/></g></svg>");
+  content: "";
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: 0;
+  width: 23rem;
+  height: 6.25rem;
+  pointer-events: none;
+  background: var(--callout-band);
+  -webkit-mask: var(--wave) no-repeat right bottom / 23rem 6.25rem;
+  mask: var(--wave) no-repeat right bottom / 23rem 6.25rem;
+}
+
+.copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.calloutLine {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  line-height: 1.45;
+}
+
+.bullets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1.35rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.bullets li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin: 0;
+}
+
+.bullets svg {
+  flex: none;
+  margin-top: 0.15rem;
+  color: var(--color-accent);
+}
+
+.actions {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin-left: auto;
+}
+
+.button {
+  display: inline-block;
+  max-width: 100%;
+  padding: 0.6rem 1.35rem;
+  border-radius: 0.75rem;
+  background: var(--color-cta);
+  color: var(--color-cta-text);
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+}
+
+.button:hover {
+  background: var(--color-cta-hover);
+}
+
+.code {
+  padding: 0.2rem 0.6rem;
+  border: 1.5px dashed var(--color-accent);
+  border-radius: 0.5rem;
+  background: var(--color-paper);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-accent);
 }
 
 .partTitle {
@@ -134,5 +304,14 @@
 @media (max-width: 640px) {
   .facts {
     grid-template-columns: 1fr;
+  }
+
+  .callout {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .actions {
+    margin-left: 0;
   }
 }

@@ -36,8 +36,8 @@ objective is preservation; optimization follows.
     adds `sponsored`, as Google asks for affiliate links.
 -   A clinic's Visit link is its affiliate link. Every designed visit
     CTA (provider Hero, Brand promo's name, product photo, and visit
-    button, Quote, Side by side, Clinic
-    comparison, story offer and facts) sets that rel, the new tab, and
+    button, Quote, Side by side, Clinic comparison, the Clinic facts
+    offer box, and story offer and facts) sets that rel, the new tab, and
     `data-provider` and `data-placement` itself, through
     `visitLinkProps` in `src/lib/affiliate-link.ts`. The Visit field's
     "Open in a new tab" checkbox does not change this.

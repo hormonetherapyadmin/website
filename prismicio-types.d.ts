@@ -1968,7 +1968,40 @@ export interface ClinicFactsSliceDefaultPrimary {
    * - **API ID Path**: clinic_facts.default.primary.clinic
    * - **Documentation**: https://prismic.io/docs/fields/content-relationship
    */
-  clinic: prismic.ContentRelationshipField<"provider">;
+  clinic: ContentRelationshipFieldWithData<
+    [
+      {
+        fields: [
+          "name",
+          "kind",
+          "logo",
+          "short_description",
+          "visit",
+          "code",
+          "code_note",
+          "state_availability",
+          "formulation",
+          "lab_requirement",
+          "insurance",
+          "hsa_fsa",
+          "note",
+          "specialties",
+          { fields: ["title", "text"]; id: "how_it_works" },
+        ];
+        id: "provider";
+      },
+    ]
+  >;
+
+  /**
+   * Image field in *Clinic facts → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: Describe what is in the photo.
+   * - **API ID Path**: clinic_facts.default.primary.image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
 
   /**
    * Background field in *Clinic facts → Default → Primary*

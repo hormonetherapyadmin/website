@@ -612,15 +612,17 @@ it a Heading 3. The words stay the same.
 ### Clinic facts
 
 A clinic's fact sheet, in `src/slices/ClinicFacts`. The layout is the
-fact sheet, How it works, and specialties on the Inner Balance
-mockup. Everything in it comes from the Brand. She picks the clinic
-and writes nothing else, so a fact changed on the Brand changes on
-every clinic page.
+fact sheet, a photo, How it works, the offer box, and specialties on
+the Inner Balance mockup. The photo is the only thing she places on
+the slice. Every fact, and the offer box, comes from the Brand. She
+picks the clinic, so a fact changed on the Brand changes on every
+clinic page.
 
 | Label | Id | Kind | Required | Mockup |
 | --- | --- | --- | --- | --- |
 | Section | Eyebrow, Heading (H2), and Content | Shared, open on the slice | | Heading (H2): The facts. Content: What I confirmed on their page… |
 | Clinic | `clinic` | Content relationship to Provider | Yes | Inner Balance |
+| Image | `image` | Image, including its description | No | A photo between the facts and How it works |
 
 The fact cards, in this order, each with a fixed icon:
 
@@ -644,7 +646,31 @@ have a title, text, or both. Specialties they list is the Brand's
 Specialties, one pill per line. Each part is hidden when the Brand has
 none. With a Heading (H2), the two part titles are `h3`. Without
 one they are `h2`. A slice whose clinic is not published shows only its
-header.
+header and, when Image is filled, the photo.
+
+Image sits between the fact cards and How it works. It is as wide as
+the cards, so it splits that stack. It keeps its own shape. There is
+no crop and no caption. An empty Image is left out. The description
+on the image is the alt text.
+
+Image help: "Describe what is in the photo."
+
+Between How it works and Specialties they list is the same offer box
+a post gets from `{{provider:uid:offer}}`. The box is yellow
+(`--color-card-3`), so it is not the blue-gray of the fact cards.
+The logo and the line sit on the left. The line is the code line.
+A blank code line uses Short description, the one line about the
+clinic. If that is blank too, the large line is left out and the
+bullets stay. Short description does not open the box on its own.
+Under that line are the same three bullets as a story facts token:
+typically prescribed,
+insurance (clinics only, "Takes insurance" or "Doesn't take
+insurance"), and getting started. A missing one is left out. A
+product has no insurance bullet. Visit and the code sit on the right.
+On a narrow screen they drop under the bullets. Visit uses the
+link's display text, or "Visit" plus the clinic name. The box is
+left out when the Brand has no code line, no code, and no visit
+link. The visit click is placement `clinic_facts`.
 
 Facts on the Wix clinic pages that are not on the Brand, such as
 "Voted Best For", can be written in a Text slice on that page. The
@@ -1107,7 +1133,7 @@ clinic relationship, the same way it lists `visit`.
 | Side by side, clinic | `clinic` | Logo, name, quote, visit, and, when Style is Card, kind, product image, price, price is, price note, formulation, insurance, getting started, code, code line. Style stays on the slice. Quote is the logo panel. Card is the product photo and price. |
 | Boxes | `clinic` on each box | Logo, top choice label, name, code. A written Image, Heading, Line under the heading, or Bottom line replaces it |
 | Brand promo | `clinic` | Name, kind, logo, visit, page, my review, my comparison, review video, product image, price, price is, price note, formulation, insurance, getting started, code, code line, quote. Page is Products & pricing. My review is her post. Each My comparison is a button with its display text. Review video is Watch my review. A photo in Overwrite replaces the product image. A written Quote replaces the clinic quote. Style on the slice chooses the quote panel or the product card. Is this 1st? and Place stay on the slice. Text under the quote and extra links are in Overwrite. Extra links are a second row of text |
-| Clinic facts | `clinic` | Kind, state availability, typically prescribed, labs, insurance, HSA / FSA, getting started, how it works, specialties |
+| Clinic facts | `clinic` | Kind, state availability, typically prescribed, labs, insurance, HSA / FSA, getting started, how it works, specialties, logo, visit, code, code line, short description. Image stays on the slice |
 | Post sidebar | `clinic` | Name, logo. The name links to Page when that field is set |
 | Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, code, code line, plus the sentence in that paragraph |
 | Story facts token | `{{provider:uid:facts}}` | Price, price is, price note, insurance (clinics only), formulation |

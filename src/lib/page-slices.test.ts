@@ -128,6 +128,12 @@ describe("factsClinic", () => {
         { title: "Health quiz", text: "Complete the quiz." },
         { title: undefined, text: "Start treatment." },
       ],
+      logo: { src: "https://images.prismic.io/logo.png" },
+      visitHref: "https://example.com/inner-balance?ref=peggy",
+      visitText: "Visit Inner Balance",
+      offerCode: "PEGGY10",
+      offerCopy: "10% off your first order.",
+      shortDescription: "Bioidentical cream by mail.",
     });
   });
 

@@ -421,7 +421,9 @@ comparison slice. The trusted-providers clinic card is the Brand promo
 slice. The trusted-providers close band is the Ribbon slice. Rich
 Text is the Text slice: writing on its own, for pages that are mostly
 words. The Wix clinic pages' fact block is the Clinic facts slice,
-which reads the Brand. Pros / Cons is the Pros and cons slice. FAQ is
+which reads the Brand. A photo on that slice sits between the facts
+and How it works. The post offer box sits between How it works and
+the specialties. Pros / Cons is the Pros and cons slice. FAQ is
 the FAQ slice: questions that open and close, each one closed unless
 Start opened is on. A row of buttons with no box is the Buttons slice.
 A close band that has a sentence stays the Ribbon. A post
