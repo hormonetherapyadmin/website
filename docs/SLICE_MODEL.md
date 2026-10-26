@@ -352,9 +352,16 @@ Gallery photos:
 | Caption | `caption` | Heading rich text | Under the thumbnail, and the title of the large photo. |
 | Line under the caption | `line` | Text | A color, such as Dark brown. |
 | Link | `link` | Link, with display text | Shown in the large photo. Empty means no link. |
+| Center the photos | `center` | Boolean. Default Centered | Gallery only. Centered is the default. Left lines the photos up with the heading. A blank value is Centered. |
+
+Each photo is 16.8rem wide, the width of one card when three sit on the
+page. One, two, three, or four photos stay that width. A fifth wraps to
+the next line at the same width. On a narrow screen a photo can shrink
+to the column, and it does not grow past 16.8rem.
 
 Pair uses Before, Before caption, After, After caption, and Link under
-the photos. That link sits under the pair and in the large photo.
+the photos. Each of those photos is the same 16.8rem card. The link sits
+under the pair and in the large photo.
 An empty photo is left out. A gallery with no photos renders nothing.
 
 Both variations use the section fields: Eyebrow, Heading (H2), Content,

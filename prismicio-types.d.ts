@@ -3434,6 +3434,17 @@ export interface PhotoGallerySliceDefaultPrimary {
   >;
 
   /**
+   * Center the photos field in *Photo gallery → Gallery → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: photo_gallery.default.primary.center
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  center: prismic.BooleanField;
+
+  /**
    * Background field in *Photo gallery → Gallery → Primary*
    *
    * - **Field Type**: Select

@@ -7,19 +7,47 @@
   overflow: hidden;
 }
 
+/*
+  One photo is the width of a card in a three-across row on the page.
+  One, two, three, or four stay that width. A fifth wraps.
+*/
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.5rem 1rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+.grid[data-align="start"] {
+  justify-content: flex-start;
+}
+
+.grid > li {
+  flex: 0 0 auto;
+  width: min(100%, 16.8rem);
+}
+
+.pairBlock {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
 .pair {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.pair > * {
+  flex: 0 0 auto;
+  width: min(100%, 16.8rem);
+  min-width: 0;
+  max-width: 16.8rem;
 }
 
 .shot {
@@ -194,12 +222,6 @@
   font-size: 0.9rem;
   font-weight: 600;
   text-underline-offset: 0.2em;
-}
-
-@media (max-width: 800px) {
-  .pair {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

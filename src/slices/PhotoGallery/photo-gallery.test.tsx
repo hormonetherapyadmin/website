@@ -130,7 +130,24 @@ describe("PhotoGallery", () => {
 
     expect(gallery).toContain("Enlarge Portrait Mode");
     expect(gallery).toContain("Shaded Biscuit");
+    expect(gallery).toContain('data-align="center"');
     expect(gallery).not.toContain("<dialog");
+
+    const left = renderToStaticMarkup(
+      <PhotoGallery
+        primary={{ ...section("One photo"), center: false }}
+        photos={[
+          {
+            src: "/one.jpg",
+            alt: "Peggy",
+            width: 800,
+            height: 1200,
+            caption: "Just one",
+          },
+        ]}
+      />,
+    );
+    expect(left).toContain('data-align="start"');
     expect(pair).toContain('href="/post/alloy-m4-face-cream-review"');
     expect(pair).toContain("Read the review");
     expect(pair).toContain("Enlarge Before");

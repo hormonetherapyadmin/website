@@ -141,6 +141,11 @@ function ReviewLink({
  * after, with one link under them. A click opens the photo in the same
  * dark frame as a YouTube video.
  */
+type GalleryPrimary = Partial<SliceSectionFields> & {
+  /** Centered is the default. Left lines the photos up with the heading. */
+  center?: boolean | null;
+};
+
 export function PhotoGallery({
   variation = "default",
   primary,
@@ -148,7 +153,7 @@ export function PhotoGallery({
   pair,
 }: {
   variation?: "default" | "pair" | string;
-  primary: Partial<SliceSectionFields>;
+  primary: GalleryPrimary;
   photos?: readonly GalleryShot[];
   pair?: GalleryPair | null;
 }) {
@@ -158,6 +163,7 @@ export function PhotoGallery({
       ? [pair.before, pair.after].filter((shot) => shot.src)
       : [];
   if (shots.length === 0 && sides.length === 0) return null;
+  const centered = primary.center !== false;
 
   const shared =
     pair?.href && pair.linkLabel
@@ -172,21 +178,23 @@ export function PhotoGallery({
     <SliceSection section={primary}>
       {sides.length > 0 ? (
         <>
-          <div className={styles.pair}>
-            {sides.map((shot) => (
-              <PhotoButton key={shot.src} shot={{ ...shot, ...shared }} />
-            ))}
+          <div className={styles.pairBlock}>
+            <div className={styles.pair}>
+              {sides.map((shot) => (
+                <PhotoButton key={shot.src} shot={{ ...shot, ...shared }} />
+              ))}
+            </div>
+            {shared ? (
+              <ReviewLink
+                href={shared.href}
+                label={shared.linkLabel}
+                blank={shared.blank}
+              />
+            ) : null}
           </div>
-          {shared ? (
-            <ReviewLink
-              href={shared.href}
-              label={shared.linkLabel}
-              blank={shared.blank}
-            />
-          ) : null}
         </>
       ) : (
-        <ul className={styles.grid}>
+        <ul className={styles.grid} data-align={centered ? "center" : "start"}>
           {shots.map((shot) => (
             <li key={shot.src}>
               <PhotoButton shot={shot} />

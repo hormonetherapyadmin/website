@@ -74,6 +74,15 @@
           },
           "type": "Group"
         },
+        "center": {
+          "config": {
+            "default_value": true,
+            "label": "Center the photos",
+            "placeholder_false": "Left",
+            "placeholder_true": "Centered"
+          },
+          "type": "Boolean"
+        },
         "background": {
           "config": {
             "default_value": "Transparent",
