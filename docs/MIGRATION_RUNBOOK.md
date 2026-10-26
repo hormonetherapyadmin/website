@@ -278,7 +278,8 @@ release, not published:
     Skincare has an Alloy pair, a Winona pair, and one Inner Balance
     photo. The men's photos have blank captions because the files are
     not labeled.
--   `/copy-of-weight-gain`. The uid keeps the copy slug. The vial is a
+-   `/weight-gain`. The Wix address was `/copy-of-weight-gain`, and that
+    address redirects here. The vial is a
     Side by side photo that links to `/joiwommenswellness`. The visit
     address stays on the Joi brand. The chalkboard is still a Full
     width image. The comparison under the last heading is the Chart
@@ -365,6 +366,7 @@ the build fails.
 | `/copy-of-inner-balance` | `/inner-balance` | The same page as `/inner-balance` |
 | `/copy-of-winona` | `/musely` | Wix redirect |
 | `/copy-of-winona-review-page` | `/winona-review-page` | Old copy of the Winona review. Wix pointed at `/evernow-review-page`, a 404 |
+| `/copy-of-weight-gain` | `/weight-gain` | The page lives at `/weight-gain`. The Wix copy address redirects there |
 | `/costandformunlations` | `/costandinsurance` | Wix redirect |
 | `/trustedproviders` | `/trusted-providers` | Not in Wix. A 404 on Wix that 23 blog links point to, the page's intended address |
 | `/general-8` | `/tipstofindprovider` | Wix redirect |

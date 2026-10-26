@@ -89,6 +89,17 @@ for (const document of [homepage, ...pages, ...posts]) {
   });
 }
 
+// A page moving off its copy-of- address is still published there until
+// that change is published. The redirect follows that same document.
+for (const row of WIX_REDIRECTS) {
+  const legacy = `/copy-of-${row.to.slice(1)}`;
+  if (row.from === legacy && targets.has(legacy) && !targets.has(row.to)) {
+    const moving = targets.get(legacy);
+    if (moving) targets.set(row.to, { ...moving, uid: row.to.slice(1) });
+    livePaths.delete(legacy);
+  }
+}
+
 const rows = redirectRows(WIX_REDIRECTS, targets, livePaths);
 for (const row of rows) console.log(`${row.from} → ${row.to.url}`);
 console.log(`${rows.length} redirects, all 301 permanent`);

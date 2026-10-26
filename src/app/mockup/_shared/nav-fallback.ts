@@ -16,7 +16,7 @@ const HRT_101_LINKS: NavLink[] = [
 ];
 
 const SYMPTOM_LINKS: NavLink[] = [
-  { label: "Weight & HRT", href: "/copy-of-weight-gain", icon: "Scale" },
+  { label: "Weight & HRT", href: "/weight-gain", icon: "Scale" },
   { label: "Sleep", href: "/sleep", icon: "Moon" },
   { label: "Hair loss", href: "/hair-loss", icon: "Hair" },
   { label: "Rx face creams", href: "/skincare", icon: "Drop" },
