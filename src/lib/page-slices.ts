@@ -259,6 +259,13 @@ export function factsClinic(clinic: PageClinic): FactsClinic {
     gettingStarted: clinic.gettingStarted,
     steps: clinic.steps,
     specialties: clinic.specialties,
+    logo: clinic.logo,
+    visitHref: clinic.visitHref,
+    visitText: clinic.visitText,
+    offerCode: clinic.offerCode,
+    offerCopy: clinic.offerCopy,
+    shortDescription: clinic.shortDescription,
+    product: clinic.product,
   };
 }
 

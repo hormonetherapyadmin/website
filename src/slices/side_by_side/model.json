@@ -69,6 +69,13 @@
           },
           "type": "Image"
         },
+        "image_link": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Photo link"
+          },
+          "type": "Link"
+        },
         "caption": {
           "config": {
             "label": "Caption",

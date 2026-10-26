@@ -55,13 +55,16 @@ slice. One component reads them. The section wrapper is
 
 ### Section
 
-Every slice except the Divider has these six fields. They are not in a
-group. In the Page Builder even a non-repeatable group starts empty, and
-she has to add an item before she can type a heading, so the fields stay
-open instead. Eyebrow and Heading come first, then Content where the
-slice has that field. Background, Space above, and Space below are the
-last fields on the slice. The Divider has only Line, Color, and those
-three settings. Brand promo keeps Heading (H2) open. Eyebrow, Line
+Every slice except the Divider and Full width image has these six
+fields. They are not in a group. In the Page Builder even a
+non-repeatable group starts empty, and she has to add an item before
+she can type a heading, so the fields stay open instead. Eyebrow and
+Heading come first, then Content where the slice has that field.
+Background, Space above, and Space below are the last fields on the
+slice. The Divider has only Line, Color, and those three settings.
+Full width image has only Image, Edge to edge, and those three
+settings. Brand promo
+keeps Heading (H2) open. Eyebrow, Line
 under the name, and Text under the quote are in Overwrite. It still
 ends with Background, Space above, and Space below.
 
@@ -123,13 +126,14 @@ Side by side Image:
 4. Quote
 5. Buttons
 6. Image
-7. Caption
-8. Caption on the photo
-9. Side
-10. Media position
-11. Background
-12. Space above
-13. Space below
+7. Photo link
+8. Caption
+9. Caption on the photo
+10. Side
+11. Media position
+12. Background
+13. Space above
+14. Space below
 
 Video is Eyebrow, Heading (H2), Content, Buttons, Video, Caption, then
 Side, Media position, Background, Space above, Space below. The Quote
@@ -301,6 +305,68 @@ that placement. The published document still has its first line
 directly under the hero, before the jump boxes. A later Divider, such
 as the one above Keep reading, is a separate line and does not change
 where the first one sits.
+
+### Full width image
+
+One photo. It does not use the Section header. Edge to edge chooses
+the width. Off, the photo is as wide as the writing and lines up with
+the headings. On, it runs to the edges of the window. A background
+color still paints the full band. On a colored band the photo keeps
+the band's vertical padding and loses the side padding. Background,
+Space above, and Space below are the last fields, with the same
+choices as Section. Space above defaults to Medium. Space below
+defaults to None, so the next slice sets the gap under the photo.
+
+| Label | Id | Kind | Default |
+| --- | --- | --- | --- |
+| Image | `image` | Image, including its description | Empty |
+| Edge to edge | `edge_to_edge` | Boolean | Off. On is "Full width of the screen". Off is "As wide as the writing" |
+| Background | `background` | Select | Transparent |
+| Space above | `space_above` | Select | Medium |
+| Space below | `space_below` | Select | None |
+
+An empty Image renders nothing. The description on the image is the
+alt text. The photo keeps its own shape. There is no crop, caption, or
+heading.
+
+Image help: "Describe what is in the photo."
+
+### Photo gallery
+
+Peggy's own photos, in `src/slices/PhotoGallery`. Two variations.
+Gallery is a row of photos. Pair is a before and an after, with one
+link under them. A click opens the photo in the same dark frame as a
+YouTube video. The picture keeps its own shape inside that frame.
+Escape, the close button, or the dark area around the frame closes it.
+
+| Variation | Id | What it shows |
+| --- | --- | --- |
+| Gallery | `default` | Photos, in the order she adds them. |
+| Pair | `pair` | Before, After, and Link under the photos. |
+
+Gallery photos:
+
+| Label | Id | Kind | Notes |
+| --- | --- | --- | --- |
+| Photo | `image` | Image | The description is the alt text. |
+| Caption | `caption` | Heading rich text | Under the thumbnail, and the title of the large photo. |
+| Line under the caption | `line` | Text | A color, such as Dark brown. |
+| Link | `link` | Link, with display text | Shown in the large photo. Empty means no link. |
+| Center the photos | `center` | Boolean. Default Centered | Gallery only. Centered is the default. Left lines the photos up with the heading. A blank value is Centered. |
+
+Each photo is 16.8rem wide, the width of one card when three sit on the
+page. One, two, three, or four photos stay that width. A fifth wraps to
+the next line at the same width. On a narrow screen a photo can shrink
+to the column, and it does not grow past 16.8rem.
+
+Pair uses Before, Before caption, After, After caption, and Link under
+the photos. Each of those photos is the same 16.8rem card. The link sits
+under the pair and in the large photo.
+An empty photo is left out. A gallery with no photos renders nothing.
+
+Both variations use the section fields: Eyebrow, Heading (H2), Content,
+Background, Space above, and Space below. Space above defaults to
+Medium. Space below defaults to None.
 
 ### Boxes
 
@@ -584,15 +650,17 @@ it a Heading 3. The words stay the same.
 ### Clinic facts
 
 A clinic's fact sheet, in `src/slices/ClinicFacts`. The layout is the
-fact sheet, How it works, and specialties on the Inner Balance
-mockup. Everything in it comes from the Brand. She picks the clinic
-and writes nothing else, so a fact changed on the Brand changes on
-every clinic page.
+fact sheet, a photo, How it works, the offer box, and specialties on
+the Inner Balance mockup. Every fact, the offer box, and the product
+photo come from the Brand. She picks the clinic, so a fact or product
+photo changed on the Brand changes on every clinic page. An Image on
+the slice replaces that product photo.
 
 | Label | Id | Kind | Required | Mockup |
 | --- | --- | --- | --- | --- |
 | Section | Eyebrow, Heading (H2), and Content | Shared, open on the slice | | Heading (H2): The facts. Content: What I confirmed on their page… |
 | Clinic | `clinic` | Content relationship to Provider | Yes | Inner Balance |
+| Image | `image` | Image, including its description | No | Empty, so the brand's product photo |
 
 The fact cards, in this order, each with a fixed icon:
 
@@ -616,11 +684,41 @@ have a title, text, or both. Specialties they list is the Brand's
 Specialties, one pill per line. Each part is hidden when the Brand has
 none. With a Heading (H2), the two part titles are `h3`. Without
 one they are `h2`. A slice whose clinic is not published shows only its
-header.
+header and, when Image is filled, the photo.
+
+Image sits between the fact cards and How it works. It is as wide as
+the cards and short, a 3:1 band, about 1500 by 500. The picture fills
+that band and the rest is cropped from the top and bottom, centered.
+There is no caption.
+An empty Image uses the brand's product photo. When the brand has no
+product photo either, the band is left out. A photo placed on the slice
+replaces the product photo. The description on the image is the alt text.
+
+Image help: "Describe what is in the photo."
+
+Between How it works and Specialties they list is the same offer box
+a post gets from `{{provider:uid:offer}}`. The box is yellow
+(`--color-card-3`), so it is not the blue-gray of the fact cards.
+The logo and the line sit on the left. The line is the code line.
+A blank code line uses Short description, the one line about the
+clinic. If that is blank too, the large line is left out and the
+bullets stay. Short description does not open the box on its own.
+Under that line are the same three bullets as a story facts token:
+typically prescribed,
+insurance (clinics only, "Takes insurance" or "Doesn't take
+insurance"), and getting started. A missing one is left out. A
+product has no insurance bullet. Visit and the code sit on the right.
+On a narrow screen they drop under the bullets. Visit uses the
+link's display text, or "Visit" plus the clinic name. The box is
+left out when the Brand has no code line, no code, and no visit
+link. The visit click is placement `clinic_facts`.
 
 Facts on the Wix clinic pages that are not on the Brand, such as
-"Voted Best For" and the product price list, are written in a Text
-slice on that page. The provider Hero already shows "Voted best for".
+"Voted Best For", can be written in a Text slice on that page. The
+provider Hero already shows "Voted best for" and the price. A clinic
+page does not get a "What it cost me" section. The price and the price
+note stay on the Brand. The first-year average stays on the homepage
+comparison.
 
 ### Pros and cons
 
@@ -689,14 +787,15 @@ uses that section's eyebrow color.
 Single page type. Use the page type's built-in metadata for the SEO
 title, meta description, and social image.
 
-Slices, in mockup order:
+Slices, in order:
 
 1. Hero
-2. Start here
-3. Latest posts
-4. Clinic comparison
-5. Quote
-6. Side by side
+2. Divider, the squiggly accent line already published under the hero
+3. Start here
+4. Latest posts
+5. Clinic comparison
+6. Quote
+7. Side by side
 
 Each slice below lists only its own fields. Section is on all of them.
 
@@ -810,7 +909,11 @@ The relationship fetches `name`, `kind`, `logo`, `formulation`,
 formulation when that field is filled, and the clinic name otherwise.
 The price is the clinic's one price, with "/mo" unless Price is says
 One time. This variation still uses its own product
-image and its own links, including "Watch my review".
+image and its own links, including "Watch my review". A YouTube
+address in Links plays in the video modal. The heading reads "My
+review on", then the clinic logo and name. The page keeps the plain
+YouTube link, so a browser without JavaScript opens YouTube in a new
+tab. Any other link stays a normal link.
 
 ### Start here
 
@@ -838,10 +941,13 @@ more fill rows of four, and the leftover row follows the same rule.
 
 ### Latest posts
 
-One slice, four variations, in `src/slices/posts`. The page loads the
-posts and passes them in. The slice does not store a hand-picked list.
-Every variation lists them newest first by Published. Category limits
-that list. All uses every post.
+One slice, five variations, in `src/slices/posts`. The page loads the
+posts and passes them in. Homepage, Featured, Grid, and Row do not
+store a list. They list posts newest first by Published. Category
+limits that list. All uses every post. Picked stores the posts she
+chooses. The card is the Row card: photo, category, date, read time,
+title, and excerpt. The order is the order of the Posts group. Three
+is the row. A post the page did not load is left out.
 
 The grid tabs are this Category: Telehealth brand reviews, Formulations
 & dosages, My experience & results, Testing, labs & tracking, and
@@ -854,12 +960,14 @@ documents stay the browse links on the blog page.
 | Featured | `featured` | One post. An empty Post uses the newest in Category. A picked Post is that post. |
 | Grid | `grid` | A page of posts. An empty Posts per page means 12. All shows the category tabs and the page numbers. A chosen Category hides the tabs. |
 | Row | `row` | Three posts across. This is Keep reading. |
+| Picked | `picked` | The same three-across row. She picks the posts. |
 
 | Label | Id | Kind | Variations |
 | --- | --- | --- | --- |
 | Section | Eyebrow, Heading (H2), Content, and Link right of heading | Shared, open on the slice | All |
-| Category | `category` | Select: All, then the five post categories. Default All | All |
+| Category | `category` | Select: All, then the five post categories. Default All | Homepage, Featured, Grid, Row |
 | Post | `post` | Content relationship to Post, Provider review, and Comparison | Featured |
+| Posts | `posts` | Repeatable group. Each row is Post, the same document link as Featured. Add up to three, in the order they should appear. | Picked |
 | Posts per page | `count` | Number. Empty means 12 | Grid |
 | Hide the featured post | `hide_featured` | Boolean. Default No | Grid |
 
@@ -925,6 +1033,19 @@ insurance mark that do not apply. The relationship fetches
 the Provider fields in the next section, including `code` and
 `code_note`. The review link is the row's Review field.
 
+Chart, id `chart`, is the same table with different columns: Clinic,
+What I paid, What’s included, and My code. Those cells are text on the
+row. They are not read from a Provider, because this chart is not the
+HRT price chart. An empty cell stays empty. A row with no Clinic name
+is left out. The homepage variation is unchanged.
+
+| Label | Id | Kind | Notes |
+| --- | --- | --- | --- |
+| Rows | `rows` | Repeatable group | Chart only. Add them in table order. |
+
+Each Chart row: Clinic `name`, What I paid `paid`, What’s included
+`included`, My code `code`. All four are text.
+
 ### Quote
 
 Heading (H2) in the mockup is "Peggy's take: what I'm using now."
@@ -982,7 +1103,7 @@ narrow screen the media stacks above the writing and never sticks.
 
 | Variation | Id | The media side |
 | --- | --- | --- |
-| Image | `image` | Image and Caption. The description is the image's alt text. Caption on the photo, the default, puts the words on the picture. Off centers them under it. |
+| Image | `image` | Image, Photo link, and Caption. The description is the image's alt text. Photo link makes the photo that link. Empty means the photo is not a link. An affiliate address opens in a new tab. Caption on the photo, the default, puts the words on the picture. Off centers them under it. |
 | Video | `video` | Video, a YouTube or Vimeo embed, and Caption |
 | Quote | `quote` | Quote, and Attribution under it |
 | Clinic | `clinic` | A clinic. Style chooses the panel. Quote, the default, is the logo, her words, and a visit link. Card is the product photo and price. |
@@ -999,6 +1120,7 @@ stay at the end on every variation.
 | Quote | `quote` | Heading rich text | Image, Quote |
 | Buttons | `button` | Repeatable link, with display text and a style | All |
 | Image | `image` | Image | Image |
+| Photo link | `image_link` | Link. Empty means the photo is not a link. | Image |
 | Caption | `caption` | Heading rich text | Image, Video |
 | Caption on the photo | `caption_on_photo` | Boolean. On the photo, or under the photo. Default On the photo | Image |
 | Video | `video` | Embed | Video |
@@ -1075,7 +1197,7 @@ clinic relationship, the same way it lists `visit`.
 | Side by side, clinic | `clinic` | Logo, name, quote, visit, and, when Style is Card, kind, product image, price, price is, price note, formulation, insurance, getting started, code, code line. Style stays on the slice. Quote is the logo panel. Card is the product photo and price. |
 | Boxes | `clinic` on each box | Logo, top choice label, name, code. A written Image, Heading, Line under the heading, or Bottom line replaces it |
 | Brand promo | `clinic` | Name, kind, logo, visit, page, my review, my comparison, review video, product image, price, price is, price note, formulation, insurance, getting started, code, code line, quote. Page is Products & pricing. My review is her post. Each My comparison is a button with its display text. Review video is Watch my review. A photo in Overwrite replaces the product image. A written Quote replaces the clinic quote. Style on the slice chooses the quote panel or the product card. Is this 1st? and Place stay on the slice. Text under the quote and extra links are in Overwrite. Extra links are a second row of text |
-| Clinic facts | `clinic` | Kind, state availability, typically prescribed, labs, insurance, HSA / FSA, getting started, how it works, specialties |
+| Clinic facts | `clinic` | Kind, state availability, typically prescribed, labs, insurance, HSA / FSA, getting started, how it works, specialties, logo, visit, code, code line, short description, product image. An Image on the slice replaces the product photo |
 | Post sidebar | `clinic` | Name, logo. The name links to Page when that field is set |
 | Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, code, code line, plus the sentence in that paragraph |
 | Story facts token | `{{provider:uid:facts}}` | Price, price is, price note, insurance (clinics only), formulation |
@@ -1540,8 +1662,9 @@ unchanged.
 
 The slice zone accepts every shared slice: Hero, Start here, Posts,
 Clinic comparison, Quote, Side by side, Divider, Boxes, Brand promo,
-Ribbon, Text, Clinic facts, Pros and cons, FAQ, and Buttons. A slice added to the
-library later is connected to Page too.
+Ribbon, Text, Clinic facts, Pros and cons, FAQ, Buttons, Full width
+image, and Photo gallery. A slice added to the library later is
+connected to Page too.
 
 | Label | Id | Kind | Required | Notes |
 | --- | --- | --- | --- | --- |

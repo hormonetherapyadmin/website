@@ -41,11 +41,42 @@
         },
         "clinic": {
           "config": {
-            "customtypes": ["provider"],
+            "customtypes": [
+              {
+                "fields": [
+                  "name",
+                  "kind",
+                  "logo",
+                  "short_description",
+                  "visit",
+                  "code",
+                  "code_note",
+                  "state_availability",
+                  "formulation",
+                  "lab_requirement",
+                  "insurance",
+                  "hsa_fsa",
+                  "note",
+                  "specialties",
+                  {
+                    "fields": ["title", "text"],
+                    "id": "how_it_works"
+                  }
+                ],
+                "id": "provider"
+              }
+            ],
             "label": "Clinic",
             "select": "document"
           },
           "type": "Link"
+        },
+        "image": {
+          "config": {
+            "label": "Image",
+            "placeholder": "Describe what is in the photo."
+          },
+          "type": "Image"
         },
         "background": {
           "config": {

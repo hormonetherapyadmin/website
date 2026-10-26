@@ -31,6 +31,47 @@ export type ComparisonClinic = {
   reviewHref?: string;
 };
 
+/** One row on the Chart variation. The cells are what Peggy types. */
+export type ChartRow = {
+  name: string;
+  paid?: string;
+  included?: string;
+  code?: string;
+  monogram?: string;
+};
+
+export function chartRows(
+  rows: readonly {
+    name?: string | null;
+    paid?: string | null;
+    included?: string | null;
+    code?: string | null;
+  }[],
+): ChartRow[] {
+  return rows.flatMap((row) => {
+    const name = row.name?.trim() ?? "";
+    if (!name) return [];
+    return [
+      {
+        name,
+        paid: row.paid?.trim() || undefined,
+        included: row.included?.trim() || undefined,
+        code: row.code?.trim() || undefined,
+      },
+    ];
+  });
+}
+
+function initials(name: string) {
+  return name
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0] ?? "")
+    .join("")
+    .toUpperCase();
+}
+
 type ClinicComparisonPrimary = Partial<SliceSectionFields> & {
   /** `YYYY-MM-DD`. Shown beside "What I paid per month". */
   prices_checked?: string | null;
@@ -207,23 +248,86 @@ function Price({ clinic, max }: { clinic: ComparisonClinic; max: number }) {
   );
 }
 
+function ChartTable({
+  rows,
+  titleId,
+}: {
+  rows: readonly ChartRow[];
+  titleId?: string;
+}) {
+  return (
+    <>
+      <p className={styles.scrollHint} aria-hidden="true">
+        Swipe to see more →
+      </p>
+      <div
+        className={styles.wrap}
+        role="region"
+        aria-labelledby={titleId}
+        tabIndex={0}
+      >
+        <table className={styles.table}>
+          <caption className="sr-only">
+            What Peggy paid, what was included, and her code
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Clinic</th>
+              <th scope="col">What I paid</th>
+              <th scope="col">What’s included</th>
+              <th scope="col">My code</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr key={row.name}>
+                <th scope="row">
+                  <span className={styles.clinic}>
+                    <span className={styles.logoWrap}>
+                      <span className={styles.logoTile}>
+                        <span className={styles.monogram}>
+                          {row.monogram || initials(row.name)}
+                        </span>
+                      </span>
+                    </span>
+                    <span>
+                      <span className={styles.clinicName}>{row.name}</span>
+                    </span>
+                  </span>
+                </th>
+                <td>{row.paid}</td>
+                <td>{row.included}</td>
+                <td>{row.code}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+}
+
 /**
  * Eight clinics, side by side. The columns are fixed. Each row is a clinic,
- * and the price, quote, and coupon are that clinic's own fields.
+ * and the price, quote, and coupon are that clinic's own fields. Chart is
+ * the same table with Clinic, What I paid, What’s included, and My code.
  */
 export function ClinicComparison({
   primary,
   clinics = [],
+  rows,
 }: {
   primary: ClinicComparisonPrimary;
   clinics?: readonly ComparisonClinic[];
+  /** Chart variation. The cells are typed on the slice. */
+  rows?: readonly ChartRow[];
 }) {
   const heading = primary.heading;
   const slug = sectionAnchor(heading ? asText(heading) : "");
   const titleId = slug ? `${slug}-title` : undefined;
   const checked = formatCheckedDate(primary.prices_checked);
-  const rows = clinics.filter((clinic) => clinic.name);
-  const max = maxMonthly(rows);
+  const clinicRows = clinics.filter((clinic) => clinic.name);
+  const max = maxMonthly(clinicRows);
 
   return (
     <SliceSection section={primary} showHeader={false} labelId={titleId}>
@@ -241,15 +345,21 @@ export function ClinicComparison({
           unstyled
           className={styles.intro}
         />
-        <TextLink field={primary.button} className={styles.button} />
-        <TextLink
-          field={primary.disclosure}
-          className={styles.disclosure}
-          chevron
-        />
+        {rows ? null : (
+          <TextLink field={primary.button} className={styles.button} />
+        )}
+        {rows ? null : (
+          <TextLink
+            field={primary.disclosure}
+            className={styles.disclosure}
+            chevron
+          />
+        )}
       </div>
 
-      {rows.length > 0 ? (
+      {rows ? (
+        <ChartTable rows={rows} titleId={titleId} />
+      ) : clinicRows.length > 0 ? (
         <>
           <p className={styles.scrollHint} aria-hidden="true">
             Swipe to see more →
@@ -286,7 +396,7 @@ export function ClinicComparison({
                 </tr>
               </thead>
               <tbody>
-                {rows.map((clinic) => (
+                {clinicRows.map((clinic) => (
                   <tr
                     key={clinic.name}
                     className={clinic.topChoice ? styles.topRow : undefined}

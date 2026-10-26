@@ -893,11 +893,16 @@ inventory.
     `prepare` script on `pnpm install`) formats staged files with
     Prettier until `prettier --check` passes, so the CI format check
     does not fail on push. One write is not enough for
-    `prismicio-types.d.ts`: Prettier 3.9 leaves the generated
-    intersection comments one pass short of a stable result, and the
-    Prismic CLI rewrites that file on model changes. `pnpm format`
-    and the Cursor `afterFileEdit` hook (`.cursor/hooks.json`) use
-    the same second pass.
+    `prismicio-types.d.ts`: Prettier 3.9 keeps moving the generated
+    intersection comments, and an intermediate result can already
+    pass `prettier --check`. The formatter repeats until a write
+    leaves the file unchanged. The Prismic CLI rewrites that file
+    on model changes. `pnpm format` and the Cursor `afterFileEdit`
+    hook (`.cursor/hooks.json`) use the same loop. When a staged
+    file also has unstaged edits,
+    the hook formats and stages it only if those edits are formatting.
+    Any other unstaged edit still stops the commit, so it is not
+    included by accident.
 -   Vitest for logic; Playwright with axe for smoke, legacy-URL, and
     accessibility checks.
 -   Netlify with its Next.js runtime, configured in `netlify.toml`.
@@ -946,8 +951,8 @@ inventory.
 
 ### Redirects
 
--   Redirects are managed in Prismic as a Redirect document type
-    (From path, To link, 301/302, required Reason). See
+-   Redirects are one Prismic singleton. A repeatable group holds
+    each row (From, To link, 301/302, required Reason). See
     `docs/CONTENT_MODEL.md`.
 -   A build step reads all Redirect documents and writes Netlify's
     `_redirects` file, so redirects are served by Netlify's edge

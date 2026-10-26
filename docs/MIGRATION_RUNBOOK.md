@@ -192,16 +192,17 @@ page already in the release. `--replace <uid,uid>` overwrites a
 published page. `migration/state/site-pages.json` records the Prismic
 id of each unpublished page. Commit it after every `--write`.
 
+A link to this site is a relative path, such as `/trusted-providers`,
+`/post/my-review`, or `/#eight-online-hrt-clinics-side-by-side`. A link
+to another site, including a medical source or a YouTube video, keeps
+its full address. Affiliate destinations stay on the brand.
+
 Checked against the published repository on 2026-10-23. A page that
 is already published is skipped. `--replace` is the only way to
 overwrite it, and that also overwrites edits made in Prismic.
 
 Already published, so this import does not send them:
 
--   `/about`. The hero is filled. The story beside the photo is empty.
-    The document also has a divider and a posts row that the About
-    mockup does not. Leave it until those extra slices are kept on
-    purpose or removed.
 -   `/blog`, as a Page. The content model still describes Blog as its
     own single page type. That type does not exist. The published page
     is Hero, a featured post, and the post grid.
@@ -211,35 +212,106 @@ Already published, so this import does not send them:
     ribbon. Its UID is not the Wix slug `trackersandtesting`. That URL
     decision is still open. Do not create a second page at the Wix slug
     until it is made.
--   The homepage, with a hero and a divider. The rest of the specified
-    slices are not on it yet.
 
-Still to send, in this order:
+The homepage is published. `--replace homepage` keeps the hero and the
+divider, fills the empty benefit and button links, and adds Start here,
+Latest posts, the clinic comparison, the quote, and the story. The
+footer fields already on the document stay. The scaffold meta title and
+description are replaced with the page's own heading and intro. The
+same run renames the Alloy brand from Musely to Alloy when that name is
+still wrong, and leaves the rest of the brand. Midi's comparison row
+uses the review stored on that brand, which is the weight-loss post.
 
-1.  FAQ (`/faq`) and Is HRT for me (`/ishrtforme`). These are slices
-    and do not point at a Brand. The copy is the October 2026 Wix
-    page, including its typos. The Wix stock photos stay off. Peggy's
-    portrait opens Is HRT for me, and the Winston photo sits beside
-    "Is it Safe?". A squiggly Divider sits under each Hero. Buttons
-    point at `/trusted-providers`. `/faq` is the
-    address blog posts already use. The questions are one FAQ slice.
-    Each answer is paired with the question it actually answers, and
-    each question starts closed. The close is one centered button, the
-    Buttons slice, with no box. The words are unchanged.
-2.  Finish `/about` by filling the empty story, without dropping the
-    divider and posts row, once that composition is confirmed.
-3.  Inner Balance (`/inner-balance`). The Inner Balance brand is
-    already published. This page is the pattern for the other clinic
-    pages, which are not composed yet. The visit link has to be the
-    real affiliate URL. The mockup placeholder `#affiliate-link` is
-    not a destination.
-4.  Finish the homepage. It reads the brands and the posts. The
-    published Alloy document's name currently reads Musely, the same
-    as the Musely document. Check that before a comparison slice reads
-    it.
-5.  The old trusted-providers address. `/copy-of-trusted-providers`
-    redirects to `/trusted-providers`. The Redirect type is not built
-    yet, so that redirect is a later document.
+`/about` is published. `--replace about` fills the empty story with
+the October 2026 Wix copy and keeps the rest of the document. The
+eyebrow stays About Peggy. The portrait already on the page stays.
+Winston sits on the left of the story. The divider under the hero and
+the posts row stay. The stock doctor banner stays off.
+
+`/faq` and `/ishrtforme` are published. `--replace` is how a later
+edit reaches the release. `/faq` closes with one centered Buttons
+slice. `/ishrtforme` keeps its ribbon.
+
+`/inner-balance` is a Page. The visit link, price, steps, and
+specialties stay on the Inner Balance brand. The page does not copy
+the affiliate URL or the second price card. The same run points that
+brand's Page field at the new page. `--replace inner-balance` keeps
+the dividers around Clinic facts and puts the wide lifestyle photo
+on that slice.
+
+The other clinic pages use the same slices: provider hero, divider,
+Clinic facts with its own lifestyle photo, divider, and the ribbon.
+The quote is the brand's In my words field. The eyebrow is the brand's
+Top choice label. The page uid is the live Wix address:
+
+-   `/winona-review-page`
+-   `/musely`
+-   `/alloy-review-page`
+-   `/joiwommenswellness`
+-   `/mymenopauserx` (the brand uid stays `menorx`)
+-   `/midi-health-review-page`
+
+`/effecty` is new. Effecty has no Wix overview page. The same run
+points each brand's Page field at its page, fills a blank visit label,
+and renames the Alloy brand from Musely to Alloy when that name is
+still wrong. Midi has no visit link. The lifestyle photos are uploaded
+with the pages.
+
+A clinic page does not get a "What it cost me" section. The price and
+the price note stay on the brand and show in the hero. The first-year
+average stays on the homepage comparison. Inner Balance had that
+section; it is being removed there, and the other clinic pages do not
+get it.
+
+Composed from the October 2026 Wix pages and sitting in the migration
+release, not published:
+
+-   `/formuations`. The uid keeps the typo. Hero, the two
+    best-known-for boxes, and Text for each formulation list.
+-   `/costandinsurance`. Hero and Text.
+-   `/sleep`. The live page has no body copy. Hero and the journey
+    button only.
+-   `/hair-loss`, `/skincare`, and `/men-s-hrt`. The writing and the
+    affiliate buttons are here, and Peggy's photos are a Photo gallery.
+    Hair has the three story photos and the four wig photos. Simmer
+    Elite and Kelly had no photo, so those names stay in the writing.
+    Skincare has an Alloy pair, a Winona pair, and one Inner Balance
+    photo. The men's photos have blank captions because the files are
+    not labeled.
+-   `/copy-of-weight-gain`. The uid keeps the copy slug. The vial is a
+    Side by side photo that links to `/joiwommenswellness`. The visit
+    address stays on the Joi brand. The chalkboard is still a Full
+    width image. The comparison under the last heading is the Chart
+    variation, and its rows are empty because the Common Ninja embed
+    is not on the page.
+-   `/hrt-price-comparison-chart`. The live page is three posts, not a
+    price table. The Joi testing post is not in Prismic yet, so it
+    stays a link. The other two are a Picked posts row. The homepage
+    comparison is the price chart.
+-   `/tipstofindprovider`. Hero and Text. The formulations button goes
+    to `/formuations`.
+-   `/hrt-doctors-review-costs-services`. The words are in Text. This
+    should become a Brand, and then the page can use the clinic page
+    pattern. The ShareASale address is the start button until that
+    brand exists.
+
+The journey button on these pages links to `/trusted-providers`. On
+Wix it links to the homepage.
+
+Not composed:
+
+1.  `/copy-of-trusted-providers` redirects to `/trusted-providers`.
+    It is a row on the Redirect document, not a second page.
+2.  `/copy-of-inner-balance` redirects to `/inner-balance`. It is a
+    row on the Redirect document, not a second page.
+3.  `/trackersandtesting` is the published page `trackers-and-testing`.
+    That URL decision is still open.
+4.  `/my-addresses` is a Wix members page. It needs a disposition, not
+    a composition.
+5.  `/home-1` is live and is not in the Wix sitemap. It needs a URL
+    decision before it is built.
+6.  Privacy, contact, and terms are named in `docs/CONTENT_MODEL.md`
+    and return 404 on the live Wix site. They are not invented here.
 
 The live signup form on the trusted-providers page has no slice yet.
 The published page does not include it.
@@ -247,10 +319,6 @@ The published page does not include it.
 Editorial Standards and Affiliate Disclosure are still listed as
 singletons in `docs/CONTENT_MODEL.md` and have no custom type yet.
 They are not part of this order.
-
-The other Wix site pages, including privacy, contact, and the clinic
-pages that have no slice composition, stay out until each one is
-composed. Their copy is not rewritten to fill a page.
 
 ## URL Manifest
 
@@ -270,9 +338,11 @@ For redirects, validate:
 
 The complete list from Wix → SEO → URL Redirect Manager (owner
 screenshot, 2026-10-09), with destinations approved by the owner the
-same day, plus the dead addresses below. The Redirect type is built on
-the branch after the blog migration. Then create one Redirect document
-per row (see `docs/CONTENT_MODEL.md`), all `301 permanent`.
+same day, plus the dead addresses below and `/copy-of-inner-balance`.
+They are rows on the one Redirect document (see
+`docs/CONTENT_MODEL.md`), all `301 permanent`.
+`scripts/import-redirects.mts` sends that document and does not
+publish it.
 
 `src/migration/wix-redirects.ts` holds the same list. Change both
 together. The post importer uses it to point links in posts straight
@@ -292,6 +362,7 @@ the build fails.
 | `/copy-of-pricing-insurance` | `/ishrtforme` | Wix redirect |
 | `/copy-of-providers` | `/formuations` | Wix redirect |
 | `/copy-of-trusted-providers` | `/trusted-providers` | Not in Wix. The live trusted providers page moves to a new address (owner decision, 2026-10-09) |
+| `/copy-of-inner-balance` | `/inner-balance` | The same page as `/inner-balance` |
 | `/copy-of-winona` | `/musely` | Wix redirect |
 | `/copy-of-winona-review-page` | `/winona-review-page` | Old copy of the Winona review. Wix pointed at `/evernow-review-page`, a 404 |
 | `/costandformunlations` | `/costandinsurance` | Wix redirect |

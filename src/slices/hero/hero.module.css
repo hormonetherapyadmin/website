@@ -334,18 +334,26 @@
 }
 
 .voted {
-  margin: 0.85rem 0 0;
-  font-size: 1.05rem;
-  font-weight: 700;
+  margin: 0.65rem 0 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
 }
 
 .quote {
   max-width: 36rem;
-  margin: 1.25rem 0 0;
+  margin: 1.75rem 0 0;
   font-family: var(--font-body);
   font-weight: 500;
   font-size: clamp(1.2rem, 2vw, 1.45rem);
   line-height: 1.4;
+}
+
+.voted + .quote {
+  margin-top: 2.35rem;
 }
 
 .resourceLinks {

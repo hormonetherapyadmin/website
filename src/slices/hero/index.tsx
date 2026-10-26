@@ -13,7 +13,9 @@ import {
   SliceSection,
   type SliceSectionFields,
 } from "@/components/slice-section";
+import { VideoLink } from "@/components/video-link";
 import { visitLinkProps } from "@/lib/affiliate-link";
+import { youtubeVideo } from "@/lib/youtube";
 import styles from "./hero.module.css";
 
 export type HeroClinic = {
@@ -449,6 +451,9 @@ function BrandsHero({ primary }: { primary: BrandsPrimary }) {
   );
 }
 
+/** The video modal heading. The clinic logo and name follow it. */
+const VIDEO_TITLE = "My review on";
+
 function ProviderHero({ primary }: { primary: ProviderPrimary }) {
   const clinic = primary.clinic?.data;
   const name = text(clinic?.name);
@@ -459,7 +464,7 @@ function ProviderHero({ primary }: { primary: ProviderPrimary }) {
       ? clinic.monthly_price
       : undefined;
   const priceNote = text(clinic?.price_note);
-  const code = text(clinic?.code);
+  const code = text(clinic?.code)?.replace(/^code\s+/i, "");
   const codeNote = text(clinic?.code_note);
   const visitHref =
     clinic?.visit &&
@@ -515,16 +520,42 @@ function ProviderHero({ primary }: { primary: ProviderPrimary }) {
           />
           {links.length > 0 ? (
             <ul className={styles.resourceLinks}>
-              {links.map((link) => (
-                <li key={link.text}>
-                  <PrismicNextLink field={link}>
-                    {isFilled.link(link) ? (
-                      <ResourceIcon url={link.url ?? ""} />
-                    ) : null}
-                    {link.text}
-                  </PrismicNextLink>
-                </li>
-              ))}
+              {links.map((link) => {
+                const href = isFilled.link(link) ? link.url : undefined;
+                const video = youtubeVideo(href);
+                return (
+                  <li key={`${link.text}-${href ?? ""}`}>
+                    {href && video ? (
+                      <VideoLink
+                        href={href}
+                        title={name ? VIDEO_TITLE : (link.text ?? VIDEO_TITLE)}
+                        brand={
+                          name
+                            ? {
+                                name,
+                                logo:
+                                  clinic?.logo && isFilled.image(clinic.logo)
+                                    ? clinic.logo.url
+                                    : undefined,
+                              }
+                            : undefined
+                        }
+                      >
+                        <ResourceIcon url={href} />
+                        {link.text}
+                        {name ? (
+                          <span className="sr-only"> — {name}</span>
+                        ) : null}
+                      </VideoLink>
+                    ) : (
+                      <PrismicNextLink field={link}>
+                        {href ? <ResourceIcon url={href} /> : null}
+                        {link.text}
+                      </PrismicNextLink>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           ) : null}
         </div>

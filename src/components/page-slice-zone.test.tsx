@@ -309,6 +309,59 @@ describe("PageSliceZone", () => {
     expect(html.split("Newest story").length - 1).toBe(2);
   });
 
+  it("shows picked posts in the chosen order with their photos", () => {
+    const html = render(
+      [
+        slice(
+          "posts",
+          {
+            ...section("Price chart"),
+            posts: [
+              {
+                post: {
+                  link_type: "Document",
+                  url: "/post/older-review",
+                },
+              },
+              {
+                post: {
+                  link_type: "Document",
+                  url: "/post/newest-story",
+                },
+              },
+            ],
+          },
+          "picked",
+        ),
+      ],
+      context({
+        posts: [
+          {
+            title: "Newest story",
+            href: "/post/newest-story",
+            published: "2026-10-16",
+            category: "My experience & results",
+            image: { src: "/mockup/posts/newest.jpg" },
+          },
+          {
+            title: "Older review",
+            href: "/post/older-review",
+            published: "2026-01-01",
+            category: "Cost, insurance & access",
+            image: { src: "/mockup/posts/older.jpg" },
+          },
+        ],
+      }),
+    );
+
+    expect(html.indexOf("Older review")).toBeLessThan(
+      html.indexOf("Newest story"),
+    );
+    expect(html).toContain("Cost, insurance &amp; access");
+    expect(html).toContain('src="/mockup/posts/older.jpg"');
+    expect(html).toContain('src="/mockup/posts/newest.jpg"');
+  });
+
   it("shows the posts the page loaded", () => {
     const html = render(
       [slice("posts", { ...section("Keep reading"), category: "All" }, "row")],
@@ -426,5 +479,27 @@ describe("PageSliceZone", () => {
 
     expect(html).toContain("Where should I start?");
     expect(html).toContain("New to HRT");
+  });
+
+  it("renders a full width image inside the page container", () => {
+    const html = render([
+      slice("full_width_image", {
+        image: {
+          id: "photo",
+          url: "/mockup/posts/oestra-vs-winona.jpg",
+          alt: "Oestra and Winona",
+          dimensions: { width: 800, height: 500 },
+        },
+        background: "Transparent",
+        space_above: "None",
+        space_below: "None",
+      }),
+    ]);
+
+    expect(html).toContain('alt="Oestra and Winona"');
+    expect(html).toContain('src="/mockup/posts/oestra-vs-winona.jpg"');
+    expect(html).toContain("max-w-wrap");
+    expect(html).toContain("px-gutter");
+    expect(html).not.toContain("<h2");
   });
 });
