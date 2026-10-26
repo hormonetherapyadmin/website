@@ -4,6 +4,7 @@ import type { LinkField, RichTextField } from "@prismicio/client";
 import { describe, expect, it, vi } from "vitest";
 import type { SliceSectionFields } from "@/components/slice-section";
 import {
+  chartRows,
   ClinicComparison,
   formatCheckedDate,
   formatMonthly,
@@ -150,6 +151,37 @@ describe("ClinicComparison", () => {
     expect(markup).toContain("affiliate link, opens in a new tab");
     expect(markup).not.toContain('data-provider="Midi Health"');
     expect(markup).toContain("Midi Health");
+  });
+
+  it("uses the chart columns and leaves a blank cell blank", () => {
+    const markup = renderToStaticMarkup(
+      <ClinicComparison
+        primary={{
+          ...section(),
+          heading: rich("GLP medications"),
+        }}
+        rows={chartRows([
+          {
+            name: "From the embed",
+            paid: "",
+            included: "Not on the page yet",
+            code: "PEGGY10",
+          },
+          { name: "  ", paid: "$10" },
+        ])}
+      />,
+    );
+
+    expect(markup).toContain("What I paid");
+    expect(markup).toContain("What’s included");
+    expect(markup).toContain("My code");
+    expect(markup).not.toContain("Typically prescribed");
+    expect(markup).not.toContain("Insurance");
+    expect(markup).toContain("From the embed");
+    expect(markup).toContain("FT");
+    expect(markup).toContain("Not on the page yet");
+    expect(markup).toContain("PEGGY10");
+    expect(markup).not.toContain("$10");
   });
 
   it("renders no table when there are no clinics", () => {

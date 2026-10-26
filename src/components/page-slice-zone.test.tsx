@@ -309,6 +309,59 @@ describe("PageSliceZone", () => {
     expect(html.split("Newest story").length - 1).toBe(2);
   });
 
+  it("shows picked posts in the chosen order with their photos", () => {
+    const html = render(
+      [
+        slice(
+          "posts",
+          {
+            ...section("Price chart"),
+            posts: [
+              {
+                post: {
+                  link_type: "Document",
+                  url: "/post/older-review",
+                },
+              },
+              {
+                post: {
+                  link_type: "Document",
+                  url: "/post/newest-story",
+                },
+              },
+            ],
+          },
+          "picked",
+        ),
+      ],
+      context({
+        posts: [
+          {
+            title: "Newest story",
+            href: "/post/newest-story",
+            published: "2026-10-16",
+            category: "My experience & results",
+            image: { src: "/mockup/posts/newest.jpg" },
+          },
+          {
+            title: "Older review",
+            href: "/post/older-review",
+            published: "2026-01-01",
+            category: "Cost, insurance & access",
+            image: { src: "/mockup/posts/older.jpg" },
+          },
+        ],
+      }),
+    );
+
+    expect(html.indexOf("Older review")).toBeLessThan(
+      html.indexOf("Newest story"),
+    );
+    expect(html).toContain("Cost, insurance &amp; access");
+    expect(html).toContain('src="/mockup/posts/older.jpg"');
+    expect(html).toContain('src="/mockup/posts/newest.jpg"');
+  });
+
   it("shows the posts the page loaded", () => {
     const html = render(
       [slice("posts", { ...section("Keep reading"), category: "All" }, "row")],

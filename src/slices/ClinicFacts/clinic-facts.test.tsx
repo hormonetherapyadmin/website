@@ -130,6 +130,24 @@ describe("ClinicFacts", () => {
     expect(markup).toContain('src="/mockup/posts/oestra-vs-winona.jpg"');
   });
 
+  it("uses the brand product photo when the slice image is empty", () => {
+    const markup = renderToStaticMarkup(
+      <ClinicFacts
+        primary={section("The facts")}
+        clinic={{
+          ...innerBalance,
+          product: photo("Oestra vaginal cream"),
+        }}
+      />,
+    );
+    const facts = markup.indexOf("<dl");
+    const image = markup.indexOf('alt="Oestra vaginal cream"');
+    const steps = markup.indexOf("How it works");
+
+    expect(image).toBeGreaterThan(facts);
+    expect(steps).toBeGreaterThan(image);
+  });
+
   it("leaves an empty photo out", () => {
     const markup = renderToStaticMarkup(
       <ClinicFacts primary={section("The facts")} clinic={innerBalance} />,

@@ -1,6 +1,7 @@
 /*
   Layout copied from the fact sheet, How it works, and specialties on
-  the Inner Balance mockup. The photo is the full width of those cards.
+  the Inner Balance mockup. The photo is the full width of those cards
+  and a short 3:1 band, about 1500 by 500.
   The offer box matches the post offer callout. A card keeps its own
   color on any band.
 */
@@ -65,13 +66,17 @@
 
 .photo {
   margin-bottom: 0;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  aspect-ratio: 3 / 1;
 }
 
 .photoImg {
   display: block;
   width: 100%;
-  height: auto;
-  border-radius: 1.25rem;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .callout {

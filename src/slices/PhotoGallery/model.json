@@ -1,0 +1,218 @@
+{
+  "id": "photo_gallery",
+  "name": "Photo gallery",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Gallery",
+      "primary": {
+        "small_heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Eyebrow",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Heading (H2)",
+            "labels": ["superscript"],
+            "placeholder": "My hair story",
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "intro": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Content",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "photos": {
+          "config": {
+            "fields": {
+              "image": {
+                "config": {
+                  "label": "Photo"
+                },
+                "type": "Image"
+              },
+              "caption": {
+                "config": {
+                  "label": "Caption",
+                  "single": "paragraph,strong,em"
+                },
+                "type": "StructuredText"
+              },
+              "line": {
+                "config": {
+                  "label": "Line under the caption",
+                  "placeholder": "A color, such as Dark brown"
+                },
+                "type": "Text"
+              },
+              "link": {
+                "config": {
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "label": "Link"
+                },
+                "type": "Link"
+              }
+            },
+            "label": "Photos"
+          },
+          "type": "Group"
+        },
+        "background": {
+          "config": {
+            "default_value": "Transparent",
+            "label": "Background",
+            "options": [
+              "Transparent",
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ]
+          },
+          "type": "Select"
+        },
+        "space_above": {
+          "config": {
+            "default_value": "Medium",
+            "label": "Space above",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "space_below": {
+          "config": {
+            "default_value": "None",
+            "label": "Space below",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        }
+      },
+      "version": ""
+    },
+    {
+      "description": "Pair",
+      "docURL": "",
+      "id": "pair",
+      "imageUrl": "",
+      "name": "Pair",
+      "primary": {
+        "small_heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Eyebrow",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Heading (H2)",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "intro": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Content",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "before": {
+          "config": {
+            "label": "Before"
+          },
+          "type": "Image"
+        },
+        "before_caption": {
+          "config": {
+            "label": "Before caption",
+            "single": "paragraph"
+          },
+          "type": "StructuredText"
+        },
+        "after": {
+          "config": {
+            "label": "After"
+          },
+          "type": "Image"
+        },
+        "after_caption": {
+          "config": {
+            "label": "After caption",
+            "single": "paragraph"
+          },
+          "type": "StructuredText"
+        },
+        "link": {
+          "config": {
+            "allowTargetBlank": true,
+            "allowText": true,
+            "label": "Link under the photos"
+          },
+          "type": "Link"
+        },
+        "background": {
+          "config": {
+            "default_value": "Transparent",
+            "label": "Background",
+            "options": [
+              "Transparent",
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ]
+          },
+          "type": "Select"
+        },
+        "space_above": {
+          "config": {
+            "default_value": "Medium",
+            "label": "Space above",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "space_below": {
+          "config": {
+            "default_value": "None",
+            "label": "Space below",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

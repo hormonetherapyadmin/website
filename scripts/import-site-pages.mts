@@ -25,6 +25,7 @@ import type {
 import prismicConfig from "../prismic.config.json" with { type: "json" };
 import { planPost, type ImportState } from "../src/migration/post-plan.ts";
 import {
+  CLINIC_BRANDS,
   HOMEPAGE,
   SITE_PAGES,
   pageImages,
@@ -294,13 +295,21 @@ if (blocked.length) {
 const migration = createMigration();
 const assets = new Map<string, PrismicMigrationAsset>();
 
+function imageType(filename: string) {
+  if (filename.endsWith(".png")) return "image/png";
+  if (filename.endsWith(".webp")) return "image/webp";
+  return "image/jpeg";
+}
+
 function imageField(image: LocalImage) {
   const existing = library.get(image.filename);
   if (existing) return libraryImage(existing, image.alt);
   let asset = assets.get(image.filename);
   if (!asset) {
     const bytes = readFileSync(image.path);
-    const file = new File([bytes], image.filename, { type: "image/jpeg" });
+    const file = new File([bytes], image.filename, {
+      type: imageType(image.filename),
+    });
     asset = migration.createAsset(file, image.filename, { alt: image.alt });
     assets.set(image.filename, asset);
   }
@@ -314,6 +323,10 @@ function pageDocument(page: SitePage) {
     lang,
     data: {
       slices: replaceImages(page.slices, (image) => imageField(image)),
+      ...(page.meta_title ? { meta_title: page.meta_title } : {}),
+      ...(page.meta_description
+        ? { meta_description: page.meta_description }
+        : {}),
       indexing: true,
     },
   };
@@ -382,35 +395,64 @@ if (homepagePlan && homepagePlan.plan.action !== "skip") {
   });
 }
 
-const innerBalanceSent = sent.some((item) => item.page.uid === "inner-balance");
-if (innerBalanceSent && innerBalance) {
-  const visit = innerBalance.data.visit;
+const brands = await client.getAllByIDs<ProviderDocument>(
+  CLINIC_BRANDS.map((brand) => brand.providerId),
+);
+for (const brand of CLINIC_BRANDS) {
+  if (!sent.some((item) => item.page.uid === brand.pageUid)) continue;
+  const provider = brands.find((item) => item.id === brand.providerId);
+  if (!provider || provider.type !== "provider") {
+    throw new Error(
+      `Brand ${brand.providerId} for /${brand.pageUid} is missing`,
+    );
+  }
+  const visit = provider.data.visit;
   const visitHasText =
     visit &&
     "text" in visit &&
     typeof visit.text === "string" &&
     visit.text.trim().length > 0;
+  const visitText =
+    visit &&
+    visit.link_type === "Web" &&
+    "url" in visit &&
+    visit.url &&
+    !visitHasText &&
+    brand.visitText
+      ? brand.visitText
+      : undefined;
+  const name =
+    brand.name && provider.data.name !== brand.name
+      ? brand.name
+      : provider.data.name;
   migration.updateDocument(
     {
-      ...innerBalance,
+      ...provider,
       data: {
-        ...innerBalance.data,
-        ...(visit && visit.link_type === "Web" && !visitHasText
-          ? { visit: { ...visit, text: "Visit Inner Balance" } }
-          : {}),
+        ...provider.data,
+        ...(name && name !== provider.data.name ? { name } : {}),
+        ...(visitText && visit ? { visit: { ...visit, text: visitText } } : {}),
         page: {
           link_type: "Document" as const,
-          id: () => migration.getByUID("page", "inner-balance"),
+          id: () => migration.getByUID("page", brand.pageUid),
         },
       },
     } as ExistingPrismicDocument<ProviderDocument>,
-    innerBalance.data.name || "Inner Balance",
+    name || brand.pageUid,
   );
-  console.log("inner-balance brand page will point at the new page");
+  console.log(`${provider.uid} brand page will point at /${brand.pageUid}`);
+  if (name && name !== provider.data.name) {
+    console.log(
+      `${provider.uid} name will change from ${provider.data.name ?? "(empty)"} to ${name}`,
+    );
+  }
 }
 
 const homepageSent = sent.some((item) => item.page.uid === "homepage");
-if (homepageSent && alloy && alloy.data.name !== "Alloy") {
+const alloyPageSent = sent.some(
+  (item) => item.page.uid === "alloy-review-page",
+);
+if (homepageSent && !alloyPageSent && alloy && alloy.data.name !== "Alloy") {
   migration.updateDocument(
     {
       ...alloy,

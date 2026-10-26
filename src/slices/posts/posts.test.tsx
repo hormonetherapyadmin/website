@@ -1,6 +1,6 @@
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import type { RichTextField } from "@prismicio/client";
+import type { LinkField, RichTextField } from "@prismicio/client";
 import { describe, expect, it, vi } from "vitest";
 import type { SliceSectionFields } from "@/components/slice-section";
 import {
@@ -10,6 +10,7 @@ import {
   gridFeature,
   pageSize,
   pageWindow,
+  pickedPostCards,
   selectPosts,
   type PostCardData,
 } from "./index";
@@ -94,6 +95,34 @@ describe("selectPosts", () => {
       "Middle comparison",
     ]);
     expect(selected.pages).toBe(1);
+  });
+});
+
+describe("pickedPostCards", () => {
+  it("keeps the chosen posts in field order and stops at three", () => {
+    const cards = pickedPostCards(
+      [
+        { post: { link_type: "Web", url: "/newest-story" } as LinkField },
+        {
+          post: {
+            link_type: "Web",
+            url: "https://example.com/missing",
+          } as LinkField,
+        },
+        { post: { link_type: "Any" } as LinkField },
+        { post: { link_type: "Web", url: "/older-review" } as LinkField },
+        { post: { link_type: "Web", url: "/spring-guide" } as LinkField },
+      ],
+      POSTS,
+    );
+
+    expect(cards.map((card) => card.title)).toEqual([
+      "Newest story",
+      "Older review",
+      "Spring guide",
+    ]);
+    expect(cards[0]?.image?.src).toBe("/mockup/posts/skin.jpg");
+    expect(cards[0]?.category).toBe("My experience & results");
   });
 });
 
@@ -290,6 +319,27 @@ describe("Posts", () => {
     expect(html).not.toContain("All posts");
     expect(html).toContain("Summer review");
     expect(html).not.toContain("Newest story");
+  });
+
+  it("keeps a picked row in the chosen order, with the same card", () => {
+    const html = renderToStaticMarkup(
+      <Posts
+        variation="picked"
+        primary={section("Price Comparison Chart")}
+        posts={[
+          post("Older review", "2026-01-01", "Cost, insurance & access"),
+          post("Newest story", "2026-09-29", "My experience & results"),
+        ]}
+      />,
+    );
+
+    const older = html.indexOf("Older review");
+    const newer = html.indexOf("Newest story");
+    expect(older).toBeGreaterThan(-1);
+    expect(newer).toBeGreaterThan(older);
+    expect(html).toContain("Cost, insurance &amp; access");
+    expect(html).toContain('src="/mockup/posts/skin.jpg"');
+    expect(html).not.toContain("All posts");
   });
 
   it("says when a category is empty", () => {

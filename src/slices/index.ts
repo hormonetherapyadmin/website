@@ -9,6 +9,7 @@ import Divider from "./divider";
 import Faq from "./Faq";
 import FullWidthImage from "./FullWidthImage";
 import Hero from "./hero";
+import PhotoGallery from "./PhotoGallery";
 import Posts from "./posts";
 import ProsAndCons from "./ProsAndCons";
 import Quote from "./quote";
@@ -27,6 +28,7 @@ export const components = {
   faq: Faq,
   full_width_image: FullWidthImage,
   hero: Hero,
+  photo_gallery: PhotoGallery,
   posts: Posts,
   pros_cons: ProsAndCons,
   quote: Quote,

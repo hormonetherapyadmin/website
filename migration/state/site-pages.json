@@ -18,5 +18,73 @@
   "homepage": {
     "uid": "homepage",
     "prismicId": "asWb3hIAACsA34Wx"
+  },
+  "page:winona-review-page": {
+    "uid": "winona-review-page",
+    "prismicId": "at4fGBMAACcAEQhF"
+  },
+  "page:musely": {
+    "uid": "musely",
+    "prismicId": "at4fFhMAAC4AEQhA"
+  },
+  "page:alloy-review-page": {
+    "uid": "alloy-review-page",
+    "prismicId": "at4fExMAACgAEQg7"
+  },
+  "page:joiwommenswellness": {
+    "uid": "joiwommenswellness",
+    "prismicId": "at4fERMAACgAEQg0"
+  },
+  "page:effecty": {
+    "uid": "effecty",
+    "prismicId": "at4fDxMAAC4AEQgv"
+  },
+  "page:mymenopauserx": {
+    "uid": "mymenopauserx",
+    "prismicId": "at4fDRMAACwAEQgo"
+  },
+  "page:midi-health-review-page": {
+    "uid": "midi-health-review-page",
+    "prismicId": "at4fCxMAACgAEQgj"
+  },
+  "page:formuations": {
+    "uid": "formuations",
+    "prismicId": "at6tFxMAAC0AEdeC"
+  },
+  "page:costandinsurance": {
+    "uid": "costandinsurance",
+    "prismicId": "at6tFRMAAC4AEdd7"
+  },
+  "page:sleep": {
+    "uid": "sleep",
+    "prismicId": "at6tExMAAC4AEdd2"
+  },
+  "page:hair-loss": {
+    "uid": "hair-loss",
+    "prismicId": "at6tERMAACcAEddv"
+  },
+  "page:skincare": {
+    "uid": "skincare",
+    "prismicId": "at6tDxMAACsAEddq"
+  },
+  "page:copy-of-weight-gain": {
+    "uid": "copy-of-weight-gain",
+    "prismicId": "at6tDRMAACsAEddk"
+  },
+  "page:hrt-price-comparison-chart": {
+    "uid": "hrt-price-comparison-chart",
+    "prismicId": "at6tCxMAAC0AEddd"
+  },
+  "page:tipstofindprovider": {
+    "uid": "tipstofindprovider",
+    "prismicId": "at6tCBMAACwAEddY"
+  },
+  "page:hrt-doctors-review-costs-services": {
+    "uid": "hrt-doctors-review-costs-services",
+    "prismicId": "at6tBhMAACsAEddR"
+  },
+  "page:men-s-hrt": {
+    "uid": "men-s-hrt",
+    "prismicId": "at6tBBMAACoAEddM"
   }
 }

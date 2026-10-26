@@ -265,6 +265,7 @@ export function factsClinic(clinic: PageClinic): FactsClinic {
     offerCode: clinic.offerCode,
     offerCopy: clinic.offerCopy,
     shortDescription: clinic.shortDescription,
+    product: clinic.product,
   };
 }
 

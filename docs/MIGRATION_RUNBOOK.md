@@ -232,11 +232,30 @@ the posts row stay. The stock doctor banner stays off.
 edit reaches the release. `/faq` closes with one centered Buttons
 slice. `/ishrtforme` keeps its ribbon.
 
-`/inner-balance` is a new Page. The visit link, price, steps, and
+`/inner-balance` is a Page. The visit link, price, steps, and
 specialties stay on the Inner Balance brand. The page does not copy
 the affiliate URL or the second price card. The same run points that
-brand's Page field at the new page. The other clinic pages are not
-composed yet.
+brand's Page field at the new page. `--replace inner-balance` keeps
+the dividers around Clinic facts and puts the wide lifestyle photo
+on that slice.
+
+The other clinic pages use the same slices: provider hero, divider,
+Clinic facts with its own lifestyle photo, divider, and the ribbon.
+The quote is the brand's In my words field. The eyebrow is the brand's
+Top choice label. The page uid is the live Wix address:
+
+-   `/winona-review-page`
+-   `/musely`
+-   `/alloy-review-page`
+-   `/joiwommenswellness`
+-   `/mymenopauserx` (the brand uid stays `menorx`)
+-   `/midi-health-review-page`
+
+`/effecty` is new. Effecty has no Wix overview page. The same run
+points each brand's Page field at its page, fills a blank visit label,
+and renames the Alloy brand from Musely to Alloy when that name is
+still wrong. Midi has no visit link. The lifestyle photos are uploaded
+with the pages.
 
 A clinic page does not get a "What it cost me" section. The price and
 the price note stay on the brand and show in the hero. The first-year
@@ -244,11 +263,50 @@ average stays on the homepage comparison. Inner Balance had that
 section; it is being removed there, and the other clinic pages do not
 get it.
 
-Still to send:
+Still to send, composed from the October 2026 Wix pages and not yet
+published:
+
+-   `/formuations`. The uid keeps the typo. Hero, the two
+    best-known-for boxes, and Text for each formulation list.
+-   `/costandinsurance`. Hero and Text.
+-   `/sleep`. The live page has no body copy. Hero and the journey
+    button only.
+-   `/hair-loss`, `/skincare`, and `/men-s-hrt`. The writing and the
+    affiliate buttons are here. Peggy's photos are not. Those pages
+    need a photo gallery slice.
+-   `/copy-of-weight-gain`. The uid keeps the copy slug. The vial and
+    the chalkboard are Full width images. The vial is Joi's visit link
+    on Wix, and Full width image has no link, so that address stays on
+    the Joi brand. The comparison under the last heading is a Common
+    Ninja embed and is not in this page.
+-   `/hrt-price-comparison-chart`. The live page is three posts, not a
+    price table. The posts are links. The homepage comparison is the
+    price chart.
+-   `/tipstofindprovider`. Hero and Text. The formulations button goes
+    to `/formuations`.
+-   `/hrt-doctors-review-costs-services`. The words are in Text. This
+    should become a Brand, and then the page can use the clinic page
+    pattern. The ShareASale address is the start button until that
+    brand exists.
+
+The journey button on these pages links to `/trusted-providers`. On
+Wix it links to the homepage.
+
+Not composed:
 
 1.  The old trusted-providers address. `/copy-of-trusted-providers`
     redirects to `/trusted-providers`. The Redirect type is not built
     yet, so that redirect is a later document.
+2.  `/copy-of-inner-balance` is the same page as `/inner-balance`. It
+    should redirect, not be a second page.
+3.  `/trackersandtesting` is the published page `trackers-and-testing`.
+    That URL decision is still open.
+4.  `/my-addresses` is a Wix members page. It needs a disposition, not
+    a composition.
+5.  `/home-1` is live and is not in the Wix sitemap. It needs a URL
+    decision before it is built.
+6.  Privacy, contact, and terms are named in `docs/CONTENT_MODEL.md`
+    and return 404 on the live Wix site. They are not invented here.
 
 The live signup form on the trusted-providers page has no slice yet.
 The published page does not include it.
@@ -256,10 +314,6 @@ The published page does not include it.
 Editorial Standards and Affiliate Disclosure are still listed as
 singletons in `docs/CONTENT_MODEL.md` and have no custom type yet.
 They are not part of this order.
-
-The other Wix site pages, including privacy, contact, and the clinic
-pages that have no slice composition, stay out until each one is
-composed. Their copy is not rewritten to fill a page.
 
 ## URL Manifest
 

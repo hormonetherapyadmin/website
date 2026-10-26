@@ -502,7 +502,8 @@ type PageDocumentDataSlicesSlice =
   | ProsConsSlice
   | FaqSlice
   | ButtonsSlice
-  | FullWidthImageSlice;
+  | FullWidthImageSlice
+  | PhotoGallerySlice;
 
 /**
  * Content for Page documents
@@ -1765,6 +1766,51 @@ export interface ClinicComparisonSliceDefaultPrimaryClinicsItem {
 }
 
 /**
+ * Item in *Clinic comparison → Chart → Primary → Rows*
+ */
+export interface ClinicComparisonSliceChartPrimaryRowsItem {
+  /**
+   * Clinic field in *Clinic comparison → Chart → Primary → Rows*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: clinic_comparison.chart.primary.rows[].name
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  name: prismic.KeyTextField;
+
+  /**
+   * What I paid field in *Clinic comparison → Chart → Primary → Rows*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: clinic_comparison.chart.primary.rows[].paid
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  paid: prismic.KeyTextField;
+
+  /**
+   * What's included field in *Clinic comparison → Chart → Primary → Rows*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: clinic_comparison.chart.primary.rows[].included
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  included: prismic.KeyTextField;
+
+  /**
+   * My code field in *Clinic comparison → Chart → Primary → Rows*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: clinic_comparison.chart.primary.rows[].code
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  code: prismic.KeyTextField;
+}
+
+/**
  * Primary content in *Clinic comparison → Default → Primary*
  */
 export interface ClinicComparisonSliceDefaultPrimary {
@@ -1910,9 +1956,117 @@ export type ClinicComparisonSliceDefault = prismic.SharedSliceVariation<
 >;
 
 /**
+ * Primary content in *Clinic comparison → Chart → Primary*
+ */
+export interface ClinicComparisonSliceChartPrimary {
+  /**
+   * Eyebrow field in *Clinic comparison → Chart → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: clinic_comparison.chart.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading (H2) field in *Clinic comparison → Chart → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: clinic_comparison.chart.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Content field in *Clinic comparison → Chart → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: clinic_comparison.chart.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Rows field in *Clinic comparison → Chart → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: clinic_comparison.chart.primary.rows[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  rows: prismic.GroupField<Simplify<ClinicComparisonSliceChartPrimaryRowsItem>>;
+
+  /**
+   * Background field in *Clinic comparison → Chart → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Transparent
+   * - **API ID Path**: clinic_comparison.chart.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Clinic comparison → Chart → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: clinic_comparison.chart.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Clinic comparison → Chart → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: clinic_comparison.chart.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+}
+
+/**
+ * Chart variation for Clinic comparison Slice
+ *
+ * - **API ID**: `chart`
+ * - **Description**: Chart
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ClinicComparisonSliceChart = prismic.SharedSliceVariation<
+  "chart",
+  Simplify<ClinicComparisonSliceChartPrimary>,
+  never
+>;
+
+/**
  * Slice variation for *Clinic comparison*
  */
-type ClinicComparisonSliceVariation = ClinicComparisonSliceDefault;
+type ClinicComparisonSliceVariation =
+  ClinicComparisonSliceDefault | ClinicComparisonSliceChart;
 
 /**
  * Clinic comparison Shared Slice
@@ -3189,6 +3343,343 @@ type HeroSliceVariation =
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
 /**
+ * Item in *Photo gallery → Gallery → Primary → Photos*
+ */
+export interface PhotoGallerySliceDefaultPrimaryPhotosItem {
+  /**
+   * Photo field in *Photo gallery → Gallery → Primary → Photos*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: photo_gallery.default.primary.photos[].image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Caption field in *Photo gallery → Gallery → Primary → Photos*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: photo_gallery.default.primary.photos[].caption
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  caption: prismic.RichTextField;
+
+  /**
+   * Line under the caption field in *Photo gallery → Gallery → Primary → Photos*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A color, such as Dark brown
+   * - **API ID Path**: photo_gallery.default.primary.photos[].line
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  line: prismic.KeyTextField;
+
+  /**
+   * Link field in *Photo gallery → Gallery → Primary → Photos*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: photo_gallery.default.primary.photos[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Primary content in *Photo gallery → Gallery → Primary*
+ */
+export interface PhotoGallerySliceDefaultPrimary {
+  /**
+   * Eyebrow field in *Photo gallery → Gallery → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: photo_gallery.default.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading (H2) field in *Photo gallery → Gallery → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: My hair story
+   * - **API ID Path**: photo_gallery.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Content field in *Photo gallery → Gallery → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: photo_gallery.default.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Photos field in *Photo gallery → Gallery → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: photo_gallery.default.primary.photos[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  photos: prismic.GroupField<
+    Simplify<PhotoGallerySliceDefaultPrimaryPhotosItem>
+  >;
+
+  /**
+   * Background field in *Photo gallery → Gallery → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Transparent
+   * - **API ID Path**: photo_gallery.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Photo gallery → Gallery → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: photo_gallery.default.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Photo gallery → Gallery → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: photo_gallery.default.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+}
+
+/**
+ * Gallery variation for Photo gallery Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PhotoGallerySliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<PhotoGallerySliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Primary content in *Photo gallery → Pair → Primary*
+ */
+export interface PhotoGallerySlicePairPrimary {
+  /**
+   * Eyebrow field in *Photo gallery → Pair → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: photo_gallery.pair.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading (H2) field in *Photo gallery → Pair → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: photo_gallery.pair.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Content field in *Photo gallery → Pair → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: photo_gallery.pair.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Before field in *Photo gallery → Pair → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: photo_gallery.pair.primary.before
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  before: prismic.ImageField<never>;
+
+  /**
+   * Before caption field in *Photo gallery → Pair → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: photo_gallery.pair.primary.before_caption
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  before_caption: prismic.RichTextField;
+
+  /**
+   * After field in *Photo gallery → Pair → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: photo_gallery.pair.primary.after
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  after: prismic.ImageField<never>;
+
+  /**
+   * After caption field in *Photo gallery → Pair → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: photo_gallery.pair.primary.after_caption
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  after_caption: prismic.RichTextField;
+
+  /**
+   * Link under the photos field in *Photo gallery → Pair → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: photo_gallery.pair.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Background field in *Photo gallery → Pair → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Transparent
+   * - **API ID Path**: photo_gallery.pair.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Photo gallery → Pair → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: photo_gallery.pair.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Photo gallery → Pair → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: photo_gallery.pair.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+}
+
+/**
+ * Pair variation for Photo gallery Slice
+ *
+ * - **API ID**: `pair`
+ * - **Description**: Pair
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PhotoGallerySlicePair = prismic.SharedSliceVariation<
+  "pair",
+  Simplify<PhotoGallerySlicePairPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Photo gallery*
+ */
+type PhotoGallerySliceVariation =
+  PhotoGallerySliceDefault | PhotoGallerySlicePair;
+
+/**
+ * Photo gallery Shared Slice
+ *
+ * - **API ID**: `photo_gallery`
+ * - **Description**: *None*
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PhotoGallerySlice = prismic.SharedSlice<
+  "photo_gallery",
+  PhotoGallerySliceVariation
+>;
+
+/**
+ * Item in *Posts → Picked → Primary → Posts*
+ */
+export interface PostsSlicePickedPrimaryPostsItem {
+  /**
+   * Post field in *Posts → Picked → Primary → Posts*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: Add up to three, in the order they should appear.
+   * - **API ID Path**: posts.picked.primary.posts[].post
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  post:
+    | prismic.ContentRelationshipField<"post">
+    | prismic.ContentRelationshipField<"provider_review">
+    | prismic.ContentRelationshipField<"comparison">;
+}
+
+/**
  * Primary content in *Posts → Homepage → Primary*
  */
 export interface PostsSliceHomePrimary {
@@ -3727,10 +4218,131 @@ export type PostsSliceRow = prismic.SharedSliceVariation<
 >;
 
 /**
+ * Primary content in *Posts → Picked → Primary*
+ */
+export interface PostsSlicePickedPrimary {
+  /**
+   * Eyebrow field in *Posts → Picked → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: posts.picked.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading (H2) field in *Posts → Picked → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Latest reviews and posts
+   * - **API ID Path**: posts.picked.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Content field in *Posts → Picked → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: posts.picked.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Link right of heading field in *Posts → Picked → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: posts.picked.primary.link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Posts field in *Posts → Picked → Primary*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: posts.picked.primary.posts[]
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  posts: prismic.GroupField<Simplify<PostsSlicePickedPrimaryPostsItem>>;
+
+  /**
+   * Background field in *Posts → Picked → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Transparent
+   * - **API ID Path**: posts.picked.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Posts → Picked → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: posts.picked.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Posts → Picked → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: posts.picked.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+}
+
+/**
+ * Picked variation for Posts Slice
+ *
+ * - **API ID**: `picked`
+ * - **Description**: Picked
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PostsSlicePicked = prismic.SharedSliceVariation<
+  "picked",
+  Simplify<PostsSlicePickedPrimary>,
+  never
+>;
+
+/**
  * Slice variation for *Posts*
  */
 type PostsSliceVariation =
-  PostsSliceHome | PostsSliceFeatured | PostsSliceGrid | PostsSliceRow;
+  | PostsSliceHome
+  | PostsSliceFeatured
+  | PostsSliceGrid
+  | PostsSliceRow
+  | PostsSlicePicked;
 
 /**
  * Posts Shared Slice
@@ -4349,6 +4961,22 @@ export interface SideBySideSliceImagePrimary {
    * - **Documentation**: https://prismic.io/docs/fields/image
    */
   image: prismic.ImageField<never>;
+
+  /**
+   * Photo link field in *Side by side → Image → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: side_by_side.image.primary.image_link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  image_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Caption field in *Side by side → Image → Primary*
@@ -5320,8 +5948,11 @@ declare module "@prismicio/client" {
       ClinicComparisonSlice,
       ClinicComparisonSliceDefaultPrimaryClinicsItem,
       ClinicComparisonSliceDefaultPrimary,
+      ClinicComparisonSliceChartPrimaryRowsItem,
+      ClinicComparisonSliceChartPrimary,
       ClinicComparisonSliceVariation,
       ClinicComparisonSliceDefault,
+      ClinicComparisonSliceChart,
       ClinicFactsSlice,
       ClinicFactsSliceDefaultPrimary,
       ClinicFactsSliceVariation,
@@ -5353,16 +5984,26 @@ declare module "@prismicio/client" {
       HeroSliceBrands,
       HeroSliceProvider,
       HeroSliceCentered,
+      PhotoGallerySlice,
+      PhotoGallerySliceDefaultPrimaryPhotosItem,
+      PhotoGallerySliceDefaultPrimary,
+      PhotoGallerySlicePairPrimary,
+      PhotoGallerySliceVariation,
+      PhotoGallerySliceDefault,
+      PhotoGallerySlicePair,
       PostsSlice,
       PostsSliceHomePrimary,
       PostsSliceFeaturedPrimary,
       PostsSliceGridPrimary,
       PostsSliceRowPrimary,
+      PostsSlicePickedPrimaryPostsItem,
+      PostsSlicePickedPrimary,
       PostsSliceVariation,
       PostsSliceHome,
       PostsSliceFeatured,
       PostsSliceGrid,
       PostsSliceRow,
+      PostsSlicePicked,
       ProsConsSlice,
       ProsConsSliceDefaultPrimaryRowsItem,
       ProsConsSliceDefaultPrimary,

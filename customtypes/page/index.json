@@ -59,6 +59,9 @@
             },
             "full_width_image": {
               "type": "SharedSlice"
+            },
+            "photo_gallery": {
+              "type": "SharedSlice"
             }
           }
         },

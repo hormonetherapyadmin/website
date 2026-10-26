@@ -15,9 +15,11 @@ function previewImage(image: LocalImage, origin: string) {
     alt: image.alt,
     copyright: null,
     dimensions:
-      image.filename === "peggy-winston.jpg"
-        ? { width: 1200, height: 1600 }
-        : { width: 1200, height: 1500 },
+      image.width && image.height
+        ? { width: image.width, height: image.height }
+        : image.filename === "peggy-winston.jpg"
+          ? { width: 1200, height: 1600 }
+          : { width: 1200, height: 1500 },
     edit: { x: 0, y: 0, zoom: 1, background: "transparent" },
   };
 }

@@ -7,6 +7,8 @@
 // names it. The order and the pages already in Prismic are in
 // docs/MIGRATION_RUNBOOK.md.
 
+import { GUIDE_PAGES } from "./guide-pages.ts";
+
 type Span = {
   start: number;
   end: number;
@@ -26,6 +28,8 @@ export type LocalImage = {
   path: string;
   filename: string;
   alt: string;
+  width?: number;
+  height?: number;
 };
 
 type Slice = {
@@ -39,6 +43,10 @@ export type SitePage = {
   sourceId: string;
   uid: string;
   title: string;
+  /** The Wix document title, when it is not the hero heading. */
+  meta_title?: string;
+  /** The Wix meta description. Empty on Wix stays unset. */
+  meta_description?: string;
   /** Decisions to check in the migration release. */
   review: string[];
   /** Links pointed at the public address instead of a mockup path. */
@@ -149,10 +157,21 @@ function marked(text: string, phrase: string, type: "strong" | "em"): Span {
   return { start, end: start + phrase.length, type };
 }
 
-function photo(path: string, alt: string): LocalImage {
+function photo(
+  path: string,
+  alt: string,
+  width?: number,
+  height?: number,
+): LocalImage {
   const filename = path.split("/").at(-1);
   if (!filename) throw new Error(`Photo path has no filename: ${path}`);
-  return { localImage: true, path, filename, alt };
+  return {
+    localImage: true,
+    path,
+    filename,
+    alt,
+    ...(width && height ? { width, height } : {}),
+  };
 }
 
 function section(
@@ -186,12 +205,15 @@ function slice(
 }
 
 /** The usual line under a Hero. Squiggly and accent, as on the published pages. */
-function divider(space_below: "None" | "Medium" = "None"): Slice {
+function divider(
+  space_below: "None" | "Medium" | "Large" = "None",
+  space_above: "None" | "Small" | "Medium" | "Large" = "Medium",
+): Slice {
   return slice("divider", "default", {
     line: "Squiggly",
     color: "Accent",
     background: "Transparent",
-    space_above: "Medium",
+    space_above,
     space_below,
   });
 }
@@ -446,6 +468,125 @@ const reviewIds: Record<string, string> = {
   "will-midi-health-help-me-lose-weight": "askCRRcAACwAcqgJ",
 };
 
+const FACTS_INTRO =
+  "What I confirmed on their page. This is my experience as a patient, not a medical review.";
+
+/**
+ * A wide lifestyle photo for the Clinic facts band. Free Pexels photos,
+ * already cropped to 1500 by 500. The filename is what the media library
+ * stores.
+ */
+function life(file: string, alt: string) {
+  return photo(`public/mockup/clinic-life/${file}`, alt, 1500, 500);
+}
+
+function storedImage(
+  id: string,
+  file: string,
+  alt: string,
+  width: number,
+  height: number,
+) {
+  return {
+    id,
+    url: `https://images.prismic.io/1shr96di/${id}_${file}?auto=format,compress`,
+    dimensions: { width, height },
+    edit: { x: 0, y: 0, zoom: 1, background: "transparent" },
+    alt,
+    copyright: null,
+  };
+}
+
+function clinicRibbon(name: string) {
+  return slice("ribbon", "default", {
+    ...section({ space_below: "Large" }),
+    layout: "On the right",
+    box_background: "Pink",
+    title: rich("Comparing a few clinics?"),
+    content: rich(
+      `${name} is one of seven I’ve been a patient at. The short list has the code I use at each.`,
+    ),
+    button: [button("Trusted providers", "/trusted-providers")],
+  });
+}
+
+type ClinicLink = {
+  id: string;
+  uid: string;
+  text: string;
+};
+
+/**
+ * A clinic page. The price, visit link, steps, and specialties stay on
+ * the brand. The quote is the brand's In my words field. The page uid is
+ * the live Wix address, which is not always the brand uid.
+ */
+function clinicPage(input: {
+  uid: string;
+  providerId: string;
+  providerUid: string;
+  title: string;
+  quote: string;
+  review: ClinicLink;
+  comparisons?: ClinicLink[];
+  youtube?: string;
+  product: ReturnType<typeof storedImage>;
+  image: LocalImage;
+  ribbonName: string;
+  reviewNotes?: string[];
+}): SitePage {
+  const links = [
+    documentLink(input.review.id, "post", input.review.uid, input.review.text),
+    ...(input.comparisons ?? []).map((link) =>
+      documentLink(link.id, "post", link.uid, link.text),
+    ),
+    ...(input.youtube
+      ? [web("Watch my review", input.youtube, undefined, true)]
+      : []),
+  ];
+  return {
+    sourceId: `page:${input.uid}`,
+    uid: input.uid,
+    title: input.title,
+    review: [
+      "The visit button reads the brand’s affiliate link. This page does not store a destination.",
+      "Facts, steps, specialties, price, and the coupon stay on the brand.",
+      "There is no What it cost me section. The price stays in the hero.",
+      "The eyebrow is the brand’s Top choice label. The quote is the brand’s In my words field.",
+      ...(input.reviewNotes ?? []),
+    ],
+    changes: [
+      `${input.review.text} links to /post/${input.review.uid}`,
+      ...(input.youtube
+        ? ["Watch my review links to the YouTube video stored on the brand"]
+        : []),
+      "Trusted providers links to /trusted-providers",
+    ],
+    slices: [
+      slice("hero", "provider", {
+        ...section({ space_above: "Medium", space_below: "None" }),
+        clinic: documentLink(input.providerId, "provider", input.providerUid),
+        quote: rich(input.quote),
+        links,
+        product: input.product,
+      }),
+      divider("Large", "Large"),
+      slice("clinic_facts", "default", {
+        ...section({
+          heading: "The facts",
+          intro: FACTS_INTRO,
+          space_above: "None",
+          space_below: "None",
+        }),
+        clinic: documentLink(input.providerId, "provider", input.providerUid),
+        image: input.image,
+      }),
+      divider("None", "Large"),
+      clinicRibbon(input.ribbonName),
+    ],
+  };
+}
+
 function innerBalancePage(): SitePage {
   return {
     sourceId: "page:inner-balance",
@@ -455,6 +596,7 @@ function innerBalancePage(): SitePage {
       "The visit button reads the brand’s affiliate link. This page does not store a destination.",
       "Facts, steps, specialties, price, and the coupon stay on the brand.",
       "There is no What it cost me section. The price stays in the hero. The other clinic pages do not get that section.",
+      "The wide photo replaces the close crop. The dividers match the published page.",
     ],
     changes: [
       "My 1-year review links to the Oestra review",
@@ -467,6 +609,7 @@ function innerBalancePage(): SitePage {
         ...section({
           small_heading: "My 2026 top choice",
           space_above: "Medium",
+          space_below: "None",
         }),
         clinic: documentLink(INNER_BALANCE, "provider", "inner-balance"),
         voted: rich("Voted best for sleep"),
@@ -495,27 +638,76 @@ function innerBalancePage(): SitePage {
         ],
         product: oestraJar,
       }),
+      divider("Large", "Large"),
       slice("clinic_facts", "default", {
         ...section({
           heading: "The facts",
-          intro:
-            "What I confirmed on their page. This is my experience as a patient, not a medical review.",
+          intro: FACTS_INTRO,
+          space_above: "None",
+          space_below: "None",
         }),
         clinic: documentLink(INNER_BALANCE, "provider", "inner-balance"),
-      }),
-      slice("ribbon", "default", {
-        ...section({ space_below: "Large" }),
-        layout: "On the right",
-        box_background: "Pink",
-        title: rich("Comparing a few clinics?"),
-        content: rich(
-          "Inner Balance is one of seven I’ve been a patient at. The short list has the code I use at each.",
+        image: life(
+          "inner-balance-morning.jpg",
+          "A woman smiling over coffee among plants",
         ),
-        button: [button("Trusted providers", "/trusted-providers")],
       }),
+      divider("None", "Large"),
+      clinicRibbon("Inner Balance"),
     ],
   };
 }
+
+const WINONA = "asvI_BcAADMAeME-";
+const MUSELY = "asz2AxcAADAAeqH0";
+const ALLOY = "asz9cxcAADEAer1m";
+const JOI = "asvUERcAAC0AeNI_";
+const EFFECTY = "asz-gRcAADMAesHD";
+const MENORX = "as0AwRcAADMAeslp";
+const MIDI = "as0CfhcAADIAes6P";
+
+/**
+ * The brand each clinic page should point at. The importer sets the
+ * brand's Page field when that page is sent. visitText is used only
+ * when the published visit link has no display text.
+ */
+export const CLINIC_BRANDS: {
+  pageUid: string;
+  providerId: string;
+  visitText?: string;
+  /** Correct the published name when it is still wrong. */
+  name?: string;
+}[] = [
+  {
+    pageUid: "inner-balance",
+    providerId: INNER_BALANCE,
+    visitText: "Visit Inner Balance",
+  },
+  {
+    pageUid: "winona-review-page",
+    providerId: WINONA,
+    visitText: "Visit Winona",
+  },
+  { pageUid: "musely", providerId: MUSELY, visitText: "Visit Musely" },
+  {
+    pageUid: "alloy-review-page",
+    providerId: ALLOY,
+    visitText: "Visit Alloy",
+    name: "Alloy",
+  },
+  {
+    pageUid: "joiwommenswellness",
+    providerId: JOI,
+    visitText: "Visit Joi Women’s Wellness",
+  },
+  { pageUid: "effecty", providerId: EFFECTY, visitText: "Visit Effecty" },
+  {
+    pageUid: "mymenopauserx",
+    providerId: MENORX,
+    visitText: "Visit MyMenopauseRx",
+  },
+  { pageUid: "midi-health-review-page", providerId: MIDI },
+];
 
 const tested =
   "Since beginning my personal hormone replacement therapy journey under the care of a medical provider in 2019, I’ve experienced firsthand how overwhelming it can be to navigate menopause care, changing symptoms, and treatment options. To find what worked for my body, I’ve personally tested and evaluated more than 9 different HRT telehealth providers, including platforms like Winona, Midi Health, Alloy, Inner Balance, Musely, MyMenopauseRx, Effecty, a traditional OB/GYN and Joi Women’s Wellness.";
@@ -899,6 +1091,216 @@ export const SITE_PAGES: SitePage[] = [
     ],
   },
   innerBalancePage(),
+  clinicPage({
+    uid: "winona-review-page",
+    providerId: WINONA,
+    providerUid: "winona",
+    title: "Winona",
+    quote:
+      "I received my first order within 5 days of placing order for the HRT products my clinician recommended.",
+    review: {
+      id: reviewIds["winona-bioidentical-hormone-therapy-review"],
+      uid: "winona-bioidentical-hormone-therapy-review",
+      text: "My review",
+    },
+    youtube: "https://youtu.be/XZD4yvTKScA",
+    product: storedImage(
+      "ZJ3So0oFxyB6wWqP",
+      "winona-cream.webp",
+      "Winona cream",
+      256,
+      253,
+    ),
+    image: life("winona.jpg", "A woman in a sun hat smiling at the beach"),
+    ribbonName: "Winona",
+  }),
+  clinicPage({
+    uid: "musely",
+    providerId: MUSELY,
+    providerUid: "musely",
+    title: "Musely",
+    quote:
+      "Bi-Est is considered a gentler form of HRT & a good product for newbies or those who have reservations about HRT.",
+    review: {
+      id: reviewIds[
+        "musely-estrogen-cream-review-a-safer-gentler-hrt-alternative"
+      ],
+      uid: "musely-estrogen-cream-review-a-safer-gentler-hrt-alternative",
+      text: "My review",
+    },
+    comparisons: [
+      {
+        id: "askC7xcAADMAcqo6",
+        uid: "musely-estrogen-cream-vs-winona-which-hrt-cream-wins",
+        text: "Winona vs Musely",
+      },
+    ],
+    product: storedImage(
+      "EqU9Y3mOgjKWz6Ej",
+      "musely-product.webp",
+      "Musely product",
+      256,
+      256,
+    ),
+    image: life("musely.jpg", "A woman watering flowers in a garden"),
+    ribbonName: "Musely",
+  }),
+  clinicPage({
+    uid: "alloy-review-page",
+    providerId: ALLOY,
+    providerUid: "alloy",
+    title: "Alloy",
+    quote:
+      "I would describe my experience with Alloy as a pleasant straight-forward experience.",
+    review: {
+      id: reviewIds["my-alloy-an-overview-of-products-process-and-pricing"],
+      uid: "my-alloy-an-overview-of-products-process-and-pricing",
+      text: "My review",
+    },
+    comparisons: [
+      {
+        id: "askCFBcAADAAcqdx",
+        uid: "winona-vs-alloy-hormone-replacement-side-by-side-comparison",
+        text: "Alloy Vs. Wiona",
+      },
+    ],
+    youtube: "https://youtu.be/KznU_Qx24XQ",
+    product: storedImage(
+      "5ek_8ZGN28nl-2eg",
+      "alloy-product.webp",
+      "Alloy product",
+      256,
+      256,
+    ),
+    image: life("alloy.jpg", "A woman sitting on a park bench"),
+    ribbonName: "Alloy",
+    reviewNotes: [
+      "The comparison button keeps the stored label Alloy Vs. Wiona.",
+      "The published brand name is still Musely. This run sets it to Alloy.",
+    ],
+  }),
+  clinicPage({
+    uid: "joiwommenswellness",
+    providerId: JOI,
+    providerUid: "joi",
+    title: "Joi Women’s Wellness",
+    quote:
+      "My 1:1’s were very thorough and I learned something new each time I met with a Joi Clinician.",
+    review: {
+      id: reviewIds["joi-womens-hormone-replacement-review"],
+      uid: "joi-womens-hormone-replacement-review",
+      text: "My review",
+    },
+    youtube: "https://youtu.be/2sQ2-kh1F10",
+    product: storedImage(
+      "eF34zNG00JZlRw6T",
+      "join-product.webp",
+      "Joi HRT",
+      256,
+      256,
+    ),
+    image: life("joi.jpg", "A woman holding a yoga mat in a bright studio"),
+    ribbonName: "Joi Women’s Wellness",
+  }),
+  clinicPage({
+    uid: "effecty",
+    providerId: EFFECTY,
+    providerUid: "effecty",
+    title: "Effecty",
+    quote:
+      "I can share with you first hand, they are not kidding when they say no hidden fees.",
+    review: {
+      id: reviewIds["effecty-hormone-replacement-therapy-review"],
+      uid: "effecty-hormone-replacement-therapy-review",
+      text: "My review",
+    },
+    youtube: "https://youtu.be/5671FQQHL8s",
+    product: storedImage(
+      "nIKTt1hWX4JFSOe9",
+      "effecty-product.webp",
+      "Effecty",
+      256,
+      256,
+    ),
+    image: life("effecty.jpg", "A woman smiling on a hiking trail"),
+    ribbonName: "Effecty",
+    reviewNotes: [
+      "Effecty has no Wix overview page. /effecty is a new address.",
+    ],
+  }),
+  clinicPage({
+    uid: "mymenopauserx",
+    providerId: MENORX,
+    providerUid: "menorx",
+    title: "MyMenopauseRx",
+    quote:
+      "If you are one who knows you want to use your medical and prescription insurance to start or start-over on HRT, then I highly recommend MyMenopauseRx.",
+    review: {
+      id: reviewIds["mymenopauserx-review"],
+      uid: "mymenopauserx-review",
+      text: "My review",
+    },
+    comparisons: [
+      {
+        id: "askCVRcAADMAcqg9",
+        uid: "midi-health-vs-mymenopauserx",
+        text: "MyMenoRX Vs. Midi",
+      },
+    ],
+    youtube: "https://youtu.be/4BBgI4gmvZE",
+    product: storedImage(
+      "j8J4U6XFdqPQxpI-",
+      "mymeno-product.webp",
+      "MyMenopauseRX product",
+      256,
+      256,
+    ),
+    image: life("menorx.jpg", "Three women laughing together by the water"),
+    ribbonName: "MyMenopauseRx",
+    reviewNotes: [
+      "The page uid is the Wix address mymenopauserx. The brand uid stays menorx.",
+      "The brand has no coupon code.",
+    ],
+  }),
+  clinicPage({
+    uid: "midi-health-review-page",
+    providerId: MIDI,
+    providerUid: "midi",
+    title: "Midi Health",
+    quote:
+      "When I was a new client of Midi Health, I was able to get an appointment the very next business day.",
+    review: {
+      id: reviewIds["will-midi-health-help-me-lose-weight"],
+      uid: "will-midi-health-help-me-lose-weight",
+      text: "My review",
+    },
+    comparisons: [
+      {
+        id: "askCoBcAACwAcqk3",
+        uid: "midi-health-vs-allara-health",
+        text: "Midi Health vs. Allara Health",
+      },
+    ],
+    youtube: "https://youtu.be/4BBgI4gmvZE",
+    product: storedImage(
+      "7SwP0xxy4KmG0oYy",
+      "midi-prod.avif",
+      "Mini product",
+      964,
+      822,
+    ),
+    image: life(
+      "midi.jpg",
+      "A woman laughing with friends in an exercise class",
+    ),
+    ribbonName: "Midi Health",
+    reviewNotes: [
+      "Midi has no visit link and no coupon code.",
+      "The brand’s comparison button said MyMenoRX Vs. Midi and pointed at the Allara post. This page uses the post’s own title.",
+      "The review video is the Midi and MyMenopauseRx comparison, the same video stored on both brands.",
+    ],
+  }),
+  ...GUIDE_PAGES,
 ];
 
 export function isLocalImage(value: unknown): value is LocalImage {

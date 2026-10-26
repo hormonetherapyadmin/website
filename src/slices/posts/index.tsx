@@ -22,7 +22,13 @@ function tabLabel(category: PostCategoryOption) {
   return category === "All" ? "All posts" : category;
 }
 
-export const POST_VARIATIONS = ["home", "featured", "grid", "row"] as const;
+export const POST_VARIATIONS = [
+  "home",
+  "featured",
+  "grid",
+  "row",
+  "picked",
+] as const;
 
 export type PostVariation = (typeof POST_VARIATIONS)[number];
 
@@ -42,6 +48,8 @@ type PostsPrimary = Partial<SliceSectionFields> & {
   category?: SelectField<PostCategoryOption> | string | null;
   /** Featured only. The page resolves this link and passes `featured`. */
   post?: LinkField | null;
+  /** Picked only. Up to three posts, in the order she added them. */
+  posts?: readonly { post?: LinkField | null }[] | null;
   /** Grid only. Empty means 12. */
   count?: number | null;
   /**
@@ -455,14 +463,33 @@ function Pagination({
 function limitFor(variation: PostVariation, count: number | null | undefined) {
   if (variation === "home") return 5;
   if (variation === "featured") return 1;
-  if (variation === "row") return 3;
+  if (variation === "row" || variation === "picked") return 3;
   return pageSize(count);
+}
+
+/**
+ * The posts on a Picked slice, in field order. A link the page did not
+ * load is left out. Three is the row.
+ */
+export function pickedPostCards(
+  rows: readonly { post?: LinkField | null }[] | null | undefined,
+  posts: readonly PostCardData[],
+) {
+  return (rows ?? [])
+    .flatMap((row) => {
+      const link = row.post;
+      if (!link || !isFilled.link(link) || !link.url) return [];
+      const card = posts.find((post) => post.href === link.url);
+      return card ? [card] : [];
+    })
+    .slice(0, 3);
 }
 
 /**
  * Recent posts. Homepage is five, with the newest as the large card.
  * Featured is one post. Grid is a paged list with category tabs.
- * Row is three across.
+ * Row is three across, the newest in a category. Picked is that same
+ * row, in the order she chose.
  */
 export function Posts({
   variation,
@@ -500,16 +527,17 @@ export function Posts({
         })
       : { showInline: false as const };
   const pinned = layout === "featured" && featured ? featured : null;
+  const handPicked = layout === "picked";
   const selected = pinned
     ? { items: [pinned], total: 1, page: 1, pages: 1 }
     : selectPosts(posts, {
-        category: layout === "featured" ? locked : viewing,
+        category: layout === "featured" || handPicked ? null : viewing,
         limit: limitFor(layout, primary.count),
         page: layout === "grid" ? page : 1,
         skipHref:
           ("skipHref" in feature ? feature.skipHref : undefined) ??
-          (viewing === "All" ? skipHref : undefined),
-        keepOrder,
+          (viewing === "All" && !handPicked ? skipHref : undefined),
+        keepOrder: keepOrder || handPicked,
       });
 
   const hrefForPage =

@@ -113,6 +113,10 @@
   --wrap: calc(var(--max) + var(--gutter) * 2);
   --radius: 4px;
 
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
   background: var(--bg);
   color: var(--text);
   font-family: var(--sans);
@@ -150,6 +154,8 @@
 /* Header */
 
 .header {
+  /* A flex item with auto side margins otherwise shrinks to the links. */
+  width: 100%;
   max-width: var(--wrap);
   margin: 0 auto;
   padding: 1.4rem var(--gutter);
@@ -1564,6 +1570,7 @@ a.clinicName:focus-visible {
 /* Footer */
 
 .footer {
+  margin-top: auto;
   background: var(--panel);
   color: #fff;
   padding: clamp(3.5rem, 7vw, 5.5rem) var(--gutter) 2rem;

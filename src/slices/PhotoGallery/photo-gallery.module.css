@@ -1,0 +1,223 @@
+/*
+  The large photo uses the same dark frame as a YouTube video.
+  The picture keeps its own shape inside that frame.
+*/
+
+:global(html):has(.dialog[open]) {
+  overflow: hidden;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1.5rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.shot {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: zoom-in;
+}
+
+.shot:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 4px;
+  border-radius: 1.25rem;
+}
+
+.frame {
+  display: block;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background: var(--color-surface);
+}
+
+.frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center 18%;
+}
+
+.caption {
+  display: block;
+  margin: 0.7rem 0 0;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+
+.pair .caption {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.line {
+  display: block;
+  margin: 0.2rem 0 0;
+  line-height: 1.4;
+}
+
+.review {
+  margin: 0.85rem 0 0;
+  font-weight: 600;
+}
+
+.dialog {
+  width: min(42rem, calc(100vw - 2rem));
+  max-width: none;
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  color: var(--color-panel-text);
+}
+
+.dialog::backdrop {
+  background: color-mix(in srgb, var(--color-panel) 78%, transparent);
+  backdrop-filter: blur(4px);
+}
+
+.dialog[open] {
+  animation: rise 180ms ease-out;
+}
+
+.dialog[open]::backdrop {
+  animation: fade 180ms ease-out;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 1.25rem;
+  background: var(--color-video-frame);
+  box-shadow: 0 24px 60px -24px rgb(0 0 0 / 60%);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-inline: 0.35rem 0;
+}
+
+.title {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.title > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.close {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-panel-text) 12%, transparent);
+  color: inherit;
+  cursor: pointer;
+}
+
+.close:hover {
+  background: color-mix(in srgb, var(--color-panel-text) 22%, transparent);
+}
+
+.close:focus-visible,
+.source:focus-visible {
+  outline: 2px solid var(--color-panel-text);
+  outline-offset: 2px;
+}
+
+.well {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: #000;
+}
+
+.full {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100dvh - 10rem);
+  object-fit: contain;
+}
+
+.detail {
+  margin: 0 0.35rem;
+  line-height: 1.4;
+}
+
+.source {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  margin-inline-start: 0.35rem;
+  color: var(--color-panel-accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-underline-offset: 0.2em;
+}
+
+@media (max-width: 800px) {
+  .pair {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog[open],
+  .dialog[open]::backdrop {
+    animation: none;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.98);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}

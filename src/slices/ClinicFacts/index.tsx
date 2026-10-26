@@ -46,6 +46,8 @@ export type FactsClinic = {
   offerCopy?: string;
   /** One line about the clinic. The offer box uses it when the code line is blank. */
   shortDescription?: string;
+  /** The jar or bottle. Shown when the slice has no image of its own. */
+  product?: ImageField | null;
 };
 
 type ClinicFactsPrimary = Partial<SliceSectionFields> & {
@@ -234,9 +236,9 @@ function OfferCallout({
 }
 
 /**
- * A clinic's fact sheet: the fact cards, a full-width photo, How it
- * works, the offer box, and the specialties. The photo is on the slice.
- * Everything else comes from the Brand.
+ * A clinic's fact sheet: the fact cards, a wide photo, How it works,
+ * the offer box, and the specialties. The photo is the slice image, or
+ * the brand's product photo when the slice image is empty.
  */
 export function ClinicFacts({
   primary,
@@ -249,8 +251,11 @@ export function ClinicFacts({
   const steps = (clinic?.steps ?? []).filter((step) => step.title || step.text);
   const specialties = clinic?.specialties ?? [];
   const Part = asText(primary.heading ?? []).trim() ? "h3" : "h2";
-  const image = primary.image;
-  const showPhoto = Boolean(image && isFilled.image(image));
+  const chosen =
+    primary.image && isFilled.image(primary.image)
+      ? primary.image
+      : clinic?.product;
+  const image = chosen && isFilled.image(chosen) ? chosen : null;
   const background = sectionBackground(primary.background);
 
   return (
@@ -271,7 +276,7 @@ export function ClinicFacts({
         </dl>
       ) : null}
 
-      {showPhoto && image ? (
+      {image ? (
         <figure className={styles.photo}>
           <Photo field={image} />
         </figure>

@@ -224,6 +224,48 @@ describe("Hero", () => {
     expect(html).not.toContain("<img");
   });
 
+  it("opens a YouTube review link in the video modal", () => {
+    const html = renderToStaticMarkup(
+      <Hero
+        variation="provider"
+        primary={{
+          ...section(),
+          clinic: {
+            data: {
+              name: "Inner Balance",
+              logo: image("/mockup/logos/inner-balance.png", ""),
+            },
+          },
+          voted: emptyRich,
+          quote: emptyRich,
+          links: [
+            {
+              link_type: "Web",
+              url: "/post/oestra",
+              text: "My 1-year review",
+            },
+            {
+              link_type: "Web",
+              url: "https://youtu.be/PuAekNT9ZvA",
+              text: "Watch my review",
+              target: "_blank",
+            },
+          ],
+          product: emptyImage,
+        }}
+      />,
+    );
+
+    expect(html).toContain('href="/post/oestra"');
+    expect(html).not.toMatch(/href="\/post\/oestra"[^>]*aria-haspopup/);
+    expect(html).toContain('href="https://youtu.be/PuAekNT9ZvA"');
+    expect(html).toContain('target="_blank"');
+    expect(html).toContain('aria-haspopup="dialog"');
+    expect(html).toContain("Watch my review");
+    expect(html).not.toContain("<iframe");
+    expect(html).not.toContain("<dialog");
+  });
+
   it("marks the visit button as an affiliate link even when the new-tab box is off", () => {
     const html = renderToStaticMarkup(
       <Hero

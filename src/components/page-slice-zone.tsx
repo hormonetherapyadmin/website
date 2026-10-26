@@ -13,13 +13,19 @@ import {
 import { BrandPromo } from "@/slices/BrandPromo";
 import { Boxes } from "@/slices/boxes";
 import { Buttons } from "@/slices/Buttons";
-import { ClinicComparison } from "@/slices/clinic_comparison";
+import { chartRows, ClinicComparison } from "@/slices/clinic_comparison";
 import { ClinicFacts } from "@/slices/ClinicFacts";
 import { Divider } from "@/slices/divider";
 import { Faq } from "@/slices/Faq";
 import { FullWidthImage } from "@/slices/FullWidthImage";
 import { Hero, type HeroSlice as HeroProps } from "@/slices/hero";
-import { featuredPostHref, Posts, type PostCardData } from "@/slices/posts";
+import { PhotoGallery, galleryShots, pairShots } from "@/slices/PhotoGallery";
+import {
+  featuredPostHref,
+  pickedPostCards,
+  Posts,
+  type PostCardData,
+} from "@/slices/posts";
 import { ProsAndCons } from "@/slices/ProsAndCons";
 import { Quote } from "@/slices/quote";
 import { Ribbon } from "@/slices/Ribbon";
@@ -37,6 +43,7 @@ import type {
   FullWidthImageSlice,
   HeroSlice,
   PageDocumentDataSlicesSlice,
+  PhotoGallerySlice,
   PostsSlice,
   ProsConsSlice,
   ProviderDocument,
@@ -138,12 +145,16 @@ function PostsAdapter({ slice, context }: Props<PostsSlice>) {
   const featured = pickedUrl
     ? (context.posts.find((post) => post.href === pickedUrl) ?? null)
     : null;
+  const handPicked =
+    slice.variation === "picked"
+      ? pickedPostCards(slice.primary.posts, context.posts)
+      : null;
 
   return (
     <Posts
       variation={slice.variation}
       primary={slice.primary}
-      posts={context.posts}
+      posts={handPicked ?? context.posts}
       featured={featured}
       page={context.page}
       activeCategory={context.category}
@@ -156,6 +167,15 @@ function ClinicComparisonAdapter({
   slice,
   context,
 }: Props<ClinicComparisonSlice>) {
+  if (slice.variation === "chart") {
+    return (
+      <ClinicComparison
+        primary={slice.primary}
+        rows={chartRows(slice.primary.rows)}
+      />
+    );
+  }
+
   const clinics = slice.primary.clinics.flatMap((row) => {
     const id = linkedId(row.clinic);
     const clinic = id ? context.clinics.get(id) : undefined;
@@ -208,6 +228,25 @@ function DividerAdapter({ slice }: Props<DividerSlice>) {
 
 function FullWidthImageAdapter({ slice }: Props<FullWidthImageSlice>) {
   return <FullWidthImage primary={slice.primary} />;
+}
+
+function PhotoGalleryAdapter({ slice }: Props<PhotoGallerySlice>) {
+  if (slice.variation === "pair") {
+    return (
+      <PhotoGallery
+        variation="pair"
+        primary={slice.primary}
+        pair={pairShots(slice.primary)}
+      />
+    );
+  }
+
+  return (
+    <PhotoGallery
+      primary={slice.primary}
+      photos={galleryShots(slice.primary.photos)}
+    />
+  );
 }
 
 function FaqAdapter({ slice, context }: Props<FaqSlice>) {
@@ -288,6 +327,7 @@ const components = {
   divider: DividerAdapter,
   faq: FaqAdapter,
   full_width_image: FullWidthImageAdapter,
+  photo_gallery: PhotoGalleryAdapter,
   ribbon: RibbonAdapter,
   buttons: ButtonsAdapter,
   boxes: BoxesAdapter,

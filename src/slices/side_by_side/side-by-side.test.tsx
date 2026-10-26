@@ -146,6 +146,77 @@ describe("SideBySide", () => {
     expect(markup).toContain("Peggy, at home.");
   });
 
+  it("makes the photo a link when one is set", () => {
+    const markup = renderToStaticMarkup(
+      <SideBySide
+        variation="image"
+        imageHref="/joiwommenswellness"
+        primary={{
+          ...section(),
+          text: content(rich("Hi.")),
+          caption: rich("Joi + Blokes"),
+          caption_on_photo: false,
+        }}
+        image={{ src: "/photo.jpg", alt: "A vial" }}
+      />,
+    );
+    expect(markup).toContain('href="/joiwommenswellness"');
+    expect(markup).not.toContain("sponsored");
+  });
+
+  it("uses the photo link field when no address is passed in", () => {
+    const markup = renderToStaticMarkup(
+      <SideBySide
+        variation="image"
+        primary={{
+          ...section(),
+          text: content(rich("Hi.")),
+          image_link: {
+            link_type: "Web",
+            url: "/joiwommenswellness",
+          },
+        }}
+        image={{ src: "/photo.jpg", alt: "A vial" }}
+      />,
+    );
+    expect(markup).toContain('href="/joiwommenswellness"');
+    expect(markup).not.toContain("sponsored");
+  });
+
+  it("opens a photo link in a new tab when the field says so", () => {
+    const markup = renderToStaticMarkup(
+      <SideBySide
+        variation="image"
+        primary={{
+          ...section(),
+          text: content(rich("Hi.")),
+          image_link: {
+            link_type: "Web",
+            url: "https://example.com/joi",
+            target: "_blank",
+          },
+        }}
+        image={{ src: "/photo.jpg", alt: "A vial" }}
+      />,
+    );
+    expect(markup).toContain('target="_blank"');
+    expect(markup).toContain('rel="noopener noreferrer"');
+    expect(markup).not.toContain("sponsored");
+  });
+
+  it("marks an affiliate photo link as sponsored", () => {
+    const markup = renderToStaticMarkup(
+      <SideBySide
+        variation="image"
+        imageHref="https://joiblokes.pxf.io/R01mK7"
+        primary={{ ...section(), text: content(rich("Hi.")) }}
+        image={{ src: "/photo.jpg", alt: "A vial" }}
+      />,
+    );
+    expect(markup).toContain('rel="sponsored nofollow noopener noreferrer"');
+    expect(markup).toContain('target="_blank"');
+  });
+
   it("hides an empty caption", () => {
     const markup = renderToStaticMarkup(
       <SideBySide

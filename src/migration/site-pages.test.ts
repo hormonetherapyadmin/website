@@ -12,13 +12,32 @@ function textOf(value: unknown): string {
   return JSON.stringify(value);
 }
 
+const LA_WIG_START = "shareasale.com/r.cfm?b=1744268";
+
 describe("site pages", () => {
-  it("sends About, FAQ, Is HRT for me, and Inner Balance, in that order", () => {
+  it("sends the site pages with the clinic pages after Inner Balance", () => {
     expect(SITE_PAGES.map((item) => item.uid)).toEqual([
       "about",
       "faq",
       "ishrtforme",
       "inner-balance",
+      "winona-review-page",
+      "musely",
+      "alloy-review-page",
+      "joiwommenswellness",
+      "effecty",
+      "mymenopauserx",
+      "midi-health-review-page",
+      "formuations",
+      "costandinsurance",
+      "sleep",
+      "hair-loss",
+      "skincare",
+      "copy-of-weight-gain",
+      "hrt-price-comparison-chart",
+      "tipstofindprovider",
+      "hrt-doctors-review-costs-services",
+      "men-s-hrt",
     ]);
   });
 
@@ -110,7 +129,9 @@ describe("site pages", () => {
     expect(writing).not.toContain("/mockup/trusted-providers");
     expect(writing).not.toContain("/mockup/is-hrt-for-me");
     expect(writing).not.toContain("#affiliate");
-    expect(writing).not.toContain("pxf.io");
+    expect(writing.replaceAll("http://winona.pxf.io/XYkMZ3", "")).not.toContain(
+      "pxf.io",
+    );
     for (const item of [...SITE_PAGES, HOMEPAGE]) {
       for (const image of pageImages(item)) {
         expect(image.path.startsWith("public/mockup/")).toBe(true);
@@ -125,7 +146,9 @@ describe("site pages", () => {
       clinic.slices.map((slice) => [slice.slice_type, slice.variation]),
     ).toEqual([
       ["hero", "provider"],
+      ["divider", "default"],
       ["clinic_facts", "default"],
+      ["divider", "default"],
       ["ribbon", "default"],
     ]);
     const writing = textOf(clinic);
@@ -141,7 +164,100 @@ describe("site pages", () => {
     );
     expect(writing).toContain('"/post/inner-balance-hrt-review"');
     expect(writing).toContain("https://youtu.be/PuAekNT9ZvA");
-    expect(pageImages(clinic)).toEqual([]);
+    expect(pageImages(clinic).map((image) => image.filename)).toEqual([
+      "inner-balance-morning.jpg",
+    ]);
+  });
+
+  it("builds a clinic page for each of the other brands, at the Wix address", () => {
+    const pages = [
+      ["winona-review-page", "winona.jpg", "placing order"],
+      ["musely", "musely.jpg", "gentler form of HRT"],
+      ["alloy-review-page", "alloy.jpg", "straight-forward experience"],
+      ["joiwommenswellness", "joi.jpg", "Joi Clinician"],
+      ["effecty", "effecty.jpg", "no hidden fees"],
+      ["mymenopauserx", "menorx.jpg", "start-over on HRT"],
+      ["midi-health-review-page", "midi.jpg", "very next business day"],
+    ] as const;
+    for (const [uid, filename, quote] of pages) {
+      const clinic = page(uid);
+      expect(
+        clinic.slices.map((slice) => [slice.slice_type, slice.variation]),
+      ).toEqual([
+        ["hero", "provider"],
+        ["divider", "default"],
+        ["clinic_facts", "default"],
+        ["divider", "default"],
+        ["ribbon", "default"],
+      ]);
+      const writing = textOf(clinic);
+      expect(writing).toContain(quote);
+      expect(writing).toContain("The facts");
+      expect(writing).toContain("/trusted-providers");
+      expect(writing).not.toContain("What Oestra cost me");
+      expect(pageImages(clinic).map((image) => image.filename)).toEqual([
+        filename,
+      ]);
+    }
+    expect(textOf(page("musely"))).toContain("Winona vs Musely");
+    expect(textOf(page("alloy-review-page"))).toContain("Alloy Vs. Wiona");
+    expect(textOf(page("midi-health-review-page"))).toContain(
+      "Midi Health vs. Allara Health",
+    );
+    expect(textOf(page("midi-health-review-page"))).not.toContain("pxf.io");
+    expect(textOf(page("effecty"))).toContain("https://youtu.be/5671FQQHL8s");
+  });
+
+  it("keeps the October 2026 wording on the remaining site pages", () => {
+    expect(textOf(page("formuations"))).toContain("Theu can contain");
+    expect(textOf(page("formuations"))).toContain("thatr are");
+    expect(textOf(page("formuations"))).toContain("mange any");
+    expect(textOf(page("formuations"))).toContain("ad administration");
+    expect(textOf(page("formuations"))).toContain("a extended period");
+    expect(textOf(page("costandinsurance"))).toContain("informtion");
+    expect(textOf(page("costandinsurance"))).toContain("therapy. it is");
+    expect(textOf(page("hair-loss"))).toContain("before I starting");
+    expect(textOf(page("hair-loss"))).toContain("experiementing");
+    expect(textOf(page("hair-loss"))).toContain(LA_WIG_START);
+    expect(textOf(page("skincare"))).toContain("estriol a form");
+    expect(textOf(page("skincare"))).toContain("$ 149.97");
+    expect(textOf(page("skincare"))).toContain("http://alloy.sjv.io/q4MxVj");
+    expect(textOf(page("skincare"))).toContain("http://winona.pxf.io/XYkMZ3");
+    expect(textOf(page("skincare"))).toContain('"/inner-balance"');
+    expect(textOf(page("men-s-hrt"))).toContain("anthing");
+    expect(textOf(page("men-s-hrt"))).toContain("https://shrsl.com/4pnzy");
+    expect(textOf(page("hrt-doctors-review-costs-services"))).toContain(
+      "Specialities",
+    );
+    expect(textOf(page("hrt-doctors-review-costs-services"))).toContain(
+      "$229/Month",
+    );
+    expect(textOf(page("hrt-doctors-review-costs-services"))).toContain(
+      "shareasale.com/r.cfm?b=2245796",
+    );
+    expect(textOf(page("copy-of-weight-gain"))).not.toContain("joiblokes");
+    expect(textOf(page("copy-of-weight-gain"))).toContain(
+      "weight-chalkboard.png",
+    );
+    expect(textOf(page("tipstofindprovider"))).toContain('"/formuations"');
+    expect(textOf(page("hrt-price-comparison-chart"))).toContain("6 days ago");
+    expect(textOf(page("sleep")).match(/hero/g)?.length).toBeGreaterThan(0);
+    for (const uid of [
+      "formuations",
+      "costandinsurance",
+      "sleep",
+      "hair-loss",
+      "skincare",
+      "copy-of-weight-gain",
+      "hrt-price-comparison-chart",
+      "tipstofindprovider",
+      "hrt-doctors-review-costs-services",
+      "men-s-hrt",
+    ]) {
+      expect(page(uid).slices[0]?.slice_type).toBe("hero");
+      expect(page(uid).slices[1]?.slice_type).toBe("divider");
+      expect(textOf(page(uid))).toContain("/trusted-providers");
+    }
   });
 
   it("finishes the homepage and keeps the hero and divider", () => {

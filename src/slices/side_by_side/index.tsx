@@ -22,7 +22,12 @@ import {
   sectionAnchor,
   type SliceSectionFields,
 } from "@/components/slice-section";
-import { storyLinkRel, visitLinkProps } from "@/lib/affiliate-link";
+import {
+  AFFILIATE_REL,
+  isAffiliateUrl,
+  storyLinkRel,
+  visitLinkProps,
+} from "@/lib/affiliate-link";
 import { ProductCard } from "@/slices/BrandPromo";
 import styles from "./side-by-side.module.css";
 
@@ -76,6 +81,8 @@ type SideBySidePrimary = Partial<SliceSectionFields> & {
   text?: RichTextField | null;
   button?: readonly LinkField[] | null;
   image?: ImageField | null;
+  /** Image only. The photo opens this. Empty means the photo is not a link. */
+  image_link?: LinkField | null;
   caption?: RichTextField | null;
   /** On the photo is the default. Off centers the caption under the photo. */
   caption_on_photo?: boolean | null;
@@ -179,39 +186,68 @@ function MediaFigure({
   );
 }
 
+function photoDestination(
+  imageHref: string | null | undefined,
+  link: LinkField | null | undefined,
+) {
+  if (imageHref) {
+    return { href: imageHref, blank: isAffiliateUrl(imageHref) };
+  }
+  if (!link || !isFilled.link(link) || !link.url) return null;
+  return {
+    href: link.url,
+    blank:
+      ("target" in link && link.target === "_blank") ||
+      isAffiliateUrl(link.url),
+  };
+}
+
 function Photo({
   image,
   field,
+  href,
+  blank = false,
 }: {
   image?: SideImage | null;
   field?: ImageField | null;
+  href?: string | null;
+  blank?: boolean;
 }) {
-  if (image?.src) {
-    return (
-      <Image
-        src={image.src}
-        alt={image.alt ?? ""}
-        fill
-        sizes="(max-width: 960px) 100vw, 560px"
-        className={styles.photo}
-        preload
-      />
-    );
-  }
+  const picture = image?.src ? (
+    <Image
+      src={image.src}
+      alt={image.alt ?? ""}
+      fill
+      sizes="(max-width: 960px) 100vw, 560px"
+      className={styles.photo}
+      preload
+    />
+  ) : isFilled.image(field) ? (
+    <PrismicNextImage
+      field={field}
+      fill
+      sizes="(max-width: 960px) 100vw, 560px"
+      className={styles.photo}
+      fallbackAlt=""
+    />
+  ) : null;
 
-  if (isFilled.image(field)) {
-    return (
-      <PrismicNextImage
-        field={field}
-        fill
-        sizes="(max-width: 960px) 100vw, 560px"
-        className={styles.photo}
-        fallbackAlt=""
-      />
-    );
-  }
+  if (!picture) return null;
+  if (!href) return picture;
 
-  return null;
+  const affiliate = isAffiliateUrl(href);
+  const open = blank || affiliate;
+
+  return (
+    <a
+      href={href}
+      className={styles.photoLink}
+      target={open ? "_blank" : undefined}
+      rel={affiliate ? AFFILIATE_REL : open ? "noopener noreferrer" : undefined}
+    >
+      {picture}
+    </a>
+  );
 }
 
 function VideoFrame({ video }: { video: SideVideo }) {
@@ -272,6 +308,7 @@ export function SideBySide({
   variation,
   primary,
   image,
+  imageHref,
   video,
   clinic,
   clinics,
@@ -280,6 +317,8 @@ export function SideBySide({
   variation: SideBySideVariation | string;
   primary: SideBySidePrimary;
   image?: SideImage | null;
+  /** Makes the photo a link. An affiliate address opens in a new tab. */
+  imageHref?: string | null;
   video?: SideVideo | null;
   clinic?: SideClinic | null;
   /** Clinics a token in the writing can name. */
@@ -295,6 +334,9 @@ export function SideBySide({
   const showImage =
     layout === "image" &&
     (Boolean(image?.src) || isFilled.image(primary.image));
+  const photoLink = showImage
+    ? photoDestination(imageHref, primary.image_link)
+    : null;
   const showVideo = layout === "video" && Boolean(video?.html || video?.url);
   const showQuote = layout === "quote" && isFilled.richText(primary.quote);
   const showStatement = layout === "image" && isFilled.richText(primary.quote);
@@ -347,7 +389,12 @@ export function SideBySide({
             caption={primary.caption}
             onPhoto={primary.caption_on_photo !== false}
           >
-            <Photo image={image} field={primary.image} />
+            <Photo
+              image={image}
+              field={primary.image}
+              href={photoLink?.href}
+              blank={photoLink?.blank}
+            />
           </MediaFigure>
         ) : null}
         {showVideo && video ? (
