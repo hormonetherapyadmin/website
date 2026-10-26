@@ -240,7 +240,40 @@ describe("site pages", () => {
       "weight-chalkboard.png",
     );
     expect(textOf(page("tipstofindprovider"))).toContain('"/formuations"');
-    expect(textOf(page("hrt-price-comparison-chart"))).toContain("6 days ago");
+    expect(textOf(page("hair-loss"))).toContain("photo_gallery");
+    expect(textOf(page("hair-loss"))).toContain("Simmer Elite");
+    expect(textOf(page("hair-loss"))).toContain("Raquel Welch - Portrait Mode");
+    expect(
+      pageImages(page("hair-loss")).map((image) => image.filename),
+    ).toEqual([
+      "hair-thin.jpg",
+      "hair-topper.jpg",
+      "hair-shaved.jpg",
+      "wig-portrait.jpg",
+      "wig-directors.jpg",
+      "wig-flirt.jpg",
+      "wig-julianne.jpg",
+    ]);
+    expect(textOf(page("skincare"))).toContain("alloy-m4-face-cream-review");
+    expect(textOf(page("skincare"))).toContain(
+      "winona-estriol-cream-with-tretinoin-review",
+    );
+    expect(
+      pageImages(page("men-s-hrt")).map((image) => image.filename),
+    ).toEqual(["men-1.jpg", "men-2.jpg", "men-3.jpg"]);
+    expect(textOf(page("copy-of-weight-gain"))).toContain(
+      '"/joiwommenswellness"',
+    );
+    expect(textOf(page("copy-of-weight-gain"))).toContain('"chart"');
+    expect(textOf(page("hrt-price-comparison-chart"))).toContain(
+      "atGcfxIAAC4AAHHR",
+    );
+    expect(textOf(page("hrt-price-comparison-chart"))).toContain(
+      "atGcfRIAACkAAHHM",
+    );
+    expect(textOf(page("hrt-price-comparison-chart"))).toContain(
+      "my-experience-with-joi-women-s-wellness-menopause-hormone-testing-what-s-included-is-it-worth-it",
+    );
     expect(textOf(page("sleep")).match(/hero/g)?.length).toBeGreaterThan(0);
     for (const uid of [
       "formuations",

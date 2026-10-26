@@ -1147,13 +1147,95 @@ export type ProviderDocument<Lang extends string = string> =
     Lang
   >;
 
+/**
+ * Item in *Redirect → Redirects*
+ */
+export interface RedirectDocumentDataRedirectsItem {
+  /**
+   * From field in *Redirect → Redirects*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: The old address, for example /old-page. Goes live after the site rebuilds, usually within a few minutes.
+   * - **API ID Path**: redirect.redirects[].from
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  from: prismic.KeyTextField;
+
+  /**
+   * To field in *Redirect → Redirects*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: The page this address should open. Pick the document when it is one of ours.
+   * - **API ID Path**: redirect.redirects[].to
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  to: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Type field in *Redirect → Redirects*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: 301 permanent
+   * - **API ID Path**: redirect.redirects[].redirect_type
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  redirect_type: prismic.SelectField<
+    "301 permanent" | "302 temporary",
+    "filled"
+  >;
+
+  /**
+   * Reason field in *Redirect → Redirects*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Why this address moves.
+   * - **API ID Path**: redirect.redirects[].reason
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  reason: prismic.KeyTextField;
+}
+
+/**
+ * Content for Redirect documents
+ */
+interface RedirectDocumentData {
+  /**
+   * Redirects field in *Redirect*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: redirect.redirects[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  redirects: prismic.GroupField<Simplify<RedirectDocumentDataRedirectsItem>>;
+}
+
+/**
+ * Redirect document from Prismic
+ *
+ * - **API ID**: `redirect`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type RedirectDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<RedirectDocumentData>,
+    "redirect",
+    Lang
+  >;
+
 export type AllDocumentTypes =
   | AuthorDocument
   | HomepageDocument
   | NavigationDocument
   | PageDocument
   | PostDocument
-  | ProviderDocument;
+  | ProviderDocument
+  | RedirectDocument;
 
 /**
  * Item in *Boxes → Default → Primary → Boxes*
@@ -5941,6 +6023,9 @@ declare module "@prismicio/client" {
       ProviderDocument,
       ProviderDocumentData,
       ProviderDocumentDataHowItWorksItem,
+      RedirectDocument,
+      RedirectDocumentData,
+      RedirectDocumentDataRedirectsItem,
       AllDocumentTypes,
       BoxesSlice,
       BoxesSliceDefaultPrimaryBoxesItem,

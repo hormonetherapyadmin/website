@@ -951,8 +951,8 @@ inventory.
 
 ### Redirects
 
--   Redirects are managed in Prismic as a Redirect document type
-    (From path, To link, 301/302, required Reason). See
+-   Redirects are one Prismic singleton. A repeatable group holds
+    each row (From, To link, 301/302, required Reason). See
     `docs/CONTENT_MODEL.md`.
 -   A build step reads all Redirect documents and writes Netlify's
     `_redirects` file, so redirects are served by Netlify's edge

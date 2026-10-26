@@ -354,10 +354,10 @@ is the Wix slug, unchanged, such as `copy-of-trusted-providers` or
 
 ### Redirect
 
-One document per redirect. Published redirects are written to
-Netlify's `_redirects` file at build time.
+One singleton, custom type `redirect`. It has no public URL. Every
+redirect is a row in the repeatable group **Redirects**.
 
--   From path --- key text, must start with `/`. Help text: "The old
+-   From --- key text, must start with `/`. Help text: "The old
     address, for example /old-page. Goes live after the site rebuilds,
     usually within a few minutes."
 -   To --- link field. Prefer linking to a document so the redirect

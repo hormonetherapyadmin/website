@@ -263,8 +263,8 @@ average stays on the homepage comparison. Inner Balance had that
 section; it is being removed there, and the other clinic pages do not
 get it.
 
-Still to send, composed from the October 2026 Wix pages and not yet
-published:
+Composed from the October 2026 Wix pages and sitting in the migration
+release, not published:
 
 -   `/formuations`. The uid keeps the typo. Hero, the two
     best-known-for boxes, and Text for each formulation list.
@@ -272,16 +272,22 @@ published:
 -   `/sleep`. The live page has no body copy. Hero and the journey
     button only.
 -   `/hair-loss`, `/skincare`, and `/men-s-hrt`. The writing and the
-    affiliate buttons are here. Peggy's photos are not. Those pages
-    need a photo gallery slice.
--   `/copy-of-weight-gain`. The uid keeps the copy slug. The vial and
-    the chalkboard are Full width images. The vial is Joi's visit link
-    on Wix, and Full width image has no link, so that address stays on
-    the Joi brand. The comparison under the last heading is a Common
-    Ninja embed and is not in this page.
+    affiliate buttons are here, and Peggy's photos are a Photo gallery.
+    Hair has the three story photos and the four wig photos. Simmer
+    Elite and Kelly had no photo, so those names stay in the writing.
+    Skincare has an Alloy pair, a Winona pair, and one Inner Balance
+    photo. The men's photos have blank captions because the files are
+    not labeled.
+-   `/copy-of-weight-gain`. The uid keeps the copy slug. The vial is a
+    Side by side photo that links to `/joiwommenswellness`. The visit
+    address stays on the Joi brand. The chalkboard is still a Full
+    width image. The comparison under the last heading is the Chart
+    variation, and its rows are empty because the Common Ninja embed
+    is not on the page.
 -   `/hrt-price-comparison-chart`. The live page is three posts, not a
-    price table. The posts are links. The homepage comparison is the
-    price chart.
+    price table. The Joi testing post is not in Prismic yet, so it
+    stays a link. The other two are a Picked posts row. The homepage
+    comparison is the price chart.
 -   `/tipstofindprovider`. Hero and Text. The formulations button goes
     to `/formuations`.
 -   `/hrt-doctors-review-costs-services`. The words are in Text. This
@@ -294,11 +300,10 @@ Wix it links to the homepage.
 
 Not composed:
 
-1.  The old trusted-providers address. `/copy-of-trusted-providers`
-    redirects to `/trusted-providers`. The Redirect type is not built
-    yet, so that redirect is a later document.
-2.  `/copy-of-inner-balance` is the same page as `/inner-balance`. It
-    should redirect, not be a second page.
+1.  `/copy-of-trusted-providers` redirects to `/trusted-providers`.
+    It is a row on the Redirect document, not a second page.
+2.  `/copy-of-inner-balance` redirects to `/inner-balance`. It is a
+    row on the Redirect document, not a second page.
 3.  `/trackersandtesting` is the published page `trackers-and-testing`.
     That URL decision is still open.
 4.  `/my-addresses` is a Wix members page. It needs a disposition, not
@@ -333,9 +338,11 @@ For redirects, validate:
 
 The complete list from Wix → SEO → URL Redirect Manager (owner
 screenshot, 2026-10-09), with destinations approved by the owner the
-same day, plus the dead addresses below. The Redirect type is built on
-the branch after the blog migration. Then create one Redirect document
-per row (see `docs/CONTENT_MODEL.md`), all `301 permanent`.
+same day, plus the dead addresses below and `/copy-of-inner-balance`.
+They are rows on the one Redirect document (see
+`docs/CONTENT_MODEL.md`), all `301 permanent`.
+`scripts/import-redirects.mts` sends that document and does not
+publish it.
 
 `src/migration/wix-redirects.ts` holds the same list. Change both
 together. The post importer uses it to point links in posts straight
@@ -355,6 +362,7 @@ the build fails.
 | `/copy-of-pricing-insurance` | `/ishrtforme` | Wix redirect |
 | `/copy-of-providers` | `/formuations` | Wix redirect |
 | `/copy-of-trusted-providers` | `/trusted-providers` | Not in Wix. The live trusted providers page moves to a new address (owner decision, 2026-10-09) |
+| `/copy-of-inner-balance` | `/inner-balance` | The same page as `/inner-balance` |
 | `/copy-of-winona` | `/musely` | Wix redirect |
 | `/copy-of-winona-review-page` | `/winona-review-page` | Old copy of the Winona review. Wix pointed at `/evernow-review-page`, a 404 |
 | `/costandformunlations` | `/costandinsurance` | Wix redirect |

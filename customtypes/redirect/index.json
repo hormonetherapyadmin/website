@@ -1,0 +1,48 @@
+{
+  "format": "custom",
+  "id": "redirect",
+  "json": {
+    "Main": {
+      "redirects": {
+        "config": {
+          "fields": {
+            "from": {
+              "config": {
+                "label": "From",
+                "placeholder": "The old address, for example /old-page. Goes live after the site rebuilds, usually within a few minutes."
+              },
+              "type": "Text"
+            },
+            "to": {
+              "config": {
+                "label": "To",
+                "placeholder": "The page this address should open. Pick the document when it is one of ours."
+              },
+              "type": "Link"
+            },
+            "redirect_type": {
+              "config": {
+                "default_value": "301 permanent",
+                "label": "Type",
+                "options": ["301 permanent", "302 temporary"]
+              },
+              "type": "Select"
+            },
+            "reason": {
+              "config": {
+                "label": "Reason",
+                "placeholder": "Why this address moves."
+              },
+              "type": "Text"
+            }
+          },
+          "label": "Redirects"
+        },
+        "type": "Group"
+      }
+    }
+  },
+  "label": "Redirect",
+  "repeatable": false,
+  "status": true
+}

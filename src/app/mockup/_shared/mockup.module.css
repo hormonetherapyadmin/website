@@ -155,6 +155,7 @@
 
 .header {
   /* A flex item with auto side margins otherwise shrinks to the links. */
+  position: relative;
   width: 100%;
   max-width: var(--wrap);
   margin: 0 auto;
@@ -163,7 +164,30 @@
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   column-gap: 1.5rem;
-  border-bottom: 1px solid var(--rule);
+}
+
+/*
+  Rule under the nav. The mask swells through the middle and thins
+  toward the ends, and the gradient fades those ends out. The fill is
+  the palette accent, which is the brand color on public pages.
+*/
+.header::after {
+  --header-rule: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 24' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='h' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='white' stop-opacity='0'/%3E%3Cstop offset='0.04' stop-color='white' stop-opacity='0'/%3E%3Cstop offset='0.14' stop-color='white' stop-opacity='1'/%3E%3Cstop offset='0.86' stop-color='white' stop-opacity='1'/%3E%3Cstop offset='0.96' stop-color='white' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23h)' d='M0 12C260 12 400 11.2 500 7.2C600 11.2 740 12 1000 12C740 12 600 12.8 500 16.8C400 12.8 260 12 0 12Z'/%3E%3C/svg%3E");
+
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  pointer-events: none;
+  background: var(--accent);
+  -webkit-mask-image: var(--header-rule);
+  mask-image: var(--header-rule);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
 }
 
 .wordmark {

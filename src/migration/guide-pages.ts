@@ -2,10 +2,9 @@
 // including the typos. A link to this site is a relative path. A link
 // to another site keeps its full address.
 //
-// These pages are waiting on a slice or a brand, and say so in review:
-// hair, skincare, and men's HRT need a photo gallery; the weight page
-// needs a link on Full width image and a chart for the embedded
-// comparison; the price chart needs a hand-picked post list; HRT
+// Hair, skincare, and men's HRT use the photo gallery. The weight page
+// links the vial photo to the Joi page and leaves the GLP chart empty.
+// The price chart picks the posts that are already in Prismic. HRT
 // Doctors should become a Brand so the clinic page can replace this
 // Text composition.
 
@@ -162,6 +161,31 @@ function photo(path: string, alt: string, width: number, height: number) {
   };
 }
 
+function web(url: string, text?: string) {
+  return {
+    link_type: "Web" as const,
+    url,
+    ...(text ? { text } : {}),
+  };
+}
+
+function shot(
+  path: string,
+  alt: string,
+  width: number,
+  height: number,
+  caption?: string,
+  line?: string,
+  link?: ReturnType<typeof web>,
+) {
+  return {
+    image: photo(path, alt, width, height),
+    ...(caption ? { caption: rich(caption) } : {}),
+    ...(line ? { line } : {}),
+    ...(link ? { link } : {}),
+  };
+}
+
 const LA_WIG =
   "https://shareasale.com/r.cfm?b=1744268&u=4098145&m=98959&urllink=&afftrack=";
 const UNIWIGS = "https://shrsl.com/4pnzy";
@@ -184,7 +208,7 @@ export const GUIDE_PAGES = [
     review: [
       "The Wix page has no separate title. The hero uses the document title, and the two best-known-for lines are boxes.",
       "Wix shows the formulation names as bold lines. Here they are Heading 3. The words are unchanged, including Theu, thatr, a extended, mange, and ad administration.",
-      "The two formulation columns are stacked. A two-column writing slice would match the Wix layout.",
+      "The live page is one column, so the two formulation lists stay stacked.",
     ],
     changes: [journeyChange],
     slices: [
@@ -402,7 +426,7 @@ export const GUIDE_PAGES = [
     meta_description:
       "Hair loss during menopause sometimes happens.  See trusted providers for Hair Toppers and Wigs.",
     review: [
-      "Peggy's hair photos, the toppers, and the wig gallery stay off. A page photo gallery is the slice for them. The wig names and colors are here.",
+      "The three hair photos and the four wig photos are a photo gallery, centered. Simmer Elite and Kelly had no photo, so their names stay in the writing.",
       "The words are unchanged, including before I starting, experiementing, handband, alot, and it become.",
     ],
     changes: [
@@ -424,6 +448,33 @@ export const GUIDE_PAGES = [
           'I have never had "GREAT" hair and as time went on, my hair became more and more thin. I couldn\'t really do much with it, so I wore it in a clip most of the time. I had a significant bald area on my crown, so pulling it back allowed me to camouflage that area and then I used tons of hairspray to make it big on top!',
         ),
       ]),
+      slice("photo_gallery", "default", {
+        ...section({ space_above: "Medium" }),
+        center: true,
+        photos: [
+          shot(
+            "public/mockup/proposed/hair-thin.jpg",
+            "Peggy, before she started wearing alternative hair",
+            815,
+            1400,
+            "Before alternative hair",
+          ),
+          shot(
+            "public/mockup/proposed/hair-topper.jpg",
+            "Peggy wearing a hair topper",
+            1136,
+            1400,
+            "With a topper",
+          ),
+          shot(
+            "public/mockup/proposed/hair-shaved.jpg",
+            "Peggy with a shaved head",
+            1377,
+            1400,
+            "Me today, no wig",
+          ),
+        ],
+      }),
       writing(
         "Hair Toppers",
         rich(
@@ -438,7 +489,44 @@ export const GUIDE_PAGES = [
           "He immediately responded with, let's do it now! It was a shock at first, but the buzzed hair is like human velcro and I don't have to wear anything under my wigs! I'm also working with my stylist to get it grown out enough to have a decent pixie cut by summer so I can swim with my grandkids when we go to Orlando, Florida.",
         ),
       ]),
-      writing("Some of my favorite Wigs!", []),
+      slice("photo_gallery", "default", {
+        ...section({ heading: "Some of my favorite Wigs!" }),
+        center: true,
+        photos: [
+          shot(
+            "public/mockup/proposed/wig-portrait.jpg",
+            "Peggy in the Raquel Welch Portrait Mode wig, Shaded Biscuit",
+            1353,
+            1400,
+            "Raquel Welch - Portrait Mode",
+            "Color: RL 19/23SS (Shaded Biscuit)",
+          ),
+          shot(
+            "public/mockup/proposed/wig-directors.jpg",
+            "Peggy in the Raquel Welch Director's Pick wig, Shaded Biscuit",
+            1400,
+            1050,
+            "Raquel Welch - Director's Pick",
+            "Color: RL 19/23SS (Shaded Biscuit)",
+          ),
+          shot(
+            "public/mockup/proposed/wig-flirt.jpg",
+            "Peggy in the Raquel Welch Flirt Alert wig, Shaded Biscuit",
+            1353,
+            1400,
+            "Raquel Welch - Flirt Alert",
+            "Color: RL 19/23SS (Shaded Biscuit)",
+          ),
+          shot(
+            "public/mockup/proposed/wig-julianne.jpg",
+            "Peggy in the Jon Reneau Julianne Lite wig, Palm Springs Blonde",
+            1166,
+            1400,
+            "Jon Reneau - Julianne Lite",
+            "Color: FS17/101S18 (Palm Springs Blonde)",
+          ),
+        ],
+      }),
       buttons([solid("Take me to The LA Wig Company", LA_WIG, true)], "None"),
       writing(undefined, [
         paragraph(
@@ -452,23 +540,10 @@ export const GUIDE_PAGES = [
         ),
         ...pairs([
           [
-            "Raquel Welch - Portrait Mode",
-            "Color: RL 19/23SS (Shaded Biscuit)",
-          ],
-          [
-            "Raquel Welch - Director's Pick",
-            "Color: RL 19/23SS (Shaded Biscuit)",
-          ],
-          ["Raquel Welch - Flirt Alert", "Color: RL 19/23SS (Shaded Biscuit)"],
-          [
             "Raquel Welch - Simmer Elite",
             "Color: 17/23SS - (Iced Latte Macchiato)",
           ],
           ["Jon Reneau - Kelly", "Color: FS17/101S18 (Palm Springs Blonde)"],
-          [
-            "Jon Reneau - Julianne Lite",
-            "Color: FS17/101S18 (Palm Springs Blonde)",
-          ],
         ]),
       ]),
       buttons([solid("Take me to The LA Wig Company", LA_WIG, true), journey]),
@@ -482,7 +557,7 @@ export const GUIDE_PAGES = [
     meta_description:
       "Are you looking for cream appropriate for a woman in her 50's then look at the creams I've tried and my before and afters.",
     review: [
-      "The before and after photos stay off. Alloy's pair links to /post/alloy-m4-face-cream-review and Winona's pair links to /post/winona-estriol-cream-with-tretinoin-review. A page photo gallery is the slice for them.",
+      "Alloy and Winona are before-and-after pairs. Each pair links to that cream's review. Inner Balance has one photo, and it links to /inner-balance.",
       "The Alloy button uses the Alloy visit address already on that brand. The Winona button uses a different address from the brand visit, so it is stored on this page.",
       "The Inner Balance coupon links to /inner-balance. The Wix page has no separate affiliate address on that button.",
     ],
@@ -503,13 +578,52 @@ export const GUIDE_PAGES = [
         paragraph(
           "The first Face Cream I tried that had Estrogen in it was Alloy's M4 Estriol Face Cream. The cost was $ 149.97 for a 3-month supply. It made a big difference in the darkness under my eyes.",
         ),
-        paragraph("Before"),
-        paragraph("After"),
+      ]),
+      slice("photo_gallery", "pair", {
+        ...section({ heading: "Alloy M4 Estriol Face Cream" }),
+        before: photo(
+          "public/mockup/proposed/skin-alloy-before.jpg",
+          "Peggy before Alloy M4 face cream",
+          1047,
+          1400,
+        ),
+        before_caption: rich("Before"),
+        after: photo(
+          "public/mockup/proposed/skin-alloy-after.jpg",
+          "Peggy after Alloy M4 face cream",
+          957,
+          1400,
+        ),
+        after_caption: rich("After"),
+        link: web("/post/alloy-m4-face-cream-review", "Read the review"),
+      }),
+      writing(undefined, [
         paragraph(
           "The second Face Cream I tried that had Estrogen in it was Winona's Estriol Skin Cream with Tretinoin. The cost was $150 for a 3-month supply. This was immediately after my experience with Alloy so it makes sense that I'm not seeing as much of difference because I started in a better place than I did with Alloy. I love the feel of Winona's Cream as it's super smooth and goes on with very little tugging. I think it's the Tretinoin that makes it so smooth. However, this was to be a 3-month supply and I barely got 30 days out of it.",
         ),
-        paragraph("Before"),
-        paragraph("After"),
+      ]),
+      slice("photo_gallery", "pair", {
+        ...section({ heading: "Winona Estriol Skin Cream" }),
+        before: photo(
+          "public/mockup/proposed/skin-winona-before.jpg",
+          "Peggy before Winona estriol cream",
+          1152,
+          1400,
+        ),
+        before_caption: rich("Before"),
+        after: photo(
+          "public/mockup/proposed/skin-winona-after.jpg",
+          "Peggy after Winona estriol cream",
+          1400,
+          1210,
+        ),
+        after_caption: rich("After"),
+        link: web(
+          "/post/winona-estriol-cream-with-tretinoin-review",
+          "Read the review",
+        ),
+      }),
+      writing(undefined, [
         paragraph(
           "Then once Inner Balance came out with their Estriol Face Cream, I had to try that as I'm a huge fan of the Oestra HRT cream.",
         ),
@@ -519,9 +633,22 @@ export const GUIDE_PAGES = [
         paragraph(
           "The cost per day is $2.44 for Inner Balance, compared to Alloy at $2.66 per day and Winona being at $3.33 per day.",
         ),
-        paragraph("Before"),
-        paragraph("After"),
       ]),
+      slice("photo_gallery", "default", {
+        ...section({ heading: "Inner Balance" }),
+        center: true,
+        photos: [
+          shot(
+            "public/mockup/proposed/skin-inner-balance.jpg",
+            "Peggy with the Inner Balance face cream",
+            745,
+            1400,
+            "Inner Balance",
+            undefined,
+            web("/inner-balance", "Inner Balance page"),
+          ),
+        ],
+      }),
       buttons([
         solid(
           "Use Code HormoneHub for $10 off first order!",
@@ -545,8 +672,8 @@ export const GUIDE_PAGES = [
     meta_description:
       "Want to know the Holy grail of weight loss for menopause? Learn about how you can combine HRT  and Semaglutide for the most effective weight loss results.",
     review: [
-      "The vial photo is the Joi visit link on Wix. Full width image has no link, so the address stays on the Joi brand and the photo is not a link yet.",
-      "The comparison under Which Telehealth Platform is a Common Ninja embed. Its rows are not on this page. A comparison table slice is what that chart needs.",
+      "The vial photo links to /joiwommenswellness. The visit address stays on the Joi brand.",
+      "The comparison under Which Telehealth Platform is a Common Ninja embed. Its rows are not on this page, so the chart is empty.",
     ],
     changes: [journeyChange],
     slices: [
@@ -554,22 +681,23 @@ export const GUIDE_PAGES = [
         "GLP-1 & GIP-1 Meds can be very beneficial to add to your HRT Regimen for Stubborn Weight Loss",
       ),
       divider(),
-      slice("full_width_image", "default", {
+      slice("side_by_side", "image", {
+        ...section({
+          heading:
+            "The HOLY Grail of Weight Loss for Women in Menopause or Perimenopause!",
+        }),
         image: photo(
           "public/mockup/pages/weight-vial.jpg",
           "A vial and an orange syringe on a counter",
           1050,
           1400,
         ),
-        edge_to_edge: false,
-        background: "Transparent",
-        space_above: "Large",
-        space_below: "None",
+        image_link: web("/joiwommenswellness"),
+        caption: rich("Joi + Blokes"),
+        caption_on_photo: false,
+        side: "Media right",
+        media_position: "Center",
       }),
-      writing(
-        "The HOLY Grail of Weight Loss for Women in Menopause or Perimenopause!",
-        [],
-      ),
       slice("full_width_image", "default", {
         image: photo(
           "public/mockup/pages/weight-chalkboard.png",
@@ -582,10 +710,13 @@ export const GUIDE_PAGES = [
         space_above: "Medium",
         space_below: "None",
       }),
-      writing(
-        "Which Telehealth Platform offers the Best Value for GLP-1 Medications?",
-        [],
-      ),
+      slice("clinic_comparison", "chart", {
+        ...section({
+          heading:
+            "Which Telehealth Platform offers the Best Value for GLP-1 Medications?",
+        }),
+        rows: [],
+      }),
       buttons([journey]),
     ],
   },
@@ -596,8 +727,8 @@ export const GUIDE_PAGES = [
     meta_title: "Pricing | Hormone Therapy Hub",
     meta_description: "Online HRT Price Comparison Chart",
     review: [
-      "The live page is these three posts, not a price table. The homepage comparison is the price chart. Posts cannot name these three, so they are links.",
-      "6 days ago is the blog widget's clock on 2026-10-25. Oct 12 and Oct 9 are the dates on the page.",
+      "The live page is these three posts, not a price table. The homepage comparison is the price chart.",
+      "The Joi testing post is not in Prismic yet, so it stays a link. The other two are the hand-picked row, in the same order.",
     ],
     changes: [journeyChange],
     slices: [
@@ -617,20 +748,30 @@ export const GUIDE_PAGES = [
           "My Experience with Joi Women’s Wellness Menopause Hormone Testing: What’s Included & Is It Worth It?",
           "/post/my-experience-with-joi-women-s-wellness-menopause-hormone-testing-what-s-included-is-it-worth-it",
         ),
-        paragraph("6 days ago"),
-        linked(
-          "How Does Online HRT Work? Doctors, Costs, and Insurance Explained",
-          "How Does Online HRT Work? Doctors, Costs, and Insurance Explained",
-          "/post/how-does-online-hrt-work-doctors-costs-and-insurance-explained",
-        ),
-        paragraph("Oct 12"),
-        linked(
-          "Joi vs. Midi Health: Which Offers 1-on-1 Consults & the Most Thorough Testing?",
-          "Joi vs. Midi Health: Which Offers 1-on-1 Consults & the Most Thorough Testing?",
-          "/post/joi-vs-midi-health-which-offers-1-on-1-consults-testing",
-        ),
-        paragraph("Oct 9"),
       ]),
+      slice("posts", "picked", {
+        ...section(),
+        posts: [
+          {
+            post: {
+              link_type: "Document",
+              id: "atGcfxIAAC4AAHHR",
+              type: "post",
+              uid: "how-does-online-hrt-work-doctors-costs-and-insurance-explained",
+              url: "/post/how-does-online-hrt-work-doctors-costs-and-insurance-explained",
+            },
+          },
+          {
+            post: {
+              link_type: "Document",
+              id: "atGcfRIAACkAAHHM",
+              type: "post",
+              uid: "joi-vs-midi-health-which-offers-1-on-1-consults-testing",
+              url: "/post/joi-vs-midi-health-which-offers-1-on-1-consults-testing",
+            },
+          },
+        ],
+      }),
       buttons([journey]),
     ],
   },
@@ -814,7 +955,7 @@ export const GUIDE_PAGES = [
     title: "Men's HRT",
     meta_title: "Men's HRT | Hormone Therapy Hub",
     review: [
-      "Peggy's hair photos stay off. A page photo gallery is the slice for them.",
+      "The three photos are a photo gallery. The files are not labeled, so the captions are blank.",
       "The page is Peggy's hair topper story. The words are unchanged, including anthing and less roots.",
       "There is no men's hormone copy on the live page.",
     ],
@@ -841,6 +982,30 @@ export const GUIDE_PAGES = [
           "This is my first topper; I already have a 2nd and 3rd on order. This one has less roots, than the 2nd I've ordered, has more roots and the 3rd will be synthetic hair, as I wanted to try those out as well. I'll keep you posted on how it goes.",
         ),
       ]),
+      slice("photo_gallery", "default", {
+        ...section({ space_above: "Medium" }),
+        center: true,
+        photos: [
+          shot(
+            "public/mockup/proposed/men-1.jpg",
+            "Peggy, a photo from the men's HRT page",
+            1211,
+            1400,
+          ),
+          shot(
+            "public/mockup/proposed/men-2.jpg",
+            "Peggy, a second photo from the men's HRT page",
+            1225,
+            1400,
+          ),
+          shot(
+            "public/mockup/proposed/men-3.jpg",
+            "Peggy, a third photo from the men's HRT page",
+            1168,
+            1400,
+          ),
+        ],
+      }),
       writing("Hair Loss is a side-effect of Perimenopause and Menopause", [
         paragraph(
           "During perimenopause and menopause, many women experience hair loss, which can be attributed to a combination of hormonal changes, genetics, and environmental factors. One of the primary hormonal shifts involves a decrease in estrogen levels. Estrogen plays a crucial role in the hair growth cycle; it helps to prolong the growth phase and maintain hair density. As estrogen levels drop, the balance between hair growth and shedding can be disrupted, leading to increased hair thinning and loss.",
