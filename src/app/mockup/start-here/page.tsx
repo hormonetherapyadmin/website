@@ -51,7 +51,7 @@ const SAMPLES = [
     small_heading: "A longer path",
     heading: "Weight and HRT",
     text: "How hormone therapy and weight showed up in Peggy's own care.",
-    href: "/copy-of-weight-gain",
+    href: "/weight-gain",
   },
 ];
 

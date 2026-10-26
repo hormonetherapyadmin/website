@@ -33,7 +33,7 @@ describe("site pages", () => {
       "sleep",
       "hair-loss",
       "skincare",
-      "copy-of-weight-gain",
+      "weight-gain",
       "hrt-price-comparison-chart",
       "tipstofindprovider",
       "hrt-doctors-review-costs-services",
@@ -235,10 +235,8 @@ describe("site pages", () => {
     expect(textOf(page("hrt-doctors-review-costs-services"))).toContain(
       "shareasale.com/r.cfm?b=2245796",
     );
-    expect(textOf(page("copy-of-weight-gain"))).not.toContain("joiblokes");
-    expect(textOf(page("copy-of-weight-gain"))).toContain(
-      "weight-chalkboard.png",
-    );
+    expect(textOf(page("weight-gain"))).not.toContain("joiblokes");
+    expect(textOf(page("weight-gain"))).toContain("weight-chalkboard.png");
     expect(textOf(page("tipstofindprovider"))).toContain('"/formuations"');
     expect(textOf(page("hair-loss"))).toContain("photo_gallery");
     expect(textOf(page("hair-loss"))).toContain("Simmer Elite");
@@ -261,10 +259,8 @@ describe("site pages", () => {
     expect(
       pageImages(page("men-s-hrt")).map((image) => image.filename),
     ).toEqual(["men-1.jpg", "men-2.jpg", "men-3.jpg"]);
-    expect(textOf(page("copy-of-weight-gain"))).toContain(
-      '"/joiwommenswellness"',
-    );
-    expect(textOf(page("copy-of-weight-gain"))).toContain('"chart"');
+    expect(textOf(page("weight-gain"))).toContain('"/joiwommenswellness"');
+    expect(textOf(page("weight-gain"))).toContain('"chart"');
     expect(textOf(page("hrt-price-comparison-chart"))).toContain(
       "atGcfxIAAC4AAHHR",
     );
@@ -281,7 +277,7 @@ describe("site pages", () => {
       "sleep",
       "hair-loss",
       "skincare",
-      "copy-of-weight-gain",
+      "weight-gain",
       "hrt-price-comparison-chart",
       "tipstofindprovider",
       "hrt-doctors-review-costs-services",
@@ -307,6 +303,8 @@ describe("site pages", () => {
     ]);
     const writing = textOf(HOMEPAGE);
     expect(writing).toContain("Feel like you again.");
+    expect(writing).toContain('"/weight-gain"');
+    expect(writing).not.toContain("copy-of-");
     expect(writing).toContain("XYNQOFoQwb5OYLsz");
     expect(writing).toContain('"/#eight-online-hrt-clinics-side-by-side"');
     expect(writing).toContain('"/formuations"');

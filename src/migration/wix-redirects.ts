@@ -62,6 +62,12 @@ export const WIX_REDIRECTS: readonly WixRedirect[] = [
       "Old copy of the Winona review. Wix pointed at /evernow-review-page, a 404.",
   },
   {
+    from: "/copy-of-weight-gain",
+    to: "/weight-gain",
+    reason:
+      "The page lives at /weight-gain. The Wix copy address redirects there.",
+  },
+  {
     from: "/costandformunlations",
     to: "/costandinsurance",
     reason: "Wix redirect.",

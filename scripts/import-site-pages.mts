@@ -21,9 +21,15 @@ import type {
   HomepageDocument,
   PageDocument,
   ProviderDocument,
+  RedirectDocument,
 } from "../prismicio-types";
 import prismicConfig from "../prismic.config.json" with { type: "json" };
 import { planPost, type ImportState } from "../src/migration/post-plan.ts";
+import {
+  redirectRows,
+  type RedirectTarget,
+} from "../src/migration/redirect-rows.ts";
+import { WIX_REDIRECTS } from "../src/migration/wix-redirects.ts";
 import {
   CLINIC_BRANDS,
   HOMEPAGE,
@@ -280,6 +286,15 @@ for (const { page, plan } of jobs) {
     console.log(`  change ${page.uid}: ${change}`);
 }
 
+const renamingWeight = jobs.some(
+  (job) => job.page.uid === "weight-gain" && job.plan.action === "update",
+);
+if (renamingWeight) {
+  console.log(
+    "  redirect /copy-of-weight-gain → /weight-gain, in this same release",
+  );
+}
+
 if (!args.write) {
   console.log(`dry run. Report: ${writeReport()}`);
   process.exit(0);
@@ -465,6 +480,52 @@ if (homepageSent && !alloyPageSent && alloy && alloy.data.name !== "Alloy") {
   );
 }
 
+let redirectMigration: PrismicMigrationDocument<RedirectDocument> | undefined;
+if (sent.some((item) => item.page.uid === "weight-gain")) {
+  const targets = new Map<string, RedirectTarget>();
+  if (homepageDocument) {
+    targets.set("/", { id: homepageDocument.id, type: "homepage" });
+  }
+  for (const [uid, id] of published) {
+    targets.set(`/${uid}`, { id, type: "page", uid });
+  }
+  const moving = targets.get("/copy-of-weight-gain");
+  if (!moving) {
+    throw new Error(
+      "The weight page is not published at /copy-of-weight-gain, so the redirect has no document to follow.",
+    );
+  }
+  targets.set("/weight-gain", { ...moving, uid: "weight-gain" });
+  const live = new Set(targets.keys());
+  live.delete("/copy-of-weight-gain");
+  const rows = redirectRows(WIX_REDIRECTS, targets, live).map((row) =>
+    row.to.url === "/weight-gain"
+      ? {
+          ...row,
+          to: {
+            link_type: "Document" as const,
+            id: () => migration.getByUID("page", "weight-gain"),
+          },
+        }
+      : row,
+  );
+  const data = { redirects: rows } as RedirectDocument["data"];
+  const existing = await client
+    .getSingle<RedirectDocument>("redirect")
+    .catch(() => null);
+  redirectMigration = existing
+    ? migration.updateDocument(
+        { ...existing, data } as ExistingPrismicDocument<RedirectDocument>,
+        "Redirects",
+      )
+    : migration.createDocument({ type: "redirect", lang, data }, "Redirects");
+  console.log(
+    existing
+      ? `redirects will update ${existing.id}`
+      : "redirects will be created in this release",
+  );
+}
+
 if (sent.length === 0) {
   console.log(`Nothing to send. Report: ${writeReport()}`);
   process.exit(0);
@@ -500,6 +561,13 @@ try {
   }
   mkdirSync("migration/state", { recursive: true });
   writeFileSync(STATE_FILE, `${JSON.stringify(state, null, 2)}\n`);
+  const redirectId = redirectMigration?.document.id;
+  if (redirectId && !failure) {
+    writeFileSync(
+      "migration/state/redirect.json",
+      `${JSON.stringify({ prismicId: redirectId }, null, 2)}\n`,
+    );
+  }
   report.result = {
     created,
     updated,

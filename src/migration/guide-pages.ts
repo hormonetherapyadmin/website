@@ -666,12 +666,13 @@ export const GUIDE_PAGES = [
   },
   {
     sourceId: "page:copy-of-weight-gain",
-    uid: "copy-of-weight-gain",
+    uid: "weight-gain",
     title: "Weight & HRT",
     meta_title: "Weight & HRT | Hormone Therapy Hub",
     meta_description:
       "Want to know the Holy grail of weight loss for menopause? Learn about how you can combine HRT  and Semaglutide for the most effective weight loss results.",
     review: [
+      "The public address is /weight-gain. /copy-of-weight-gain is the Wix address and redirects here.",
       "The vial photo links to /joiwommenswellness. The visit address stays on the Joi brand.",
       "The comparison under Which Telehealth Platform is a Common Ninja embed. Its rows are not on this page, so the chart is empty.",
     ],

@@ -349,8 +349,11 @@ one-off Wix pages found in the inventory.
 
 The page type is `customtypes/page`. Every Page is `/<uid>`, the same
 way every Post is `/post/<uid>`. It has no URL section field. The UID
-is the Wix slug, unchanged, such as `copy-of-trusted-providers` or
-`inner-balance`. Fields and rendering are in `docs/SLICE_MODEL.md`.
+is the Wix slug, unchanged, such as `formuations` or `inner-balance`.
+A page whose Wix address is only `copy-of-` plus the real address uses
+that real address as the UID. The Wix address redirects to it.
+`/weight-gain` is that case. Fields and rendering are in
+`docs/SLICE_MODEL.md`.
 
 ### Redirect
 

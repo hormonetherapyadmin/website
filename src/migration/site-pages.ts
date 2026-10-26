@@ -760,7 +760,7 @@ export const HOMEPAGE = {
         space_below: "Small",
       }),
       benefits: [
-        web("Lose weight", "/copy-of-weight-gain"),
+        web("Lose weight", "/weight-gain"),
         web("Enhance mood and mental clarity", "/ishrtforme"),
         web(
           "Diminish hot flashes/night sweats",

@@ -71,7 +71,7 @@ export default function HeroPreview() {
           benefits: [
             {
               link_type: "Web",
-              url: "/copy-of-weight-gain",
+              url: "/weight-gain",
               text: "Lose weight",
             },
             {

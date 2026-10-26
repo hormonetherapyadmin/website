@@ -1656,9 +1656,10 @@ The five reasons are the copy at the bottom of the live `/blog` page.
 ## Page
 
 Repeatable page type, in `customtypes/page`. One site page, such as
-`/inner-balance` or `/copy-of-trusted-providers`. Every Page is
-`/<uid>`. There is no URL section field. The UID is the Wix slug,
-unchanged.
+`/inner-balance` or `/formuations`. Every Page is `/<uid>`. There is
+no URL section field. The UID is the Wix slug, unchanged, except a
+page whose Wix address is only `copy-of-` plus the real address. That
+page uses the real address, and the Wix address redirects to it.
 
 The slice zone accepts every shared slice: Hero, Start here, Posts,
 Clinic comparison, Quote, Side by side, Divider, Boxes, Brand promo,

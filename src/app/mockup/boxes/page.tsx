@@ -110,7 +110,7 @@ const customBoxes = [
   ["Weighing your options", "Formulations", "/formuations"],
   ["Watching the budget", "Cost & insurance", "/hrt-price-comparison-chart"],
   ["Sleep", "Why I wake up hot", "/post/why-do-i-wake-up-hot-and-sweaty"],
-  ["Weight", "Weight gain and HRT", "/copy-of-weight-gain"],
+  ["Weight", "Weight gain and HRT", "/weight-gain"],
 ].map(([heading, text, href]) => ({
   clinic: emptyLink,
   image: emptyImage,

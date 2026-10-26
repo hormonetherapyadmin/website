@@ -13,7 +13,7 @@ const UIDS = [
   "sleep",
   "hair-loss",
   "skincare",
-  "copy-of-weight-gain",
+  "weight-gain",
   "hrt-price-comparison-chart",
   "tipstofindprovider",
   "hrt-doctors-review-costs-services",
