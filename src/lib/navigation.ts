@@ -152,7 +152,10 @@ function columnsFrom(links: readonly NavigationMenuLink[]): NavColumn[] {
     const heading = link.columnHeading;
     const view = toNavLink(link);
     const current = columns[columns.length - 1];
-    if (current && current.heading === heading) {
+    // A blank heading stays in the column already open. Only a different
+    // heading starts the next column, matching the mockup: "Compare &
+    // choose" on the first link, then "My reviews" on the first clinic.
+    if (current && (heading === undefined || current.heading === heading)) {
       current.links.push(view);
     } else {
       columns.push(heading ? { heading, links: [view] } : { links: [view] });

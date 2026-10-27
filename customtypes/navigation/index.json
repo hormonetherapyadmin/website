@@ -77,7 +77,7 @@
                   "column_heading": {
                     "config": {
                       "label": "Column heading",
-                      "placeholder": "Leave blank for the first column. A new heading starts the next column, such as My reviews."
+                      "placeholder": "Leave blank to stay in the current column. A new heading starts the next column, such as My reviews."
                     },
                     "type": "Text"
                   },

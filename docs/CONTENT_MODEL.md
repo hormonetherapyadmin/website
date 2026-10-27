@@ -40,9 +40,10 @@ use the clinic name. A clinic also supplies its logo, in the clinic's
 own colors. The icon is any image she uploads. The header colors it
 raspberry, so a transparent background is what reads as an icon. Links
 stay in the order she adds them. A new column starts when the column
-heading changes. The first column
+heading changes. A blank heading stays in the column already open, so
+only the first link of a column needs the heading. The first column
 can have a heading too, such as "Compare & choose", with "My reviews"
-on the clinic links.
+on the first clinic link.
 
 The footer is **Footer columns**. Each column has a heading and links.
 A clinic on a footer link supplies the name when the label is blank.

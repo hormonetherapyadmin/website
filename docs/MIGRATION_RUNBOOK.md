@@ -2,7 +2,7 @@
 
 ## Objective
 
-Move Hormone Therapy Hub from Wix to Prismic/Next.js/Netlify without
+Move Hormone Therapy Hub from Wix to Prismic/Next.js/Vercel without
 unnecessarily changing public URLs, losing content, breaking affiliate
 revenue paths, or disrupting search visibility.
 
@@ -522,9 +522,9 @@ For high-value pages compare old vs new:
 -   sitemap correct
 -   robots correct
 -   production canonicals correct
--   deploy previews/staging protected from indexing (`ALLOW_INDEXING`
-    unset everywhere except the production context)
--   Netlify primary domain set to `www.hormonetherapyhub.com`, apex
+-   Preview deployments protected from indexing (`ALLOW_INDEXING`
+    unset everywhere except the Vercel Production environment)
+-   Vercel production domain set to `www.hormonetherapyhub.com`, apex
     redirecting to it
 -   analytics verified
 -   affiliate events verified
@@ -540,10 +540,10 @@ For high-value pages compare old vs new:
 2.  Run final Wix extraction.
 3.  Normalize/import delta or final dataset.
 4.  Run migration validation.
-5.  Set `ALLOW_INDEXING=true` in the Netlify production context only,
-    then deploy the final production build. Without this step the
+5.  Set `ALLOW_INDEXING=true` in the Vercel Production environment
+    only, then deploy the final production build. Without this step the
     production site stays `noindex` and would drop out of search.
-6.  Verify Netlify production target before DNS.
+6.  Verify the Vercel production target before DNS.
 7.  Change DNS as planned.
 8.  Verify HTTPS.
 9.  Run legacy URL smoke suite.

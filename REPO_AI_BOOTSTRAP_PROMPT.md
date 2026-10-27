@@ -37,7 +37,7 @@ The proposal should state:
 -   environment-variable strategy
 -   design-token approach that can accept brand values later
 -   Prismic integration foundation
--   Netlify deployment foundation
+-   Vercel deployment foundation
 -   documentation changes, if any
 -   verification plan
 

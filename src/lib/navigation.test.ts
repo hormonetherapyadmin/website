@@ -61,6 +61,59 @@ describe("siteNavigationFrom", () => {
     ]);
   });
 
+  it("keeps a blank heading in the column already open", () => {
+    const navigation = siteNavigationFrom({
+      main_items: [
+        {
+          label: "Providers",
+          link: empty,
+          links: [
+            link("Price comparison chart", "/hrt-price-comparison-chart", {
+              column_heading: "Compare & choose",
+            }),
+            link("Tips to find a provider", "/tipstofindprovider"),
+            link("Trusted providers", "/trusted-providers"),
+            link("Inner Balance", "/inner-balance", {
+              column_heading: "My reviews",
+            }),
+            link("Winona", "/winona-review-page"),
+            link("Musely", "/musely"),
+          ],
+        },
+      ],
+    });
+
+    expect(navigation.main).toEqual([
+      {
+        label: "Providers",
+        columns: [
+          {
+            heading: "Compare & choose",
+            links: [
+              {
+                label: "Price comparison chart",
+                href: "/hrt-price-comparison-chart",
+              },
+              {
+                label: "Tips to find a provider",
+                href: "/tipstofindprovider",
+              },
+              { label: "Trusted providers", href: "/trusted-providers" },
+            ],
+          },
+          {
+            heading: "My reviews",
+            links: [
+              { label: "Inner Balance", href: "/inner-balance" },
+              { label: "Winona", href: "/winona-review-page" },
+              { label: "Musely", href: "/musely" },
+            ],
+          },
+        ],
+      },
+    ]);
+  });
+
   it("groups menu links into columns when the heading changes", () => {
     const navigation = siteNavigationFrom({
       main_items: [

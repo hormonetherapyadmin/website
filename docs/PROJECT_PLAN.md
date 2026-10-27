@@ -3,7 +3,7 @@
 ## 1. Mission
 
 Rebuild Hormone Therapy Hub from Wix as a modern, high-performance
-Next.js + Prismic site deployed on Netlify while protecting the organic
+Next.js + Prismic site deployed on Vercel while protecting the organic
 visibility, answer-engine visibility, affiliate revenue, URLs, content,
 and human voice that already make the existing site valuable.
 
@@ -340,7 +340,7 @@ Recommended baseline:
 -   Current stable Next.js App Router
 -   TypeScript strict mode
 -   Prismic SDK/integration
--   Netlify Next.js deployment support
+-   Vercel for Next.js hosting
 -   Server Components by default
 -   Route handlers/server actions only where justified
 -   Centralized metadata helpers
@@ -558,22 +558,24 @@ disposition.
 The owner currently uses free Gmail, not domain-based email, reducing
 mail-migration complexity.
 
-Do not assume domain registration must move to Netlify.
+Do not move domain registration to the host.
 
 Keep these concepts separate:
 
 -   Registrar
 -   DNS provider
--   Netlify hosting
+-   Vercel hosting
 
-Final choice should be made after Wix/domain access is available.
+Hosting is Vercel (2026-10-26). Registrar and DNS stay where they are
+unless a later decision moves them. Do not assume either moves to
+Vercel.
 
 ### Cutover outline
 
 -   Confirm domain ownership/registrar
 -   Capture complete DNS records
 -   Reduce TTL ahead of cutover where appropriate
--   Verify Netlify production domain
+-   Verify the Vercel production domain
 -   Verify HTTPS
 -   Verify redirects/canonicals
 -   Verify analytics
@@ -592,7 +594,7 @@ Final choice should be made after Wix/domain access is available.
 Recommended:
 
 -   Local development
--   Netlify deploy previews
+-   Vercel Preview deployments
 -   Production
 
 Preview/staging must not become accidentally indexable.
@@ -661,7 +663,7 @@ deferring it to launch.
 
 -   Scaffold Next.js/TypeScript
 -   Establish lint/typecheck/build
--   Netlify baseline
+-   Hosting baseline (Netlify, replaced by Vercel on 2026-10-26; see section 24)
 -   Environment handling
 -   Docs
 -   AGENTS.md
@@ -876,10 +878,33 @@ established search and revenue equity.
 These are a snapshot. The Phase 1 crawl is the authoritative
 inventory.
 
+### Hosting
+
+Owner decision, 2026-10-26: host on Vercel. Netlify is no longer the
+host.
+
+Netlify production deploys stopped on 2026-10-09. Merges to `main`
+after that were skipped before the build started, while deploy
+previews kept building. The published Netlify site stayed the
+2026-10-09 deployment of `01bb0ad`, the placeholder shell with no
+`/[uid]` pages. Netlify's build credits blocked those production
+deploys, and the hobby plan does not cover the builds this project
+needs.
+
+The Vercel project is not connected yet. Until it is,
+`hormonetherapyhub.netlify.app` is the old host and is not the site
+this repo now builds. Disconnect that Netlify site once Vercel
+Production is serving `main`. This site earns affiliate revenue, so
+the Vercel team needs a plan that allows commercial use.
+
+Set `PRISMIC_ACCESS_TOKEN`, `PRISMIC_WEBHOOK_SECRET`, and, at cutover,
+`ALLOW_INDEXING` in the Vercel project. `ALLOW_INDEXING=true` is
+Production only.
+
 ### Toolchain
 
--   Node 24 LTS, pinned in `.nvmrc`, `package.json` `engines`, and
-    `netlify.toml`.
+-   Node 24 LTS, pinned in `.nvmrc` and `package.json` `engines`. The
+    Vercel project uses that same major version.
 -   pnpm, pinned through the `packageManager` field.
 -   Latest stable Next.js App Router, React, TypeScript strict mode.
 -   Prismic with Slice Machine (`@prismicio/client`,
@@ -905,10 +930,12 @@ inventory.
     included by accident.
 -   Vitest for logic; Playwright with axe for smoke, legacy-URL, and
     accessibility checks.
--   Netlify with its Next.js runtime, configured in `netlify.toml`.
+-   Vercel for hosting. GitHub merges to `main` publish Production.
+    Other branches get Preview deployments. There is no `netlify.toml`
+    and no `vercel.json`; the app is a standard Next.js build.
 -   GitHub Actions CI: format check, lint, typecheck, unit tests,
     build, and Playwright smoke tests. Lighthouse CI with performance
-    budgets on deploy previews is added in Phase 3, once there are
+    budgets on Preview deployments is added in Phase 3, once there are
     real templates to measure.
 -   Environment variables are read through `src/lib/env.ts` without
     a validation library.
@@ -954,18 +981,17 @@ inventory.
 -   Redirects are one Prismic singleton. A repeatable group holds
     each row (From, To link, 301/302, required Reason). See
     `docs/CONTENT_MODEL.md`.
--   A build step reads all Redirect documents and writes Netlify's
-    `_redirects` file, so redirects are served by Netlify's edge
-    without running app code per request.
--   The build fails on a redirect whose From path is a live page, on
-    chains, on loops, and on duplicate From paths. A failed build
-    leaves the previous deploy live.
--   The revalidation webhook also triggers a Netlify build hook when a
-    Redirect document changes. Redirects therefore go live after a
-    rebuild (minutes), not instantly.
--   Phase 2 must verify that Netlify's Next.js runtime honors
-    `_redirects` from `public/`. Fallback: Next.js `redirects()` in
-    `next.config.ts`, also populated from Prismic at build time.
+-   `next.config.ts` `redirects()` reads that document at build time.
+    Vercel serves the redirects Next.js returns. There is no
+    `_redirects` file.
+-   `redirectRules` in `src/lib/site-redirects.ts` drops a row with no
+    destination and a row that points at itself. It does not reject
+    chains, duplicate From paths, or a From path that is also a live
+    page. A failed production build leaves the previous Production
+    deployment live.
+-   `POST /api/revalidate` only expires the Prismic cache. It does not
+    start a deployment. A Redirect document change is live after the
+    next Production deployment.
 
 ### Indexing control
 
@@ -973,12 +999,12 @@ inventory.
     `X-Robots-Tag: noindex, nofollow` header on every response and a
     disallow-all `robots.txt`.
 -   Indexing is enabled only when `ALLOW_INDEXING=true`. Set it only in
-    the Netlify production context, only at cutover. See
-    `docs/MIGRATION_RUNBOOK.md`.
+    the Vercel Production environment, only at cutover. Leave it unset
+    for Preview and Development. See `docs/MIGRATION_RUNBOOK.md`.
 -   When indexing is enabled, `robots.txt` allows all user agents,
     including AI crawlers (GPTBot, OAI-SearchBot, ClaudeBot,
-    PerplexityBot, Google-Extended). Netlify firewall/bot settings must
-    not block them.
+    PerplexityBot, Google-Extended). Vercel Firewall and bot protection
+    must not block them.
 -   `/search` stays `noindex` even when indexing is enabled. A query
     is `?q=` on that address and is not its own page. The canonical
     is `/search`.
