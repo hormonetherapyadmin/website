@@ -118,7 +118,36 @@ export const NAVIGATION_MENU = {
   ] satisfies FooterColumnPlan[],
 };
 
-function pageDocument(link: MenuLink, pages: ReadonlyMap<string, MenuPage>) {
+type BuiltPageLink = {
+  link_type: "Document";
+  id: string;
+  type: "page";
+  uid: string;
+  url: string;
+};
+
+type BuiltMenuLink = {
+  label?: string;
+  link: BuiltPageLink;
+  clinic?: {
+    link_type: "Document";
+    id: string;
+    type: "provider";
+    uid: string | undefined;
+  };
+  column_heading?: string;
+};
+
+type BuiltMainItem = {
+  label: string;
+  link?: BuiltPageLink;
+  links?: BuiltMenuLink[];
+};
+
+function pageDocument(
+  link: MenuLink,
+  pages: ReadonlyMap<string, MenuPage>,
+): BuiltPageLink {
   const uid = link.pageUid;
   if (!uid) throw new Error("A menu link has no page");
   const page =
@@ -133,7 +162,10 @@ function pageDocument(link: MenuLink, pages: ReadonlyMap<string, MenuPage>) {
   };
 }
 
-function linkFields(link: MenuLink, pages: ReadonlyMap<string, MenuPage>) {
+function linkFields(
+  link: MenuLink,
+  pages: ReadonlyMap<string, MenuPage>,
+): BuiltMenuLink {
   return {
     ...(link.label ? { label: link.label } : {}),
     link: pageDocument(link, pages),
@@ -155,7 +187,7 @@ export function navigationData(pages: ReadonlyMap<string, MenuPage>) {
   return {
     header_button_label: NAVIGATION_MENU.button.label,
     header_button_link: pageDocument(NAVIGATION_MENU.button, pages),
-    main_items: NAVIGATION_MENU.main.map((item) => ({
+    main_items: NAVIGATION_MENU.main.map((item): BuiltMainItem => ({
       label: item.label,
       ...(item.pageUid
         ? { link: pageDocument(item, pages) }

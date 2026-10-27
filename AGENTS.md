@@ -105,7 +105,7 @@ The new stack is:
 -   Next.js with the App Router
 -   TypeScript
 -   Prismic as the CMS
--   Netlify for hosting/deployment
+-   Vercel for hosting/deployment
 -   Wix APIs as the source for migration
 -   Prismic Migration API as the destination for migration
 -   Existing analytics/search tooling preserved where available
@@ -453,7 +453,7 @@ Performance is a product and SEO requirement.
 
 ## Security and Privacy
 
--   Keep Prismic/Wix/Netlify credentials server-side and out of source
+-   Keep Prismic/Wix/Vercel credentials server-side and out of source
     control.
 -   Never expose migration tokens to browser code.
 -   Validate environment variables.

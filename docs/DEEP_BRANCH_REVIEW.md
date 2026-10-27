@@ -65,7 +65,7 @@ Useful project-specific review groups may include:
 -   Wix extraction/normalization/import
 -   URL/redirect manifest
 -   Analytics
--   Netlify/deployment/config
+-   Vercel/deployment/config
 -   Tests/docs
 
 ## Phase 2: Review Each Change Group
