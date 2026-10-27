@@ -1076,6 +1076,6 @@ To decide before the slice is built:
 
 -   Who has Search Console access?
 -   Where is the domain registered?
--   `/sleep` is in the pages sitemap and returns 200 with a
-    self-canonical, but the page shows no content (crawl,
-    2026-10-12). Keep and rebuild it, or redirect it?
+-   `/sleep`, `/hair-loss`, and `/men-s-hrt` stay at those addresses
+    and are archived: indexing off, out of the menu (2026-10-26).
+    `/sleep` had no body copy on Wix.

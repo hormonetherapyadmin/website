@@ -342,7 +342,7 @@ function pageDocument(page: SitePage) {
       ...(page.meta_description
         ? { meta_description: page.meta_description }
         : {}),
-      indexing: true,
+      indexing: page.indexing !== false,
     },
   };
 }

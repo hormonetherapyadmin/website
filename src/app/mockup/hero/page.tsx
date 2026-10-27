@@ -85,7 +85,6 @@ export default function HeroPreview() {
               text: "Diminish hot flashes/night sweats",
             },
             { link_type: "Web", url: "/ishrtforme", text: "Boost energy" },
-            { link_type: "Web", url: "/sleep", text: "Improve sleep" },
           ],
           button: [
             {

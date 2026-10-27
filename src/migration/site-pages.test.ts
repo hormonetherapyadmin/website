@@ -271,6 +271,9 @@ describe("site pages", () => {
       "my-experience-with-joi-women-s-wellness-menopause-hormone-testing-what-s-included-is-it-worth-it",
     );
     expect(textOf(page("sleep")).match(/hero/g)?.length).toBeGreaterThan(0);
+    expect(page("sleep").indexing).toBe(false);
+    expect(page("hair-loss").indexing).toBe(false);
+    expect(page("men-s-hrt").indexing).toBe(false);
     for (const uid of [
       "formuations",
       "costandinsurance",
@@ -305,6 +308,7 @@ describe("site pages", () => {
     expect(writing).toContain("Feel like you again.");
     expect(writing).toContain('"/weight-gain"');
     expect(writing).not.toContain("copy-of-");
+    expect(writing).not.toContain('"/sleep"');
     expect(writing).toContain("XYNQOFoQwb5OYLsz");
     expect(writing).toContain('"/#eight-online-hrt-clinics-side-by-side"');
     expect(writing).toContain('"/formuations"');

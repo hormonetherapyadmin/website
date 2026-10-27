@@ -412,7 +412,9 @@ export const GUIDE_PAGES = [
     uid: "sleep",
     title: "Sleep",
     meta_title: "Sleep | Hormone Therapy Hub",
+    indexing: false,
     review: [
+      "Archived. The address stays /sleep, indexing is off, and it is not in the menu.",
       "The live Wix page has no writing under the title. The hero and the journey button are the whole page.",
     ],
     changes: [journeyChange],
@@ -425,7 +427,9 @@ export const GUIDE_PAGES = [
     meta_title: "Hair Loss | Hormone Therapy Hub",
     meta_description:
       "Hair loss during menopause sometimes happens.  See trusted providers for Hair Toppers and Wigs.",
+    indexing: false,
     review: [
+      "Archived. The address stays /hair-loss, indexing is off, and it is not in the menu.",
       "The three hair photos and the four wig photos are a photo gallery, centered. Simmer Elite and Kelly had no photo, so their names stay in the writing.",
       "The words are unchanged, including before I starting, experiementing, handband, alot, and it become.",
     ],
@@ -955,7 +959,9 @@ export const GUIDE_PAGES = [
     uid: "men-s-hrt",
     title: "Men's HRT",
     meta_title: "Men's HRT | Hormone Therapy Hub",
+    indexing: false,
     review: [
+      "Archived. The address stays /men-s-hrt, indexing is off, and it is not in the menu.",
       "The three photos are a photo gallery. The files are not labeled, so the captions are blank.",
       "The page is Peggy's hair topper story. The words are unchanged, including anthing and less roots.",
       "There is no men's hormone copy on the live page.",

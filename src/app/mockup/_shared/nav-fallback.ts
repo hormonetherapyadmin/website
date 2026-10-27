@@ -11,14 +11,11 @@ const HRT_101_LINKS: NavLink[] = [
   { label: "Formulations", href: "/formuations", icon: "Medicine" },
   { label: "Cost & insurance", href: "/costandinsurance", icon: "Wallet" },
   { label: "Test kits", href: "/trackersandtesting", icon: "Test tube" },
-  { label: "Men’s HRT", href: "/men-s-hrt", icon: "Person" },
   { label: "FAQ", href: "/faq", icon: "Chat" },
 ];
 
 const SYMPTOM_LINKS: NavLink[] = [
   { label: "Weight & HRT", href: "/weight-gain", icon: "Scale" },
-  { label: "Sleep", href: "/sleep", icon: "Moon" },
-  { label: "Hair loss", href: "/hair-loss", icon: "Hair" },
   { label: "Rx face creams", href: "/skincare", icon: "Drop" },
 ];
 

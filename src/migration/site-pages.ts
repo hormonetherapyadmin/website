@@ -51,6 +51,8 @@ export type SitePage = {
   review: string[];
   /** Links pointed at the public address instead of a mockup path. */
   changes: string[];
+  /** Off means the page stays up and is left out of search and the sitemap. */
+  indexing?: boolean;
   slices: Slice[];
 };
 
@@ -725,6 +727,7 @@ export const HOMEPAGE = {
     "All posts links to /blog",
     "Read my whole story links to /about",
     "See my HRT Reviews links to /blog",
+    "Improve sleep is gone. /sleep is archived.",
   ],
   meta_title: "Feel like you again.",
   meta_description:
@@ -767,7 +770,6 @@ export const HOMEPAGE = {
           "/post/why-do-i-wake-up-hot-and-sweaty",
         ),
         web("Boost energy", "/ishrtforme"),
-        web("Improve sleep", "/sleep"),
       ],
       button: [
         web("See what each clinic cost me", COMPARE, "Solid"),

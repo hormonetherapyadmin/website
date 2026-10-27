@@ -24,9 +24,9 @@ Suggested fields:
 
 Singleton, `customtypes/navigation`. No public URL. Peggy adds and
 removes header items and footer columns here. The header and footer
-read the published document. Until that document exists, the design
-mockup menu is the fallback. A published menu is used as she wrote it,
-including when a column or item is removed.
+read the published document. Until that document is published, the
+design mockup menu is the fallback. A published menu is used as she
+wrote it, including when a column or item is removed.
 
 The header is **Menu items**. Each item is a label plus either a link
 (Blog) or **Menu links** (HRT 101, Symptoms, Providers). Leave the item
@@ -60,13 +60,16 @@ The button is three fields at the top of **Main menu**: **Header button
 label**, **Header button icon**, and **Header button link**. Leave the
 label or the link blank and the button is hidden. The icon is optional.
 It is any image on a transparent background, shown in the button color.
-Until a Navigation document exists, the button says "Trusted providers"
-and links to `/mockup/trusted-providers`. The live page is
-`/copy-of-trusted-providers`. On the new site it moves to
-`/trusted-providers`, and the old address redirects there (owner
-decision, 2026-10-09; see `docs/MIGRATION_RUNBOOK.md`). There is no
-stronger single call to action yet: that page is the compare step, and
-the homepage already sends people there.
+The published menu's button says "Trusted providers" and links to
+`/trusted-providers`. `scripts/import-navigation.mts` updates that
+document and does not publish it. If the document is missing, the
+design menu is the fallback, and that fallback button points at
+`/mockup/trusted-providers`. There is no stronger single call to
+action yet: that page is the compare step, and the homepage already
+sends people there. Men's HRT, Sleep, and Hair loss stay off the
+menu. How I review and Affiliate disclosure stay off until those
+pages exist. Icons are left empty. Test kits links to
+`/trackers-and-testing`. Weight & HRT links to `/weight-gain`.
 
 `/search` is an app route, not a Prismic document. It lists published
 Pages and Posts that are still set to Index. Pages come first, then

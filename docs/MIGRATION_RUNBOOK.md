@@ -269,15 +269,15 @@ release, not published:
 -   `/formuations`. The uid keeps the typo. Hero, the two
     best-known-for boxes, and Text for each formulation list.
 -   `/costandinsurance`. Hero and Text.
--   `/sleep`. The live page has no body copy. Hero and the journey
-    button only.
--   `/hair-loss`, `/skincare`, and `/men-s-hrt`. The writing and the
-    affiliate buttons are here, and Peggy's photos are a Photo gallery.
-    Hair has the three story photos and the four wig photos. Simmer
-    Elite and Kelly had no photo, so those names stay in the writing.
-    Skincare has an Alloy pair, a Winona pair, and one Inner Balance
-    photo. The men's photos have blank captions because the files are
-    not labeled.
+-   `/sleep`, `/hair-loss`, and `/men-s-hrt` are archived. The
+    addresses stay, indexing is off, and they are not in the menu.
+    `/sleep` still has no body copy. Hair loss keeps the writing, the
+    three story photos, and the four wig photos. Simmer Elite and
+    Kelly had no photo, so those names stay in the writing. Men's HRT
+    keeps the writing and three photos with blank captions.
+-   `/skincare`. The writing and the affiliate buttons are here, and
+    Peggy's photos are a Photo gallery. Skincare has an Alloy pair, a
+    Winona pair, and one Inner Balance photo.
 -   `/weight-gain`. The Wix address was `/copy-of-weight-gain`, and that
     address redirects here. The vial is a
     Side by side photo that links to `/joiwommenswellness`. The visit
