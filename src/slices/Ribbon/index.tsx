@@ -6,17 +6,19 @@ import {
 } from "@prismicio/client";
 import { PrismicNextLink } from "@prismicio/next";
 import { useId } from "react";
+import { PeggyTip, PEGGY_TIP_TITLE } from "@/components/peggy-tip";
 import { RichText } from "@/components/rich-text";
 import {
-  SECTION_BACKGROUNDS,
   SliceSection,
   sectionBackground,
   sliceLayout,
-  type SectionBackground,
   type SliceSectionFields,
 } from "@/components/slice-section";
 import { storyLinkRel } from "@/lib/affiliate-link";
 import styles from "./ribbon.module.css";
+import { ribbonBoxBackground, ribbonShowsWave, ribbonTone } from "./tone";
+
+export { ribbonBoxBackground, ribbonShowsWave, ribbonTone };
 
 type RibbonPrimary = Partial<SliceSectionFields> & {
   title?: RichTextField | null;
@@ -25,41 +27,6 @@ type RibbonPrimary = Partial<SliceSectionFields> & {
   button?: readonly LinkField[] | null;
   layout?: string | null;
 };
-
-/** An empty Box background is Pink, the ribbon in the template. */
-export function ribbonBoxBackground(
-  value: string | null | undefined,
-): SectionBackground {
-  if (value == null || value === "") return "Pink";
-  for (const option of SECTION_BACKGROUNDS) {
-    if (option === value) return option;
-  }
-  return "Transparent";
-}
-
-/**
- * Text follows the color the words sit on. A transparent box sits on
- * the section, so a Navy or Raspberry band behind it uses light text.
- */
-export function ribbonTone(
-  box: SectionBackground,
-  behind: SectionBackground,
-): "dark" | "light" {
-  const surface = box === "Transparent" ? behind : box;
-  return surface === "Navy" || surface === "Raspberry" ? "dark" : "light";
-}
-
-/** The corner wave is the color behind the box, and only when it would show. */
-export function ribbonShowsWave(
-  box: SectionBackground,
-  behind: SectionBackground,
-) {
-  if (box === "Transparent") return false;
-  const painted = box === "Cream" ? "page" : box;
-  const ground =
-    behind === "Transparent" || behind === "Cream" ? "page" : behind;
-  return painted !== ground;
-}
 
 function Chevron() {
   return (
@@ -79,14 +46,50 @@ function Chevron() {
   );
 }
 
+function RibbonTip({ primary }: { primary: RibbonPrimary }) {
+  const titleId = useId();
+  const sectionHeading = asText(primary.heading ?? []).trim();
+  const hasContent = isFilled.richText(primary.content);
+  const box = ribbonBoxBackground(primary.box_background);
+  const behind = sectionBackground(primary.background);
+
+  return (
+    <SliceSection
+      section={primary}
+      title={sectionHeading || (hasContent ? PEGGY_TIP_TITLE : undefined)}
+      labelId={!sectionHeading && hasContent ? titleId : undefined}
+    >
+      {hasContent ? (
+        <PeggyTip
+          box={box}
+          behind={behind}
+          titleAs={sectionHeading ? "h3" : "h2"}
+          titleId={titleId}
+        >
+          <RichText field={primary.content} />
+        </PeggyTip>
+      ) : null}
+    </SliceSection>
+  );
+}
+
 /**
  * A colored box on a section band. On the right, title and content sit
  * on the left and buttons sit on the right. Centered centers the words
  * and stacks the buttons under them. Solid is the filled button. Ghost
- * is the text button with an arrow.
+ * is the text button with an arrow. Tip is the same box with Peggy’s
+ * portrait and the title “Peggy’s tip”. She types the tip.
  */
-export function Ribbon({ primary }: { primary: RibbonPrimary }) {
+export function Ribbon({
+  variation = "default",
+  primary,
+}: {
+  variation?: string;
+  primary: RibbonPrimary;
+}) {
   const titleId = useId();
+  if (variation === "tip") return <RibbonTip primary={primary} />;
+
   const centered = sliceLayout(primary.layout) === "centered";
   const box = ribbonBoxBackground(primary.box_background);
   const behind = sectionBackground(primary.background);

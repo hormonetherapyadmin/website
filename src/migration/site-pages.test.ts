@@ -18,6 +18,7 @@ describe("site pages", () => {
   it("sends the site pages with the clinic pages after Inner Balance", () => {
     expect(SITE_PAGES.map((item) => item.uid)).toEqual([
       "about",
+      "how-i-review",
       "faq",
       "ishrtforme",
       "inner-balance",
@@ -72,13 +73,38 @@ describe("site pages", () => {
     expect(posts?.primary.category).toBe("All");
   });
 
+  it("writes How I review in her voice and keeps the portrait", () => {
+    const review = page("how-i-review");
+    expect(review.slices[0]).toMatchObject({
+      slice_type: "hero",
+      variation: "subpage",
+    });
+    expect(textOf(review)).toContain("XYNQOFoQwb5OYLsz");
+    expect(textOf(review)).toContain("I don't fill in a visit I didn't take");
+    expect(textOf(review)).toContain('"/affiliate-disclosures"');
+    expect(textOf(review)).toContain('"/hrt-price-comparison-chart"');
+    expect(textOf(review)).toContain("December 2019");
+  });
+
+  it("closes guide pages with the same Trusted providers ribbon", () => {
+    for (const uid of ["weight-gain", "faq", "skincare", "formuations"]) {
+      const ribbon = page(uid).slices.at(-1);
+      expect(ribbon?.slice_type).toBe("ribbon");
+      const writing = textOf(ribbon);
+      expect(writing).toContain("Start with the clinics I've used");
+      expect(writing).toContain("with my words and the codes I use");
+      expect(writing).toContain('"/trusted-providers"');
+      expect(writing).toContain("I'm not a doctor.");
+    }
+  });
+
   it("keeps the FAQ wording and pairs each answer with its question", () => {
     const faq = page("faq");
     expect(faq.slices.map((slice) => slice.slice_type)).toEqual([
       "hero",
       "divider",
       "faq",
-      "buttons",
+      "ribbon",
     ]);
     const writing = textOf(faq.slices[2]);
     const safety = writing.indexOf("Is BHRT safe?");
@@ -216,6 +242,13 @@ describe("site pages", () => {
     expect(textOf(page("formuations"))).toContain("a extended period");
     expect(textOf(page("costandinsurance"))).toContain("informtion");
     expect(textOf(page("costandinsurance"))).toContain("therapy. it is");
+    expect(page("costandinsurance").slices[0]).toMatchObject({
+      slice_type: "hero",
+      variation: "subpage",
+    });
+    expect(
+      pageImages(page("costandinsurance")).map((image) => image.filename),
+    ).toEqual(["peggy-standing.jpg"]);
     expect(textOf(page("hair-loss"))).toContain("before I starting");
     expect(textOf(page("hair-loss"))).toContain("experiementing");
     expect(textOf(page("hair-loss"))).toContain(LA_WIG_START);
@@ -224,6 +257,19 @@ describe("site pages", () => {
     expect(textOf(page("skincare"))).toContain("http://alloy.sjv.io/q4MxVj");
     expect(textOf(page("skincare"))).toContain("http://winona.pxf.io/XYkMZ3");
     expect(textOf(page("skincare"))).toContain('"/inner-balance"');
+    const skin = textOf(page("skincare"));
+    expect(skin.indexOf("Alloy M4 Estriol Face Cream")).toBeLessThan(
+      skin.indexOf("http://alloy.sjv.io/q4MxVj"),
+    );
+    expect(skin.indexOf("http://alloy.sjv.io/q4MxVj")).toBeLessThan(
+      skin.indexOf("Winona Estriol Skin Cream"),
+    );
+    expect(skin.indexOf("http://winona.pxf.io/XYkMZ3")).toBeLessThan(
+      skin.indexOf("The cost per day"),
+    );
+    expect(skin.indexOf("The cost per day")).toBeLessThan(
+      skin.indexOf("PEGGY10"),
+    );
     expect(textOf(page("men-s-hrt"))).toContain("anthing");
     expect(textOf(page("men-s-hrt"))).toContain("https://shrsl.com/4pnzy");
     expect(textOf(page("hrt-doctors-review-costs-services"))).toContain(
@@ -236,8 +282,45 @@ describe("site pages", () => {
       "shareasale.com/r.cfm?b=2245796",
     );
     expect(textOf(page("weight-gain"))).not.toContain("joiblokes");
-    expect(textOf(page("weight-gain"))).toContain("weight-chalkboard.png");
+    expect(textOf(page("weight-gain"))).toContain("The Holy Grail");
+    expect(textOf(page("weight-gain"))).toContain(
+      "I'm happy to report. It did.",
+    );
+    expect(
+      page("weight-gain").slices.find(
+        (slice) => slice.slice_type === "side_by_side",
+      ),
+    ).toMatchObject({
+      variation: "clinic",
+      primary: {
+        heading: [{ text: "The Holy Grail" }],
+        style: "Quote",
+        clinic: { id: "asvUERcAAC0AeNI_", uid: "joi" },
+      },
+    });
+    expect(textOf(page("weight-gain"))).not.toContain("weight-chalkboard");
+    expect(textOf(page("weight-gain"))).not.toContain("clinic_comparison");
+    expect(textOf(page("weight-gain"))).toContain(
+      "joi-weight-loss-review-my-experience-using-semaglutide-hrt",
+    );
+    expect(textOf(page("weight-gain"))).toContain(
+      "ivim-review-hrt-glp-1-menopause-weight-gain",
+    );
+    expect(textOf(page("weight-gain"))).toContain("semaglutide-and-menopause");
     expect(textOf(page("tipstofindprovider"))).toContain('"/formuations"');
+    expect(page("tipstofindprovider").slices[0]).toMatchObject({
+      slice_type: "hero",
+      variation: "subpage",
+    });
+    expect(
+      pageImages(page("tipstofindprovider")).map((image) => image.filename),
+    ).toEqual(["peggy-portrait.jpg"]);
+    expect(textOf(page("tipstofindprovider"))).toContain(
+      "This is what I look at before I pay a clinic.",
+    );
+    expect(textOf(page("tipstofindprovider"))).toContain(
+      "Hormone Replacement Specialist near me",
+    );
     expect(textOf(page("hair-loss"))).toContain("photo_gallery");
     expect(textOf(page("hair-loss"))).toContain("Simmer Elite");
     expect(textOf(page("hair-loss"))).toContain("Raquel Welch - Portrait Mode");
@@ -259,11 +342,34 @@ describe("site pages", () => {
     expect(
       pageImages(page("men-s-hrt")).map((image) => image.filename),
     ).toEqual(["men-1.jpg", "men-2.jpg", "men-3.jpg"]);
-    expect(textOf(page("weight-gain"))).toContain('"/joiwommenswellness"');
-    expect(textOf(page("weight-gain"))).toContain('"chart"');
-    expect(textOf(page("hrt-price-comparison-chart"))).toContain(
-      "atGcfxIAAC4AAHHR",
+    expect(page("weight-gain").slices[0]).toMatchObject({
+      slice_type: "hero",
+      variation: "subpage",
+      primary: { heading: [{ text: "Stubborn weight loss" }] },
+    });
+    expect(textOf(page("weight-gain"))).toContain(
+      "GLP-1 and GIP-1 meds can be very beneficial",
     );
+    expect(
+      pageImages(page("weight-gain")).map((image) => image.filename),
+    ).toEqual(["weight-vial.jpg"]);
+    expect(textOf(page("weight-gain"))).toContain('"picked"');
+    const chart = page("hrt-price-comparison-chart");
+    const homeChart = HOMEPAGE.slices.find(
+      (slice) => slice.slice_type === "clinic_comparison",
+    );
+    const pageChart = chart.slices.find(
+      (slice) => slice.slice_type === "clinic_comparison",
+    );
+    expect(pageChart?.variation).toBe("default");
+    expect(textOf(pageChart)).toContain("2026-09-09");
+    expect(textOf(pageChart)).toContain("These are my real costs");
+    const clinicsOf = (slice: typeof homeChart) =>
+      slice && "primary" in slice
+        ? (slice.primary as { clinics?: unknown }).clinics
+        : undefined;
+    expect(clinicsOf(pageChart)).toEqual(clinicsOf(homeChart));
+    expect(textOf(chart)).toContain("atGcfxIAAC4AAHHR");
     expect(textOf(page("hrt-price-comparison-chart"))).toContain(
       "atGcfRIAACkAAHHM",
     );

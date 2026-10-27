@@ -86,5 +86,9 @@
   "page:men-s-hrt": {
     "uid": "men-s-hrt",
     "prismicId": "at6tBBMAACoAEddM"
+  },
+  "page:how-i-review": {
+    "uid": "how-i-review",
+    "prismicId": "auDJBBMAACwAFppP"
   }
 }

@@ -566,7 +566,7 @@ export default async function BlogPostMockup(
                 </p>
                 <p className={styles.authorLinks}>
                   <Link href="/about">Read my whole story</Link>
-                  <a href="#">How I review</a>
+                  <Link href="/how-i-review">How I review</Link>
                 </p>
               </div>
             </section>

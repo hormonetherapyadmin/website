@@ -131,6 +131,105 @@
         }
       },
       "version": ""
+    },
+    {
+      "description": "Tip",
+      "docURL": "",
+      "id": "tip",
+      "imageUrl": "",
+      "name": "Tip",
+      "primary": {
+        "small_heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Eyebrow",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "heading": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Heading (H2)",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "intro": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Line above the box",
+            "labels": ["superscript"],
+            "single": "paragraph,strong,em,hyperlink"
+          },
+          "type": "StructuredText"
+        },
+        "content": {
+          "config": {
+            "allowTargetBlank": true,
+            "label": "Tip",
+            "labels": ["highlight", "superscript"],
+            "multi": "paragraph,strong,em,hyperlink,list-item,o-list-item",
+            "placeholder": "Ask what the first month actually costs before you sign up."
+          },
+          "type": "StructuredText"
+        },
+        "box_background": {
+          "config": {
+            "default_value": "Pink",
+            "label": "Box background",
+            "options": [
+              "Transparent",
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ],
+            "placeholder": "The color of the ribbon. Same choices as Background."
+          },
+          "type": "Select"
+        },
+        "background": {
+          "config": {
+            "default_value": "Transparent",
+            "label": "Background",
+            "options": [
+              "Transparent",
+              "Cream",
+              "Pink",
+              "Blue",
+              "Yellow",
+              "Lavender",
+              "Raspberry",
+              "Navy"
+            ],
+            "placeholder": "The color behind the ribbon."
+          },
+          "type": "Select"
+        },
+        "space_above": {
+          "config": {
+            "default_value": "Medium",
+            "label": "Space above",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        },
+        "space_below": {
+          "config": {
+            "default_value": "None",
+            "label": "Space below",
+            "options": ["None", "Small", "Medium", "Large"]
+          },
+          "type": "Select"
+        }
+      },
+      "version": ""
     }
   ]
 }

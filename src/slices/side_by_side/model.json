@@ -37,7 +37,7 @@
             "label": "Content",
             "labels": ["highlight", "superscript", "signoff", "note"],
             "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
-            "placeholder": "Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in."
+            "placeholder": "Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in. {{tip}} is Peggy’s tip."
           },
           "type": "StructuredText"
         },
@@ -180,7 +180,7 @@
             "label": "Content",
             "labels": ["highlight", "superscript", "signoff", "note"],
             "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
-            "placeholder": "Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in."
+            "placeholder": "Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in. {{tip}} is Peggy’s tip."
           },
           "type": "StructuredText"
         },
@@ -296,7 +296,7 @@
             "label": "Content",
             "labels": ["highlight", "superscript", "signoff", "note"],
             "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
-            "placeholder": "Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in."
+            "placeholder": "Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in. {{tip}} is Peggy’s tip."
           },
           "type": "StructuredText"
         },
@@ -412,7 +412,7 @@
             "label": "Content",
             "labels": ["highlight", "superscript", "signoff", "note"],
             "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
-            "placeholder": "Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in."
+            "placeholder": "Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in. {{tip}} is Peggy’s tip."
           },
           "type": "StructuredText"
         },

@@ -1,6 +1,7 @@
 import type { RichTextField } from "@prismicio/client";
 import Image from "next/image";
 import { visitLinkProps } from "@/lib/affiliate-link";
+import { PeggyTip } from "./peggy-tip";
 import {
   contentPieces,
   type TokenClinic,
@@ -124,7 +125,7 @@ function Token({
 /**
  * Content rich text. Highlight and superscript style words. A Signoff or
  * Note label on a whole paragraph becomes the closing line or the tint box.
- * A paragraph can start with a clinic token.
+ * A paragraph can start with a clinic token or {{tip}}.
  */
 export function Content({
   field,
@@ -160,6 +161,14 @@ export function Content({
             >
               <RichText field={piece.field} />
             </div>
+          );
+        }
+
+        if (piece.kind === "tip") {
+          return (
+            <PeggyTip key={index} place="story">
+              <RichText field={piece.field} />
+            </PeggyTip>
           );
         }
 

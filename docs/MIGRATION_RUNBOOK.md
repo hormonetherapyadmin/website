@@ -268,36 +268,47 @@ release, not published:
 
 -   `/formuations`. The uid keeps the typo. Hero, the two
     best-known-for boxes, and Text for each formulation list.
--   `/costandinsurance`. Hero and Text.
+-   `/costandinsurance`. Subpage hero, with Peggy in her living room,
+    because the intro is a full paragraph. Then Text.
 -   `/sleep`, `/hair-loss`, and `/men-s-hrt` are archived. The
     addresses stay, indexing is off, and they are not in the menu.
     `/sleep` still has no body copy. Hair loss keeps the writing, the
     three story photos, and the four wig photos. Simmer Elite and
     Kelly had no photo, so those names stay in the writing. Men's HRT
     keeps the writing and three photos with blank captions.
--   `/skincare`. The writing and the affiliate buttons are here, and
-    Peggy's photos are a Photo gallery. Skincare has an Alloy pair, a
-    Winona pair, and one Inner Balance photo.
+-   `/skincare`. The opening is her before, during, and after
+    menopause. Each cream then has its own words, its photos, and its
+    coupon. Alloy and Winona are before-and-after pairs. Inner Balance
+    has one photo. The journey button is the last slice.
 -   `/weight-gain`. The Wix address was `/copy-of-weight-gain`, and that
-    address redirects here. The vial is a
-    Side by side photo that links to `/joiwommenswellness`. The visit
-    address stays on the Joi brand. The chalkboard is still a Full
-    width image. The comparison under the last heading is the Chart
-    variation, and its rows are empty because the Common Ninja embed
-    is not on the page.
--   `/hrt-price-comparison-chart`. The live page is three posts, not a
-    price table. The Joi testing post is not in Prismic yet, so it
-    stays a link. The other two are a Picked posts row. The homepage
-    comparison is the price chart.
--   `/tipstofindprovider`. Hero and Text. The formulations button goes
-    to `/formuations`.
+    address redirects here. The hero is Subpage: Stubborn weight loss,
+    the Wix sentence under it, and the vial photo. The Holy Grail is a
+    Side by side clinic: her account stays in Content, and Joi's logo,
+    words, and visit link come from the brand. The visit address stays
+    on the Joi brand. The chalkboard graphic is gone.
+    The Common Ninja price chart had no rows on the page, so it is
+    gone too. A Picked posts row links her Joi review, her Ivim
+    review, and the semaglutide cost post.
+-   `/hrt-price-comparison-chart`. This is the price chart the menu
+    and the “Open the price chart” buttons point at. It uses the same
+    Clinic comparison as the homepage: the same eight providers, the
+    same review links, and prices checked on 2026-09-09. Those prices
+    stay on the Provider documents. Under the chart, her Joi testing
+    post stays a link because that post is not in Prismic yet, then
+    the same two Picked posts.
+-   `/tipstofindprovider`. The intro is a full paragraph, so the hero
+    is Subpage, with Peggy's portrait. "Hormone Replacement Online" is
+    a statement. The shopping question heads the checklist, on Blue,
+    with one line in her voice above the cards. The formulations
+    button goes to `/formuations`.
 -   `/hrt-doctors-review-costs-services`. The words are in Text. This
     should become a Brand, and then the page can use the clinic page
     pattern. The ShareASale address is the start button until that
     brand exists.
 
-The journey button on these pages links to `/trusted-providers`. On
-Wix it links to the homepage.
+These pages close with the same ribbon: "Start with the clinics I've
+used," then Trusted providers. On Wix that closer was a button to the
+homepage.
 
 Not composed:
 
@@ -317,9 +328,13 @@ Not composed:
 The live signup form on the trusted-providers page has no slice yet.
 The published page does not include it.
 
-Editorial Standards and Affiliate Disclosure are still listed as
-singletons in `docs/CONTENT_MODEL.md` and have no custom type yet.
-They are not part of this order.
+`/how-i-review` was not a Wix page. It is a Page, written in her
+voice from how the reviews, the price chart, and the about page
+already work. The footer and her author card link to it. It stays
+out of the header menu. Affiliate Disclosure is still listed as a
+singleton in `docs/CONTENT_MODEL.md` and has no custom type yet. It
+is not part of this order. The footer already links to
+`/affiliate-disclosures`.
 
 ## URL Manifest
 

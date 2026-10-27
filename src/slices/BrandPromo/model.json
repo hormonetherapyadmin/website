@@ -153,6 +153,15 @@
           },
           "type": "Group"
         },
+        "card_position": {
+          "config": {
+            "default_value": "Center",
+            "label": "Card position",
+            "options": ["Center", "Top", "Sticky"],
+            "placeholder": "Center lines the card up with the middle of the writing. Top lines it up with the first line. Sticky keeps it in view while long writing scrolls."
+          },
+          "type": "Select"
+        },
         "background": {
           "config": {
             "default_value": "Transparent",

@@ -109,10 +109,13 @@ describe("storySegments", () => {
   it("does not take a token or a heading as a photo's caption", () => {
     const first = image("First");
     const second = image("Second");
+    const third = image("Third");
     const segments = storySegments([
       first,
       paragraph("{{provider:musely:offer}} My favorite eye serum."),
       second,
+      paragraph("{{tip}} Ask about the first month."),
+      third,
       { type: "heading2", text: "Next section", spans: [] },
     ] as RichTextField);
 
@@ -123,6 +126,11 @@ describe("storySegments", () => {
         field: [paragraph("{{provider:musely:offer}} My favorite eye serum.")],
       },
       { kind: "photo", image: second, caption: null },
+      {
+        kind: "rich",
+        field: [paragraph("{{tip}} Ask about the first month.")],
+      },
+      { kind: "photo", image: third, caption: null },
       {
         kind: "rich",
         field: [{ type: "heading2", text: "Next section", spans: [] }],

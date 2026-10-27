@@ -405,6 +405,26 @@ describe("PageSliceZone", () => {
     expect(html).toContain('data-box="Pink"');
   });
 
+  it("renders the Tip variation with Peggy’s portrait and the tip", () => {
+    const html = render([
+      slice(
+        "ribbon",
+        {
+          ...section(""),
+          heading: emptyRich,
+          content: rich("Ask what the first month actually costs."),
+          box_background: "Pink",
+        },
+        "tip",
+      ),
+    ]);
+
+    expect(html).toContain("Peggy’s tip");
+    expect(html).toContain("Ask what the first month actually costs.");
+    expect(html).toContain("XYNQOFoQwb5OYLsz");
+    expect(html).toContain('data-layout="tip"');
+  });
+
   it("renders Buttons as a row with no box", () => {
     const html = render([
       slice("buttons", {

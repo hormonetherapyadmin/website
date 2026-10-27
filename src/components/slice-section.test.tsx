@@ -63,8 +63,11 @@ describe("SliceSection", () => {
       </SliceSection>,
     );
 
-    expect(html).toContain("mt-slice");
-    expect(html).toContain("mb-0");
+    expect(html).toContain("flow-root");
+    expect(html).toContain("pt-slice");
+    expect(html).toContain("pb-0");
+    expect(html).not.toContain("mt-slice");
+    expect(html).not.toContain("mb-slice");
     expect(html).not.toContain("<h2");
     expect(html).toContain("Body");
   });
@@ -89,12 +92,14 @@ describe("SliceSection", () => {
     );
 
     expect(html).toContain('id="menopause-isnt-a-dirty-word"');
-    expect(html).toContain("mt-slice-lg");
-    expect(html).toContain("mb-slice-sm");
+    expect(html).toContain("pt-slice-lg");
+    expect(html).toContain("pb-slice-sm");
+    expect(html).not.toContain("mt-slice");
+    expect(html).not.toContain("mb-slice");
     expect(html).toContain("[--section-space-above:var(--spacing-slice-lg)]");
     expect(html).toContain("[--section-space-below:var(--spacing-slice-sm)]");
     expect(html).toContain("bg-panel");
-    expect(html).toContain("py-slice");
+    expect(html).not.toContain("py-slice");
     expect(html).toContain("<h2");
     expect(html).toContain("Menopause isn’t a dirty word.");
     expect(html).toContain("All posts");
@@ -163,7 +168,7 @@ describe("SliceSection", () => {
     );
 
     expect(pink).toContain("bg-card-1");
-    expect(pink).toContain("py-slice");
+    expect(pink).not.toContain("py-slice");
     expect(raspberry).toContain("bg-accent text-panel-text");
     expect(pink).toContain("[--section-kicker:var(--color-accent)]");
     expect(raspberry).toContain("[--section-kicker:var(--color-card-2)]");
@@ -176,6 +181,26 @@ describe("SliceSection", () => {
     ).toContain("[--section-kicker:var(--color-panel-accent)]");
     expect(retired).not.toContain("py-slice");
     expect(retired).not.toContain("bg-");
+  });
+
+  it("adds the next slice's space above to the gap after this one", () => {
+    const html = renderToStaticMarkup(
+      <SliceSection
+        followingSpaceAbove="Medium"
+        section={fields({
+          background: "Navy",
+          space_above: "None",
+          space_below: "Large",
+        })}
+      />,
+    );
+
+    expect(html).toContain("pt-0");
+    expect(html).toContain("pb-slice-lg");
+    expect(html).toContain("bg-panel");
+    expect(html).toContain(
+      "--section-gap-after:calc(var(--spacing-slice-lg) + var(--spacing-slice))",
+    );
   });
 
   it("paints a cream band but leaves Transparent unpainted", () => {

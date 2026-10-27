@@ -103,6 +103,13 @@ const winona: BrandPromoClinic = {
     "I received my first order within 5 days of placing order for the HRT products my clinician recommended.",
 };
 
+const longWriting = [
+  "The supporting card can line up with the first line, the middle of the writing, or stay on screen while this column scrolls.",
+  "Center is the usual place. Top lines the card up with the heading. Sticky keeps the price, or her words, in view on a long section.",
+  "On a phone the card stacks under the writing, and it does not stay stuck.",
+  "The clinic facts on these examples are Inner Balance. The sentences are only here so the three positions are easy to compare.",
+].flatMap((sentence) => rich(sentence));
+
 const joi: BrandPromoClinic = {
   uid: "joi",
   name: "Joi Women’s Wellness",
@@ -172,6 +179,49 @@ export default function BrandPromoPreview() {
           first: false,
         }}
         clinic={joi}
+      />
+      <BrandPromo
+        primary={{
+          ...section({ heading: rich("Card at the top") }),
+          card_position: "Top",
+          overwrite: [
+            {
+              text: longWriting,
+              quote: rich(innerBalance.quote ?? ""),
+            },
+          ],
+        }}
+        clinic={innerBalance}
+      />
+      <BrandPromo
+        primary={{
+          ...section({ heading: rich("Card in the center") }),
+          card_position: "Center",
+          overwrite: [
+            {
+              text: longWriting,
+              quote: rich(innerBalance.quote ?? ""),
+            },
+          ],
+        }}
+        clinic={innerBalance}
+      />
+      <BrandPromo
+        primary={{
+          ...section({
+            heading: rich("Card stays on screen"),
+            background: "Cream",
+          }),
+          card_position: "Sticky",
+          overwrite: [
+            {
+              style: "Quote",
+              text: longWriting,
+              quote: rich(innerBalance.quote ?? ""),
+            },
+          ],
+        }}
+        clinic={innerBalance}
         last
       />
     </>

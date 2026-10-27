@@ -1,5 +1,5 @@
 import type { RichTextField } from "@prismicio/client";
-import { parseProviderToken } from "@/components/content-blocks";
+import { isTipToken, parseProviderToken } from "@/components/content-blocks";
 
 type StoryBlock = RichTextField[number];
 type StoryImage = Extract<StoryBlock, { type: "image" }>;
@@ -68,6 +68,7 @@ function isCaption(block: StoryBlock) {
   if (isPhotoTextToken(text)) return false;
   if (isTableToken(text)) return false;
   if (parseProviderToken(text)) return false;
+  if (isTipToken(text)) return false;
   return true;
 }
 

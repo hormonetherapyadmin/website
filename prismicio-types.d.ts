@@ -286,7 +286,7 @@ export interface NavigationDocumentDataMainItemsLinksItem {
    * Column heading field in *Navigation → Menu items → Menu links*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: Leave blank for the first column. A new heading starts the next column, such as My reviews.
+   * - **Placeholder**: Leave blank to stay in the current column. A new heading starts the next column, such as My reviews.
    * - **API ID Path**: navigation.main_items[].links[].column_heading
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
@@ -679,7 +679,7 @@ interface PostDocumentData {
    * Story field in *Blog post*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: Write the story readers will see. A line that is only {{table}} shows the first table from Tables there, {{table2}} the second, and so on.
+   * - **Placeholder**: Write the story readers will see. A line that is only {{table}} shows the first table from Tables there, {{table2}} the second, and so on. Start a paragraph with {{tip}} for Peggy’s tip.
    * - **API ID Path**: post.body
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
@@ -1608,6 +1608,17 @@ export interface BrandPromoSliceDefaultPrimary {
   overwrite: prismic.GroupField<
     Simplify<BrandPromoSliceDefaultPrimaryOverwriteItem>
   >;
+
+  /**
+   * Card position field in *Brand promo → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Center lines the card up with the middle of the writing. Top lines it up with the first line. Sticky keeps it in view while long writing scrolls.
+   * - **Default Value**: Center
+   * - **API ID Path**: brand_promo.default.primary.card_position
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  card_position: prismic.SelectField<"Center" | "Top" | "Sticky", "filled">;
 
   /**
    * Background field in *Brand promo → Default → Primary*
@@ -4970,9 +4981,137 @@ export type RibbonSliceDefault = prismic.SharedSliceVariation<
 >;
 
 /**
+ * Primary content in *Ribbon → Tip → Primary*
+ */
+export interface RibbonSliceTipPrimary {
+  /**
+   * Eyebrow field in *Ribbon → Tip → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: ribbon.tip.primary.small_heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  small_heading: prismic.RichTextField;
+
+  /**
+   * Heading (H2) field in *Ribbon → Tip → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: ribbon.tip.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  heading: prismic.RichTextField;
+
+  /**
+   * Line above the box field in *Ribbon → Tip → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: ribbon.tip.primary.intro
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro: prismic.RichTextField;
+
+  /**
+   * Tip field in *Ribbon → Tip → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Ask what the first month actually costs before you sign up.
+   * - **API ID Path**: ribbon.tip.primary.content
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  content: prismic.RichTextField;
+
+  /**
+   * Box background field in *Ribbon → Tip → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: The color of the ribbon. Same choices as Background.
+   * - **Default Value**: Pink
+   * - **API ID Path**: ribbon.tip.primary.box_background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  box_background: prismic.SelectField<
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
+    "filled"
+  >;
+
+  /**
+   * Background field in *Ribbon → Tip → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: The color behind the ribbon.
+   * - **Default Value**: Transparent
+   * - **API ID Path**: ribbon.tip.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    | "Transparent"
+    | "Cream"
+    | "Pink"
+    | "Blue"
+    | "Yellow"
+    | "Lavender"
+    | "Raspberry"
+    | "Navy",
+    "filled"
+  >;
+
+  /**
+   * Space above field in *Ribbon → Tip → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Medium
+   * - **API ID Path**: ribbon.tip.primary.space_above
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_above: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+
+  /**
+   * Space below field in *Ribbon → Tip → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: None
+   * - **API ID Path**: ribbon.tip.primary.space_below
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  space_below: prismic.SelectField<
+    "None" | "Small" | "Medium" | "Large",
+    "filled"
+  >;
+}
+
+/**
+ * Tip variation for Ribbon Slice
+ *
+ * - **API ID**: `tip`
+ * - **Description**: Tip
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type RibbonSliceTip = prismic.SharedSliceVariation<
+  "tip",
+  Simplify<RibbonSliceTipPrimary>,
+  never
+>;
+
+/**
  * Slice variation for *Ribbon*
  */
-type RibbonSliceVariation = RibbonSliceDefault;
+type RibbonSliceVariation = RibbonSliceDefault | RibbonSliceTip;
 
 /**
  * Ribbon Shared Slice
@@ -5011,7 +5150,7 @@ export interface SideBySideSliceImagePrimary {
    * Content field in *Side by side → Image → Primary*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in.
+   * - **Placeholder**: Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in. {{tip}} is Peggy’s tip.
    * - **API ID Path**: side_by_side.image.primary.text
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
@@ -5205,7 +5344,7 @@ export interface SideBySideSliceVideoPrimary {
    * Content field in *Side by side → Video → Primary*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in.
+   * - **Placeholder**: Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in. {{tip}} is Peggy’s tip.
    * - **API ID Path**: side_by_side.video.primary.text
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
@@ -5362,7 +5501,7 @@ export interface SideBySideSliceQuotePrimary {
    * Content field in *Side by side → Quote → Primary*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in.
+   * - **Placeholder**: Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in. {{tip}} is Peggy’s tip.
    * - **API ID Path**: side_by_side.quote.primary.text
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
@@ -5519,7 +5658,7 @@ export interface SideBySideSliceClinicPrimary {
    * Content field in *Side by side → Clinic → Primary*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in.
+   * - **Placeholder**: Signoff on a whole paragraph is the large closing line. Note on a whole paragraph is the tint box. Start a paragraph with {{provider:inner-balance:offer}} or {{provider:inner-balance:facts}} to pull that clinic in. {{tip}} is Peggy’s tip.
    * - **API ID Path**: side_by_side.clinic.primary.text
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
@@ -5887,7 +6026,7 @@ export interface TextSliceDefaultPrimary {
    * Content field in *Text → Default → Primary*
    *
    * - **Field Type**: Rich Text
-   * - **Placeholder**: The writing. Headings, lists, photos, and videos are allowed.
+   * - **Placeholder**: The writing. Headings, lists, photos, and videos are allowed. Start a paragraph with {{tip}} for Peggy’s tip.
    * - **API ID Path**: text.default.primary.text
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
@@ -6111,8 +6250,10 @@ declare module "@prismicio/client" {
       QuoteSliceDefault,
       RibbonSlice,
       RibbonSliceDefaultPrimary,
+      RibbonSliceTipPrimary,
       RibbonSliceVariation,
       RibbonSliceDefault,
+      RibbonSliceTip,
       SideBySideSlice,
       SideBySideSliceImagePrimary,
       SideBySideSliceVideoPrimary,

@@ -7,7 +7,13 @@
 // names it. The order and the pages already in Prismic are in
 // docs/MIGRATION_RUNBOOK.md.
 
-import { GUIDE_PAGES } from "./guide-pages.ts";
+import {
+  COMPARISON_REVIEW_IDS as reviewIds,
+  INNER_BALANCE_HRT_REVIEW_ID as HRT_REVIEW,
+  INNER_BALANCE_ID as INNER_BALANCE,
+  comparisonClinicRows,
+} from "./comparison-clinics.ts";
+import { GUIDE_PAGES, providersRibbon } from "./guide-pages.ts";
 
 type Span = {
   start: number;
@@ -230,11 +236,6 @@ const aboutPortrait = {
   copyright: null,
 };
 
-const journey = button(
-  "Trusted HRT Docs/Clinics - Start my Journey",
-  "/trusted-providers",
-);
-
 const reviewsLine =
   "I hope you find useful informative articles in the bog pages and be sure to check out the trusted HRT Doctor/Clinic Reviews. I spill the beans on what they offer, their process, their pricing and what they offer in the way of payment plans.";
 
@@ -405,9 +406,7 @@ const safety = [
   ),
 ];
 
-const INNER_BALANCE = "asf4zhEAAC4AYFel";
 const ONE_YEAR_REVIEW = "askC8xcAAC0AcqpI";
-const HRT_REVIEW = "askCgRcAADEAcqjO";
 const COMPARE = "#eight-online-hrt-clinics-side-by-side";
 
 const oestraJar = {
@@ -417,57 +416,6 @@ const oestraJar = {
   edit: { x: 0, y: 0, zoom: 1, background: "transparent" },
   alt: "Oestra Vaginal cream",
   copyright: null,
-};
-
-const comparisonClinics: { id: string; uid: string; review: string }[] = [
-  {
-    id: INNER_BALANCE,
-    uid: "inner-balance",
-    review: "inner-balance-hrt-review",
-  },
-  {
-    id: "asvI_BcAADMAeME-",
-    uid: "winona",
-    review: "winona-bioidentical-hormone-therapy-review",
-  },
-  {
-    id: "asz2AxcAADAAeqH0",
-    uid: "musely",
-    review: "musely-estrogen-cream-review-a-safer-gentler-hrt-alternative",
-  },
-  {
-    id: "asz9cxcAADEAer1m",
-    uid: "alloy",
-    review: "my-alloy-an-overview-of-products-process-and-pricing",
-  },
-  {
-    id: "asvUERcAAC0AeNI_",
-    uid: "joi",
-    review: "joi-womens-hormone-replacement-review",
-  },
-  {
-    id: "asz-gRcAADMAesHD",
-    uid: "effecty",
-    review: "effecty-hormone-replacement-therapy-review",
-  },
-  { id: "as0AwRcAADMAeslp", uid: "menorx", review: "mymenopauserx-review" },
-  {
-    id: "as0CfhcAADIAes6P",
-    uid: "midi",
-    review: "will-midi-health-help-me-lose-weight",
-  },
-];
-
-const reviewIds: Record<string, string> = {
-  "inner-balance-hrt-review": HRT_REVIEW,
-  "winona-bioidentical-hormone-therapy-review": "asjxrxcAADIAcou2",
-  "musely-estrogen-cream-review-a-safer-gentler-hrt-alternative":
-    "asfWCxEAACwAYBu0",
-  "my-alloy-an-overview-of-products-process-and-pricing": "askCEBcAAC8Acqdk",
-  "joi-womens-hormone-replacement-review": "askCGBcAAC0Acqd9",
-  "effecty-hormone-replacement-therapy-review": "askClRcAADIAcqkU",
-  "mymenopauserx-review": "askCSRcAAC4AcqgW",
-  "will-midi-health-help-me-lose-weight": "askCRRcAACwAcqgJ",
 };
 
 const FACTS_INTRO =
@@ -840,15 +788,7 @@ export const HOMEPAGE = {
       prices_checked: "2026-09-09",
       button: web("Trusted providers", "/trusted-providers"),
       disclosure: web("Affiliate disclosure", "/affiliate-disclosures"),
-      clinics: comparisonClinics.map((clinic) => ({
-        clinic: documentLink(clinic.id, "provider", clinic.uid),
-        review: documentLink(
-          reviewIds[clinic.review],
-          "post",
-          clinic.review,
-          "Read review",
-        ),
-      })),
+      clinics: comparisonClinicRows(),
     }),
     slice("quote", "default", {
       ...section({
@@ -961,6 +901,81 @@ export const SITE_PAGES: SitePage[] = [
     ],
   },
   {
+    sourceId: "page:how-i-review",
+    uid: "how-i-review",
+    title: "How I review",
+    meta_title: "How I review | Hormone Therapy Hub",
+    meta_description:
+      "I'm not a doctor. I write what I used, what I paid, and what I confirmed on the clinic's page.",
+    review: [
+      "This page was not on Wix. The words are new, in her voice, from how the reviews, the price chart, and the about page already work.",
+      "It is a Page at /how-i-review. Editorial Standards still has no custom type.",
+    ],
+    changes: [
+      "The footer and Peggy's author card link here. On Wix those links had nowhere to go.",
+    ],
+    slices: [
+      slice("hero", "subpage", {
+        ...section({
+          small_heading: "About Peggy",
+          heading: "How I review",
+          intro:
+            "I'm not a doctor. These reviews are me, the patient, spilling what I used, what I paid, and what I confirmed on their page.",
+          space_above: "Medium",
+        }),
+        image: aboutPortrait,
+      }),
+      divider(),
+      slice("text", "default", {
+        ...section({
+          heading: "What goes into a review",
+          space_below: "Large",
+        }),
+        background: "Blue",
+        layout: "On the right",
+        text: [
+          paragraph(
+            "I started bioidentical hormone therapy in December 2019. Everything here is from that seat.",
+          ),
+          heading("heading3", "What I used"),
+          paragraph(
+            "The review is the clinic, the cream, or the kit I actually used. I sign up, I pay, and I write what that was like for me. I don't fill in a visit I didn't take, or a result I didn't have.",
+          ),
+          heading("heading3", "What I paid"),
+          paragraph(
+            "The number on a clinic is what I paid, not a list price from an ad. A consult, labs, or insurance can change it. I put the date on the price chart when I check those numbers. Yours may differ.",
+          ),
+          heading("heading3", "What the clinic says"),
+          paragraph(
+            "Insurance, what they typically prescribe, and how you get started are what I confirmed on their page. That part is theirs. The quote is mine. I am not reviewing them as a medical professional.",
+          ),
+          heading("heading3", "When a link pays me"),
+          linked(
+            "Some of the visit buttons pay me a commission. I was still the patient, and I still write the part I didn't love. The code on the card is the one I use. The rest is on the affiliate disclosure.",
+            "affiliate disclosure",
+            "/affiliate-disclosures",
+          ),
+          heading("heading3", "When a price changes"),
+          paragraph(
+            "A price or a code can change after I hit publish. I change it on the clinic. The chart and the clinic page pick up the new number. The review stays the story of the time I used it.",
+          ),
+        ],
+      }),
+      slice("buttons", "default", {
+        ...section({ space_below: "Large" }),
+        layout: "Centered",
+        button: [
+          web(
+            "See what each clinic cost me",
+            "/hrt-price-comparison-chart",
+            "Solid",
+          ),
+          web("Read my whole story", "/about", "Ghost"),
+        ],
+      }),
+    ],
+  },
+  {
     sourceId: "page:faq",
     uid: "faq",
     title: "Bioidentical Hormone Replacement Therapy",
@@ -968,7 +983,7 @@ export const SITE_PAGES: SitePage[] = [
       "Each answer is paired with the question it actually answers. On Wix the safety answer sits under the insurance question, and the insurance answer sits under the safety question. The words are unchanged, including lby, yur, and professsionals.",
     ],
     changes: [
-      "Trusted HRT Docs/Clinics - Start my Journey links to /trusted-providers",
+      "The close is the shared Trusted providers ribbon. On Wix that button links to the homepage.",
     ],
     slices: [
       slice(
@@ -985,11 +1000,7 @@ export const SITE_PAGES: SitePage[] = [
         ...section(),
         questions: faqQuestions,
       }),
-      slice("buttons", "default", {
-        ...section({ space_below: "Large" }),
-        layout: "Centered",
-        button: [journey],
-      }),
+      providersRibbon(),
     ],
   },
   {
@@ -1003,7 +1014,7 @@ export const SITE_PAGES: SitePage[] = [
       "The words are unchanged, including the important of, ACCOG, Regulatory Oversign, and the unfinished make any necessary.",
     ],
     changes: [
-      "Trusted HRT Docs/Clinics - Start my Journey links to /trusted-providers",
+      "The disclaimer ribbon stays. Its button says Trusted providers and links to /trusted-providers. On Wix that button links to the homepage.",
     ],
     slices: [
       slice("hero", "subpage", {
@@ -1088,7 +1099,7 @@ export const SITE_PAGES: SitePage[] = [
         content: rich(
           "The landscape of hormone therapy is dynamic and research findings may evolve over time. Always consult with a qualified healthcare professional to discuss your specific health situation to make informed decisions regarding your health.",
         ),
-        button: [journey],
+        button: [button("Trusted providers", "/trusted-providers")],
       }),
     ],
   },

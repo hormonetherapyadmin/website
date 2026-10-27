@@ -65,8 +65,8 @@ slice. The Divider has only Line, Color, and those three settings.
 Full width image has only Image, Edge to edge, and those three
 settings. Brand promo
 keeps Heading (H2) open. Eyebrow, Line
-under the name, and Text under the quote are in Overwrite. It still
-ends with Background, Space above, and Space below.
+under the name, and Text under the quote are in Overwrite. Card
+position sits just before Background, Space above, and Space below.
 
 | Label | Id | Kind | Default |
 | --- | --- | --- | --- |
@@ -152,11 +152,11 @@ The eyebrow is a line above the title. She does not pick the level.
 **Background** choices are the site colors, by name. Each maps to a
 color token:
 
-- Transparent, the default. It paints nothing and adds no inner
-  padding, so the slice sits on the page, which is cream
-- Cream, the page color (`background`). It paints that color and adds
-  no inner padding, so Space above and Space below are the only gap.
-  A cream slice between two other colors is a cream band
+- Transparent, the default. It paints nothing. Space above and Space
+  below are still padding, and the page, which is cream, shows through
+  them
+- Cream, the page color (`background`). It paints that color. A cream
+  slice between two other colors is a cream band
 - Pink (`card-1`)
 - Blue (`card-2`)
 - Yellow (`card-3`)
@@ -180,12 +180,10 @@ Pieces a slice draws in raspberry, other than the eyebrow, are
 not changed on a Raspberry band. A hero button is one example. Use Raspberry for writing and quotes.
 A card keeps its own color on any band.
 
-**Space above** and **Space below** are the gap outside the slice. Both
-are None, Small, Medium, or Large. The gap between two slices is set by
-the lower slice's Space above. Transparent and Cream add no inner
-padding. Pink, Blue, Yellow, Lavender, Raspberry, and Navy paint the
-slice and keep a fixed padding inside the color. That inner padding is
-not a field.
+**Space above** and **Space below** are padding inside the slice. Both
+are None, Small, Medium, or Large. The background color includes that
+padding. The gap between two slices is this slice's Space below plus
+the next slice's Space above. No background adds padding of its own.
 
 **Section id.** Every section gets an id from its title, so a button on the
 same page can scroll to it. "Feel like you again." becomes
@@ -279,10 +277,8 @@ posts is a repeatable group with one content relationship in each row.
 
 A line between slices. It does not use the Section header. Background,
 Space above, and Space below are fields on the slice, with the same
-choices as Section. Both spacing fields default to Medium. That gap is
-added around the line, on top of the space on the slices beside it. A
-margin would collapse into the neighbor's margin, and None and Small
-would look the same.
+choices as Section. Both spacing fields default to Medium. That padding
+sits around the line, on top of the padding on the slices beside it.
 
 | Label | Id | Kind | Default |
 | --- | --- | --- | --- |
@@ -311,8 +307,9 @@ where the first one sits.
 One photo. It does not use the Section header. Edge to edge chooses
 the width. Off, the photo is as wide as the writing and lines up with
 the headings. On, it runs to the edges of the window. A background
-color still paints the full band. On a colored band the photo keeps
-the band's vertical padding and loses the side padding. Background,
+color still paints the full band. On a colored band the photo loses
+the side padding. Space above and Space below are its vertical padding.
+Background,
 Space above, and Space below are the last fields, with the same
 choices as Section. Space above defaults to Medium. Space below
 defaults to None, so the next slice sets the gap under the photo.
@@ -420,6 +417,14 @@ A box heading is an `h3` when Heading (H2) is filled. Without a
 section heading it is a paragraph, so a jump band does not add
 headings to the page outline.
 
+A row where no box has an image or a clinic logo is a statement panel,
+not a jump ticket. The heading is set large, the line under it is the
+accent line, and the cards cycle Pink, Blue, Yellow, and Lavender.
+The row is only as wide as the story column, so it lines up with the
+writing under it. Formulations uses this for "best known for." On a
+narrow screen those panels stack to one column. A row that has any
+logo stays the small ticket, including the trusted-providers jump band.
+
 ### Brand promo
 
 One clinic card, in `src/slices/BrandPromo`. Trusted providers stacks
@@ -429,8 +434,8 @@ on a transparent background, with Is this 1st? left off.
 
 The open fields are the ones she fills on every card. Heading (H2) is the
 specialty, such as "Improved sleep", and it is an `h2`. Clinic is the
-brand. Background, Space above, and Space below are the section.
-Is this 1st? shows the badge. Place is the words beside it.
+brand. Card position, Background, Space above, and Space below are
+the section. Is this 1st? shows the badge. Place is the words beside it.
 
 Overwrite is one optional group. It starts empty. She adds it only when
 this card should differ from the brand, or from the built-in line
@@ -456,6 +461,7 @@ consult or not, and choose patch or gel." Leave it blank to hide it.
 | Is this 1st? | `first` | Boolean | No | On shows the 1st badge. Off hides it. |
 | Place | `place` | Text | No | My 2026 top choice. Shown beside the badge. Blank hides the words. |
 | Overwrite | `overwrite` | Non-repeatable group | No | Off. Add it to replace what the brand supplies. |
+| Card position | `card_position` | Select: Center, Top, Sticky. Default Center | No | Center. Where the supporting card sits beside the writing. |
 
 Overwrite fields:
 
@@ -483,9 +489,17 @@ a product card. Photo and price applies only when Style is Card.
 Beside, the default, puts
 the price box next to the product image, as on Trusted providers.
 Stacked puts the image on top and the price box under it, as one
-card centered in the right half, with no line. The
-card stays in view while the writing scrolls on wide screens. Use Stacked when the card has a lot of writing, as on the
-test kits page. On a phone both layouts stack.
+card centered in the right half, with no line. Use Stacked when the
+card has a lot of writing, as on the test kits page. On a phone both
+layouts stack.
+
+Card position sets where that supporting card sits beside the writing.
+Center, the default, lines it up with the middle of the writing. Top
+lines it up with the first line. Sticky starts at the top and keeps the
+card in view while long writing scrolls. A slice saved before this field
+existed stays centered. A Stacked product card saved before the field
+existed stays in view, the way that layout used to. On a phone the card
+stacks under the writing and never sticks.
 
 The relationship fetches `name`, `kind`, `logo`, `visit`, `page`,
 `review`, `comparison`, `youtube`, `product`, `monthly_price`, `price_unit`,
@@ -528,8 +542,8 @@ light card and white on Navy or Raspberry, each with a chevron. Set
 Space above and Space below to None on the directory cards so they
 stack. A light Beside card draws a rule across the bottom, in the
 middle of the gap after the card, so that gap is even on both sides
-of the line. The gap is Space below, or the next slice's Space above
-when that is larger. Stacked draws no rule. The last card in a run
+of the line. The gap is this card's Space below plus the next slice's
+Space above. Stacked draws no rule. The last card in a run
 draws no rule either: when the next slice is not a Brand promo, or
 nothing follows, the line is left off, so it never doubles up with a
 Divider or trails the page. There is no field for this. Navy and Raspberry use the light text and the light visit
@@ -562,6 +576,23 @@ is transparent, or when the box and the band are the same color. Cream
 and Transparent are the same page color, so a cream box on a
 transparent band has no wave.
 
+Tip is a second variation. The box is the same ribbon. Peggy’s portrait
+sits in a circle on the left, and the title is always “Peggy’s tip”.
+She types the tip in Tip. There is no title field, no layout, and no
+buttons. The portrait is the photo already published on `/about`. Box
+background still chooses the ribbon color, and the default is Pink.
+An empty Tip hides the box. The section header can still show. With a
+Heading (H2), “Peggy’s tip” is an `h3`. Without one it is the `h2` and
+the section id `peggys-tip`.
+
+| Label | Id | Kind | Required | Template |
+| --- | --- | --- | --- | --- |
+| Section | Eyebrow, Heading (H2), and Line above the box | Shared, open on the slice | | Background is the color behind the box. Default Transparent |
+| Tip | `content` | Rich text: paragraphs, bold, italic, links, lists | No | Ask what the first month actually costs before you sign up. |
+| Box background | `box_background` | Select. Same choices as Background. Default Pink | No | Pink |
+
+The default variation:
+
 | Label | Id | Kind | Required | Template |
 | --- | --- | --- | --- | --- |
 | Section | Eyebrow, Heading (H2), and Line above the box | Shared, open on the slice | | Background is the color behind the box. Default Transparent |
@@ -581,8 +612,9 @@ section header can still show.
 ### Buttons
 
 A row of buttons with no box, in `src/slices/Buttons`. Use it when the
-close is only a button, such as the end of `/faq`. A close that has a
-sentence in a colored box stays a Ribbon.
+close is only a button. The shared close that sends people to Trusted
+providers is a Ribbon, including on `/faq`. A close that has a sentence
+in a colored box stays a Ribbon.
 
 The row sits in the story column, the same width as Text and FAQ. A
 Background color still fills the full width. Layout On the left, the
@@ -600,7 +632,7 @@ Space above, Space below. There is no Content field.
 | --- | --- | --- | --- | --- |
 | Eyebrow | `small_heading` | Heading rich text | No | Empty |
 | Heading (H2) | `heading` | Heading rich text | No | Empty |
-| Buttons | `button` | Repeatable link, with display text and a style | No | Solid: Trusted HRT Docs/Clinics - Start my Journey |
+| Buttons | `button` | Repeatable link, with display text and a style | No | Solid: Take me to The LA Wig Company |
 | Layout | `layout` | Select: On the left, Centered. Default On the left | No | Centered |
 | Background | `background` | Select | No | Transparent |
 | Space above | `space_above` | Select | No | Medium |
@@ -641,11 +673,24 @@ the `h2` and the section id. Headings inside Content are for the parts
 under it, so use Heading 3 there when the slice has a heading. A
 paragraph can start with a clinic token, the same
 `{{provider:inner-balance:offer}}` and `{{provider:inner-balance:facts}}`
-tokens as the post. Tables and the `{{photos}}` and `{{photo-text}}`
+tokens as the post. `{{tip}}` is Peggy’s tip, the same token as the
+post. Tables and the `{{photos}}` and `{{photo-text}}`
 rows are post-only. An empty slice shows only its spacing.
 
 Wix pages often fake a heading with a bold paragraph. In Prismic make
 it a Heading 3. The words stay the same.
+
+Two or more Heading 3 lines in a row, each followed by one or more
+paragraphs, render as a numbered card grid. That is the formulations
+list, the cost and insurance topics, and the provider-tips checklist.
+A Heading 3 with no paragraph under it stays a heading above the grid.
+A Heading 3 followed by a list stays ordinary writing. A Text slice
+with no Heading (H2) and a single plain paragraph stays ordinary
+writing when Layout is On the right. Layout Centered makes that
+paragraph a centered lead, the same measure as a hero dek. A clinic
+token or a tip token in that paragraph stays ordinary writing so the
+box can render. On a tinted Background
+the cards are white, so they still separate from the band.
 
 ### Clinic facts
 
@@ -741,13 +786,15 @@ Each row:
 | Cons | `cons` | Rich text: paragraph, bullet, bold, italic, link | No | Cost, one per line |
 
 Each line or bullet is one item. A blank label says Pros or Cons, and
-she can write her own, such as "What I liked". The Pros card is light
-green (`--color-pros`) and the Cons card is white. Pros have a check
-mark and Cons a minus sign, so the side does not depend on color. A row
-with no pros and no cons is hidden. A row with only one side shows
-that card alone. A row title is an `h3` under a Heading (H2), and
-the Pros and Cons labels are a level below the row title. The two
-cards stack at 640 pixels.
+she can write her own, such as "What I liked". The title sits above
+two cards. The Pros card is light green (`--color-pros`) and the Cons
+card is pink (`--color-card-1`). A check mark sits above Pros and a
+minus above Cons, in the same round well as the Clinic facts icons, so
+the side does not depend on color. The lines use the heading face. A
+row with no pros and no cons is hidden. A row with only one side shows
+that card alone. A row title is an `h3` under a Heading (H2), and the
+Pros and Cons labels are a level below the row title. The two cards
+stack at 640 pixels.
 
 ### FAQ
 
@@ -776,8 +823,8 @@ The list sits in the story column, centered, the same width as Text.
 A Background color still fills the full width. A question is an `h3`
 under a Heading (H2). Without one it is an `h2`, so a page whose
 title is the Hero still has headings for the questions. Answer uses
-the content toolbar. A paragraph can start with a clinic token, the
-same as Text.
+the content toolbar. A paragraph can start with a clinic token or
+`{{tip}}`, the same as Text.
 
 The chevron is raspberry on a light band. On Raspberry or Navy it
 uses that section's eyebrow color.
@@ -805,10 +852,8 @@ One slice, five variations. Each variation includes the shared Section
 fields and lays the heading out itself. Section supplies the spacing and
 background. Home and Provider have no Link. Subpage, Centered, and
 Brands do: one text link, such as "Start here" or "Full price chart."
-The homepage section id comes from the heading. The homepage
-variation also keeps the mockup's vertical padding, and Space above and
-Space below add to it. The subpage, centered, brands, and provider
-variations do not, so those fields are the whole gap.
+The homepage section id comes from the heading. Space above and
+Space below are the whole gap on every variation, including Home.
 
 #### Home
 
@@ -862,6 +907,8 @@ spans the container. Content stays on the shorter measure. It has no
 fields of its own. The test kits page uses it with one content sentence
 and moves Peggy's photo into the Side by side under it. Keep that
 sentence to one or two, because a long centered paragraph is hard to read.
+A hero whose Content is a full paragraph uses Subpage and a photo.
+`/costandinsurance` does this, with Peggy in her living room.
 
 #### Brands
 
@@ -979,6 +1026,10 @@ the newest post as the feature and leaves it out of the grid. A selected
 category keeps the featured card on the newest post overall, or on the
 post Featured points at. That post stays out of the grid, including on
 its own category.
+Choosing a tab filters the grid in place. The address becomes
+`?category=` (All drops it) without loading the page again, and the
+window stays where it is. The cards fade in. A shared or refreshed
+address still opens on that category.
 Page addresses are `/blog` and `/blog/page/N`. The category tabs do not
 get their own public URL until the indexing decision in
 `docs/SEO_AEO_GEO.md`.
@@ -1024,7 +1075,10 @@ order they should appear. To change a price, a quote, or a code, edit
 that clinic. Pick the review on this row."
 
 The slice is in `src/slices/clinic_comparison`. The page resolves each
-clinic and passes the fields this table reads.
+clinic and passes the fields this table reads. The homepage and
+`/hrt-price-comparison-chart` use this variation with the same clinics,
+the same review links, and the same prices-checked date. The list lives
+in `src/migration/comparison-clinics.ts`.
 
 The columns stay fixed: Clinic, Description, What I paid per month,
 Insurance, Typically prescribed, In my words. The chart compares
@@ -1037,7 +1091,8 @@ Chart, id `chart`, is the same table with different columns: Clinic,
 What I paid, What’s included, and My code. Those cells are text on the
 row. They are not read from a Provider, because this chart is not the
 HRT price chart. An empty cell stays empty. A row with no Clinic name
-is left out. The homepage variation is unchanged.
+is left out. A chart with no named rows keeps the heading and
+renders no table. The homepage variation is unchanged.
 
 | Label | Id | Kind | Notes |
 | --- | --- | --- | --- |
@@ -1143,7 +1198,8 @@ the large closing line. A Note label on a whole paragraph is the tint
 box. The story's note is "I am not a medical professional, and this site
 does not provide medical advice or treatment plans." A paragraph can
 start with a clinic token, the same `{{provider:inner-balance:offer}}`
-and `{{provider:inner-balance:facts}}` tokens as the post.
+and `{{provider:inner-balance:facts}}` tokens as the post. `{{tip}}`
+is Peggy’s tip.
 
 Caption is the line about the photo, such as "Me and Winston, my
 Bernedoodle." Caption on the photo is on by default. On draws those
@@ -1201,6 +1257,7 @@ clinic relationship, the same way it lists `visit`.
 | Post sidebar | `clinic` | Name, logo. The name links to Page when that field is set |
 | Story offer token | `{{provider:uid:offer}}` | Logo, name, visit, code, code line, plus the sentence in that paragraph |
 | Story facts token | `{{provider:uid:facts}}` | Price, price is, price note, insurance (clinics only), formulation |
+| Story tip token | `{{tip}}` | Peggy’s portrait, the title “Peggy’s tip”, and the words after the token. Nothing is read from a clinic |
 
 #### Profile
 
@@ -1566,7 +1623,21 @@ whole paragraph. Any other last word is ordinary text. In preview, an
 unknown clinic shows an error where the box would be. On the public
 site that token is removed and the rest of the paragraph stays.
 
-Story help: "Write the story readers will see. A line that is only {{table}} shows the first table from Tables there, {{table2}} the second, and so on."
+### Tip token
+
+A paragraph can start with `{{tip}}`. The words after it are Peggy’s
+tip. Bold, italic, and links in those words stay. The portrait and the
+title “Peggy’s tip” are part of the layout. The same box is the Ribbon
+Tip variation, where she types the tip in the Tip field instead of a
+token. A paragraph that is only `{{tip}}` is hidden. A token in the
+middle of a sentence stays ordinary text. The tip does not add a clinic
+to the sidebar.
+
+```
+{{tip}} Ask what the first month actually costs before you sign up.
+```
+
+Story help: "Write the story readers will see. A line that is only {{table}} shows the first table from Tables there, {{table2}} the second, and so on. Start a paragraph with {{tip}} for Peggy’s tip."
 
 The sidebar is not a field. It reads the story. Each clinic appears
 once, in the order of its first token, and the sidebar shows the first
@@ -1604,8 +1675,8 @@ Breadcrumbs are Home, Blog, and the title. Minutes to read and Keep
 reading are calculated, as above. An empty Author field uses Peggy B.
 The byline and the author block read that document: name, profile,
 and about. On Peggy's posts the byline goes to the about page, and
-"Read my whole story" and "How I review" are the about page and the
-editorial standards page. On a guest post the byline jumps to the
+"Read my whole story" and "How I review" are `/about` and
+`/how-i-review`. On a guest post the byline jumps to the
 author card on the same page. That card's link is "Read my story,"
 the Author link on that person, and it opens in a new tab. The
 disclosure line is the site affiliate disclosure.
@@ -1689,7 +1760,8 @@ not fetch. A clinic a slice names is read from the published Clinic, by
 the fields each slice lists under Provider. An unpublished clinic is
 left out of the chart, and a Quote or Side by side without one shows
 its writing only. A clinic token in Side by side or Text writing reads
-the same fields as a story token. Posts loads every Post only when the page has
+the same fields as a story token. `{{tip}}` in that writing, in an FAQ
+answer, or in a post is Peggy’s tip. Posts loads every Post only when the page has
 a Posts slice. Featured shows the post it points at, or the newest.
 Grid reads `?page=` and `?category=` from the address. Those addresses
 keep the page's canonical.

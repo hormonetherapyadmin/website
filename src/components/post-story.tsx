@@ -20,9 +20,12 @@ import Image from "next/image";
 import { isValidElement, type CSSProperties, type ReactNode } from "react";
 import {
   parseProviderToken,
+  tipMessageField,
+  isTipToken,
   type ProviderToken,
   type TokenClinic,
 } from "@/components/content-blocks";
+import { PeggyTip } from "@/components/peggy-tip";
 import { storyLinkRel, visitLinkProps } from "@/lib/affiliate-link";
 import { headingAnchors, type HeadingAnchor } from "@/lib/post-headings";
 import { storySegments, type PhotoCell } from "@/lib/story-segments";
@@ -521,6 +524,22 @@ function RichChunk({
             clinic={findClinic(clinics, token.uid)}
             preview={preview}
           />
+        );
+      }
+      if (isTipToken(node.text)) {
+        const field = tipMessageField(node);
+        // Null falls through to the default paragraph, which would show the token.
+        if (!field) return <></>;
+        return (
+          <PeggyTip place="story">
+            <PrismicRichText
+              field={field}
+              components={{
+                ...inlineComponents(sourceId),
+                paragraph: ({ children: words }) => <p>{words}</p>,
+              }}
+            />
+          </PeggyTip>
         );
       }
       return <p>{children}</p>;

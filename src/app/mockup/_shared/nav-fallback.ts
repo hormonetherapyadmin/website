@@ -72,7 +72,7 @@ export const FALLBACK_FOOTER: FooterColumn[] = [
     heading: "About",
     links: [
       { label: "About Peggy", href: "/about" },
-      { label: "How I review", href: "#" },
+      { label: "How I review", href: "/how-i-review" },
       { label: "Affiliate disclosure", href: "/affiliate-disclosures" },
       { label: "Blog", href: "/blog" },
     ],

@@ -75,7 +75,7 @@
   --radius-control: 0.5rem;
   --radius-card: 1rem;
 
-  /* Gap outside a slice. See docs/SLICE_MODEL.md. */
+  /* Padding inside a slice. See docs/SLICE_MODEL.md. */
   --spacing-slice-sm: 1.5rem;
   --spacing-slice: 4rem;
   --spacing-slice-lg: 6.5rem;

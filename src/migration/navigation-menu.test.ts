@@ -14,6 +14,7 @@ const pages = new Map(
     "tipstofindprovider",
     "trusted-providers",
     "about",
+    "how-i-review",
     "blog",
     "inner-balance",
     "winona-review-page",
@@ -64,5 +65,8 @@ describe("navigation menu", () => {
       "Providers",
       "About",
     ]);
+    expect(
+      data.footer_columns.at(-1)?.links.map((link) => link.link.uid),
+    ).toEqual(["about", "how-i-review", "blog"]);
   });
 });

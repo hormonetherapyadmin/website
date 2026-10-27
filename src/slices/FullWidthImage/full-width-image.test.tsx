@@ -105,8 +105,8 @@ describe("Full width image", () => {
       />,
     );
 
-    expect(html).toContain("mt-slice");
-    expect(html).toContain("mb-0");
+    expect(html).toContain("pt-slice");
+    expect(html).toContain("pb-0");
     expect(html).not.toContain("mt-0");
   });
 
@@ -123,9 +123,9 @@ describe("Full width image", () => {
     );
 
     expect(html).toContain("bg-card-1");
-    expect(html).toContain("py-slice");
-    expect(html).toContain("mt-slice-sm");
-    expect(html).toContain("mb-slice-lg");
+    expect(html).not.toContain("py-slice");
+    expect(html).toContain("pt-slice-sm");
+    expect(html).toContain("pb-slice-lg");
     expect(html).toContain('alt=""');
     expect(html).toContain("px-gutter");
   });
@@ -148,7 +148,7 @@ describe("Full width image", () => {
 
     expect(html).toContain('sizes="100vw"');
     expect(html).toContain("bg-card-1");
-    expect(html).toContain("py-slice");
+    expect(html).not.toContain("py-slice");
     expect(html).not.toContain("max-w-wrap");
     expect(html).not.toContain("px-gutter");
   });

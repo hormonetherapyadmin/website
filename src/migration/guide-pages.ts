@@ -3,10 +3,19 @@
 // to another site keeps its full address.
 //
 // Hair, skincare, and men's HRT use the photo gallery. The weight page
-// links the vial photo to the Joi page and leaves the GLP chart empty.
-// The price chart picks the posts that are already in Prismic. HRT
-// Doctors should become a Brand so the clinic page can replace this
-// Text composition.
+// puts Joi beside The Holy Grail. The chalkboard and the empty GLP
+// chart are gone. Three of her posts sit under the story.
+// /hrt-price-comparison-chart shows the same provider chart as the
+// homepage. HRT Doctors should become a Brand so the clinic page can
+// replace this Text composition.
+
+import {
+  COMPARISON_CLINICS,
+  comparisonClinicRows,
+} from "./comparison-clinics.ts";
+
+const JOI_ID = COMPARISON_CLINICS.find((clinic) => clinic.uid === "joi")?.id;
+if (!JOI_ID) throw new Error("Joi is missing from the comparison clinics");
 
 type Span = {
   start: number;
@@ -102,16 +111,20 @@ function divider() {
   });
 }
 
-function hero(headingText: string, intro?: string) {
-  return slice(
-    "hero",
-    "centered",
-    section({
+function hero(
+  headingText: string,
+  intro?: string,
+  image?: ReturnType<typeof photo>,
+) {
+  return slice("hero", image ? "subpage" : "centered", {
+    ...section({
+      ...(image ? { small_heading: "HRT 101" } : {}),
       heading: headingText,
       ...(intro ? { intro } : {}),
       space_above: "Medium",
     }),
-  );
+    ...(image ? { image } : {}),
+  });
 }
 
 function writing(headingText: string | undefined, text: Block[]) {
@@ -132,17 +145,29 @@ function solid(text: string, url: string, blank = false) {
   };
 }
 
-const journey = solid(
-  "Trusted HRT Docs/Clinics - Start my Journey",
-  "/trusted-providers",
-);
+/** The closer on the guide pages. One ribbon, same words, same destination. */
+export function providersRibbon(
+  space_above: "Small" | "Medium" | "Large" = "Large",
+) {
+  return slice("ribbon", "default", {
+    ...section({ space_above, space_below: "Large" }),
+    layout: "On the right",
+    box_background: "Pink",
+    title: rich("Start with the clinics I've used"),
+    content: rich(
+      "The ones I've been a patient at, on one page, with my words and the codes I use. I'm not a doctor. This is where I send people who ask.",
+    ),
+    button: [solid("Trusted providers", "/trusted-providers")],
+  });
+}
 
 function buttons(
   links: ReturnType<typeof solid>[],
   space_below: "None" | "Large" = "Large",
+  space_above: "None" | "Small" | "Medium" | "Large" = "Large",
 ) {
   return slice("buttons", "default", {
-    ...section({ space_below }),
+    ...section({ space_below, space_above }),
     layout: "Centered",
     button: links,
   });
@@ -195,7 +220,7 @@ const HRT_DOCTORS =
   "https://shareasale.com/r.cfm?b=2245796&u=4098145&m=135949&urllink=&afftrack=";
 
 const journeyChange =
-  "Trusted HRT Docs/Clinics - Start my Journey links to /trusted-providers. On Wix that button links to the homepage.";
+  "The close is the shared Trusted providers ribbon. On Wix that button links to the homepage.";
 
 export const GUIDE_PAGES = [
   {
@@ -341,7 +366,7 @@ export const GUIDE_PAGES = [
           ],
         ]),
       ),
-      buttons([journey]),
+      providersRibbon(),
     ],
   },
   {
@@ -354,12 +379,19 @@ export const GUIDE_PAGES = [
     review: [
       "Wix has a second h1, Bioidentical Hormone Replacement Therapy. Here that line is a Heading 3 under Cost of Hormone Replacement Therapy, so the page keeps one h1.",
       "The words are unchanged, including informtion and the period in Before starting hormone replacement therapy.",
+      "The intro is a full paragraph, so the hero is Subpage, with Peggy in her living room. A centered hero is for a title, or a sentence or two.",
     ],
     changes: [journeyChange],
     slices: [
       hero(
         "Will my Hormone Replacement be covered by insurance?",
         "It's crucial to have open communication with both your healthcare provider and your insurance company to understand the financial aspects of bioidentical hormone replacement therapy. Additionally, it's important to keep in mind that insurance coverage policies may change, so it's advisable to check with your insurance provider for the most up-to-date informtion.",
+        photo(
+          "public/mockup/test-kits/peggy-standing.jpg",
+          "Peggy standing in her living room, smiling, with her arms crossed",
+          1000,
+          1500,
+        ),
       ),
       divider(),
       writing("Cost of Hormone Replacement Therapy", [
@@ -404,7 +436,7 @@ export const GUIDE_PAGES = [
           "Some Hormone Replacement Therapy clinics and providers accept HSA credit cards. Be sure to check their website, our review pages or with the practice directly to confirm they'll accept your HSA Card for payment.",
         ),
       ]),
-      buttons([journey]),
+      providersRibbon(),
     ],
   },
   {
@@ -415,10 +447,10 @@ export const GUIDE_PAGES = [
     indexing: false,
     review: [
       "Archived. The address stays /sleep, indexing is off, and it is not in the menu.",
-      "The live Wix page has no writing under the title. The hero and the journey button are the whole page.",
+      "The live Wix page has no writing under the title. The hero and the Trusted providers ribbon are the whole page.",
     ],
     changes: [journeyChange],
-    slices: [hero("Sleep"), divider(), buttons([journey])],
+    slices: [hero("Sleep"), divider(), providersRibbon()],
   },
   {
     sourceId: "page:hair-loss",
@@ -550,7 +582,8 @@ export const GUIDE_PAGES = [
           ["Jon Reneau - Kelly", "Color: FS17/101S18 (Palm Springs Blonde)"],
         ]),
       ]),
-      buttons([solid("Take me to The LA Wig Company", LA_WIG, true), journey]),
+      buttons([solid("Take me to The LA Wig Company", LA_WIG, true)], "None"),
+      providersRibbon("Small"),
     ],
   },
   {
@@ -562,12 +595,22 @@ export const GUIDE_PAGES = [
       "Are you looking for cream appropriate for a woman in her 50's then look at the creams I've tried and my before and afters.",
     review: [
       "Alloy and Winona are before-and-after pairs. Each pair links to that cream's review. Inner Balance has one photo, and it links to /inner-balance.",
+      "Each cream's words sit above its photos, in the story column. A single paragraph is not centered.",
+      "Each coupon sits under its own photos. The Trusted providers ribbon is the only closer at the end.",
       "The Alloy button uses the Alloy visit address already on that brand. The Winona button uses a different address from the brand visit, so it is stored on this page.",
       "The Inner Balance coupon links to /inner-balance. The Wix page has no separate affiliate address on that button.",
     ],
     changes: [journeyChange],
     slices: [
-      hero("Menopause SkinCare"),
+      slice(
+        "hero",
+        "centered",
+        section({
+          small_heading: "Rx face creams",
+          heading: "Menopause SkinCare",
+          space_above: "Medium",
+        }),
+      ),
       divider(),
       writing(undefined, [
         paragraph(
@@ -579,12 +622,14 @@ export const GUIDE_PAGES = [
         paragraph(
           "After menopause, the changes continued. My skin felt even more delicate, and I had to be more careful about what I applied. That's when I heard about creams with estriol a form of estrogen, and honestly, they’ve been a game changer for me. Estrogen creams have helped restore some of the moisture my skin had lost, and they seem to plump things up a little, making my skin feel smoother and more hydrated. It’s like the elasticity I had in my younger years has returned in small ways, especially in areas where I used to feel dry or saggy. I still use my usual moisturizer, but I’ve found that adding estrogen-based products has made a noticeable difference in reducing the dullness and increasing my skin's resilience. It’s not a miracle cure, but it’s definitely helped me feel like my skin is being taken care of during this time of transition.",
         ),
+      ]),
+      writing("Alloy M4 Estriol Face Cream", [
         paragraph(
           "The first Face Cream I tried that had Estrogen in it was Alloy's M4 Estriol Face Cream. The cost was $ 149.97 for a 3-month supply. It made a big difference in the darkness under my eyes.",
         ),
       ]),
       slice("photo_gallery", "pair", {
-        ...section({ heading: "Alloy M4 Estriol Face Cream" }),
+        ...section({ space_above: "Small", space_below: "None" }),
         before: photo(
           "public/mockup/proposed/skin-alloy-before.jpg",
           "Peggy before Alloy M4 face cream",
@@ -601,13 +646,24 @@ export const GUIDE_PAGES = [
         after_caption: rich("After"),
         link: web("/post/alloy-m4-face-cream-review", "Read the review"),
       }),
-      writing(undefined, [
+      buttons(
+        [
+          solid(
+            "Use Code HormoneHub for $10 off first order!",
+            ALLOY_CREAM,
+            true,
+          ),
+        ],
+        "None",
+        "Small",
+      ),
+      writing("Winona Estriol Skin Cream", [
         paragraph(
           "The second Face Cream I tried that had Estrogen in it was Winona's Estriol Skin Cream with Tretinoin. The cost was $150 for a 3-month supply. This was immediately after my experience with Alloy so it makes sense that I'm not seeing as much of difference because I started in a better place than I did with Alloy. I love the feel of Winona's Cream as it's super smooth and goes on with very little tugging. I think it's the Tretinoin that makes it so smooth. However, this was to be a 3-month supply and I barely got 30 days out of it.",
         ),
       ]),
       slice("photo_gallery", "pair", {
-        ...section({ heading: "Winona Estriol Skin Cream" }),
+        ...section({ space_above: "Small", space_below: "None" }),
         before: photo(
           "public/mockup/proposed/skin-winona-before.jpg",
           "Peggy before Winona estriol cream",
@@ -627,7 +683,18 @@ export const GUIDE_PAGES = [
           "Read the review",
         ),
       }),
-      writing(undefined, [
+      buttons(
+        [
+          solid(
+            "Click for 15% off your first Winona Order",
+            WINONA_CREAM,
+            true,
+          ),
+        ],
+        "None",
+        "Small",
+      ),
+      writing("Inner Balance", [
         paragraph(
           "Then once Inner Balance came out with their Estriol Face Cream, I had to try that as I'm a huge fan of the Oestra HRT cream.",
         ),
@@ -639,7 +706,7 @@ export const GUIDE_PAGES = [
         ),
       ]),
       slice("photo_gallery", "default", {
-        ...section({ heading: "Inner Balance" }),
+        ...section({ space_above: "Small", space_below: "None" }),
         center: true,
         photos: [
           shot(
@@ -653,19 +720,17 @@ export const GUIDE_PAGES = [
           ),
         ],
       }),
-      buttons([
-        solid(
-          "Use Code HormoneHub for $10 off first order!",
-          ALLOY_CREAM,
-          true,
-        ),
-        solid("Click for 15% off your first Winona Order", WINONA_CREAM, true),
-        solid(
-          "Use Coupon Code PEGGY10 for 10% off your Inner Balance order!!",
-          "/inner-balance",
-        ),
-        journey,
-      ]),
+      buttons(
+        [
+          solid(
+            "Use Coupon Code PEGGY10 for 10% off your Inner Balance order!!",
+            "/inner-balance",
+          ),
+        ],
+        "None",
+        "Small",
+      ),
+      providersRibbon(),
     ],
   },
   {
@@ -677,52 +742,87 @@ export const GUIDE_PAGES = [
       "Want to know the Holy grail of weight loss for menopause? Learn about how you can combine HRT  and Semaglutide for the most effective weight loss results.",
     review: [
       "The public address is /weight-gain. /copy-of-weight-gain is the Wix address and redirects here.",
-      "The vial photo links to /joiwommenswellness. The visit address stays on the Joi brand.",
-      "The comparison under Which Telehealth Platform is a Common Ninja embed. Its rows are not on this page, so the chart is empty.",
+      "The hero is Subpage. The long Wix sentence is the content under Stubborn weight loss, with the vial photo beside it.",
+      "The Holy Grail is a Side by side clinic. Her account stays in Content. Joi's logo, words, and visit link come from the brand. The visit address stays on the Joi brand.",
+      "The Wix heading was The HOLY Grail of Weight Loss for Women in Menopause or Perimenopause! It is now The Holy Grail, with her account under it.",
+      "The paragraph is from her Ivim review: 30-plus pounds, about 20 off with HRT, fasting, and exercise, then a GLP-1 for the last 10 or 15. Her About page says about 28 pounds with HRT and fasting, and does not mention a GLP-1.",
+      "The chalkboard graphic is gone. The Common Ninja chart had no rows here, so that heading is gone too.",
+      "The posts are her Joi semaglutide review, her Ivim review, and the semaglutide cost post. The cost post gives a range, not a receipt of what she paid.",
     ],
     changes: [journeyChange],
     slices: [
-      hero(
-        "GLP-1 & GIP-1 Meds can be very beneficial to add to your HRT Regimen for Stubborn Weight Loss",
-      ),
-      divider(),
-      slice("side_by_side", "image", {
+      slice("hero", "subpage", {
         ...section({
-          heading:
-            "The HOLY Grail of Weight Loss for Women in Menopause or Perimenopause!",
+          small_heading: "Weight & HRT",
+          heading: "Stubborn weight loss",
+          intro:
+            "GLP-1 and GIP-1 meds can be very beneficial to add to your HRT regimen. I'm not a doctor. The scale had stopped for me, and this is what I added.",
+          space_above: "Medium",
         }),
         image: photo(
           "public/mockup/pages/weight-vial.jpg",
-          "A vial and an orange syringe on a counter",
+          "A semaglutide vial and an orange syringe on a counter",
           1050,
           1400,
         ),
-        image_link: web("/joiwommenswellness"),
-        caption: rich("Joi + Blokes"),
-        caption_on_photo: false,
+      }),
+      divider(),
+      slice("side_by_side", "clinic", {
+        ...section({
+          heading: "The Holy Grail",
+        }),
+        text: rich(
+          "HRT got me part of the way. I had 30-plus pounds to lose, and with HRT, fasting, and exercise I treated like a job, about 20 of them came off. Then the scale stopped. I told my provider I could not lose the last 10 or 15, and they suggested adding a GLP-1 to my HRT. I'm happy to report. It did. I'm not a doctor. This is what happened for me.",
+        ),
+        clinic: {
+          link_type: "Document",
+          id: JOI_ID,
+          type: "provider",
+          uid: "joi",
+        },
+        style: "Quote",
         side: "Media right",
         media_position: "Center",
       }),
-      slice("full_width_image", "default", {
-        image: photo(
-          "public/mockup/pages/weight-chalkboard.png",
-          "Chalkboard equation: HRT plus GLP-1 (compound semaglutide, Ozempic or Wegovy) equals real weight loss for perimenopause and menopause",
-          1000,
-          500,
-        ),
-        edge_to_edge: false,
-        background: "Transparent",
-        space_above: "Medium",
-        space_below: "None",
-      }),
-      slice("clinic_comparison", "chart", {
+      slice("posts", "picked", {
         ...section({
-          heading:
-            "Which Telehealth Platform offers the Best Value for GLP-1 Medications?",
+          small_heading: "From the blog",
+          heading: "What I wrote about it",
+          intro:
+            "The first one is my Joi review. Ivim is where I wrote up adding a GLP-1 to my HRT. The third is what these medications tend to cost.",
         }),
-        rows: [],
+        background: "Blue",
+        posts: [
+          {
+            post: {
+              link_type: "Document",
+              id: "askCFhcAAC8Acqd3",
+              type: "post",
+              uid: "joi-weight-loss-review-my-experience-using-semaglutide-hrt",
+              url: "/post/joi-weight-loss-review-my-experience-using-semaglutide-hrt",
+            },
+          },
+          {
+            post: {
+              link_type: "Document",
+              id: "askC4xcAAC0AcqoS",
+              type: "post",
+              uid: "ivim-review-hrt-glp-1-menopause-weight-gain",
+              url: "/post/ivim-review-hrt-glp-1-menopause-weight-gain",
+            },
+          },
+          {
+            post: {
+              link_type: "Document",
+              id: "askCBhcAAC4AcqdE",
+              type: "post",
+              uid: "semaglutide-and-menopause",
+              url: "/post/semaglutide-and-menopause",
+            },
+          },
+        ],
       }),
-      buttons([journey]),
+      providersRibbon(),
     ],
   },
   {
@@ -732,8 +832,8 @@ export const GUIDE_PAGES = [
     meta_title: "Pricing | Hormone Therapy Hub",
     meta_description: "Online HRT Price Comparison Chart",
     review: [
-      "The live page is these three posts, not a price table. The homepage comparison is the price chart.",
-      "The Joi testing post is not in Prismic yet, so it stays a link. The other two are the hand-picked row, in the same order.",
+      "The chart is the same provider comparison as the homepage, checked 2026-09-09. Prices stay on the Provider documents.",
+      "The Joi testing post is not in Prismic yet, so it stays a link under the chart. The other two are the hand-picked row, in the same order.",
     ],
     changes: [journeyChange],
     slices: [
@@ -741,13 +841,24 @@ export const GUIDE_PAGES = [
         "hero",
         "centered",
         section({
-          small_heading: "HRT Provider",
+          small_heading: "What I paid",
           heading: "Price Comparison Chart",
           space_above: "Medium",
         }),
       ),
       divider(),
-      writing(undefined, [
+      slice("clinic_comparison", "default", {
+        ...section({
+          heading: "Eight online HRT clinics, side by side",
+          intro:
+            "I paid out of pocket with my HSA card, or through my prescription insurance when I could. These are my real costs, not list prices. Yours may differ.",
+        }),
+        prices_checked: "2026-09-09",
+        button: web("/trusted-providers", "Trusted providers"),
+        disclosure: web("/affiliate-disclosures", "Affiliate disclosure"),
+        clinics: comparisonClinicRows(),
+      }),
+      writing("Costs, insurance, and testing", [
         linked(
           "My Experience with Joi Women’s Wellness Menopause Hormone Testing: What’s Included & Is It Worth It?",
           "My Experience with Joi Women’s Wellness Menopause Hormone Testing: What’s Included & Is It Worth It?",
@@ -755,7 +866,7 @@ export const GUIDE_PAGES = [
         ),
       ]),
       slice("posts", "picked", {
-        ...section(),
+        ...section({ space_above: "Small" }),
         posts: [
           {
             post: {
@@ -777,7 +888,7 @@ export const GUIDE_PAGES = [
           },
         ],
       }),
-      buttons([journey]),
+      providersRibbon(),
     ],
   },
   {
@@ -789,90 +900,122 @@ export const GUIDE_PAGES = [
       "What to consider when you are shopping for online, telehealth HRT providers and clinics.  Learn how to find a online Hormone Therapy Doctor that's just right for you.",
     review: [
       "Click for HRT Options and Formulations is a picture on Wix. Here it is a button to /formuations.",
+      "The intro is a full paragraph, so the hero is Subpage, with Peggy's portrait. The shopping question is the heading over the cards.",
     ],
     changes: [journeyChange],
     slices: [
-      hero(
-        "You want menopause symptom relief; you deserve exquisite care.",
-        "When looking for an online Hormone Replacement Therapy (HRT) or Bioidentical Hormone Replacement Therapy (BHRT) doctor in your state, it's essential to prioritize factors that ensure safety, privacy, credibility, and quality of care.",
-      ),
+      slice("hero", "subpage", {
+        ...section({
+          small_heading: "Providers",
+          heading:
+            "You want menopause symptom relief; you deserve exquisite care.",
+          intro:
+            "When looking for an online Hormone Replacement Therapy (HRT) or Bioidentical Hormone Replacement Therapy (BHRT) doctor in your state, it's essential to prioritize factors that ensure safety, privacy, credibility, and quality of care.",
+          space_above: "Medium",
+        }),
+        image: photo(
+          "public/mockup/peggy-portrait.jpg",
+          "Peggy, smiling, in a dark sweater",
+          1389,
+          1600,
+        ),
+      }),
       divider(),
-      writing("Hormone Replacement Online", [
-        paragraph(
-          "Hormone Replacement Specialist near me (as close as your personal computer)",
-        ),
-        heading(
-          "What to look for when shopping for an online Doctor and Clinic?",
-        ),
-        heading("Medical Credentials"),
-        paragraph(
-          "Ensure that the provider is a licensed healthcare professional with the appropriate medical credentials.",
-        ),
-        paragraph(
-          "Verify that the provider has experience and expertise in hormone replacement therapy or Bioidentical Hormone Replacement Therapy.",
-        ),
-        heading("Telemedicine Compliance"),
-        paragraph(
-          "Confirm that the online provider complies with telemedicine regulations and laws in your state.",
-        ),
-        paragraph(
-          "Check if the provider requires an initial in-person consultation, which might be a legal requirement in some regions.",
-        ),
-        ...pairs([
-          [
-            "Patient Reviews and Testimonials",
-            "Look for reviews and testimonials from other patients who have used the services. This can provide insights into the provider's reputation and patient satisfaction.",
-          ],
-          [
-            "Privacy and Security",
-            "Verify that the online platform follows strict privacy and security measures to protect your personal and health information.",
-          ],
-          [
-            "Customization of Treatment Plans",
-            "For Bioidentical Hormone Replacement Therapy, inquire about the customization of treatment plans based on individual hormone needs. Understand how the provider tailors treatments to your specific health profile.",
-          ],
-          [
-            "Transparent Pricing",
-            "Ensure that the pricing structure is transparent and clearly outlined. Be aware of any hidden fees or unexpected charges.",
-          ],
-          [
-            "Communication Channels",
-            "Evaluate the communication channels available for interacting with healthcare professionals. Look for platforms that offer secure messaging, video consultations, or phone calls. Are they HIPAA compliant?",
-          ],
-          [
-            "Pharmacy Partnerships",
-            "Check if the online provider works with reputable pharmacies to ensure the quality and safety of medications. If you are interested in bioidentical hormone replacement therapy, ask if they have a compounding pharmacy they work with and the lead time on prescriptions.",
-          ],
-          [
-            "Follow-up and Monitoring",
-            "Inquire about the provider's follow-up procedures and monitoring of treatment. Regular check-ins and adjustments to the treatment plan may be necessary.",
-          ],
-          [
-            "Educational Resources",
-            "A reliable provider should offer educational resources about hormone replacement therapy, potential side effects, and lifestyle considerations.",
-          ],
-          [
-            "Emergency Protocols",
-            "Understand the provider's emergency protocols and how they handle urgent situations or adverse reactions.",
-          ],
-          [
-            "State Regulations Compliance",
-            "Confirm that the provider adheres to state-specific regulations governing hormone therapy and telemedicine in your location.",
-          ],
-          [
-            "Insurance Coverage",
-            "Inquire in advance with the provider if they accept insurance and specifically, the insurance you have. If they don't, understand the costs involved.",
-          ],
-          [
-            "Patient Support",
-            "Assess the level of patient support offered, including access to health care professionals for questions or concerns.",
-          ],
-        ]),
-      ]),
-      buttons([
-        solid("Click for HRT Options and Formulations", "/formuations"),
-        journey,
-      ]),
+      slice("boxes", "default", {
+        ...section(),
+        across: "2",
+        boxes: [
+          {
+            heading: rich("Hormone Replacement Online"),
+            text: rich(
+              "Hormone Replacement Specialist near me (as close as your personal computer)",
+            ),
+          },
+        ],
+      }),
+      slice("text", "default", {
+        ...section({
+          heading:
+            "What to look for when shopping for an online Doctor and Clinic?",
+          space_below: "Large",
+        }),
+        background: "Blue",
+        layout: "On the right",
+        text: [
+          paragraph(
+            "I'm not a doctor. I learned this by being the patient. This is what I look at before I pay a clinic.",
+          ),
+          heading("Medical Credentials"),
+          paragraph(
+            "Ensure that the provider is a licensed healthcare professional with the appropriate medical credentials.",
+          ),
+          paragraph(
+            "Verify that the provider has experience and expertise in hormone replacement therapy or Bioidentical Hormone Replacement Therapy.",
+          ),
+          heading("Telemedicine Compliance"),
+          paragraph(
+            "Confirm that the online provider complies with telemedicine regulations and laws in your state.",
+          ),
+          paragraph(
+            "Check if the provider requires an initial in-person consultation, which might be a legal requirement in some regions.",
+          ),
+          ...pairs([
+            [
+              "Patient Reviews and Testimonials",
+              "Look for reviews and testimonials from other patients who have used the services. This can provide insights into the provider's reputation and patient satisfaction.",
+            ],
+            [
+              "Privacy and Security",
+              "Verify that the online platform follows strict privacy and security measures to protect your personal and health information.",
+            ],
+            [
+              "Customization of Treatment Plans",
+              "For Bioidentical Hormone Replacement Therapy, inquire about the customization of treatment plans based on individual hormone needs. Understand how the provider tailors treatments to your specific health profile.",
+            ],
+            [
+              "Transparent Pricing",
+              "Ensure that the pricing structure is transparent and clearly outlined. Be aware of any hidden fees or unexpected charges.",
+            ],
+            [
+              "Communication Channels",
+              "Evaluate the communication channels available for interacting with healthcare professionals. Look for platforms that offer secure messaging, video consultations, or phone calls. Are they HIPAA compliant?",
+            ],
+            [
+              "Pharmacy Partnerships",
+              "Check if the online provider works with reputable pharmacies to ensure the quality and safety of medications. If you are interested in bioidentical hormone replacement therapy, ask if they have a compounding pharmacy they work with and the lead time on prescriptions.",
+            ],
+            [
+              "Follow-up and Monitoring",
+              "Inquire about the provider's follow-up procedures and monitoring of treatment. Regular check-ins and adjustments to the treatment plan may be necessary.",
+            ],
+            [
+              "Educational Resources",
+              "A reliable provider should offer educational resources about hormone replacement therapy, potential side effects, and lifestyle considerations.",
+            ],
+            [
+              "Emergency Protocols",
+              "Understand the provider's emergency protocols and how they handle urgent situations or adverse reactions.",
+            ],
+            [
+              "State Regulations Compliance",
+              "Confirm that the provider adheres to state-specific regulations governing hormone therapy and telemedicine in your location.",
+            ],
+            [
+              "Insurance Coverage",
+              "Inquire in advance with the provider if they accept insurance and specifically, the insurance you have. If they don't, understand the costs involved.",
+            ],
+            [
+              "Patient Support",
+              "Assess the level of patient support offered, including access to health care professionals for questions or concerns.",
+            ],
+          ]),
+        ],
+      }),
+      buttons(
+        [solid("Click for HRT Options and Formulations", "/formuations")],
+        "None",
+      ),
+      providersRibbon("Small"),
     ],
   },
   {
@@ -951,7 +1094,7 @@ export const GUIDE_PAGES = [
       writing("Private Insurance", rich("Private Insurance not accepted")),
       writing("HSA Card Accepted", rich("Yes")),
       writing("Trusted Providers", []),
-      buttons([journey]),
+      providersRibbon(),
     ],
   },
   {
@@ -1024,7 +1167,8 @@ export const GUIDE_PAGES = [
           "Stress is another contributing factor during this time, as women may face emotional and physical stressors related to aging, health changes, and life transitions. Stress can trigger telogen effluvium, a condition where hair follicles prematurely enter the shedding phase. Additionally, nutritional deficiencies that may arise during menopause, such as lower iron or vitamin D levels, can further compromise hair health. Together, these factors can lead to noticeable changes in hair density and texture, prompting many women to seek solutions to manage this common but distressing aspect of aging.",
         ),
       ]),
-      buttons([solid("Take me to UniWigs", UNIWIGS, true), journey]),
+      buttons([solid("Take me to UniWigs", UNIWIGS, true)], "None"),
+      providersRibbon("Small"),
     ],
   },
 ];

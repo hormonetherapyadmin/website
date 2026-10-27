@@ -183,7 +183,7 @@
 }
 
 .featureLead {
-  margin-bottom: 2.75rem;
+  padding-bottom: 2.75rem;
 }
 
 .featured {
@@ -216,7 +216,7 @@
 }
 
 .tabs {
-  margin-bottom: 1.75rem;
+  padding-bottom: 1.75rem;
 }
 
 .tabs a,
@@ -247,7 +247,7 @@
 
 .pagination {
   justify-self: center;
-  margin-top: 2rem;
+  padding-top: 2rem;
 }
 
 .pagination a {
@@ -276,10 +276,28 @@
   color: var(--color-text-muted);
 }
 
+@keyframes postsFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fade {
+  animation: postsFade 180ms ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card:hover .photo,
   .featured:hover .photo {
     transform: none;
+  }
+
+  .fade {
+    animation: none;
   }
 }
 

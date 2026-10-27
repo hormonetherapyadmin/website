@@ -2,8 +2,10 @@ import type { RichTextField } from "@prismicio/client";
 import { describe, expect, it } from "vitest";
 import {
   contentPieces,
+  isTipToken,
   parseProviderToken,
   storyClinicUids,
+  tipMessageField,
 } from "./content-blocks";
 
 const paragraph = (text: string, spans: object[] = []) => ({
@@ -35,6 +37,43 @@ describe("parseProviderToken", () => {
       null,
     );
     expect(parseProviderToken("{{provider:Musely:price}}")).toBeNull();
+  });
+});
+
+describe("tip token", () => {
+  it("reads the words after {{tip}} and keeps bold inside them", () => {
+    const text = "{{tip}} Ask about labs before you pay.";
+    const start = text.indexOf("labs");
+    const block = paragraph(text, [{ start, end: start + 4, type: "strong" }]);
+    const field = tipMessageField(block as RichTextField[number]);
+
+    expect(isTipToken(text)).toBe(true);
+    expect(isTipToken("Then {{tip}} later.")).toBe(false);
+    expect(field).toEqual([
+      {
+        ...block,
+        text: "Ask about labs before you pay.",
+        spans: [{ start: 10, end: 14, type: "strong" }],
+      },
+    ]);
+  });
+
+  it("splits a tip out of the writing and drops an empty one", () => {
+    const pieces = contentPieces([
+      paragraph("The first paragraph."),
+      paragraph("{{tip}} Start with the clinics I have used."),
+      paragraph("{{tip}}"),
+      paragraph("I tried {{tip}} in the middle."),
+    ] as RichTextField);
+
+    expect(pieces.map((piece) => piece.kind)).toEqual(["rich", "tip", "rich"]);
+    expect(pieces[1]).toMatchObject({
+      kind: "tip",
+      field: [{ text: "Start with the clinics I have used." }],
+    });
+    expect(pieces[2]).toMatchObject({
+      field: [paragraph("I tried {{tip}} in the middle.")],
+    });
   });
 });
 
