@@ -561,14 +561,54 @@ For high-value pages compare old vs new:
 6.  Verify the Vercel production target before DNS.
 7.  Change DNS as planned.
 8.  Verify HTTPS.
-9.  Run legacy URL smoke suite.
-10. Crawl production.
-11. Verify analytics.
-12. Verify representative affiliate clicks.
-13. Verify sitemap/robots/canonicals, and that production responses
+9.  Point Prismic previews at the live domain. The steps and the
+    commands are in the next section. Do this only after
+    `www.hormonetherapyhub.com` answers from Vercel over HTTPS.
+10. Run legacy URL smoke suite.
+11. Crawl production.
+12. Verify analytics.
+13. Verify representative affiliate clicks.
+14. Verify sitemap/robots/canonicals, and that production responses
     have no `X-Robots-Tag: noindex` header.
-14. Confirm Search Console property/verification.
-15. Submit/confirm sitemap as appropriate.
+15. Confirm Search Console property/verification.
+16. Submit/confirm sitemap as appropriate.
+
+## Prismic previews at DNS cutover
+
+The Page Builder has two settings. Both point at localhost until this
+cutover, and localhost only works on the machine running `next dev`.
+Run the commands below once `www.hormonetherapyhub.com` is serving this
+Next.js app over HTTPS. The production deploy has to include
+`/slice-simulator` and `/api/preview`. Use that www domain. Prismic
+keeps a single simulator URL, and a `*.vercel.app` address changes with
+each deployment.
+
+1. Add the full-page preview. This is what **Preview the page** opens.
+   A repository can hold more than one preview URL, so the Development
+   localhost preview can stay for local editing.
+
+   ```sh
+   npx prismic preview add https://www.hormonetherapyhub.com/api/preview --name Production
+   ```
+
+2. Point the slice thumbnails at the live site. This replaces the
+   localhost simulator. A repository holds one simulator URL.
+
+   ```sh
+   npx prismic preview set-simulator https://www.hormonetherapyhub.com
+   ```
+
+3. Confirm with `npx prismic preview list`. The Production preview and
+   the simulator should be the live domain. Reload a document in the
+   Page Builder. Slice thumbnails should show the real slices, and
+   **Preview the page** should open
+   `https://www.hormonetherapyhub.com` with the Prismic toolbar.
+
+Settings in place before the domain move (October 2026):
+
+-   Preview: `http://localhost:3000/api/preview` (name: Development)
+-   Simulator: `http://localhost:3000/slice-simulator`
+-   The old Prismic starter preview was removed. Leave it off.
 
 ## Rollback
 

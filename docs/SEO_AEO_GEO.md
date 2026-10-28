@@ -173,15 +173,36 @@ The canonical is `/search`. `?q=` repeats that search for someone with
 the link. It is not a separate indexable URL, and the page has no type
 filter.
 
+`/slice-simulator` is the Page Builder thumbnail route. It is always
+noindex. It is not a public page.
+
 ## Sitemap
 
 `/sitemap.xml` lists the canonical URL of the published Homepage and
 every published Page and Post still set to Index, plus the HTML sitemap
-at `/sitemap`. It leaves out `/search` and mockup routes. `lastmod` is
+at `/sitemap`. It leaves out `/search`, `/slice-simulator`, and mockup
+routes. `lastmod` is
 that document's last publication time in
 Prismic, when one exists. The page at `/sitemap` is built in the app,
 not stored in Prismic, and it also links Home. When indexing is on,
 `robots.txt` points at `/sitemap.xml`.
+
+## llms.txt
+
+`/llms.txt` is a static Markdown file at `public/llms.txt`. It tells an
+AI agent what the site is and links the main public pages, clinic
+overviews, and the reviews those overviews point at. The HTML sitemap
+remains the full list of indexable URLs.
+
+The file follows the [llms.txt](https://llmstxt.org/) format. It does
+not offer an agent API, booking, or checkout. The root layout points
+at it with `rel="describedby"`. Pages do not have separate Markdown
+copies. Agents should read the public HTML pages.
+
+Do not describe Peggy as a clinician, and do not state a price, coupon,
+or clinic fact in this file unless that fact is already on the linked
+page. When a linked page changes address, update this file in the same
+change. Archived, noindex pages stay out of it.
 
 ## Performance
 

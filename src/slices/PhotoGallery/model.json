@@ -7,7 +7,7 @@
       "description": "Default",
       "docURL": "",
       "id": "default",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/photo_gallery/default/0d3a9fbd0b4504bb38836c1290303a5f100c21d1.png?auto=compress%2Cformat",
       "name": "Gallery",
       "primary": {
         "small_heading": {
@@ -123,7 +123,7 @@
       "description": "Pair",
       "docURL": "",
       "id": "pair",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/photo_gallery/pair/11b37e4e58a47340018a3b3ae966e41415d287f7.png?auto=compress%2Cformat",
       "name": "Pair",
       "primary": {
         "small_heading": {

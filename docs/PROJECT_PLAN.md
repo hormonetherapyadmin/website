@@ -959,6 +959,14 @@ Production only.
     does not reach localhost, and a cached miss would keep a just
     published document off the page.
 -   Preview uses Prismic preview with Next.js draft mode (Phase 2).
+    "Preview the page" opens `/api/preview`, which starts draft mode
+    and redirects to the document (`npx prismic preview add`). Page
+    Builder thumbnails are separate: they load `/slice-simulator`. The
+    repository simulator URL is the site origin
+    (`npx prismic preview set-simulator`). Localhost only works while
+    this machine's dev server is running. After the domain serves the
+    Next.js app, add `https://www.hormonetherapyhub.com/api/preview`
+    and point the simulator at `https://www.hormonetherapyhub.com`.
 
 ### URLs
 
@@ -1014,6 +1022,9 @@ Production only.
 -   `/sitemap` is the HTML sitemap. It is an app route, not a Prismic
     document. It is indexable when indexing is on, and it also links
     Home.
+-   `/llms.txt` is a static Markdown file for AI agents. It describes
+    the site and links the main public pages. It is not an agent API.
+    See `docs/SEO_AEO_GEO.md`.
 
 ### Speed
 

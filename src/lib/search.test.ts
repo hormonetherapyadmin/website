@@ -189,6 +189,14 @@ describe("pageSearchHit and postSearchHit", () => {
     expect(
       pageSearchHit({ id: "post", uid: "post", url: "/post", data }),
     ).toBeNull();
+    expect(
+      pageSearchHit({
+        id: "simulator",
+        uid: "slice-simulator",
+        url: "/slice-simulator",
+        data,
+      }),
+    ).toBeNull();
   });
 
   it("reads a post card, including the category and date", () => {

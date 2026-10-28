@@ -8,7 +8,7 @@
       "description": "A photo beside the writing. The homepage story uses this.",
       "docURL": "",
       "id": "image",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/side_by_side/image/e3df8404d2c152150eb6a29e9b8d5a208c393b7e.png?auto=compress%2Cformat",
       "items": {},
       "name": "Image",
       "primary": {
@@ -152,7 +152,7 @@
       "description": "A YouTube or Vimeo video beside the writing.",
       "docURL": "",
       "id": "video",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/side_by_side/video/1268cf23684cf227e6040ae3b15aeeb15cd0c6ba.png?auto=compress%2Cformat",
       "items": {},
       "name": "Video",
       "primary": {
@@ -268,7 +268,7 @@
       "description": "A pull quote beside the writing.",
       "docURL": "",
       "id": "quote",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/side_by_side/quote/fe29b04287fe572fc4d4dd879a777438d0ca5f80.png?auto=compress%2Cformat",
       "items": {},
       "name": "Quote",
       "primary": {
@@ -384,7 +384,7 @@
       "description": "A clinic beside the writing. The logo, name, quote, and visit link come from the clinic.",
       "docURL": "",
       "id": "clinic",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/side_by_side/clinic/e08888644a031f3c8b2e34fe59d082d68bcc7c1f.png?auto=compress%2Cformat",
       "items": {},
       "name": "Clinic",
       "primary": {

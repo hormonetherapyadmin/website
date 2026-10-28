@@ -7,7 +7,7 @@
       "description": "Default",
       "docURL": "",
       "id": "default",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/ribbon/default/c99224c5adea21eaac9fcc0eaa3c1570e2911036.png?auto=compress%2Cformat",
       "name": "Default",
       "primary": {
         "small_heading": {
@@ -136,7 +136,7 @@
       "description": "Tip",
       "docURL": "",
       "id": "tip",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/ribbon/tip/87e84bc15941f57a2639b6bcd0063659f7668c67.png?auto=compress%2Cformat",
       "name": "Tip",
       "primary": {
         "small_heading": {

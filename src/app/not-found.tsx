@@ -68,9 +68,6 @@ export default function NotFound() {
               <Arrow />
             </Link>
           </div>
-          <p className={styles.quiet}>
-            Or browse the <Link href="/sitemap">sitemap</Link>.
-          </p>
         </div>
       </div>
     </SiteShell>

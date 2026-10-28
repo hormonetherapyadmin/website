@@ -8,7 +8,7 @@
       "description": "Five posts. The newest is the large card. Category limits the list.",
       "docURL": "",
       "id": "home",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/posts/home/1a469274c499935dd79edca8e85f12e8cda90d36.png?auto=compress%2Cformat",
       "items": {},
       "name": "Homepage",
       "primary": {
@@ -103,7 +103,7 @@
       "description": "One post. Leave Post empty for the newest in Category, or pick a post.",
       "docURL": "",
       "id": "featured",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/posts/featured/26fbb76c622a0b4e5942cc486e84b437e83407d5.png?auto=compress%2Cformat",
       "items": {},
       "name": "Featured",
       "primary": {
@@ -206,7 +206,7 @@
       "description": "A page of posts. Empty Posts per page means 12. All adds the category tabs.",
       "docURL": "",
       "id": "grid",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/posts/grid/39ea3dd4840afd87404918e4470adf28abe7a2b4.png?auto=compress%2Cformat",
       "items": {},
       "name": "Grid",
       "primary": {
@@ -317,7 +317,7 @@
       "description": "Three posts across. Category limits the list.",
       "docURL": "",
       "id": "row",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/posts/row/d152a843662e93ffaf3792c308e12b85b3d31d14.png?auto=compress%2Cformat",
       "items": {},
       "name": "Row",
       "primary": {
@@ -412,7 +412,7 @@
       "description": "Picked",
       "docURL": "",
       "id": "picked",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/posts/picked/0f7cdad9c98a176139173a9867fc46bfa2ff7d92.png?auto=compress%2Cformat",
       "name": "Picked",
       "primary": {
         "small_heading": {

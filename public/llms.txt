@@ -1,0 +1,68 @@
+# Hormone Therapy Hub
+
+> Peggy's first-person guide to online hormone replacement therapy (HRT) and bioidentical hormone replacement therapy (BHRT). She writes from personal experience. She is not a doctor, and the site does not give medical advice. Some visit links are affiliate links.
+
+Hormone Therapy Hub helps someone compare telehealth clinics for menopause and other hormone-related symptoms. A clinic page covers how that clinic works, what it offers, pricing, insurance, and HSA or FSA policy when Peggy has confirmed those facts. The long reviews live as posts.
+
+Read each page as three kinds of information. Her experience is what she used, what she paid, and what it was like for her. Clinic-reported facts, such as insurance, formulations, labs, states, and how to get started, are what she confirmed on that clinic's own page. Guides are educational. None of this is a diagnosis or a treatment plan.
+
+Prices and coupon codes change. The figure on a clinic page or the price chart is the one she last checked, and the chart is dated. A review stays the story of the time she used that clinic. Someone else's price can differ.
+
+Visit buttons on clinic pages can pay her a commission. That does not change the review. How she decides what to publish, including the affiliate relationship, is on How I review.
+
+There is no booking, checkout, or agent API. These pages are the source. The canonical host is https://www.hormonetherapyhub.com, with no trailing slash. Posts live under /post/. The sitemap lists every indexable URL.
+
+Clinics she has written up: Inner Balance (including its Oestra cream), Winona, Musely, Alloy, Joi Women's Wellness, Effecty, MyMenopauseRx, Midi Health, and HRT Doctors Group.
+
+## Start here
+
+- [Home](https://www.hormonetherapyhub.com/): Where to start, a clinic comparison, and Peggy's introduction.
+- [Is HRT for me?](https://www.hormonetherapyhub.com/ishrtforme): Her guide to deciding whether to look into hormone therapy.
+- [How I review](https://www.hormonetherapyhub.com/how-i-review): What she used, what she paid, what she confirmed on the clinic's page, and when a link pays her.
+- [About Peggy](https://www.hormonetherapyhub.com/about): Who she is and why she writes the site.
+- [Trusted providers](https://www.hormonetherapyhub.com/trusted-providers): The clinics she has used, with a way into each one.
+- [Price comparison chart](https://www.hormonetherapyhub.com/hrt-price-comparison-chart): Side-by-side prices for the clinics on the chart, dated to her last check.
+- [Tips to find a provider](https://www.hormonetherapyhub.com/tipstofindprovider): What she tells someone to check before choosing an online clinic.
+- [Blog](https://www.hormonetherapyhub.com/blog): Every post, newest first.
+- [FAQ](https://www.hormonetherapyhub.com/faq): Common questions about bioidentical hormone therapy.
+
+## Guides
+
+- [Formulations](https://www.hormonetherapyhub.com/formuations): The hormone formulations she writes about, and which clinics are known for them.
+- [Cost and insurance](https://www.hormonetherapyhub.com/costandinsurance): What she has learned about paying for therapy and checking coverage.
+- [Test kits](https://www.hormonetherapyhub.com/trackers-and-testing): Trackers and at-home tests she has used, including Mira and Proov.
+- [Weight and HRT](https://www.hormonetherapyhub.com/weight-gain): Her writing on weight, hormone therapy, and related clinics.
+- [Rx face creams](https://www.hormonetherapyhub.com/skincare): Prescription creams she has tried, with the coupons she uses.
+
+## Clinic pages
+
+- [Inner Balance](https://www.hormonetherapyhub.com/inner-balance): Her overview of Inner Balance and Oestra, plus the facts she keeps on that clinic.
+- [Winona](https://www.hormonetherapyhub.com/winona-review-page): Her overview of Winona.
+- [Musely](https://www.hormonetherapyhub.com/musely): Her overview of Musely.
+- [Alloy](https://www.hormonetherapyhub.com/alloy-review-page): Her overview of Alloy.
+- [Joi Women's Wellness](https://www.hormonetherapyhub.com/joiwommenswellness): Her overview of Joi Women's Wellness.
+- [Effecty](https://www.hormonetherapyhub.com/effecty): Her overview of Effecty.
+- [MyMenopauseRx](https://www.hormonetherapyhub.com/mymenopauserx): Her overview of MyMenopauseRx.
+- [Midi Health](https://www.hormonetherapyhub.com/midi-health-review-page): Her overview of Midi Health.
+- [HRT Doctors Group](https://www.hormonetherapyhub.com/hrt-doctors-review-costs-services): Her overview of HRT Doctors Group, including pricing, process, and insurance.
+
+## Reviews and comparisons
+
+- [Inner Balance, one year on Oestra](https://www.hormonetherapyhub.com/post/oestra-by-inner-balance-my-honest-1-year-review): Her one-year review of Oestra.
+- [Inner Balance HRT review](https://www.hormonetherapyhub.com/post/inner-balance-hrt-review): Her hormone-therapy review of Inner Balance.
+- [Winona review](https://www.hormonetherapyhub.com/post/winona-bioidentical-hormone-therapy-review): Her Winona review.
+- [Musely estrogen cream review](https://www.hormonetherapyhub.com/post/musely-estrogen-cream-review-a-safer-gentler-hrt-alternative): Her Musely estrogen cream review.
+- [Musely vs Winona](https://www.hormonetherapyhub.com/post/musely-estrogen-cream-vs-winona-which-hrt-cream-wins): Her comparison of the two creams.
+- [Alloy review](https://www.hormonetherapyhub.com/post/my-alloy-an-overview-of-products-process-and-pricing): Her Alloy review, including products, process, and pricing.
+- [Winona vs Alloy](https://www.hormonetherapyhub.com/post/winona-vs-alloy-hormone-replacement-side-by-side-comparison): Her side-by-side comparison.
+- [Joi Women's Wellness review](https://www.hormonetherapyhub.com/post/joi-womens-hormone-replacement-review): Her Joi review.
+- [Effecty review](https://www.hormonetherapyhub.com/post/effecty-hormone-replacement-therapy-review): Her Effecty review.
+- [MyMenopauseRx review](https://www.hormonetherapyhub.com/post/mymenopauserx-review): Her MyMenopauseRx review.
+- [Midi Health vs MyMenopauseRx](https://www.hormonetherapyhub.com/post/midi-health-vs-mymenopauserx): Her comparison of the two.
+- [Midi Health review](https://www.hormonetherapyhub.com/post/will-midi-health-help-me-lose-weight): Her Midi review, including her experience with weight.
+- [Midi Health vs Allara Health](https://www.hormonetherapyhub.com/post/midi-health-vs-allara-health): Her comparison of Midi and Allara.
+
+## Find a page
+
+- [Sitemap](https://www.hormonetherapyhub.com/sitemap): Every indexable page and post.
+- [XML sitemap](https://www.hormonetherapyhub.com/sitemap.xml): The same URLs, for crawlers.
