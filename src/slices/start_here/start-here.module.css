@@ -39,7 +39,7 @@
   flex-direction: column;
   padding: 1.5rem 1.5rem 1.35rem;
   border-radius: var(--radius-card);
-  color: inherit;
+  color: var(--color-text);
   text-decoration: none;
   transition:
     transform 0.2s ease,
