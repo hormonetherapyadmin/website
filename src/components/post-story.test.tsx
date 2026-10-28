@@ -73,6 +73,28 @@ describe("PostStory clinic tokens", () => {
     expect(markup).not.toContain("{{provider:");
   });
 
+  it("replaces a tip token with Peggy’s portrait and the words after it", () => {
+    const markup = renderToStaticMarkup(
+      <PostStory
+        field={story("{{tip}} Ask what the first month actually costs.")}
+      />,
+    );
+
+    expect(markup).toContain("Peggy’s tip");
+    expect(markup).toContain("Ask what the first month actually costs.");
+    expect(markup).toContain("XYNQOFoQwb5OYLsz");
+    expect(markup).toContain('data-layout="tip"');
+    expect(markup).toContain('data-place="story"');
+    expect(markup).not.toContain("{{tip}}");
+  });
+
+  it("drops a tip token that has no words", () => {
+    const markup = renderToStaticMarkup(<PostStory field={story("{{tip}}")} />);
+
+    expect(markup).not.toContain("Peggy’s tip");
+    expect(markup).not.toContain("{{tip}}");
+  });
+
   it("keeps the sentence when the public page has no matching clinic", () => {
     const markup = renderToStaticMarkup(
       <PostStory

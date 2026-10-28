@@ -172,3 +172,56 @@ describe("Ribbon", () => {
     expect(html).not.toContain("data-box");
   });
 });
+
+describe("Ribbon tip", () => {
+  function renderTip(primary: Parameters<typeof Ribbon>[0]["primary"]) {
+    return renderToStaticMarkup(
+      createElement(Ribbon, { variation: "tip", primary }),
+    );
+  }
+
+  it("shows Peggy’s portrait, the fixed title, and the tip she typed", () => {
+    const html = renderTip({
+      ...section(),
+      content: rich("Ask what the first month actually costs."),
+      box_background: "Pink",
+    });
+
+    expect(html).toContain("Peggy’s tip");
+    expect(html).toContain("Ask what the first month actually costs.");
+    expect(html).toContain("XYNQOFoQwb5OYLsz");
+    expect(html).toContain('data-layout="tip"');
+    expect(html).toContain('data-box="Pink"');
+    expect(html).toContain('data-wave="true"');
+    expect(html).toContain("<h2");
+    expect(html).toContain('id="peggys-tip"');
+    expect(html).not.toContain("data-place");
+  });
+
+  it("uses a card heading under a section heading", () => {
+    const html = renderTip({
+      ...section({ heading: rich("Before you book") }),
+      content: rich(
+        "If they will not tell you the price, that is your answer.",
+      ),
+      box_background: "Lavender",
+    });
+
+    expect(html).toContain("<h2");
+    expect(html).toContain("Before you book");
+    expect(html).toContain("<h3");
+    expect(html).toContain("Peggy’s tip");
+    expect(html).toContain('id="before-you-book"');
+  });
+
+  it("hides an empty tip and keeps the section heading", () => {
+    const html = renderTip({
+      ...section({ heading: rich("Just a heading") }),
+      content: emptyRich,
+    });
+
+    expect(html).toContain("Just a heading");
+    expect(html).not.toContain("data-layout");
+    expect(html).not.toContain("Peggy’s tip");
+  });
+});

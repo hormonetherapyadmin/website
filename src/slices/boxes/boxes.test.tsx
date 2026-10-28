@@ -169,4 +169,36 @@ describe("Boxes", () => {
     expect(html).toContain('data-cols="5"');
     expect(html).toContain("<h3");
   });
+
+  it("sets logo-less boxes as statement panels and keeps clinic tickets", () => {
+    const statements = renderToStaticMarkup(
+      <Boxes
+        primary={{
+          ...section(),
+          across: "2",
+          boxes: [
+            box("Bioidentical Hormones, best known for", {
+              text: rich("Custom Formulations"),
+            }),
+            box("Conventional Hormones, best known for", {
+              text: rich("Standardized Dosages"),
+            }),
+          ],
+        }}
+      />,
+    );
+    const tickets = renderToStaticMarkup(
+      <Boxes
+        primary={{
+          ...section(),
+          boxes: [box("Improved sleep", { link: jump("#inner-balance") })],
+        }}
+        clinics={[innerBalance]}
+      />,
+    );
+
+    expect(statements).toContain('data-kind="statements"');
+    expect(statements).toContain("Custom Formulations");
+    expect(tickets).toContain('data-kind="tickets"');
+  });
 });

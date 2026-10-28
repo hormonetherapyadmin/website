@@ -16,7 +16,8 @@
 }
 
 .body[data-align="center"] .offer,
-.body[data-align="center"] .facts {
+.body[data-align="center"] .facts,
+.body[data-align="center"] :global([data-layout="tip"]) {
   text-align: start;
 }
 

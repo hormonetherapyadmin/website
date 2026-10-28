@@ -47,18 +47,20 @@ function Side({
 
   return (
     <div className={styles.card} data-tone={tone}>
-      <Tag className={styles.label}>{label}</Tag>
+      <div className={styles.banner}>
+        <span className={styles.mark}>
+          <HugeiconsIcon
+            icon={icon}
+            size={20}
+            strokeWidth={1.75}
+            aria-hidden="true"
+          />
+        </span>
+        <Tag className={styles.label}>{label}</Tag>
+      </div>
       <ul className={styles.list}>
         {items.map((item, index) => (
           <li key={index}>
-            <span className={styles.mark}>
-              <HugeiconsIcon
-                icon={icon}
-                size={16}
-                strokeWidth={2.25}
-                aria-hidden="true"
-              />
-            </span>
             <RichText field={item} as="p" unstyled />
           </li>
         ))}
@@ -68,7 +70,7 @@ function Side({
 }
 
 /**
- * Pros beside cons. Each row is one pair, with an optional title, such
+ * Pros beside cons. Each row is two cards, with an optional title, such
  * as HRT and BHRT. A row with no pros and no cons is hidden.
  */
 export function ProsAndCons({ primary }: { primary: ProsConsPrimary }) {
@@ -97,7 +99,10 @@ export function ProsAndCons({ primary }: { primary: ProsConsPrimary }) {
             {row.title ? (
               <Title className={styles.rowTitle}>{row.title}</Title>
             ) : null}
-            <div className={styles.pair}>
+            <div
+              className={styles.pair}
+              data-sides={row.pros.length && row.cons.length ? "2" : "1"}
+            >
               <Side
                 label={prosLabel}
                 items={row.pros}

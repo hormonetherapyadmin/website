@@ -28,7 +28,12 @@ import { DEFAULT_AUTHOR_ID, resolveAuthorId } from "@/lib/author";
 import { isIndexingAllowed } from "@/lib/env";
 import { headingAnchors } from "@/lib/post-headings";
 import { minutesToRead, relatedPosts } from "@/lib/post-derived";
-import { DISCLOSURE_HREF, SITE_NAME, SITE_URL } from "@/lib/site";
+import {
+  DISCLOSURE_HREF,
+  HOW_I_REVIEW_HREF,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/site";
 import {
   blogPosting,
   breadcrumbList,
@@ -516,7 +521,7 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
                 {isPeggy ? (
                   <p className={styles.authorLinks}>
                     <Link href="/about">Read my whole story</Link>
-                    <a href="#">How I review</a>
+                    <Link href={HOW_I_REVIEW_HREF}>How I review</Link>
                   </p>
                 ) : guestStory ? (
                   <p className={styles.authorLinks}>

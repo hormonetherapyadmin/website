@@ -164,6 +164,9 @@ export function PhotoGallery({
       : [];
   if (shots.length === 0 && sides.length === 0) return null;
   const centered = primary.center !== false;
+  // The pair draws its link under the photos. Leaving it on the section
+  // would also place that link beside the heading.
+  const { link: _link, ...sectionFields } = primary;
 
   const shared =
     pair?.href && pair.linkLabel
@@ -175,7 +178,7 @@ export function PhotoGallery({
       : null;
 
   return (
-    <SliceSection section={primary}>
+    <SliceSection section={sectionFields}>
       {sides.length > 0 ? (
         <>
           <div className={styles.pairBlock}>

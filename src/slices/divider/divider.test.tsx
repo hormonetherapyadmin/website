@@ -78,7 +78,7 @@ describe("Divider", () => {
     expect(html).toContain(styles.straight);
     expect(html).toContain(styles.border);
     expect(html).toContain("bg-card-2");
-    expect(html).toContain("py-slice");
+    expect(html).not.toContain("py-slice");
     expect(html).toContain("pt-slice-lg");
     expect(html).toContain("pb-slice-sm");
   });

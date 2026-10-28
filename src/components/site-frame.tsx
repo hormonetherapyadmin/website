@@ -9,7 +9,7 @@ import {
 } from "@/app/mockup/_shared/nav-fallback";
 import { HeaderCta, SiteNav } from "@/app/mockup/_shared/site-nav";
 import { loadSiteNavigation } from "@/lib/navigation";
-import { DISCLOSURE_HREF, SITE_NAME } from "@/lib/site";
+import { DISCLOSURE_HREF, HOW_I_REVIEW_HREF, SITE_NAME } from "@/lib/site";
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -124,8 +124,7 @@ export async function SiteFrame({
             <p>© 2026 Hormone Therapy Hub · Columbus, Ohio</p>
             <nav aria-label="Site information" className={styles.footerMeta}>
               <Link href="/sitemap">Sitemap</Link>
-              {/* Editorial standards page is not published yet. */}
-              <a href="#">How I review</a>
+              <Link href={HOW_I_REVIEW_HREF}>How I review</Link>
               <Link href={DISCLOSURE_HREF}>Affiliate disclosure</Link>
             </nav>
           </div>

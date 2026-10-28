@@ -260,7 +260,7 @@ function FaqAdapter({ slice, context }: Props<FaqSlice>) {
 }
 
 function RibbonAdapter({ slice }: Props<RibbonSlice>) {
-  return <Ribbon primary={slice.primary} />;
+  return <Ribbon variation={slice.variation} primary={slice.primary} />;
 }
 
 function ButtonsAdapter({ slice }: Props<ButtonsSlice>) {

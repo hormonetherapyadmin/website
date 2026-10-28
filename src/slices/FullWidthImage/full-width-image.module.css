@@ -2,4 +2,6 @@
   display: block;
   width: 100%;
   height: auto;
+  /* Same corner as a photo in the story and in the photo gallery. */
+  border-radius: 1.25rem;
 }

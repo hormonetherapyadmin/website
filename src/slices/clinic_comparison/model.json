@@ -8,7 +8,7 @@
       "description": "The homepage chart. Add clinics in order. Edit a price on the clinic.",
       "docURL": "",
       "id": "default",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/clinic_comparison/default/387b148a2de7f5178aaeaa88735056c87410c539.png?auto=compress%2Cformat",
       "items": {},
       "name": "Default",
       "primary": {
@@ -129,7 +129,7 @@
       "description": "Chart",
       "docURL": "",
       "id": "chart",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/clinic_comparison/chart/28dea3fe3dfed6ed07e4289f72da779ff19e56cc.png?auto=compress%2Cformat",
       "name": "Chart",
       "primary": {
         "small_heading": {

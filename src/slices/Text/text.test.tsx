@@ -3,6 +3,7 @@ import type { LinkField, RichTextField } from "@prismicio/client";
 import { describe, expect, it } from "vitest";
 import type { SliceSectionFields } from "@/components/slice-section";
 import { Text } from "./index";
+import { isLead, writingRuns } from "./writing";
 
 const rich = (value: string) =>
   [{ type: "paragraph", text: value, spans: [] }] as RichTextField;
@@ -106,5 +107,142 @@ describe("Text", () => {
     expect(markup).toContain("My pick for patches.");
     expect(markup).toContain("Code PEGGY10");
     expect(markup).not.toContain("{{provider");
+  });
+
+  it("sets a heading and paragraph list as numbered cards", () => {
+    const markup = renderToStaticMarkup(
+      <Text
+        primary={{
+          ...section("Bioidentical Therapy Formulations"),
+          text: [
+            { type: "heading3", text: "Compounded Creams", spans: [] },
+            {
+              type: "paragraph",
+              text: "Applied to the skin.",
+              spans: [],
+            },
+            { type: "heading3", text: "Pellets", spans: [] },
+            {
+              type: "paragraph",
+              text: "Implanted under the skin.",
+              spans: [],
+            },
+          ] as unknown as RichTextField,
+        }}
+      />,
+    );
+
+    expect(markup).toContain("<ol");
+    expect(markup).toContain(">01<");
+    expect(markup).toContain(">02<");
+    expect(markup).toMatch(/<h3[^>]*>Compounded Creams<\/h3>/);
+    expect(markup).toContain("Applied to the skin.");
+    expect(markup).toContain("Implanted under the skin.");
+  });
+
+  it("keeps a heading with no paragraph, then cards the pairs under it", () => {
+    const markup = renderToStaticMarkup(
+      <Text
+        primary={{
+          ...section("Hormone Replacement Online"),
+          text: [
+            {
+              type: "heading3",
+              text: "What to look for when shopping for an online Doctor and Clinic?",
+              spans: [],
+            },
+            { type: "heading3", text: "Medical Credentials", spans: [] },
+            { type: "paragraph", text: "Check the license.", spans: [] },
+            { type: "paragraph", text: "Check the experience.", spans: [] },
+            { type: "heading3", text: "Privacy and Security", spans: [] },
+            {
+              type: "paragraph",
+              text: "Ask how records are stored.",
+              spans: [],
+            },
+          ] as unknown as RichTextField,
+        }}
+      />,
+    );
+
+    expect(markup).toContain(
+      "What to look for when shopping for an online Doctor and Clinic?",
+    );
+    expect(markup).toContain("<ol");
+    expect(markup).toContain("Check the license.");
+    expect(markup).toContain("Check the experience.");
+    expect(markup).toContain("Ask how records are stored.");
+  });
+
+  it("keeps one paragraph with no heading on the left", () => {
+    const markup = renderToStaticMarkup(
+      <Text
+        primary={{
+          ...section(),
+          layout: "On the right",
+          text: rich(
+            "It's important to note that conventional HRT is mass-produced.",
+          ),
+        }}
+      />,
+    );
+
+    expect(markup).not.toContain("data-lead");
+    expect(markup).not.toContain('data-align="center"');
+    expect(markup).toContain("mass-produced");
+  });
+
+  it("centers one paragraph with no heading when the layout is Centered", () => {
+    const markup = renderToStaticMarkup(
+      <Text
+        primary={{
+          ...section(),
+          layout: "Centered",
+          text: rich(
+            "It's important to note that conventional HRT is mass-produced.",
+          ),
+        }}
+      />,
+    );
+
+    expect(markup).toContain("data-lead");
+    expect(markup).toContain("mass-produced");
+    expect(markup).not.toContain("<h3");
+  });
+});
+
+describe("writingRuns", () => {
+  it("leaves a single heading and paragraph as ordinary writing", () => {
+    const field = [
+      { type: "heading3", text: "Prior Authorization", spans: [] },
+      { type: "paragraph", text: "Check your plan.", spans: [] },
+    ] as unknown as RichTextField;
+
+    expect(writingRuns(field)).toEqual([{ kind: "rich", field }]);
+    expect(isLead(writingRuns(field))).toBe(false);
+  });
+
+  it("does not treat a tip token as a lead", () => {
+    const field = [
+      {
+        type: "paragraph",
+        text: "{{tip}} Ask about the first month.",
+        spans: [],
+      },
+    ] as unknown as RichTextField;
+
+    expect(isLead(writingRuns(field))).toBe(false);
+  });
+
+  it("does not treat a clinic token as a lead", () => {
+    const field = [
+      {
+        type: "paragraph",
+        text: "{{provider:winona:offer}} My pick.",
+        spans: [],
+      },
+    ] as unknown as RichTextField;
+
+    expect(isLead(writingRuns(field))).toBe(false);
   });
 });

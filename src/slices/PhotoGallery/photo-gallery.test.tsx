@@ -106,7 +106,14 @@ describe("PhotoGallery", () => {
     const pair = renderToStaticMarkup(
       <PhotoGallery
         variation="pair"
-        primary={section("Alloy M4")}
+        primary={{
+          ...section("Alloy M4"),
+          link: {
+            link_type: "Web",
+            url: "/post/alloy-m4-face-cream-review",
+            text: "Read the review",
+          } as LinkField,
+        }}
         pair={{
           before: {
             src: "/before.jpg",
@@ -149,7 +156,7 @@ describe("PhotoGallery", () => {
     );
     expect(left).toContain('data-align="start"');
     expect(pair).toContain('href="/post/alloy-m4-face-cream-review"');
-    expect(pair).toContain("Read the review");
+    expect(pair.match(/Read the review/g)).toHaveLength(1);
     expect(pair).toContain("Enlarge Before");
   });
 });

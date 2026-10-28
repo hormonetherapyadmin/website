@@ -20,6 +20,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={besley.variable} data-scroll-behavior="smooth">
+      <head>
+        <link rel="describedby" href={`${SITE_URL}/llms.txt`} />
+      </head>
       <body className="antialiased">
         <a
           href="#main"

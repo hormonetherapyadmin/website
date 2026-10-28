@@ -147,6 +147,8 @@ function Box({ box, children }: { box: ResolvedBox; children: ReactNode }) {
 /**
  * A row of small boxes, each a clinic or written by hand. Boxes across
  * is the most in one row. Narrower screens use fewer, by that count.
+ * A row with no logos is a pair of statement panels, such as the two
+ * "best known for" lines on Formulations.
  */
 export function Boxes({
   primary,
@@ -162,11 +164,16 @@ export function Boxes({
   });
   const titled = Boolean(primary.heading && asText(primary.heading).trim());
   const columns = Math.min(boxesAcross(primary.across), boxes.length);
+  const statements = boxes.length > 0 && boxes.every((box) => !box.logo);
 
   return (
     <SliceSection section={primary}>
       {boxes.length > 0 ? (
-        <ul className={styles.grid} data-cols={columns}>
+        <ul
+          className={styles.grid}
+          data-cols={columns}
+          data-kind={statements ? "statements" : "tickets"}
+        >
           {boxes.map((box, index) => (
             <li key={index}>
               <Box box={box}>

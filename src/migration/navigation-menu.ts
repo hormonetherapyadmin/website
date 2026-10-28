@@ -112,6 +112,7 @@ export const NAVIGATION_MENU = {
       heading: "About",
       links: [
         { label: "About Peggy", pageUid: "about" },
+        { label: "How I review", pageUid: "how-i-review" },
         { label: "Blog", pageUid: "blog" },
       ],
     },

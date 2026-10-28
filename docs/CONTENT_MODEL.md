@@ -68,8 +68,9 @@ design menu is the fallback, and that fallback button points at
 `/mockup/trusted-providers`. There is no stronger single call to
 action yet: that page is the compare step, and the homepage already
 sends people there. Men's HRT, Sleep, and Hair loss stay off the
-menu. How I review and Affiliate disclosure stay off until those
-pages exist. Icons are left empty. Test kits links to
+menu. How I review is the Page `/how-i-review`, linked in the
+footer and on Peggy's author card. It stays out of the header menu.
+Affiliate disclosure stays off the menu. Icons are left empty. Test kits links to
 `/trackers-and-testing`. Weight & HRT links to `/weight-gain`.
 
 `/search` is an app route, not a Prismic document. It lists published
@@ -118,8 +119,11 @@ first. Field ids are in `docs/SLICE_MODEL.md`.
 
 ### Editorial Standards / How We Review
 
-Explain firsthand testing, provider-reported information, affiliate
-relationships, updates, and Peggy's non-medical role.
+This is the Page `/how-i-review`, not a separate singleton. The
+singleton was never given a custom type. The page explains firsthand
+use, what she paid, provider-reported information, affiliate
+relationships, updates, and that she is not a medical professional.
+The footer and her author card link to it.
 
 ### Affiliate Disclosure
 
@@ -146,7 +150,8 @@ Fields:
 Peggy B. is the author document. A post with an empty Author field
 uses her. Choose another author only when the post is not hers.
 On her posts the byline goes to the about page, and the author card
-links to "Read my whole story" and "How I review." On a guest post
+links to "Read my whole story" (`/about`) and "How I review"
+(`/how-i-review`). On a guest post
 the byline jumps to the author card at the bottom of the post, and
 that card links to "Read my story."
 
@@ -200,7 +205,9 @@ the brand's affiliate link.
 Field ids are in `docs/SLICE_MODEL.md`. The long review stays on the
 Provider review. A story inserts a clinic with a token such as
 `{{provider:inner-balance:offer}}`, which reads the Profile and Price
-tabs.
+tabs. A story inserts Peggy’s tip with `{{tip}}` and the words after
+it. The portrait and the title are fixed. The same box is the Ribbon
+Tip variation on a page.
 
 ### Provider Review
 
@@ -433,9 +440,11 @@ and How it works. The post offer box sits between How it works and
 the specialties. Pros / Cons is the Pros and cons slice. FAQ is
 the FAQ slice: questions that open and close, each one closed unless
 Start opened is on. A row of buttons with no box is the Buttons slice.
-A close band that has a sentence stays the Ribbon. A post
-inserts a clinic offer with a provider token. It does not insert a
-Callout.
+A close band that has a sentence stays the Ribbon. Ribbon’s Tip
+variation is that box with Peggy’s portrait and the title “Peggy’s
+tip”. A post
+inserts a clinic offer with a provider token, and Peggy’s tip with
+`{{tip}}`. It does not insert a Callout.
 
 Before adding a new slice, ask whether an existing slice can represent
 the editorial intent cleanly. Avoid variants that differ only
@@ -464,8 +473,9 @@ Rule:
 -   The public path is always section + UID, except for a Post and
     a Page, whose section is fixed. There is no free-text path field.
 -   A route the app already defines (`/post`, `/api`, `/mockup`,
-    `/search`, `/sitemap`) wins over a Page with that UID, so that Page
-    never shows and search and the sitemap leave it out. The list is
+    `/search`, `/sitemap`, `/slice-simulator`) wins over a Page with
+    that UID, so that Page never shows and search and the sitemap leave
+    it out. The list is
     `APP_ROUTE_UIDS` in `src/lib/site.ts`. `/blog` is not on it until
     the blog index route exists; until then a Page with UID `blog` is
     `/blog`, and it is listed like any other Page.

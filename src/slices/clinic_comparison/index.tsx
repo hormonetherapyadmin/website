@@ -358,7 +358,9 @@ export function ClinicComparison({
       </div>
 
       {rows ? (
-        <ChartTable rows={rows} titleId={titleId} />
+        rows.length > 0 ? (
+          <ChartTable rows={rows} titleId={titleId} />
+        ) : null
       ) : clinicRows.length > 0 ? (
         <>
           <p className={styles.scrollHint} aria-hidden="true">

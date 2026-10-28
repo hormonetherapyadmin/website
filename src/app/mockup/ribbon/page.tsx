@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { LinkField, RichTextField } from "@prismicio/client";
+import { Content } from "@/components/content";
 import type { SliceSectionFields } from "@/components/slice-section";
 import { Ribbon } from "@/slices/Ribbon";
 
@@ -112,6 +113,37 @@ export default function RibbonPreview() {
           button: [button("Tips for choosing", "/tipstofindprovider", "Ghost")],
         }}
       />
+      <Ribbon
+        variation="tip"
+        primary={{
+          ...section({ space_above: "Medium" }),
+          content: rich(
+            "Ask what the first month actually costs before you sign up.",
+          ),
+          box_background: "Pink",
+        }}
+      />
+      <Ribbon
+        variation="tip"
+        primary={{
+          ...section({
+            heading: rich("Before you book"),
+            background: "Cream",
+            space_above: "Medium",
+          }),
+          content: rich(
+            "If they will not tell you the price, that is your answer.",
+          ),
+          box_background: "Lavender",
+        }}
+      />
+      <div className="mx-auto max-w-[40rem] px-5 py-10">
+        <Content
+          field={rich(
+            "{{tip}} Start with the clinics I have actually used, then compare the price chart.",
+          )}
+        />
+      </div>
     </main>
   );
 }

@@ -292,8 +292,9 @@ Expected singleton types:
 -   Navigation
 -   Homepage
 -   Providers Landing
--   Editorial Standards / How We Review
 -   Affiliate Disclosure
+
+How I review is the Page `/how-i-review`, not its own singleton.
 
 The final schema is documented in `docs/CONTENT_MODEL.md`. Do not add or
 materially change a content type without updating that document.

@@ -8,7 +8,7 @@
       "description": "Homepage. Peggy's photo, the benefit links, and the two buttons.",
       "docURL": "",
       "id": "home",
-      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/hero/home/e59c8032175bdc2b8663e5e0ae6c132c2536422f.png?auto=compress%2Cformat",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/hero/home/2b9cf1c1923698a5028aa73c58cc021819ccfd30.png?auto=compress%2Cformat",
       "items": {},
       "name": "Home",
       "primary": {
@@ -138,7 +138,7 @@
       "description": "A page title, a short intro, one text link, and a photo.",
       "docURL": "",
       "id": "subpage",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/hero/subpage/bd4bc3e0342f3a52b0f367a6cf5aa0c7c4b5d76b.png?auto=compress%2Cformat",
       "items": {},
       "name": "Subpage",
       "primary": {
@@ -225,7 +225,7 @@
       "description": "A page title, a short intro, one text link, and clinic logos.",
       "docURL": "",
       "id": "brands",
-      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/hero/brands/4b3a844833b1c752e896fb542808471748d8ad53.png?auto=compress%2Cformat",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/hero/brands/a29239e97ef078cd3be5da9d6d6540d6883c0554.png?auto=compress%2Cformat",
       "items": {},
       "name": "Brands",
       "primary": {
@@ -333,7 +333,7 @@
       "description": "The top of a clinic page. The name, price, logo, and coupon come from the clinic.",
       "docURL": "",
       "id": "provider",
-      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/hero/provider/9ea44f329298b409e4e018a9ba58deb474acac67.png?auto=compress%2Cformat",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/hero/provider/bbb16af46b013602e0ea96feed958be50d3e4385.png?auto=compress%2Cformat",
       "items": {},
       "name": "Provider",
       "primary": {
@@ -462,7 +462,7 @@
       "description": "Centered",
       "docURL": "",
       "id": "centered",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/hero/centered/905cc13fa9945eaa88d19dd72bce20c31b3900d2.png?auto=compress%2Cformat",
       "name": "Centered",
       "primary": {
         "small_heading": {

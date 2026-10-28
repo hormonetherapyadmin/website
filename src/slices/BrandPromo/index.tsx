@@ -80,6 +80,11 @@ type BrandPromoPrimary = Partial<SliceSectionFields> & {
   place?: KeyTextField;
   /** Empty until she adds one. The card reads the first item. */
   overwrite?: readonly BrandPromoOverwrite[] | null;
+  /**
+   * Where the supporting card sits beside the writing.
+   * Center, Top, or Sticky. Blank stays centered.
+   */
+  card_position?: string | null;
 };
 
 /** The Overwrite group, when she has added one. */
@@ -204,6 +209,31 @@ export function brandPromoTone(background: string | null | undefined) {
 /** Quote is the logo and her words. Anything else, including a blank, is the product card. */
 export function brandPromoStyle(value: string | null | undefined) {
   return value === "Quote" ? "quote" : "card";
+}
+
+const CARD_POSITIONS = ["Center", "Top", "Sticky"] as const;
+
+/**
+ * Where the supporting card sits beside the writing.
+ * A blank choice stays centered. A Stacked product card saved before
+ * this field existed stays in view, which is how that layout used to sit.
+ */
+export function brandPromoCardPosition(
+  value: string | null | undefined,
+  options?: { layout?: string | null; style?: string | null },
+) {
+  for (const option of CARD_POSITIONS) {
+    if (option === value) {
+      return option.toLowerCase() as Lowercase<typeof option>;
+    }
+  }
+  if (
+    brandPromoStyle(options?.style) === "card" &&
+    options?.layout === "Stacked"
+  ) {
+    return "sticky";
+  }
+  return "center";
 }
 
 export function brandPromoQuote(
@@ -381,6 +411,8 @@ function Media({ field, sizes }: { field: ImageField; sizes: string }) {
  * Overwrite. Leave that group off and the card uses the brand.
  * Style Quote puts the logo, her words, and a visit link on the right.
  * Style Card, the default, puts the product photo and price there.
+ * Card position lines that card up with the middle of the writing, the
+ * first line, or keeps it in view while the writing scrolls.
  * A blank Small heading reads "Voted best for".
  * The price, logo, visit link, and coupon come from the clinic.
  * Products & pricing is the brand's page. My review is her post. Each
@@ -414,6 +446,10 @@ export function BrandPromo({
     Boolean(asText(written.small_heading).trim());
   const quote = brandPromoQuote(written.quote, clinic?.quote);
   const style = brandPromoStyle(written.style);
+  const position = brandPromoCardPosition(primary.card_position, {
+    layout: written.layout,
+    style: written.style,
+  });
   const links = brandPromoLinks(clinic);
   const extraLinks = brandPromoExtraLinks(written.links);
   const product = brandPromoProduct(written.product, clinic?.product);
@@ -465,6 +501,7 @@ export function BrandPromo({
             ? "stacked"
             : undefined
         }
+        data-position={position}
         data-last={last ? "" : undefined}
       >
         <div className={styles.copy}>

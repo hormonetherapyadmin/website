@@ -469,6 +469,18 @@
   align-items: center;
 }
 
+.layout[data-position="top"],
+.layout[data-position="sticky"],
+.layout[data-style="quote"][data-position="top"],
+.layout[data-style="quote"][data-position="sticky"] {
+  align-items: start;
+}
+
+.layout[data-position="sticky"] :is(.offer, .quoteCard) {
+  position: sticky;
+  top: 2rem;
+}
+
 .quoteBrand {
   display: flex;
   align-items: center;
@@ -521,7 +533,6 @@
 
 .layout[data-layout="stacked"] {
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  align-items: start;
 }
 
 .layout[data-layout="stacked"]::after,
@@ -530,8 +541,6 @@
 }
 
 .layout[data-layout="stacked"] .offer {
-  position: sticky;
-  top: 2rem;
   flex-direction: column;
   align-items: stretch;
   justify-self: center;
@@ -595,8 +604,12 @@
     grid-template-columns: 1fr;
   }
 
-  .layout[data-layout="stacked"] .offer {
+  .layout[data-position="sticky"] :is(.offer, .quoteCard) {
     position: static;
+    top: auto;
+  }
+
+  .layout[data-layout="stacked"] .offer {
     justify-self: center;
   }
 

@@ -6,7 +6,7 @@ import {
   type SelectField,
 } from "@prismicio/client";
 import { PrismicNextLink } from "@prismicio/next";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { useId } from "react";
 import { RichText } from "@/components/rich-text";
 
@@ -42,22 +42,23 @@ export type SliceSectionFields = {
 };
 
 const spaceAboveClass: Record<SectionSpacing, string> = {
-  None: "mt-0",
-  Small: "mt-slice-sm",
-  Medium: "mt-slice",
-  Large: "mt-slice-lg",
+  None: "pt-0",
+  Small: "pt-slice-sm",
+  Medium: "pt-slice",
+  Large: "pt-slice-lg",
 };
 
 const spaceBelowClass: Record<SectionSpacing, string> = {
-  None: "mb-0",
-  Small: "mb-slice-sm",
-  Medium: "mb-slice",
-  Large: "mb-slice-lg",
+  None: "pb-0",
+  Small: "pb-slice-sm",
+  Medium: "pb-slice",
+  Large: "pb-slice-lg",
 };
 
 /**
  * The same gap, as a length, so a slice can center something in it.
- * The gap between two slices is the lower slice's Space above.
+ * The gap between two slices is this slice's Space below plus the next
+ * slice's Space above.
  */
 const spaceAboveVar: Record<SectionSpacing, string> = {
   None: "[--section-space-above:0px]",
@@ -73,20 +74,23 @@ const spaceBelowVar: Record<SectionSpacing, string> = {
   Large: "[--section-space-below:var(--spacing-slice-lg)]",
 };
 
-/** The gap after this slice, as a length. Margins collapse to the larger one. */
-const gapAfterVar: Record<SectionSpacing, string> = {
-  None: "[--section-gap-after:0px]",
-  Small: "[--section-gap-after:var(--spacing-slice-sm)]",
-  Medium: "[--section-gap-after:var(--spacing-slice)]",
-  Large: "[--section-gap-after:var(--spacing-slice-lg)]",
+/** The same choices, as a length, for the gap after a slice. */
+const spaceLength: Record<SectionSpacing, string> = {
+  None: "0px",
+  Small: "var(--spacing-slice-sm)",
+  Medium: "var(--spacing-slice)",
+  Large: "var(--spacing-slice-lg)",
 };
 
-const spaceRank: Record<SectionSpacing, number> = {
-  None: 0,
-  Small: 1,
-  Medium: 2,
-  Large: 3,
-};
+/**
+ * Padding on this slice plus padding on the next. The two do not
+ * collapse, so a rule between them sits in the middle of both.
+ */
+function gapAfter(below: SectionSpacing, above: SectionSpacing | null) {
+  if (above === null || above === "None") return spaceLength[below];
+  if (below === "None") return spaceLength[above];
+  return `calc(${spaceLength[below]} + ${spaceLength[above]})`;
+}
 
 /** Transparent paints nothing, so the page shows through. */
 export const sectionBackgroundClass: Record<SectionBackground, string> = {
@@ -244,9 +248,10 @@ type SliceSectionProps = {
 
 /**
  * Spacing, background, and the shared heading block for every slice.
- * Space above and below are the gap outside the slice. Cream is the
- * page color, so it paints without padding. Any other background
- * paints the slice and adds a fixed padding inside the color.
+ * Space above and below are padding inside the slice, so the background
+ * includes them. No background adds padding of its own.
+ * The section is a flow root, so a child's margin stays inside that
+ * background.
  */
 export function SliceSection({
   section,
@@ -267,11 +272,8 @@ export function SliceSection({
   const spaceBelow = choice(fields?.space_below, SECTION_SPACING, "None");
   const nextAbove =
     followingSpaceAbove === undefined || followingSpaceAbove === false
-      ? spaceBelow
+      ? null
       : choice(followingSpaceAbove, SECTION_SPACING, "Medium");
-  const gapAfter =
-    spaceRank[nextAbove] > spaceRank[spaceBelow] ? nextAbove : spaceBelow;
-  const band = background !== "Transparent" && background !== "Cream";
   const header = showHeader && fields && hasHeader(fields) ? fields : null;
   const centered = align === "center";
   const sectionLink =
@@ -295,17 +297,22 @@ export function SliceSection({
         (header && isFilled.richText(header.heading) ? headingId : undefined)
       }
       className={[
+        "flow-root",
         spaceAboveClass[spaceAbove],
         spaceBelowClass[spaceBelow],
         spaceAboveVar[spaceAbove],
         spaceBelowVar[spaceBelow],
-        gapAfterVar[gapAfter],
         sectionBackgroundClass[background],
         kickerColorClass[background],
         markerColorClass[background],
       ]
         .filter(Boolean)
         .join(" ")}
+      style={
+        {
+          "--section-gap-after": gapAfter(spaceBelow, nextAbove),
+        } as CSSProperties
+      }
     >
       <div
         className={[
@@ -315,7 +322,6 @@ export function SliceSection({
             : width === "screen"
               ? ""
               : "max-w-wrap",
-          band ? "py-slice" : "",
         ]
           .filter(Boolean)
           .join(" ")}

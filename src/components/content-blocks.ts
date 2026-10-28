@@ -49,9 +49,11 @@ export type ContentPiece =
   | { kind: "rich"; field: RichTextField }
   | { kind: "signoff"; field: RichTextField }
   | { kind: "note"; field: RichTextField }
+  | { kind: "tip"; field: RichTextField }
   | ({ kind: "token" } & ProviderToken);
 
 const TOKEN = /^\{\{provider:([a-z0-9-]+):(offer|facts)\}\}([\s\S]*)$/;
+const TIP = "{{tip}}";
 
 function isBlockLabel(value: string | undefined): value is BlockLabel {
   return BLOCK_LABELS.some((label) => label === value);
@@ -83,6 +85,54 @@ export function parseProviderToken(text: string): ProviderToken | null {
     part,
     sentence: match[3].trim(),
   };
+}
+
+/** Where the words after {{tip}} sit, or null when the paragraph is not a tip. */
+function tipRange(text: string) {
+  const lead = text.length - text.trimStart().length;
+  if (!text.slice(lead).startsWith(TIP)) return null;
+
+  let start = lead + TIP.length;
+  while (start < text.length && /\s/.test(text[start] ?? "")) start += 1;
+
+  let end = text.length;
+  while (end > start && /\s/.test(text[end - 1] ?? "")) end -= 1;
+
+  return { start, end };
+}
+
+/** A tip token at the start of a paragraph. Any other wording stays text. */
+export function isTipToken(text: string) {
+  return tipRange(text) !== null;
+}
+
+/**
+ * The paragraph after {{tip}}, with bold, italic, and links kept.
+ * An empty tip, or a paragraph that is not a tip, is null.
+ */
+export function tipMessageField(
+  block: RichTextField[number],
+): RichTextField | null {
+  const paragraph = paragraphOf(block);
+  if (!paragraph) return null;
+  const range = tipRange(paragraph.text);
+  if (!range) return null;
+
+  const text = paragraph.text.slice(range.start, range.end);
+  if (!text) return null;
+
+  return [
+    {
+      ...block,
+      text,
+      spans: paragraph.spans.flatMap((span) => {
+        const start = Math.max(span.start, range.start) - range.start;
+        const end = Math.min(span.end, range.end) - range.start;
+        if (end <= start) return [];
+        return [{ ...span, start, end }];
+      }),
+    },
+  ] as RichTextField;
 }
 
 function blockLabel(text: string, spans: Span[]): BlockLabel | null {
@@ -118,8 +168,8 @@ function withoutBlockLabel(
 
 /**
  * Splits a content field into ordinary rich text, a closing line, a note
- * box, and clinic tokens. A Signoff or Note label has to cover the whole
- * paragraph. A token is the first thing in the paragraph.
+ * box, Peggy’s tip, and clinic tokens. A Signoff or Note label has to
+ * cover the whole paragraph. A token is the first thing in the paragraph.
  */
 export function contentPieces(
   field: RichTextField | null | undefined,
@@ -154,6 +204,13 @@ export function contentPieces(
       if (token) {
         flush();
         pieces.push({ kind: "token", ...token });
+        continue;
+      }
+
+      if (isTipToken(paragraph.text)) {
+        flush();
+        const field = tipMessageField(block);
+        if (field) pieces.push({ kind: "tip", field });
         continue;
       }
     }

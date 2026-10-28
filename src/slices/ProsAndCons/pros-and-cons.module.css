@@ -1,7 +1,8 @@
 /*
-  Two cards side by side. The label and the icon say which side is
-  which, so color is never the only cue. A card keeps its own color on
-  any band.
+  Two cards, in the same family as the Clinic facts cards. The icon
+  sits above a small label, and the lines use the heading face. The
+  mark and the label say which side is which, so color is never the
+  only cue. A card keeps its own color on any band.
 */
 
 .row + .row {
@@ -12,6 +13,7 @@
   margin: 0 0 1rem;
   font-family: var(--font-heading);
   font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 500;
   line-height: 1.15;
 }
 
@@ -19,63 +21,79 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.85rem;
-  align-items: start;
+  align-items: stretch;
+}
+
+.pair[data-sides="1"] {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .card {
-  padding: 1.4rem 1.5rem 1.6rem;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.35rem 1.4rem 1.5rem;
   border-radius: 1.25rem;
-  background: var(--color-paper);
   color: var(--color-text);
 }
 
 .card[data-tone="pros"] {
-  --tone: var(--color-pros-mark);
-  --tone-wash: var(--color-paper);
   background: var(--color-pros);
 }
 
 .card[data-tone="cons"] {
-  --tone: var(--color-accent);
-  --tone-wash: var(--color-card-1);
+  background: var(--color-card-1);
 }
 
-.label {
-  margin: 0 0 1rem;
-  font-family: var(--font-heading);
-  font-size: 1.55rem;
-  line-height: 1.15;
+.banner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
 }
 
 .mark {
   display: grid;
-  flex-shrink: 0;
+  flex: none;
   place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
   border-radius: 50%;
-  background: var(--tone-wash);
-  color: var(--tone);
+  background: var(--color-background);
+}
+
+.card[data-tone="pros"] .mark {
+  color: var(--color-pros-mark);
+}
+
+.card[data-tone="cons"] .mark {
+  color: var(--color-accent);
+}
+
+.label {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-accent);
 }
 
 .list {
   display: grid;
-  gap: 0.7rem;
-  margin: 0;
+  gap: 0.55rem;
+  width: 100%;
+  margin: 1rem 0 0;
   padding: 0;
   list-style: none;
 }
 
 .list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.65rem;
-  font-size: 1.1rem;
-  line-height: 1.45;
-}
-
-.mark {
-  width: 1.6rem;
-  height: 1.6rem;
-  margin-top: 0.05rem;
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 2vw, 1.45rem);
+  font-weight: 500;
+  line-height: 1.25;
 }
 
 .list p {
@@ -83,7 +101,8 @@
 }
 
 @media (max-width: 640px) {
-  .pair {
+  .pair,
+  .pair[data-sides="1"] {
     grid-template-columns: 1fr;
   }
 }

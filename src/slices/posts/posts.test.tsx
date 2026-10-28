@@ -9,6 +9,7 @@ import {
   formatPostDate,
   gridFeature,
   pageSize,
+  categoryAddress,
   pageWindow,
   pickedPostCards,
   selectPosts,
@@ -61,6 +62,16 @@ const POSTS = [
   post("Summer review", "2026-07-01", "Telehealth brand reviews"),
   post("August story", "2026-08-01", "My experience & results"),
 ];
+
+describe("categoryAddress", () => {
+  it("keeps the path and drops the query for All", () => {
+    expect(categoryAddress("/blog", "All")).toBe("/blog");
+    expect(categoryAddress("/blog", "All", "#posts")).toBe("/blog#posts");
+    expect(categoryAddress("/notes", "Formulations & dosages")).toBe(
+      "/notes?category=Formulations%20%26%20dosages",
+    );
+  });
+});
 
 describe("selectPosts", () => {
   it("lists the newest first and pages them", () => {

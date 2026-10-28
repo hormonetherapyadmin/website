@@ -60,8 +60,8 @@ function choice<T extends string>(
 }
 
 /**
- * A decorative line. Space above and below are padding, so the gap is
- * not swallowed by the margin on the slices beside the line.
+ * A decorative line. Space above and below are padding, the same as
+ * every slice, so the line's gap adds to the slices beside it.
  */
 export function Divider({ primary }: { primary: DividerPrimary }) {
   const line = choice(primary.line, LINES, "Squiggly");
@@ -69,7 +69,6 @@ export function Divider({ primary }: { primary: DividerPrimary }) {
   const background = sectionBackground(primary.background);
   const spaceAbove = choice(primary.space_above, SECTION_SPACING, "Medium");
   const spaceBelow = choice(primary.space_below, SECTION_SPACING, "Medium");
-  const band = background !== "Transparent" && background !== "Cream";
 
   return (
     <div
@@ -79,14 +78,7 @@ export function Divider({ primary }: { primary: DividerPrimary }) {
         .join(" ")}
     >
       <div className={sectionBackgroundClass[background] || undefined}>
-        <div
-          className={[
-            "mx-auto w-full max-w-wrap px-gutter",
-            band ? "py-slice" : "",
-          ]
-            .filter(Boolean)
-            .join(" ")}
-        >
+        <div className="mx-auto w-full max-w-wrap px-gutter">
           <div
             className={[styles.line, lineClass[line], colorClass[color]].join(
               " ",

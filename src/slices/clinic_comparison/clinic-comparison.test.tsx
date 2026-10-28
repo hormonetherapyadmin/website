@@ -184,6 +184,19 @@ describe("ClinicComparison", () => {
     expect(markup).not.toContain("$10");
   });
 
+  it("renders no chart table when every row is blank", () => {
+    const markup = renderToStaticMarkup(
+      <ClinicComparison
+        primary={{ ...section(), heading: rich("GLP medications") }}
+        rows={chartRows([{ name: "  " }])}
+      />,
+    );
+
+    expect(markup).toContain("GLP medications");
+    expect(markup).not.toContain("What I paid");
+    expect(markup).not.toContain("<table");
+  });
+
   it("renders no table when there are no clinics", () => {
     const markup = renderToStaticMarkup(
       <ClinicComparison primary={{ ...section() }} clinics={[]} />,

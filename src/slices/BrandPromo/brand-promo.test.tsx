@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 import type { SliceSectionFields } from "@/components/slice-section";
 import {
   BrandPromo,
+  brandPromoCardPosition,
   brandPromoExtraLinks,
   brandPromoLinks,
   brandPromoProduct,
@@ -84,6 +85,24 @@ describe("brandPromoQuote", () => {
   });
 });
 
+describe("brandPromoCardPosition", () => {
+  it("centers the supporting card unless Top or Sticky is chosen", () => {
+    expect(brandPromoCardPosition(undefined)).toBe("center");
+    expect(brandPromoCardPosition("Unknown")).toBe("center");
+    expect(brandPromoCardPosition("Top")).toBe("top");
+    expect(brandPromoCardPosition("Sticky")).toBe("sticky");
+    expect(
+      brandPromoCardPosition(undefined, { layout: "Stacked", style: "Card" }),
+    ).toBe("sticky");
+    expect(
+      brandPromoCardPosition("Center", { layout: "Stacked", style: "Card" }),
+    ).toBe("center");
+    expect(
+      brandPromoCardPosition(undefined, { layout: "Stacked", style: "Quote" }),
+    ).toBe("center");
+  });
+});
+
 describe("brandPromoStyle", () => {
   it("treats Quote as the quote panel and everything else as the product card", () => {
     expect(brandPromoStyle("Quote")).toBe("quote");
@@ -129,10 +148,31 @@ describe("BrandPromo", () => {
     expect(html).toContain('rel="sponsored nofollow noopener noreferrer"');
     expect(html).toContain('target="_blank"');
     expect(html).toContain('data-placement="brand_promo"');
+    expect(html).toContain('data-position="center"');
     expect(html).not.toContain("data-layout");
     expect(html).not.toMatch(
       /<a [^>]*href="https:\/\/example[^>]*rel="noreferrer"/,
     );
+  });
+
+  it("puts Top, Center, or Sticky on the supporting card", () => {
+    expect(render({ ...section(), card_position: "Top" })).toContain(
+      'data-position="top"',
+    );
+    expect(
+      render({
+        ...section(),
+        ...written({ style: "Quote" }),
+        card_position: "Sticky",
+      }),
+    ).toContain('data-position="sticky"');
+    expect(
+      render({
+        ...section(),
+        ...written({ layout: "Stacked" }),
+        card_position: "Center",
+      }),
+    ).toContain('data-position="center"');
   });
 
   it("defaults a blank small heading and keeps the heading off the badge line", () => {
@@ -237,6 +277,7 @@ describe("BrandPromo", () => {
 
     expect(card).not.toContain("data-style");
     expect(card).toContain('data-layout="stacked"');
+    expect(card).toContain('data-position="sticky"');
     expect(card).toContain("$179");
     expect(card).toContain("See Mira on Amazon");
     expect(card).not.toContain("<blockquote");

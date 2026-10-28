@@ -7,7 +7,7 @@
       "description": "Default",
       "docURL": "",
       "id": "default",
-      "imageUrl": "",
+      "imageUrl": "https://images.prismic.io/1shr96di/shared-slices/text/default/6cafffb131be58b36dcc739aeae4f39792ab0b43.png?auto=compress%2Cformat",
       "name": "Default",
       "primary": {
         "small_heading": {
@@ -43,7 +43,7 @@
             "label": "Content",
             "labels": ["highlight", "superscript", "signoff", "note"],
             "multi": "heading2,heading3,heading4,paragraph,strong,em,hyperlink,list-item,o-list-item,image,embed",
-            "placeholder": "The writing. Headings, lists, photos, and videos are allowed."
+            "placeholder": "The writing. Headings, lists, photos, and videos are allowed. Start a paragraph with {{tip}} for Peggy’s tip."
           },
           "type": "StructuredText"
         },
