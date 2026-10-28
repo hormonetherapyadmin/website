@@ -108,7 +108,7 @@ const longWriting = [
   "Center is the usual place. Top lines the card up with the heading. Sticky keeps the price, or her words, in view on a long section.",
   "On a phone the card stacks under the writing, and it does not stay stuck.",
   "The clinic facts on these examples are Inner Balance. The sentences are only here so the three positions are easy to compare.",
-].flatMap((sentence) => rich(sentence));
+].flatMap((sentence) => rich(sentence)) as RichTextField;
 
 const joi: BrandPromoClinic = {
   uid: "joi",
