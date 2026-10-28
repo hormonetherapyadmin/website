@@ -539,6 +539,9 @@ For high-value pages compare old vs new:
 -   production canonicals correct
 -   Preview deployments protected from indexing (`ALLOW_INDEXING`
     unset everywhere except the Vercel Production environment)
+-   Vercel project is `website-v3hp`
+    (`https://website-v3hp.vercel.app/`). The duplicate project
+    `website` is disconnected before the domain is attached
 -   Vercel production domain set to `www.hormonetherapyhub.com`, apex
     redirecting to it
 -   analytics verified

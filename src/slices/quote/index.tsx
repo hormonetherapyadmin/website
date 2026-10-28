@@ -82,21 +82,23 @@ export function Quote({
   return (
     <SliceSection section={primary} showHeader={false} labelId={titleId}>
       <div className={styles.layout}>
-        <RichText
-          field={heading}
-          as="h2"
-          id={titleId}
-          unstyled
-          className={styles.kicker}
-        />
-        <blockquote className={styles.quote}>
+        <div className={styles.lead}>
           <RichText
-            field={primary.quote}
-            as="p"
+            field={heading}
+            as="h2"
+            id={titleId}
             unstyled
-            className={styles.quoteText}
+            className={styles.kicker}
           />
-        </blockquote>
+          <blockquote className={styles.quote}>
+            <RichText
+              field={primary.quote}
+              as="p"
+              unstyled
+              className={styles.quoteText}
+            />
+          </blockquote>
+        </div>
         <div className={styles.details}>
           {name ? (
             <div className={styles.brand}>
