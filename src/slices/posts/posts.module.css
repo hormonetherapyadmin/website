@@ -3,7 +3,7 @@
   display: grid;
   margin: 0;
   padding: 0;
-  border-top: 1px solid var(--color-text);
+  border-top: 1px solid var(--section-line, var(--color-text));
   list-style: none;
 }
 
@@ -43,12 +43,12 @@
 
 .lead .card {
   padding-right: 2.5rem;
-  border-right: 1px solid var(--color-border);
+  border-right: 1px solid var(--section-line, var(--color-border));
 }
 
 .home > li:not(.lead) .card,
 .cards .card {
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--section-line, var(--color-border));
 }
 
 .home > li:not(.lead) .card {
@@ -60,7 +60,7 @@
 .cards > li:nth-child(3n + 2) .card,
 .cards > li:nth-child(3n) .card {
   padding-left: 1.5rem;
-  border-left: 1px solid var(--color-border);
+  border-left: 1px solid var(--section-line, var(--color-border));
 }
 
 .cards > li:nth-child(3n) .card {
@@ -107,7 +107,7 @@
   align-items: center;
   gap: 0.4rem 1.15em;
   margin: 0;
-  color: var(--color-text-muted);
+  color: var(--section-muted, var(--color-text-muted));
   font-size: 0.875rem;
 }
 
@@ -119,7 +119,7 @@
 }
 
 .kind {
-  color: var(--color-accent);
+  color: var(--section-kicker, var(--color-accent));
   font-weight: 700;
 }
 
@@ -140,7 +140,10 @@
 .title a,
 .leadTitle a {
   text-decoration: none;
-  background-image: linear-gradient(var(--color-tint), var(--color-tint));
+  background-image: linear-gradient(
+    var(--section-mark, var(--color-tint)),
+    var(--section-mark, var(--color-tint))
+  );
   background-repeat: no-repeat;
   background-position: 0 0.87em;
   background-size: 0 0.42em;
@@ -163,6 +166,36 @@
   background-size: 100% 0.42em;
 }
 
+/*
+  On a dark band the pale marker paints through the light type.
+  A navy line sits under the words instead.
+*/
+:global(.bg-panel) .title a,
+:global(.bg-panel) .leadTitle a,
+:global(.bg-accent):global(.text-panel-text) .title a,
+:global(.bg-accent):global(.text-panel-text) .leadTitle a {
+  background-image: none;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+  transition: text-decoration-color 160ms ease;
+}
+
+:global(.bg-panel) .card:hover .title a,
+:global(.bg-panel) .card:hover .leadTitle a,
+:global(.bg-panel) .featured:hover .leadTitle a,
+:global(.bg-panel) .title a:focus-visible,
+:global(.bg-panel) .leadTitle a:focus-visible,
+:global(.bg-accent):global(.text-panel-text) .card:hover .title a,
+:global(.bg-accent):global(.text-panel-text) .card:hover .leadTitle a,
+:global(.bg-accent):global(.text-panel-text) .featured:hover .leadTitle a,
+:global(.bg-accent):global(.text-panel-text) .title a:focus-visible,
+:global(.bg-accent):global(.text-panel-text) .leadTitle a:focus-visible {
+  background-size: 0;
+  text-decoration-color: var(--section-mark);
+}
+
 .excerpt,
 .leadExcerpt {
   display: -webkit-box;
@@ -174,11 +207,11 @@
 }
 
 .excerpt {
-  color: var(--color-text-muted);
+  color: var(--section-muted, var(--color-text-muted));
 }
 
 .leadExcerpt {
-  color: var(--color-text);
+  color: var(--section-muted, var(--color-text));
   font-size: 1.15rem;
 }
 
@@ -227,7 +260,7 @@
 .tabs a {
   display: block;
   padding: 0.5rem 1rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--section-line, var(--color-border));
   border-radius: 999px;
   font-size: 0.95rem;
   font-weight: 600;
@@ -240,9 +273,9 @@
 
 .tabs a[aria-current],
 .pagination a[aria-current="page"] {
-  border-color: var(--color-panel);
-  background: var(--color-panel);
-  color: var(--color-panel-text);
+  border-color: var(--section-chip, var(--color-panel));
+  background: var(--section-chip, var(--color-panel));
+  color: var(--section-chip-text, var(--color-panel-text));
 }
 
 .pagination {
@@ -262,18 +295,18 @@
 
 .pagination li[aria-hidden] {
   padding: 0 0.25rem;
-  color: var(--color-text-muted);
+  color: var(--section-muted, var(--color-text-muted));
 }
 
 .older {
   margin-left: 0.5rem;
   padding: 0 1.1rem;
-  border-color: var(--color-border) !important;
+  border-color: var(--section-line, var(--color-border)) !important;
 }
 
 .empty {
   margin: 0;
-  color: var(--color-text-muted);
+  color: var(--section-muted, var(--color-text-muted));
 }
 
 @keyframes postsFade {
@@ -323,7 +356,7 @@
     padding-left: 0;
     border-right: 0;
     border-left: 0;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--section-line, var(--color-border));
   }
 
   .home > li:nth-child(n) .card,
@@ -337,7 +370,7 @@
   .cards > li:nth-child(even) .card {
     padding-right: 0;
     padding-left: 1.5rem;
-    border-left: 1px solid var(--color-border);
+    border-left: 1px solid var(--section-line, var(--color-border));
   }
 
   .home > li.lead .card {

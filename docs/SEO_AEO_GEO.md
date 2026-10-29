@@ -23,8 +23,8 @@ objective is preservation; optimization follows.
 ## Indexing Control
 
 -   Every environment is `noindex` unless `ALLOW_INDEXING=true`.
--   `ALLOW_INDEXING=true` is set only in the Vercel Production
-    environment, only at cutover.
+-   `ALLOW_INDEXING=true` is set only in the Production environment
+    of the `website-v3hp` project, only at cutover.
 -   When indexing is on, `robots.txt` allows all user agents. Do not
     block AI/answer-engine crawlers (GPTBot, OAI-SearchBot, ClaudeBot,
     PerplexityBot, Google-Extended) in robots or Vercel Firewall and

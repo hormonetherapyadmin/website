@@ -98,6 +98,41 @@
     line-height: 1.6;
   }
 
+  /*
+    Navy and Raspberry are light-on-dark bands. Rules, the marker under
+    a title, and secondary text follow the band. Light bands leave
+    these unset and keep the page colors. On Navy the marker is a
+    navy line under the title, so it does not paint through the
+    light type. On Raspberry it is a light blue line.
+  */
+  .bg-panel,
+  .bg-accent.text-panel-text {
+    --section-line: color-mix(
+      in srgb,
+      var(--color-panel-text) 22%,
+      transparent
+    );
+    --section-muted: color-mix(
+      in srgb,
+      var(--color-panel-text) 78%,
+      transparent
+    );
+    --section-chip: var(--color-panel-text);
+    --section-chip-text: var(--color-panel);
+  }
+
+  .bg-panel {
+    --section-mark: color-mix(
+      in srgb,
+      var(--color-marker) 72%,
+      var(--color-panel)
+    );
+  }
+
+  .bg-accent.text-panel-text {
+    --section-mark: var(--color-card-2);
+  }
+
   h1,
   h2,
   h3,

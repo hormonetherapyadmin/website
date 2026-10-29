@@ -883,22 +883,33 @@ inventory.
 Owner decision, 2026-10-26: host on Vercel. Netlify is no longer the
 host.
 
+Owner decision, 2026-10-27: the Vercel project is `website-v3hp` on
+the `hormone-therapy-hub` team. Its address is
+`https://website-v3hp.vercel.app/`. Merges to `main` publish there.
+A second project on the same team, `website`
+(`https://website-dun-eight-12.vercel.app/`), is also connected to
+this repository. It is not the host. Disconnect it so a push does
+not deploy twice, and do not attach the domain or production
+environment variables to it.
+
+`www.hormonetherapyhub.com` is still the Wix site. The Vercel
+address stays `noindex` until DNS cutover. Do not set
+`ALLOW_INDEXING=true` on it before then.
+
 Netlify production deploys stopped on 2026-10-09. Merges to `main`
 after that were skipped before the build started, while deploy
 previews kept building. The published Netlify site stayed the
 2026-10-09 deployment of `01bb0ad`, the placeholder shell with no
 `/[uid]` pages. Netlify's build credits blocked those production
 deploys, and the hobby plan does not cover the builds this project
-needs.
-
-The Vercel project is not connected yet. Until it is,
-`hormonetherapyhub.netlify.app` is the old host and is not the site
-this repo now builds. Disconnect that Netlify site once Vercel
-Production is serving `main`. This site earns affiliate revenue, so
-the Vercel team needs a plan that allows commercial use.
+needs. `hormonetherapyhub.netlify.app` is the old host.
+Vercel Production on `website-v3hp` is serving `main`, so disconnect
+the Netlify site, including its deploy previews. This site earns
+affiliate revenue, so the Vercel team needs a plan that allows
+commercial use.
 
 Set `PRISMIC_ACCESS_TOKEN`, `PRISMIC_WEBHOOK_SECRET`, and, at cutover,
-`ALLOW_INDEXING` in the Vercel project. `ALLOW_INDEXING=true` is
+`ALLOW_INDEXING` in `website-v3hp`. `ALLOW_INDEXING=true` is
 Production only.
 
 ### Toolchain
@@ -1007,8 +1018,9 @@ Production only.
     `X-Robots-Tag: noindex, nofollow` header on every response and a
     disallow-all `robots.txt`.
 -   Indexing is enabled only when `ALLOW_INDEXING=true`. Set it only in
-    the Vercel Production environment, only at cutover. Leave it unset
-    for Preview and Development. See `docs/MIGRATION_RUNBOOK.md`.
+    the Production environment of `website-v3hp`, only at cutover.
+    Leave it unset for Preview, Development, and the duplicate
+    `website` project. See `docs/MIGRATION_RUNBOOK.md`.
 -   When indexing is enabled, `robots.txt` allows all user agents,
     including AI crawlers (GPTBot, OAI-SearchBot, ClaudeBot,
     PerplexityBot, Google-Extended). Vercel Firewall and bot protection

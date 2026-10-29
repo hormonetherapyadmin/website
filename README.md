@@ -1,7 +1,9 @@
 # Hormone Therapy Hub
 
 Rebuild of [hormonetherapyhub.com](https://www.hormonetherapyhub.com)
-from Wix to Next.js + Prismic on Vercel.
+from Wix to Next.js + Prismic on Vercel. The Vercel project is
+[`website-v3hp`](https://website-v3hp.vercel.app/). The public domain
+is still the Wix site until DNS cutover.
 
 Start with `AGENTS.md` and `docs/PROJECT_PLAN.md`. Approved technical
 decisions are in section 24 of the project plan.

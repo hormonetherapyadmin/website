@@ -168,6 +168,11 @@ The four pastels are the Start here card colors. Raspberry and Navy use
 light text. The eyebrow is raspberry on Transparent, Cream, and
 the pastels,
 light blue (`card-2`) on Raspberry, and pink (`panel-accent`) on Navy.
+A rule drawn on the band, such as the line above a post row or between
+FAQ questions, is a soft mix of that text color, so on Navy and
+Raspberry it stays visible and quiet. A title's hover mark on Navy is a navy line under the words, so it
+does not paint through the light type. On Raspberry it is a light
+blue line. A category label uses the eyebrow color.
 Slices that draw their own eyebrow (Hero, Side by side, Quote)
 follow the same rule. Brand promo's eyebrow on Navy is light blue
 (`card-2`) and sits close above the heading. A later palette
@@ -881,7 +886,8 @@ There is no separate tagline.
 | Space below | `space_below` | Select | No | |
 
 Each trust line is one Text field, `text`. Hide Words on the photo when
-it is empty. Add the buttons in the order they should appear. Solid is
+it is empty. Those words wait half a second, then fade up into place, and
+stay still for someone who prefers reduced motion. Add the buttons in the order they should appear. Solid is
 the filled button. Ghost is the quieter text button, with an arrow. A
 button with no words is hidden.
 
@@ -993,7 +999,9 @@ posts and passes them in. Homepage, Featured, Grid, and Row do not
 store a list. They list posts newest first by Published. Category
 limits that list. All uses every post. Picked stores the posts she
 chooses. The card is the Row card: photo, category, date, read time,
-title, and excerpt. The order is the order of the Posts group. Three
+title, and excerpt. On Navy the category is the light pink eyebrow,
+the hover mark under a title is a navy line, and the rules between
+cards are a soft light line, including the line above the row. The order is the order of the Posts group. Three
 is the row. A post the page did not load is left out.
 
 The grid tabs are this Category: Telehealth brand reviews, Formulations

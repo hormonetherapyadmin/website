@@ -35,3 +35,10 @@
 .text {
   background: var(--color-text);
 }
+
+:global(.bg-panel) .text,
+:global(.bg-accent):global(.text-panel-text) .text,
+:global(.bg-panel) .border,
+:global(.bg-accent):global(.text-panel-text) .border {
+  background: var(--section-line);
+}
