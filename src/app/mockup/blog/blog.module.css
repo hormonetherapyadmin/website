@@ -45,16 +45,19 @@
 /* Breadcrumbs */
 
 .crumbs {
+  width: 100%;
   max-width: var(--wrap);
   margin: 0 auto;
   padding: 1.25rem var(--gutter) 0;
   font-size: 0.9rem;
   color: var(--muted);
+  text-align: start;
 }
 
 .crumbs ol {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start;
   gap: 0.4rem;
   margin: 0;
   padding: 0;
@@ -101,7 +104,15 @@
   display: grid;
   grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
   gap: clamp(2rem, 5vw, 4.5rem);
-  align-items: start;
+  align-items: center;
+}
+
+/* On a wide screen the caption hangs under the photo, so the photo
+   itself lines up with the title block. */
+@media (min-width: 961px) {
+  .articleHead:has(.heroFigure figcaption) {
+    padding-bottom: 9.5rem;
+  }
 }
 
 .articleHeadText {
@@ -218,6 +229,20 @@
   line-height: 1.5;
   color: var(--muted);
   text-align: center;
+}
+
+@media (min-width: 961px) {
+  .heroFigure:has(figcaption) {
+    position: relative;
+  }
+
+  .heroFigure figcaption {
+    position: absolute;
+    top: calc(100% + 0.9rem);
+    right: 0;
+    left: 0;
+    margin-top: 0;
+  }
 }
 
 .heroFigure figcaption p {

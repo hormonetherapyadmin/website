@@ -444,6 +444,8 @@ export const GUIDE_PAGES = [
     uid: "sleep",
     title: "Sleep",
     meta_title: "Sleep | Hormone Therapy Hub",
+    meta_description:
+      "Sleep, and the clinics I've been a patient at. I'm not a doctor. This is where I send people who ask.",
     indexing: false,
     review: [
       "Archived. The address stays /sleep, indexing is off, and it is not in the menu.",
@@ -1102,6 +1104,8 @@ export const GUIDE_PAGES = [
     uid: "men-s-hrt",
     title: "Men's HRT",
     meta_title: "Men's HRT | Hormone Therapy Hub",
+    meta_description:
+      "Hair toppers I tried when my hair started thinning in menopause, including the UniWigs codes I use.",
     indexing: false,
     review: [
       "Archived. The address stays /men-s-hrt, indexing is off, and it is not in the menu.",

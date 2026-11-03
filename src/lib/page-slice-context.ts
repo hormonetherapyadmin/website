@@ -2,15 +2,15 @@ import { draftMode } from "next/headers";
 import {
   gridPage,
   pageClinic,
-  postCard,
   sliceClinicIds,
   slicesNeedPosts,
   sliceTokenUids,
   type PageClinic,
 } from "@/lib/page-slices";
+import { loadPostCards } from "@/lib/post-cards";
 import { tokenClinic } from "@/lib/token-clinic";
 import { createClient } from "@/prismicio";
-import type { PostDocument, ProviderDocument } from "../../prismicio-types";
+import type { ProviderDocument } from "../../prismicio-types";
 
 type Slices = Parameters<typeof sliceClinicIds>[0];
 
@@ -36,9 +36,7 @@ export async function loadPageSliceContext(
     tokenUids.length
       ? client.getAllByUIDs("provider", tokenUids)
       : Promise.resolve([] as ProviderDocument[]),
-    slicesNeedPosts(slices)
-      ? client.getAllByType("post")
-      : Promise.resolve([] as PostDocument[]),
+    slicesNeedPosts(slices) ? loadPostCards() : Promise.resolve([]),
   ]);
 
   const providers = new Map(
@@ -55,16 +53,11 @@ export async function loadPageSliceContext(
     const clinic = tokenClinic(document);
     return clinic ? [clinic] : [];
   });
-  const cards = posts.flatMap((document) => {
-    const card = postCard(document);
-    return card ? [card] : [];
-  });
-
   return {
     providers,
     clinics,
     tokenClinics,
-    posts: cards,
+    posts,
     page: gridPage(searchParams.page),
     category:
       typeof searchParams.category === "string" ? searchParams.category : null,

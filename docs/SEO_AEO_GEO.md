@@ -112,7 +112,8 @@ What the app emits, as one JSON-LD `@graph` per page, built in
     Peggy's `url` is `/about`, the page her byline links to.
     `articleSection` is Category and `keywords` are the document tags,
     both shown on the post. Publisher is the Organization. The
-    breadcrumb is Home, Blog, and the title, as shown.
+    breadcrumb list is Home, Blog, and the title. The page shows Home
+    and Blog. The title is the last item in the structured data only.
 -   There is no `dateModified`. A post has no updated date, and the
     Wix last published date is not copied (see `docs/SLICE_MODEL.md`).
     The live site emits `dateModified`; this is the one property it
@@ -186,6 +187,16 @@ that document's last publication time in
 Prismic, when one exists. The page at `/sitemap` is built in the app,
 not stored in Prismic, and it also links Home. When indexing is on,
 `robots.txt` points at `/sitemap.xml`.
+
+## Blog feed
+
+`/blog-feed.xml` is the RSS feed at the old Wix address. It lists the
+20 newest published Posts still set to Index. A newly published post
+becomes the first item after the Prismic webhook refreshes the cache.
+Each item links to that post. The summary is the subtitle, or the meta
+description when the subtitle is empty. The story is not in the feed.
+Posts set to No index are left out. The root layout points at the feed
+with `rel="alternate"`.
 
 ## llms.txt
 

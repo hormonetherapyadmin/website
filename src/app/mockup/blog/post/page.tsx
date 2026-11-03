@@ -205,7 +205,6 @@ export default async function BlogPostMockup(
           <li>
             <Link href="/blog">Blog</Link>
           </li>
-          <li aria-current="page">{POST.title}</li>
         </ol>
       </nav>
 

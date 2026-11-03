@@ -641,7 +641,7 @@ export function mapWixPost(
       ),
       caption: state.caption,
       published_date: publishedDay(post.firstPublishedDate),
-      meta_title: metaTitle && metaTitle !== title ? metaTitle : null,
+      meta_title: metaTitle || title || null,
       meta_description: metaDescription || null,
       indexing: true,
     },

@@ -49,9 +49,9 @@ export type SitePage = {
   sourceId: string;
   uid: string;
   title: string;
-  /** The Wix document title, when it is not the hero heading. */
+  /** Search title. The live Wix title when that page had one. */
   meta_title?: string;
-  /** The Wix meta description. Empty on Wix stays unset. */
+  /** Search description. The live Wix description when that page had one. */
   meta_description?: string;
   /** Decisions to check in the migration release. */
   review: string[];
@@ -484,6 +484,8 @@ function clinicPage(input: {
   image: LocalImage;
   ribbonName: string;
   reviewNotes?: string[];
+  meta_title: string;
+  meta_description: string;
 }): SitePage {
   const links = [
     documentLink(input.review.id, "post", input.review.uid, input.review.text),
@@ -498,6 +500,8 @@ function clinicPage(input: {
     sourceId: `page:${input.uid}`,
     uid: input.uid,
     title: input.title,
+    meta_title: input.meta_title,
+    meta_description: input.meta_description,
     review: [
       "The visit button reads the brand’s affiliate link. This page does not store a destination.",
       "Facts, steps, specialties, price, and the coupon stay on the brand.",
@@ -542,6 +546,9 @@ function innerBalancePage(): SitePage {
     sourceId: "page:inner-balance",
     uid: "inner-balance",
     title: "Inner Balance",
+    meta_title: "Inner Balance Review Page | Hormone Therapy Hub",
+    meta_description:
+      "Overview and Review of Inner Balance pricing, process to get started and my personal experience",
     review: [
       "The visit button reads the brand’s affiliate link. This page does not store a destination.",
       "Facts, steps, specialties, price, and the coupon stay on the brand.",
@@ -860,6 +867,9 @@ export const SITE_PAGES: SitePage[] = [
     sourceId: "page:about",
     uid: "about",
     title: "My Hormone Replacement Story",
+    meta_title: "About | Hormone Therapy Hub",
+    meta_description:
+      "Learn about how Hormone Therapy Hub got started. Discover the story behind the website and how you can improve your health with Bioidentical Hormone Replacement.",
     review: [
       "The washed-out stock doctor banner on the Wix page is left off.",
       "The published hero photo and the eyebrow About Peggy stay. Winston sits on the left of the story, so the two photos do not stack.",
@@ -979,6 +989,9 @@ export const SITE_PAGES: SitePage[] = [
     sourceId: "page:faq",
     uid: "faq",
     title: "Bioidentical Hormone Replacement Therapy",
+    meta_title: "Frequently asked questions about Bioidentical Hormones",
+    meta_description:
+      "Review commonly asked questions about Bioidentical Hormone Replacement Therapy",
     review: [
       "Each answer is paired with the question it actually answers. On Wix the safety answer sits under the insurance question, and the insurance answer sits under the safety question. The words are unchanged, including lby, yur, and professsionals.",
     ],
@@ -1007,6 +1020,9 @@ export const SITE_PAGES: SitePage[] = [
     sourceId: "page:ishrtforme",
     uid: "ishrtforme",
     title: "Is Hormone Replacement Therapy Safe?",
+    meta_title: "Learn if Bioidentical Hormone Replacement Therapy is for you",
+    meta_description:
+      "Symptoms that will help you know if you are ideal candidate for Bioidentical or Conventional Hormone Replacement Therapy. Learn HRT",
     review: [
       "Peggy's portrait opens the page. The Winston photo sits on the left of Is it Safe?, so it does not stack under the portrait.",
       "The live page's two stock photos, a beach reader and a doctor weighing her hands, stay off.",
@@ -1126,6 +1142,9 @@ export const SITE_PAGES: SitePage[] = [
     ),
     image: life("winona.jpg", "A woman in a sun hat smiling at the beach"),
     ribbonName: "Winona",
+    meta_title: "Winona Review Page | Hormone Therapy Hub",
+    meta_description:
+      "Overview and Review of WINONA pricing, HRT process, plans and insurance accepted",
   }),
   clinicPage({
     uid: "musely",
@@ -1157,6 +1176,9 @@ export const SITE_PAGES: SitePage[] = [
     ),
     image: life("musely.jpg", "A woman watering flowers in a garden"),
     ribbonName: "Musely",
+    meta_title: "Musely Review Page | Hormone Therapy Hub",
+    meta_description:
+      "Overview and Review of Musely pricing, HRT process, plans and insurance accepted",
   }),
   clinicPage({
     uid: "alloy-review-page",
@@ -1187,6 +1209,9 @@ export const SITE_PAGES: SitePage[] = [
     ),
     image: life("alloy.jpg", "A woman sitting on a park bench"),
     ribbonName: "Alloy",
+    meta_title: "Alloy Review Page | Hormone Therapy Hub",
+    meta_description:
+      "Overview and Review of ALLOY pricing, HRT process, plans and insurance accepted",
     reviewNotes: [
       "The comparison button keeps the stored label Alloy Vs. Wiona.",
       "The published brand name is still Musely. This run sets it to Alloy.",
@@ -1214,6 +1239,9 @@ export const SITE_PAGES: SitePage[] = [
     ),
     image: life("joi.jpg", "A woman holding a yoga mat in a bright studio"),
     ribbonName: "Joi Women’s Wellness",
+    meta_title: "Joi Women's Wellness Review Page | Hormone Therapy Hub",
+    meta_description:
+      "Overview and Review of Joi Women's Wellness pricing, HRT process, plans and insurance accepted",
   }),
   clinicPage({
     uid: "effecty",
@@ -1237,6 +1265,9 @@ export const SITE_PAGES: SitePage[] = [
     ),
     image: life("effecty.jpg", "A woman smiling on a hiking trail"),
     ribbonName: "Effecty",
+    meta_title: "Effecty Review Page | Hormone Therapy Hub",
+    meta_description:
+      "Overview and Review of Effecty pricing, HRT process, plans and insurance accepted",
     reviewNotes: [
       "Effecty has no Wix overview page. /effecty is a new address.",
     ],
@@ -1270,6 +1301,9 @@ export const SITE_PAGES: SitePage[] = [
     ),
     image: life("menorx.jpg", "Three women laughing together by the water"),
     ribbonName: "MyMenopauseRx",
+    meta_title: "MyMenopauseRx Overview",
+    meta_description:
+      "Overview and Review of MyMenopauseRx pricing, HRT process, plans and insurance accepted",
     reviewNotes: [
       "The page uid is the Wix address mymenopauserx. The brand uid stays menorx.",
       "The brand has no coupon code.",
@@ -1307,6 +1341,9 @@ export const SITE_PAGES: SitePage[] = [
       "A woman laughing with friends in an exercise class",
     ),
     ribbonName: "Midi Health",
+    meta_title: "Midi Review Page | Hormone Therapy Hub",
+    meta_description:
+      "Overview and Review of Midi pricing, HRT process, plans and insurance accepted",
     reviewNotes: [
       "Midi has no visit link and no coupon code.",
       "The brand’s comparison button said MyMenoRX Vs. Midi and pointed at the Allara post. This page uses the post’s own title.",

@@ -297,10 +297,10 @@ code/destination can be updated centrally.
 
 ## 10. Design System
 
-Brand designer will provide final logo/colors/type. The working palette
-is Navy & raspberry from the homepage mockup, with Besley for headings.
-The content measure is 88rem, with the mockup gutter. Those values live
-in `src/app/globals.css`.
+Figtree is the body font and Besley is the heading font. Both are
+self-hosted through `next/font`. The working palette is Navy & raspberry
+from the homepage mockup. The content measure is 88rem, with the mockup
+gutter. Those values live in `src/app/globals.css`.
 
 Engineering should establish semantic tokens such as:
 
@@ -945,9 +945,10 @@ Production only.
     Other branches get Preview deployments. There is no `netlify.toml`
     and no `vercel.json`; the app is a standard Next.js build.
 -   GitHub Actions CI: format check, lint, typecheck, unit tests,
-    build, and Playwright smoke tests. Lighthouse CI with performance
-    budgets on Preview deployments is added in Phase 3, once there are
-    real templates to measure.
+    build, and Playwright smoke tests. Lighthouse budgets on Preview
+    deployments wait until the Vercel project is connected. CI does not
+    have the Prismic token, so a Lighthouse run there would score the
+    empty site.
 -   Environment variables are read through `src/lib/env.ts` without
     a validation library.
 
@@ -993,7 +994,12 @@ Production only.
     defaults to blog post.
 -   The build fails if two documents resolve to the same path, or if a
     known legacy URL from the URL manifest has no disposition.
--   `/blog-feed.xml` is kept as an RSS feed at the same path.
+-   `/blog-feed.xml` is an RSS feed at the same path. It lists the 20
+    newest published Posts still set to Index, from Prismic, not a
+    saved copy of the old Wix feed. A publish refreshes it with the
+    rest of the Prismic cache. Each item links to `/post/<uid>` and
+    uses the subtitle, or the meta description, as the summary. The
+    story is not copied into the feed.
 
 ### Redirects
 
@@ -1052,8 +1058,14 @@ Production only.
     the click, so YouTube gets no request on page load.
 -   Images through Prismic's image CDN (`PrismicNextImage`) with
     explicit dimensions.
--   No font is loaded until brand fonts arrive; system font stacks
-    until then. Brand fonts are self-hosted through `next/font`.
+-   Figtree (body) and Besley (headings) are the site fonts. They are
+    self-hosted through `next/font`.
+-   Post cards, the related-posts row, and the build-time list of post
+    URLs ask Prismic only for the fields they show. The story is
+    fetched separately to count minutes to read. In production that
+    count is cached under the `prismic` tag, so a publish refreshes it
+    with the rest of the content. Search still loads the story, because
+    that is what it searches. Local development still refetches.
 -   No UI component library, no client-side data fetching, no
     third-party scripts beyond GA. An EmailOctopus embed would be one;
     see Email capture.

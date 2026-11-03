@@ -18,6 +18,7 @@ export const HOW_I_REVIEW_HREF = "/how-i-review";
 export const APP_ROUTE_UIDS: ReadonlySet<string> = new Set([
   "search",
   "sitemap",
+  "blog-feed.xml",
   "post",
   "api",
   "mockup",

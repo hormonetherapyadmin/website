@@ -27,6 +27,7 @@ import { storyLinkRel } from "@/lib/affiliate-link";
 import { DEFAULT_AUTHOR_ID, resolveAuthorId } from "@/lib/author";
 import { isIndexingAllowed } from "@/lib/env";
 import { headingAnchors } from "@/lib/post-headings";
+import { loadPostCards, POST_UID_GRAPH_QUERY } from "@/lib/post-cards";
 import { minutesToRead, relatedPosts } from "@/lib/post-derived";
 import {
   DISCLOSURE_HREF,
@@ -185,7 +186,9 @@ function authorTitle(data: AuthorDocument["data"] | null) {
 }
 
 export async function generateStaticParams() {
-  const posts = await createClient().getAllByType("post");
+  const posts = await createClient().getAllByType("post", {
+    graphQuery: POST_UID_GRAPH_QUERY,
+  });
   return posts.flatMap((post) => (post.uid ? [{ uid: post.uid }] : []));
 }
 
@@ -228,7 +231,7 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
   const [draft, author, catalog, providers] = await Promise.all([
     draftMode(),
     loadAuthor(post),
-    client.getAllByType("post"),
+    loadPostCards(),
     clinicUids.length
       ? client.getAllByUIDs("provider", clinicUids)
       : Promise.resolve([] as ProviderDocument[]),
@@ -276,21 +279,16 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
       read: minutes,
       image: isFilled.image(post.data.image) ? post.data.image.url : "",
     },
-    catalog.flatMap((item) => {
-      if (!item.uid) return [];
-      return [
-        {
-          id: item.id,
-          uid: item.uid,
-          category: item.data.category,
-          published: item.data.published_date ?? "",
-          title: textOf(item.data.title),
-          excerpt: textOf(item.data.sub_title),
-          read: minutesToRead(item.data.body),
-          image: isFilled.image(item.data.image) ? item.data.image.url : "",
-        },
-      ];
-    }),
+    catalog.map((item) => ({
+      id: item.id,
+      uid: item.uid,
+      category: item.category ?? null,
+      published: item.published ?? "",
+      title: item.title,
+      excerpt: item.excerpt ?? "",
+      read: item.readTime ?? 0,
+      image: item.image?.src ?? "",
+    })),
   );
   const related =
     fromCatalog.length > 0 ? fromCatalog : mockKeepReading(post.uid);
@@ -340,7 +338,6 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
           <li>
             <Link href="/blog">Blog</Link>
           </li>
-          <li aria-current="page">{title}</li>
         </ol>
       </nav>
 

@@ -23,7 +23,10 @@ const fetchOptions: NonNullable<ClientConfig["fetchOptions"]> =
         cache: "force-cache",
       };
 
-export function createClient(config: ClientConfig = {}) {
+export function createClient(
+  config: ClientConfig = {},
+  options: { preview?: boolean } = {},
+) {
   const accessToken = getPrismicAccessToken();
   const client = baseCreateClient(repositoryName, {
     routes,
@@ -32,7 +35,8 @@ export function createClient(config: ClientConfig = {}) {
     ...config,
   });
 
-  enableAutoPreviews({ client });
+  // The published read-time cache must not read the preview cookie.
+  if (options.preview !== false) enableAutoPreviews({ client });
 
   return client;
 }

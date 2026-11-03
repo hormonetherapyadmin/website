@@ -1423,12 +1423,15 @@ Use the page type's SEO tab for the meta title, meta description, and
 social image. An empty meta title uses the post title. An empty meta
 description uses the subtitle. An empty social image uses Image. On the
 live site the meta description is its own sentence, so migration fills
-it from the Wix meta description when Wix has one. The Wix excerpt goes
-in Subtitle.
+it from the Wix meta description when Wix has one. Migration writes the
+Wix meta title when Wix has one, and otherwise writes the post title, so
+the SEO tab is not left blank. The Wix excerpt goes in Subtitle.
 
 Sampled from the live site in October 2026, then checked against the
 Wix API on 2026-10-08: the post sitemap lists 142 posts, the feed lists
-the latest 20, and 18 posts were read in full. The categories sitemap
+the latest 20, and 18 posts were read in full. The app keeps that
+length: `/blog-feed.xml` is the latest 20 indexable Posts, generated
+from Prismic. The categories sitemap
 contained only `/blog`. The API returned five Wix blog categories on
 42 posts.
 
@@ -1679,7 +1682,8 @@ field.
 
 ### What the page derives
 
-Breadcrumbs are Home, Blog, and the title. Minutes to read and Keep
+Breadcrumbs are Home and Blog. The title stays in the structured
+data, and it is not repeated in the trail. Minutes to read and Keep
 reading are calculated, as above. An empty Author field uses Peggy B.
 The byline and the author block read that document: name, profile,
 and about. On Peggy's posts the byline goes to the about page, and
