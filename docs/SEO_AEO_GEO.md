@@ -188,6 +188,16 @@ Prismic, when one exists. The page at `/sitemap` is built in the app,
 not stored in Prismic, and it also links Home. When indexing is on,
 `robots.txt` points at `/sitemap.xml`.
 
+## Blog feed
+
+`/blog-feed.xml` is the RSS feed at the old Wix address. It lists the
+20 newest published Posts still set to Index. A newly published post
+becomes the first item after the Prismic webhook refreshes the cache.
+Each item links to that post. The summary is the subtitle, or the meta
+description when the subtitle is empty. The story is not in the feed.
+Posts set to No index are left out. The root layout points at the feed
+with `rel="alternate"`.
+
 ## llms.txt
 
 `/llms.txt` is a static Markdown file at `public/llms.txt`. It tells an

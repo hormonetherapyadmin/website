@@ -22,6 +22,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={besley.variable} data-scroll-behavior="smooth">
       <head>
         <link rel="describedby" href={`${SITE_URL}/llms.txt`} />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title={SITE_NAME}
+          href={`${SITE_URL}/blog-feed.xml`}
+        />
       </head>
       <body className="antialiased">
         <a

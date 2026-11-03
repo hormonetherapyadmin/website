@@ -15,6 +15,13 @@ function textOf(value: unknown): string {
 const LA_WIG_START = "shareasale.com/r.cfm?b=1744268";
 
 describe("site pages", () => {
+  it("gives every site page a meta title and a meta description", () => {
+    for (const item of SITE_PAGES) {
+      expect(item.meta_title?.trim(), item.uid).toBeTruthy();
+      expect(item.meta_description?.trim(), item.uid).toBeTruthy();
+    }
+  });
+
   it("sends the site pages with the clinic pages after Inner Balance", () => {
     expect(SITE_PAGES.map((item) => item.uid)).toEqual([
       "about",

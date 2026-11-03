@@ -29,7 +29,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    ".next-lighthouse/types/**/*.ts",
+    ".next-lighthouse/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

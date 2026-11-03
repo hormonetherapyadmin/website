@@ -658,7 +658,7 @@ describe("mapWixPost", () => {
     expect(mapped.uid).toBe("a-title");
     expect(mapped.data.sub_title[0]?.text).toBe("The card line");
     expect(mapped.data.published_date).toBe("2026-09-29");
-    expect(mapped.data.meta_title).toBeNull();
+    expect(mapped.data.meta_title).toBe("A title");
     expect(mapped.data.meta_description).toBe("Search sentence");
     expect(mapped.data.indexing).toBe(true);
   });
