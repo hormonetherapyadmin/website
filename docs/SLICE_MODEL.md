@@ -1671,7 +1671,8 @@ field.
 
 ### What the page derives
 
-Breadcrumbs are Home, Blog, and the title. Minutes to read and Keep
+Breadcrumbs are Home and Blog. The title stays in the structured
+data, and it is not repeated in the trail. Minutes to read and Keep
 reading are calculated, as above. An empty Author field uses Peggy B.
 The byline and the author block read that document: name, profile,
 and about. On Peggy's posts the byline goes to the about page, and

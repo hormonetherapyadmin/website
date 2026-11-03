@@ -159,7 +159,7 @@ export function blogPosting(input: {
   };
 }
 
-/** The visible breadcrumb trail. The last crumb is the current page. */
+/** Search breadcrumb list. The last crumb can be the current page. */
 export function breadcrumbList(
   crumbs: readonly { name: string; path?: string }[],
 ): BreadcrumbListNode {

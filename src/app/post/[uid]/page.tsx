@@ -340,7 +340,6 @@ export default async function PostPage(props: PageProps<"/post/[uid]">) {
           <li>
             <Link href="/blog">Blog</Link>
           </li>
-          <li aria-current="page">{title}</li>
         </ol>
       </nav>
 
