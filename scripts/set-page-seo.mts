@@ -107,9 +107,14 @@ const client = createClient(REPOSITORY, {
     : {}),
 });
 
+type SeoDocument =
+  | ExistingPrismicDocument<HomepageDocument>
+  | ExistingPrismicDocument<PageDocument>
+  | ExistingPrismicDocument<PostDocument>;
+
 type SeoUpdate = {
   label: string;
-  document: ExistingPrismicDocument;
+  document: SeoDocument;
   title: string;
   description: string;
 };
@@ -117,9 +122,23 @@ type SeoUpdate = {
 const updates: SeoUpdate[] = [];
 const problems: string[] = [];
 
+function withSeo<T extends HomepageDocument | PageDocument | PostDocument>(
+  document: ExistingPrismicDocument<T>,
+  update: { title: string; description: string },
+): ExistingPrismicDocument<T> {
+  return {
+    ...document,
+    data: {
+      ...document.data,
+      meta_title: update.title,
+      meta_description: update.description,
+    },
+  } as ExistingPrismicDocument<T>;
+}
+
 function queue(
   label: string,
-  document: ExistingPrismicDocument,
+  document: SeoDocument,
   currentTitle: string | null | undefined,
   currentDescription: string | null | undefined,
   copy: { title: string; description: string } | undefined,
@@ -200,17 +219,14 @@ if (!args.write) {
 
 const migration = createMigration();
 for (const update of updates) {
-  migration.updateDocument(
-    {
-      ...update.document,
-      data: {
-        ...update.document.data,
-        meta_title: update.title,
-        meta_description: update.description,
-      },
-    },
-    update.label,
-  );
+  const document = update.document;
+  if (document.type === "homepage") {
+    migration.updateDocument(withSeo(document, update), update.label);
+  } else if (document.type === "page") {
+    migration.updateDocument(withSeo(document, update), update.label);
+  } else if (document.type === "post") {
+    migration.updateDocument(withSeo(document, update), update.label);
+  }
 }
 
 const writeClient = createWriteClient(REPOSITORY, {

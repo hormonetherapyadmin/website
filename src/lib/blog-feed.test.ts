@@ -1,3 +1,4 @@
+import type { RichTextField } from "@prismicio/client";
 import { describe, expect, it } from "vitest";
 import {
   BLOG_FEED_LIMIT,
@@ -7,9 +8,8 @@ import {
   type BlogFeedSource,
 } from "./blog-feed";
 
-const rich = (text: string) => [
-  { type: "paragraph" as const, text, spans: [] },
-];
+const rich = (text: string): RichTextField =>
+  [{ type: "paragraph", text, spans: [] }] as RichTextField;
 
 function post(
   uid: string,
