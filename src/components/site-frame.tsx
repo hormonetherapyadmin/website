@@ -17,6 +17,19 @@ const figtree = Figtree({
   variable: "--mock-font-body",
 });
 
+function BrandLogo({ alt }: { alt: string }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/logos/logo.svg"
+      alt={alt}
+      width={655}
+      height={59}
+      className={styles.brandLogo}
+    />
+  );
+}
+
 function SearchIcon() {
   return (
     <svg
@@ -60,8 +73,8 @@ export async function SiteFrame({
       data-palette={palette}
     >
       <header className={styles.header}>
-        <Link href="/" className={styles.wordmark}>
-          {SITE_NAME}
+        <Link href="/" className={styles.wordmark} aria-label={SITE_NAME}>
+          <BrandLogo alt="" />
         </Link>
         <SiteNav items={main} />
         <div className={styles.headerActions}>
@@ -82,7 +95,9 @@ export async function SiteFrame({
         <div className={styles.footerInner}>
           <div className={styles.footerMain}>
             <div className={styles.footerBrand}>
-              <p className={styles.footerWordmark}>{SITE_NAME}</p>
+              <p className={styles.footerWordmark}>
+                <BrandLogo alt={SITE_NAME} />
+              </p>
               <p className={styles.footerTagline}>
                 An experienced HRT patient reviewer. Not a doctor.
               </p>

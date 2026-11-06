@@ -192,16 +192,25 @@
 
 .wordmark {
   justify-self: start;
+  min-width: 0;
 }
 
 .wordmark,
 .footerWordmark {
-  font-family: var(--display);
-  font-weight: var(--display-weight);
-  font-size: 1.5rem;
   line-height: 1;
   text-decoration: none;
-  white-space: nowrap;
+}
+
+.brandLogo {
+  display: block;
+  width: min(20.5rem, 100%);
+  height: auto;
+}
+
+.wordmark:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
 }
 
 .nav {
@@ -1622,7 +1631,21 @@ a.clinicName:focus-visible {
 
 .footerWordmark {
   margin: 0;
-  font-size: 1.75rem;
+}
+
+.footer .brandLogo {
+  width: min(16.5rem, 100%);
+}
+
+/*
+  The file is plum. On the dark footers that reads as a smudge, so those
+  palettes use a white lockup. The paper footer is light enough for the
+  original color.
+*/
+.paletteNavy .footer .brandLogo,
+.paletteNavyRaspberry .footer .brandLogo,
+.paletteGarden .footer .brandLogo {
+  filter: brightness(0) invert(1);
 }
 
 .footerTagline {
@@ -1735,8 +1758,8 @@ a.clinicName:focus-visible {
 /* Responsive */
 
 @media (max-width: 1240px) and (min-width: 1101px) {
-  .header .wordmark {
-    font-size: 1.2rem;
+  .header .brandLogo {
+    width: min(15rem, 100%);
   }
 }
 
@@ -1949,7 +1972,12 @@ a.clinicName:focus-visible {
   }
 
   .header .wordmark {
-    font-size: 1.05rem;
+    flex: 1 0 100%;
+  }
+
+  .header .brandLogo {
+    width: min(16.5rem, 100%);
+    height: auto;
   }
 
   .page .headerCta {
