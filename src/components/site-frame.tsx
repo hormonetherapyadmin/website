@@ -30,6 +30,29 @@ function BrandLogo({ alt }: { alt: string }) {
   );
 }
 
+function HeaderRule() {
+  return (
+    <svg
+      className={styles.headerRule}
+      viewBox="0 0 1000 48"
+      preserveAspectRatio="none"
+      shapeRendering="geometricPrecision"
+      aria-hidden="true"
+    >
+      <path
+        className={styles.headerRuleWide}
+        fill="currentColor"
+        d="M0 24C420 24 485 19.2 500 19.2C515 19.2 580 24 1000 24C580 24 515 28.8 500 28.8C485 28.8 420 24 0 24Z"
+      />
+      <path
+        className={styles.headerRuleCompact}
+        fill="currentColor"
+        d="M0 24C25 24 40 21 70 21C250 21 400 16.8 500 16.8C600 16.8 750 21 930 21C960 21 975 24 1000 24C975 24 960 27 930 27C750 27 600 31.2 500 31.2C400 31.2 250 27 70 27C40 27 25 24 0 24Z"
+      />
+    </svg>
+  );
+}
+
 function SearchIcon() {
   return (
     <svg
@@ -73,10 +96,11 @@ export async function SiteFrame({
       data-palette={palette}
     >
       <header className={styles.header}>
+        <HeaderRule />
         <Link href="/" className={styles.wordmark} aria-label={SITE_NAME}>
           <BrandLogo alt="" />
         </Link>
-        <SiteNav items={main} />
+        <SiteNav items={main} cta={headerButton} />
         <div className={styles.headerActions}>
           <Link
             href="/search"
