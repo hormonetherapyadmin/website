@@ -167,27 +167,43 @@
 }
 
 /*
-  Rule under the nav. The mask swells through the middle and thins
-  toward the ends, and the gradient fades those ends out. The fill is
-  the palette accent, which is the brand color on public pages.
+  Rule under the nav. Drawn as its own SVG so the swell is antialiased.
+  A masked image of this shape was rasterized, then stretched, which
+  stepped the taper. The curve is flat at the crest and at the ends.
+  The gradient only fades those ends. The fill is the palette accent.
 */
-.header::after {
-  --header-rule: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 24' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='h' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='white' stop-opacity='0'/%3E%3Cstop offset='0.04' stop-color='white' stop-opacity='0'/%3E%3Cstop offset='0.14' stop-color='white' stop-opacity='1'/%3E%3Cstop offset='0.86' stop-color='white' stop-opacity='1'/%3E%3Cstop offset='0.96' stop-color='white' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23h)' d='M0 12C260 12 400 11.2 500 7.2C600 11.2 740 12 1000 12C740 12 600 12.8 500 16.8C400 12.8 260 12 0 12Z'/%3E%3C/svg%3E");
-
-  content: "";
+.headerRule {
   position: absolute;
   right: 0;
-  bottom: 0;
+  bottom: -2px;
   left: 0;
-  height: 4px;
+  display: block;
+  width: 100%;
+  height: 8px;
+  color: var(--accent);
   pointer-events: none;
-  background: var(--accent);
-  -webkit-mask-image: var(--header-rule);
-  mask-image: var(--header-rule);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 4%,
+    #000 14%,
+    #000 86%,
+    transparent 96%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 4%,
+    #000 14%,
+    #000 86%,
+    transparent 96%,
+    transparent 100%
+  );
+}
+
+.headerRuleCompact {
+  display: none;
 }
 
 .wordmark {
@@ -311,13 +327,11 @@
   background: var(--surface);
 }
 
-.navLink svg,
-.menuToggle svg {
+.navLink svg {
   transition: transform 0.15s ease;
 }
 
-.navLink[aria-expanded="true"] svg,
-.menuToggle[aria-expanded="true"] svg {
+.navLink[aria-expanded="true"] svg {
   transform: rotate(180deg);
 }
 
@@ -329,6 +343,270 @@
 
 .menuToggle {
   display: none;
+}
+
+/*
+  Phone and tablet menu. The dialog itself is the sheet, pinned to the
+  right edge. Closed dialogs are display: none, so @starting-style is
+  the off-screen frame the entrance transition moves in from. Positive
+  translate moves that right-hand sheet further right.
+*/
+.menuDrawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  display: flex;
+  flex-direction: column;
+  width: min(18.5rem, calc(100dvw - 2.75rem));
+  height: auto;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  overflow-anchor: none;
+  border: 0;
+  background: color-mix(in srgb, var(--text) 7%, #fff);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.4;
+  text-align: start;
+  box-shadow: -20px 0 50px -28px rgb(24 32 51 / 0.55);
+  translate: 100% 0;
+}
+
+.menuDrawer[open] {
+  translate: 0 0;
+  transition: translate 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@starting-style {
+  .menuDrawer[open] {
+    translate: 100% 0;
+  }
+}
+
+.menuDrawer[data-phase="closing"] {
+  translate: 100% 0;
+  transition-duration: 0.28s;
+  transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+
+.menuDrawer::backdrop {
+  background-color: transparent;
+}
+
+.menuDrawer[open]::backdrop {
+  background-color: color-mix(in srgb, var(--text) 48%, transparent);
+  transition: background-color 0.36s ease;
+}
+
+@starting-style {
+  .menuDrawer[open]::backdrop {
+    background-color: transparent;
+  }
+}
+
+.menuDrawer[data-phase="closing"]::backdrop {
+  background-color: transparent;
+  transition-duration: 0.28s;
+}
+
+.menuPanel {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  width: 100%;
+  background: transparent;
+}
+
+.menuDrawerHead {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: calc(0.2rem + env(safe-area-inset-top))
+    calc(0.2rem + env(safe-area-inset-right)) 0.2rem 0.85rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.menuDrawerTitle {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: var(--display-weight);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.menuClose {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.menuClose:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.menuDrawerBody {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.nav .drawerList {
+  margin: 0;
+  padding: 0.15rem 0 0.5rem;
+  list-style: none;
+}
+
+.drawerList > li {
+  border-bottom: 1px solid var(--rule);
+}
+
+.drawerList > li:last-child {
+  border-bottom: 0;
+}
+
+.drawerList > li:has([aria-expanded="true"]) {
+  background: var(--surface);
+}
+
+.drawerTopLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.drawerTopLink svg {
+  flex: none;
+  transition: transform 0.2s ease;
+}
+
+.drawerTopLink[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+.drawerTopLink[aria-expanded="true"] {
+  color: var(--accent);
+}
+
+.drawerTopLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.drawerSection {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.28s ease;
+}
+
+.drawerSection[data-open] {
+  grid-template-rows: 1fr;
+}
+
+.drawerSectionInner {
+  overflow: hidden;
+}
+
+.drawerColumns {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0 0.45rem 0.55rem;
+}
+
+.drawerLinks a {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: 0.6rem;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: start;
+  text-decoration: none;
+  white-space: normal;
+}
+
+.drawerLinks a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.drawerLinks .navHeading {
+  margin: 0.55rem 0.55rem 0.3rem;
+  font-size: 0.85rem;
+  text-align: start;
+}
+
+.menuDrawerFoot {
+  flex: none;
+  padding: 0.75rem 0.85rem calc(0.75rem + env(safe-area-inset-bottom));
+  padding-right: calc(0.85rem + env(safe-area-inset-right));
+  border-top: 1px solid var(--rule);
+  background: transparent;
+}
+
+.menuDrawerFoot .headerCta {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 2.5rem;
+  padding-inline: 1rem;
+  font-size: 1rem;
+  text-align: start;
+}
+
+.menuDrawerFoot .headerCta:hover {
+  background: var(--cta);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menuDrawer,
+  .menuDrawer[open],
+  .menuDrawer[data-phase="closing"],
+  .menuDrawer::backdrop,
+  .menuDrawer[open]::backdrop,
+  .menuDrawer[data-phase="closing"]::backdrop,
+  .drawerTopLink svg,
+  .drawerSection {
+    animation: none;
+    transition: none;
+  }
+
+  .menuDrawer[open] {
+    translate: 0 0;
+  }
 }
 
 .navPanel {
@@ -1772,95 +2050,70 @@ a.clinicName:focus-visible {
     gap: 0.35rem;
   }
 
+  /*
+    About 90% of the screen, in line with the logo row. The wide rule's
+    taper disappears at this size, so the compact curve holds a hairline
+    across that width and only softens the tips.
+  */
+  .headerRule {
+    left: 5%;
+    right: auto;
+    width: 90%;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      #000 6%,
+      #000 94%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      #000 6%,
+      #000 94%,
+      transparent 100%
+    );
+  }
+
+  .headerRuleWide {
+    display: none;
+  }
+
+  .headerRuleCompact {
+    display: block;
+  }
+
   .headerActions {
     display: contents;
   }
 
   .searchLink {
     order: 2;
+    flex: none;
     margin-left: auto;
   }
 
   .nav {
     order: 3;
+    flex: none;
+    width: 2.75rem;
   }
 
-  .page .headerCta {
-    order: 4;
+  .headerActions > .headerCta {
+    display: none;
   }
 
   .menuToggle {
-    display: inline-flex;
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    border-radius: 999px;
   }
 
   .navList {
     display: none;
-  }
-
-  .nav[data-menu-open] .navList {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 20;
-    display: block;
-    max-height: calc(100vh - 6rem);
-    overflow-y: auto;
-    padding: 0.75rem var(--gutter) 1.5rem;
-    border-bottom: 1px solid var(--rule);
-    background: var(--bg);
-    box-shadow: 0 18px 40px -24px rgb(24 32 51 / 0.35);
-  }
-
-  .navList .navLink {
-    justify-content: space-between;
-    width: 100%;
-    padding: 0.85rem 0;
-    border-radius: 0;
-    border-bottom: 1px solid var(--rule);
-    font-size: 1.1rem;
-  }
-
-  .navLink:hover,
-  .navLink[aria-expanded="true"] {
-    background: none;
-  }
-
-  .navPanel,
-  .navPanel[data-wide],
-  .navPanel[data-phase="enter"],
-  .navPanel[data-phase="slide"],
-  .navPanel[data-phase="exit"] {
-    position: static;
-    display: block;
-    width: auto;
-    min-width: 0;
-    padding: 0.5rem 0 0.75rem;
-    border: 0;
-    border-radius: 0;
-    background: none;
-    box-shadow: none;
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  .navPanel::before {
-    content: none;
-  }
-
-  .navPanel a {
-    padding: 0.5rem 0.75rem;
-  }
-
-  .navPanel[data-wide] > div:first-child,
-  .navPanel[data-wide] > div:last-child {
-    padding: 0.5rem 0;
-    background: none;
-  }
-
-  .navPanel[data-wide] > div:last-child ul {
-    display: block;
   }
 
   .questions {
@@ -1967,23 +2220,13 @@ a.clinicName:focus-visible {
 }
 
 @media (max-width: 640px) {
-  .header {
-    flex-wrap: wrap;
-  }
-
   .header .wordmark {
-    flex: 1 0 100%;
+    flex: 1 1 auto;
   }
 
   .header .brandLogo {
     width: min(16.5rem, 100%);
     height: auto;
-  }
-
-  .page .headerCta {
-    flex: 0 0 auto;
-    width: fit-content;
-    margin-left: auto;
   }
 
   .questions {

@@ -377,9 +377,13 @@ a.clinicName:focus-visible {
   opacity: 0;
 }
 
+/*
+  The date tooltip hangs under this label. The cell stays in normal
+  order so the label slides under the sticky Clinic header with the
+  other columns. A z-index here would keep the label painted on top.
+*/
 .priceHead {
   position: relative;
-  z-index: 2;
 }
 
 .priceHead .tipButton {

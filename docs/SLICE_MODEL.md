@@ -189,6 +189,10 @@ A card keeps its own color on any band.
 are None, Small, Medium, or Large. The background color includes that
 padding. The gap between two slices is this slice's Space below plus
 the next slice's Space above. No background adds padding of its own.
+The lengths are in `src/app/globals.css`. On a wide screen, Small is
+1.5rem, Medium is 4rem, and Large is 6.5rem. At 640px and under, the
+same choices are 1rem, 2rem, and 3.25rem, so a phone does not keep the
+desktop gap. The Prismic choice does not change.
 
 **Section id.** Every section gets an id from its title, so a button on the
 same page can scroll to it. "Feel like you again." becomes

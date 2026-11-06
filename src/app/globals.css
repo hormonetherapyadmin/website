@@ -75,7 +75,10 @@
   --radius-control: 0.5rem;
   --radius-card: 1rem;
 
-  /* Padding inside a slice. See docs/SLICE_MODEL.md. */
+  /*
+    Padding inside a slice. See docs/SLICE_MODEL.md.
+    Phones use the shorter lengths below. These are the desktop lengths.
+  */
   --spacing-slice-sm: 1.5rem;
   --spacing-slice: 4rem;
   --spacing-slice-lg: 6.5rem;
@@ -156,5 +159,18 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+  }
+}
+
+/*
+  CMS Space above and Space below, on a phone. The Prismic choice stays
+  Small, Medium, or Large. Only the length changes, including the gap a
+  divider sits in. 640px is the same phone width the slices already use.
+*/
+@media (max-width: 640px) {
+  :root {
+    --spacing-slice-sm: 1rem;
+    --spacing-slice: 2rem;
+    --spacing-slice-lg: 3.25rem;
   }
 }
