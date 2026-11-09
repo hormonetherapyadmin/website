@@ -53,9 +53,16 @@ This singleton nests one group (the links inside an item or a column).
 Prismic allows one level of nesting. Slices still do not nest groups.
 See `docs/SLICE_MODEL.md`.
 
-The wordmark is on the left, the menu is centered, and the right side is
-a search icon plus one button. Search links to `/search` and is not a
-Navigation field.
+The wordmark is the color lockup, `/logos/HTH_Logo_color.svg`, on the
+left. The menu is centered, and the right side is a search icon plus one
+button. Search links to `/search` and is not a Navigation field. The
+footer repeats that lockup on the marigold panel and uses the white
+lockup, `/logos/HTH_Logo_white.svg`, on the dark panels. The black
+lockup, `/logos/HTH_Logo_Black.svg`, is the same mark for a light
+background when the color file is the wrong choice. The ribbon by
+itself is `/logos/HTH_mark.png`. The browser icon places that ribbon
+on a white rounded square. The Apple home-screen icon uses the same
+ribbon on white, and the phone rounds the tile.
 
 The button is three fields at the top of **Main menu**: **Header button
 label**, **Header button icon**, and **Header button link**. Leave the

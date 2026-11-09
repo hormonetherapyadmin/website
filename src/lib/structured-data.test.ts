@@ -61,6 +61,12 @@ describe("blogPosting", () => {
         "@id": ORGANIZATION_ID,
         name: "Hormone Therapy Hub",
         url: SITE,
+        logo: {
+          "@type": "ImageObject",
+          url: `${SITE}/logos/HTH_Logo_color.svg`,
+          width: 720,
+          height: 144,
+        },
       },
       isPartOf: { "@id": WEBSITE_ID },
       articleSection: "Telehealth brand reviews",

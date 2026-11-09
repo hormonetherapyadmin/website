@@ -1915,17 +1915,6 @@ a.clinicName:focus-visible {
   width: min(16.5rem, 100%);
 }
 
-/*
-  The file is plum. On the dark footers that reads as a smudge, so those
-  palettes use a white lockup. The paper footer is light enough for the
-  original color.
-*/
-.paletteNavy .footer .brandLogo,
-.paletteNavyRaspberry .footer .brandLogo,
-.paletteGarden .footer .brandLogo {
-  filter: brightness(0) invert(1);
-}
-
 .footerTagline {
   max-width: 18rem;
   margin: 0;

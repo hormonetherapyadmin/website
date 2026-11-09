@@ -1,4 +1,10 @@
-import { SITE_NAME, SITE_URL } from "@/lib/site";
+import {
+  BRAND_LOGO,
+  BRAND_LOGO_HEIGHT,
+  BRAND_LOGO_WIDTH,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/site";
 
 /*
   schema.org JSON-LD for the public pages. Each value here is something
@@ -15,6 +21,7 @@ export type OrganizationNode = {
   "@id": string;
   name: string;
   url: string;
+  logo: ImageObjectNode;
 };
 
 export type WebSiteNode = {
@@ -91,6 +98,12 @@ export function organization(): OrganizationNode {
     "@id": ORGANIZATION_ID,
     name: SITE_NAME,
     url: SITE_URL,
+    logo: {
+      "@type": "ImageObject",
+      url: absoluteUrl(BRAND_LOGO.color),
+      width: BRAND_LOGO_WIDTH,
+      height: BRAND_LOGO_HEIGHT,
+    },
   };
 }
 

@@ -9,7 +9,14 @@ import {
 } from "@/app/mockup/_shared/nav-fallback";
 import { HeaderCta, SiteNav } from "@/app/mockup/_shared/site-nav";
 import { loadSiteNavigation } from "@/lib/navigation";
-import { DISCLOSURE_HREF, HOW_I_REVIEW_HREF, SITE_NAME } from "@/lib/site";
+import {
+  BRAND_LOGO,
+  BRAND_LOGO_HEIGHT,
+  BRAND_LOGO_WIDTH,
+  DISCLOSURE_HREF,
+  HOW_I_REVIEW_HREF,
+  SITE_NAME,
+} from "@/lib/site";
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -17,14 +24,20 @@ const figtree = Figtree({
   variable: "--mock-font-body",
 });
 
-function BrandLogo({ alt }: { alt: string }) {
+function BrandLogo({
+  alt,
+  variant,
+}: {
+  alt: string;
+  variant: keyof typeof BRAND_LOGO;
+}) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src="/logos/logo.svg"
+      src={BRAND_LOGO[variant]}
       alt={alt}
-      width={655}
-      height={59}
+      width={BRAND_LOGO_WIDTH}
+      height={BRAND_LOGO_HEIGHT}
       className={styles.brandLogo}
     />
   );
@@ -98,7 +111,7 @@ export async function SiteFrame({
       <header className={styles.header}>
         <HeaderRule />
         <Link href="/" className={styles.wordmark} aria-label={SITE_NAME}>
-          <BrandLogo alt="" />
+          <BrandLogo alt="" variant="color" />
         </Link>
         <SiteNav items={main} cta={headerButton} />
         <div className={styles.headerActions}>
@@ -120,7 +133,10 @@ export async function SiteFrame({
           <div className={styles.footerMain}>
             <div className={styles.footerBrand}>
               <p className={styles.footerWordmark}>
-                <BrandLogo alt={SITE_NAME} />
+                <BrandLogo
+                  alt={SITE_NAME}
+                  variant={palette === "paper" ? "color" : "white"}
+                />
               </p>
               <p className={styles.footerTagline}>
                 An experienced HRT patient reviewer. Not a doctor.
