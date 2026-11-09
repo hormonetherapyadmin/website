@@ -4,6 +4,16 @@ export const SITE_URL = "https://www.hormonetherapyhub.com";
 
 export const SITE_NAME = "Hormone Therapy Hub";
 
+/** Designer lockups. Color on light pages, white on the dark footer. */
+export const BRAND_LOGO = {
+  color: "/logos/HTH_Logo_color.svg",
+  black: "/logos/HTH_Logo_Black.svg",
+  white: "/logos/HTH_Logo_white.svg",
+} as const;
+
+export const BRAND_LOGO_WIDTH = 720;
+export const BRAND_LOGO_HEIGHT = 144;
+
 export const DISCLOSURE_HREF = "/affiliate-disclosures";
 
 /** Peggy's editorial standards page. A Page, not a separate singleton. */

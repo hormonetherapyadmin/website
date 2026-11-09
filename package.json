@@ -24,6 +24,7 @@
     "@prismicio/client": "^7.22.1",
     "@prismicio/next": "^2.3.3",
     "@prismicio/react": "^3.5.1",
+    "@vercel/speed-insights": "^2.1.0",
     "next": "16.3.8",
     "react": "19.2.8",
     "react-dom": "19.2.8"

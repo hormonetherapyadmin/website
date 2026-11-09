@@ -102,8 +102,10 @@ What the app emits, as one JSON-LD `@graph` per page, built in
 `src/lib/structured-data.ts`:
 
 -   Homepage: `WebSite` and `Organization`, the same as the live
-    homepage. The Organization is the site name and URL. There is no
-    logo until the brand delivery.
+    homepage. The Organization is the site name, URL, and the color
+    wordmark at `/logos/HTH_Logo_color.svg` (720 by 144). The header
+    shows that file. The footer shows it on the marigold panel and
+    `/logos/HTH_Logo_white.svg` on the dark panels.
 -   Post: `BlogPosting` and `BreadcrumbList`. Headline is the post
     title, the `h1`. Description is the meta description, or the
     subtitle when that is empty. `datePublished` is Published. Image is
@@ -226,7 +228,8 @@ Prioritize:
 -   optimized images
 -   stable layouts
 -   efficient fonts
--   minimal third-party scripts
+-   minimal third-party scripts (GA and Vercel Speed Insights; see
+    `docs/PROJECT_PLAN.md` section 24)
 
 ## Launch Monitoring
 
@@ -239,7 +242,7 @@ Capture prelaunch baseline and monitor after launch:
 -   canonical/index coverage
 -   404s
 -   sitemap processing
--   Core Web Vitals
+-   Core Web Vitals, from Vercel Speed Insights on `website-v3hp`
 -   affiliate click/revenue signals where available
 
 A temporary ranking fluctuation may occur, but unexplained

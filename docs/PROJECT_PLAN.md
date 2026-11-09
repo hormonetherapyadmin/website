@@ -1066,9 +1066,9 @@ Production only.
     count is cached under the `prismic` tag, so a publish refreshes it
     with the rest of the content. Search still loads the story, because
     that is what it searches. Local development still refetches.
--   No UI component library, no client-side data fetching, no
-    third-party scripts beyond GA. An EmailOctopus embed would be one;
-    see Email capture.
+-   No UI component library and no client-side data fetching.
+    Third-party scripts are GA and Vercel Speed Insights. An
+    EmailOctopus embed would be another; see Email capture.
 
 ### Affiliate links
 
@@ -1098,6 +1098,11 @@ Production only.
     Tag.
 -   Load through `@next/third-parties` `GoogleAnalytics`, in production
     only, initialized once.
+-   Vercel Speed Insights (`@vercel/speed-insights` 2.1.0,
+    `<SpeedInsights />` in the root layout) reports Core Web Vitals.
+    It sends on Vercel deployments, including Preview. Local
+    development loads the debug script and does not report. Owner
+    decision, 2026-11-07.
 -   One affiliate event, `affiliate_click`, with properties
     `provider`, `offer`, `placement`, `page_type`, `page_path`, and
     `link_domain`, marked as a GA4 key event. CTA components fill
