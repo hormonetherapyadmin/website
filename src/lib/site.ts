@@ -4,6 +4,12 @@ export const SITE_URL = "https://www.hormonetherapyhub.com";
 
 export const SITE_NAME = "Hormone Therapy Hub";
 
+/**
+ * Peggy's existing GA4 measurement ID. The other web stream,
+ * G-BH971N6ZDY, is unused.
+ */
+export const GA_MEASUREMENT_ID = "G-VK8P9CJBX2";
+
 /** Designer lockups. Color on light pages, white on the dark footer. */
 export const BRAND_LOGO = {
   color: "/logos/HTH_Logo_color.svg",

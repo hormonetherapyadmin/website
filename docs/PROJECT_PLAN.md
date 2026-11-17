@@ -5,10 +5,12 @@
 Rebuild Hormone Therapy Hub from Wix as a modern, high-performance
 Next.js + Prismic site deployed on Vercel while protecting the organic
 visibility, answer-engine visibility, affiliate revenue, URLs, content,
-and human voice that already make the existing site valuable.
+and human voice that already make the site valuable.
 
 This is a platform migration and experience redesign, not a content
-reset.
+reset. The public site is live on Vercel at
+`www.hormonetherapyhub.com`. Wix is the former host and the migration
+source.
 
 Primary principle:
 
@@ -555,10 +557,11 @@ disposition.
 
 ## 18. Domain / DNS / Hosting
 
-The owner currently uses free Gmail, not domain-based email, reducing
-mail-migration complexity.
-
-Do not move domain registration to the host.
+The public site is this Next.js app on Vercel. Wix is the former host.
+The domain stays registered at Wix, and DNS stays on Wix nameservers.
+Do not move domain registration to the host. Mail for
+`PeggyB@hormonetherapyhub.com` delivers through Google Workspace. See
+`docs/WIX_DOMAIN.md`.
 
 Keep these concepts separate:
 
@@ -566,11 +569,12 @@ Keep these concepts separate:
 -   DNS provider
 -   Vercel hosting
 
-Hosting is Vercel (2026-10-26). Registrar and DNS stay where they are
-unless a later decision moves them. Do not assume either moves to
-Vercel.
+Hosting is Vercel (2026-10-26). Registrar and DNS stay at Wix unless a
+later decision moves them. Do not assume either moves to Vercel.
 
 ### Cutover outline
+
+DNS cutover is complete. This is the procedure that was used:
 
 -   Confirm domain ownership/registrar
 -   Capture complete DNS records
@@ -848,7 +852,10 @@ Approved by the project owner on 2026-10-05. Speed, SEO, and AEO are
 the top priorities, and nothing may degrade the existing site's
 established search and revenue equity.
 
-### Observed facts about the live Wix site (2026-10-05)
+### Observed facts about the Wix site (2026-10-05)
+
+Snapshot of the former Wix site, kept as the migration baseline. The
+public site is now this app. See Hosting below.
 
 -   Canonical host is `https://www.hormonetherapyhub.com`. The apex
     domain 301-redirects to `www`.
@@ -892,9 +899,17 @@ this repository. It is not the host. Disconnect it so a push does
 not deploy twice, and do not attach the domain or production
 environment variables to it.
 
-`www.hormonetherapyhub.com` is still the Wix site. The Vercel
-address stays `noindex` until DNS cutover. Do not set
-`ALLOW_INDEXING=true` on it before then.
+DNS cutover is complete. `https://www.hormonetherapyhub.com` is this
+Next.js app on Vercel, confirmed 2026-11-12. The apex domain
+308-redirects to `www`. `website-v3hp.vercel.app` is the same
+project. Wix does not serve the public site. DNS stays on Wix
+nameservers; see `docs/WIX_DOMAIN.md`.
+
+`ALLOW_INDEXING=true` is set in the Vercel Production environment.
+The live `robots.txt` allows all crawlers and names the sitemap, and
+production responses do not send `X-Robots-Tag: noindex`. Leave
+`ALLOW_INDEXING` unset for Preview, Development, local, and the
+duplicate `website` project.
 
 Netlify production deploys stopped on 2026-10-09. Merges to `main`
 after that were skipped before the build started, while deploy
@@ -908,9 +923,9 @@ the Netlify site, including its deploy previews. This site earns
 affiliate revenue, so the Vercel team needs a plan that allows
 commercial use.
 
-Set `PRISMIC_ACCESS_TOKEN`, `PRISMIC_WEBHOOK_SECRET`, and, at cutover,
-`ALLOW_INDEXING` in `website-v3hp`. `ALLOW_INDEXING=true` is
-Production only.
+`PRISMIC_ACCESS_TOKEN` and `PRISMIC_WEBHOOK_SECRET` belong in
+`website-v3hp`. `ALLOW_INDEXING=true` is Production only, and it is
+already set there.
 
 ### Toolchain
 
@@ -970,15 +985,19 @@ Production only.
 -   Local development does not cache Prismic responses. The webhook
     does not reach localhost, and a cached miss would keep a just
     published document off the page.
--   Preview uses Prismic preview with Next.js draft mode (Phase 2).
+-   Preview uses Prismic preview with Next.js draft mode.
     "Preview the page" opens `/api/preview`, which starts draft mode
     and redirects to the document (`npx prismic preview add`). Page
     Builder thumbnails are separate: they load `/slice-simulator`. The
     repository simulator URL is the site origin
-    (`npx prismic preview set-simulator`). Localhost only works while
-    this machine's dev server is running. After the domain serves the
-    Next.js app, add `https://www.hormonetherapyhub.com/api/preview`
-    and point the simulator at `https://www.hormonetherapyhub.com`.
+    (`npx prismic preview set-simulator`). The public site is live, so
+    the Production preview is
+    `https://www.hormonetherapyhub.com/api/preview` and the simulator
+    is `https://www.hormonetherapyhub.com`. The Development localhost
+    preview can stay for local editing, and it only works while this
+    machine's dev server is running. On 2026-11-12 the Prismic
+    Previews screen still listed only that Development preview.
+    Commands are in `docs/MIGRATION_RUNBOOK.md`.
 
 ### URLs
 
@@ -1023,10 +1042,10 @@ Production only.
 -   The site is `noindex` everywhere by default: an
     `X-Robots-Tag: noindex, nofollow` header on every response and a
     disallow-all `robots.txt`.
--   Indexing is enabled only when `ALLOW_INDEXING=true`. Set it only in
-    the Production environment of `website-v3hp`, only at cutover.
-    Leave it unset for Preview, Development, and the duplicate
-    `website` project. See `docs/MIGRATION_RUNBOOK.md`.
+-   Indexing is enabled only when `ALLOW_INDEXING=true`. It is set in
+    the Production environment of `website-v3hp`. Leave it unset for
+    Preview, Development, local, and the duplicate `website` project.
+    See `docs/MIGRATION_RUNBOOK.md`.
 -   When indexing is enabled, `robots.txt` allows all user agents,
     including AI crawlers (GPTBot, OAI-SearchBot, ClaudeBot,
     PerplexityBot, Google-Extended). Vercel Firewall and bot protection
@@ -1096,8 +1115,10 @@ Production only.
 -   Reuse Peggy's existing GA4 property, measurement ID
     `G-VK8P9CJBX2`, found in Wix Marketing Integrations under Google
     Tag.
--   Load through `@next/third-parties` `GoogleAnalytics`, in production
-    only, initialized once.
+-   Load through `@next/third-parties` `GoogleAnalytics`, once in the
+    root layout. The component renders only when `VERCEL_ENV` is
+    `production`, so Preview deployments and local development do not
+    send hits. The other web stream, `G-BH971N6ZDY`, is not loaded.
 -   Vercel Speed Insights (`@vercel/speed-insights` 2.1.0,
     `<SpeedInsights />` in the root layout) reports Core Web Vitals.
     It sends on Vercel deployments, including Preview. Local
@@ -1115,8 +1136,7 @@ Owner direction, 2026-10-12: the site collects email, through
 EmailOctopus, from a signup slice. The slice is not specified or built
 yet. Specify it in `docs/SLICE_MODEL.md` before building it.
 
-What the live Wix site does today (crawl of the pages sitemap,
-2026-10-12):
+What the Wix site did (crawl of the pages sitemap, 2026-10-12):
 
 -   `/copy-of-trusted-providers` has a signup form: "Subscribe to
     receive our FREE Online HRT Price Comparison Chart!"
@@ -1135,13 +1155,16 @@ To decide before the slice is built:
 -   Whether the popup comes back. It is not rebuilt by default.
 -   Moving the existing Wix subscribers into EmailOctopus.
 -   The GA4 event for a signup. It sends no email address.
--   Whether the signup is needed at cutover, so the trusted providers
-    page does not lose its form.
+-   Whether the signup is needed on the trusted-providers page, so
+    that page does not lose the form it had on Wix.
 
 ### Open questions for the owner
 
 -   Who has Search Console access?
--   Where is the domain registered?
+
+Domain registration is answered in `docs/WIX_DOMAIN.md`: the domain
+stays registered at Wix, and DNS stays on Wix nameservers.
+
 -   `/sleep`, `/hair-loss`, and `/men-s-hrt` stay at those addresses
     and are archived: indexing off, out of the menu (2026-10-26).
     `/sleep` had no body copy on Wix.

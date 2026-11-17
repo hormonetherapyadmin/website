@@ -110,10 +110,10 @@ The new stack is:
 -   Prismic Migration API as the destination for migration
 -   Existing analytics/search tooling preserved where available
 
-The project is not a greenfield SEO site. The current Wix site already
+The project is not a greenfield SEO site. The public site already
 generates meaningful organic traffic, AEO visibility, and affiliate
-revenue. Protecting that existing equity is a primary product
-requirement.
+revenue, carried over from the years it ran on Wix. Protecting that
+existing equity is a primary product requirement.
 
 The site's differentiator is Peggy's personal, anecdotal experience with
 hormone therapy and telehealth providers. It must feel like a human-led

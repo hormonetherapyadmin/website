@@ -1493,8 +1493,9 @@ Empty means no kicker. These are not Category documents and they are
 not public pages. The `?type=` filter on the blog mockup stays off
 the public site until an indexing decision says otherwise.
 
-Indexing is on by default. Turn it off only to hide a post. The
-site-wide noindex switch still hides every page until cutover.
+Indexing is on by default. Turn it off only to hide a post. Production
+indexing is on. Preview deployments and local development stay
+noindex because `ALLOW_INDEXING` is unset there.
 
 Hide Subtitle, Caption, Personal note, and Sources when those fields
 are empty. Hide the clinics sidebar when the story names no clinic. The
@@ -1768,8 +1769,9 @@ slice is not a Hero shows the SEO title as the `h1` above the slices. A
 second Hero lower on the page is a second `h1`, so a page uses one Hero,
 at the top.
 
-The canonical is `/<uid>`. Indexing is on by default. The site-wide
-noindex switch still hides every page until cutover.
+The canonical is `/<uid>`. Indexing is on by default. Production
+indexing is on. Preview deployments and local development stay
+noindex because `ALLOW_INDEXING` is unset there.
 
 The page reads what its slices point at before it renders. A slice does
 not fetch. A clinic a slice names is read from the published Clinic, by

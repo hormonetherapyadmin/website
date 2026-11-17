@@ -6,6 +6,19 @@ Move Hormone Therapy Hub from Wix to Prismic/Next.js/Vercel without
 unnecessarily changing public URLs, losing content, breaking affiliate
 revenue paths, or disrupting search visibility.
 
+## Current status
+
+Checked 2026-11-12. `https://www.hormonetherapyhub.com` is this
+Next.js app on Vercel. The apex domain redirects to `www`. Production
+indexing is on: `robots.txt` allows every crawler and names the
+sitemap, and the homepage does not send `X-Robots-Tag: noindex`. Wix
+does not serve the public site. The domain stays registered at Wix,
+and DNS stays on Wix nameservers. See `docs/WIX_DOMAIN.md`.
+
+The sections below are the migration record and the launch procedure.
+Where they say "the live Wix site," they mean the former public site,
+which was the migration source.
+
 ## Before Wix Access
 
 -   Scaffold repo and documentation.
@@ -63,8 +76,9 @@ Capture:
 -   current Wix connection method
 -   renewal/ownership information
 
-The owner does not currently use domain-based email, but still capture
-all DNS records rather than assuming MX is irrelevant.
+Mail for `PeggyB@hormonetherapyhub.com` delivers through Google
+Workspace. Capture all DNS records, including MX. See
+`docs/WIX_DOMAIN.md`.
 
 ## Source Crawl
 
@@ -171,7 +185,7 @@ for those posts.
 
 ### Post categories
 
-`scripts/set-post-categories.mts` reads the live Wix categories and
+`scripts/set-post-categories.mts` reads the Wix categories and
 sets Category on posts already published in Prismic. The labels are
 the tightened names in `src/migration/post-category.ts`. It does not
 create the two Wix posts that are not in Prismic, and it does not
@@ -242,7 +256,7 @@ on that slice.
 The other clinic pages use the same slices: provider hero, divider,
 Clinic facts with its own lifestyle photo, divider, and the ribbon.
 The quote is the brand's In my words field. The eyebrow is the brand's
-Top choice label. The page uid is the live Wix address:
+Top choice label. The page uid is the public address, kept from Wix:
 
 -   `/winona-review-page`
 -   `/musely`
@@ -320,10 +334,10 @@ Not composed:
     That URL decision is still open.
 4.  `/my-addresses` is a Wix members page. It needs a disposition, not
     a composition.
-5.  `/home-1` is live and is not in the Wix sitemap. It needs a URL
-    decision before it is built.
+5.  `/home-1` was live on Wix and is not in the Wix sitemap. It needs a
+    URL decision before it is built.
 6.  Privacy, contact, and terms are named in `docs/CONTENT_MODEL.md`
-    and return 404 on the live Wix site. They are not invented here.
+    and returned 404 on the Wix site. They are not invented here.
 
 The live signup form on the trusted-providers page has no slice yet.
 The published page does not include it.
@@ -338,7 +352,9 @@ is not part of this order. The footer already links to
 
 ## URL Manifest
 
-No production cutover until every crawled public URL has a disposition.
+Every crawled public URL needed a disposition before production
+cutover. Cutover is done. A public URL still needs a disposition
+before it is removed or changed.
 
 `KEEP` is the default.
 
@@ -554,6 +570,9 @@ For high-value pages compare old vs new:
 
 ## Cutover
 
+DNS cutover is done. The public site is this app on Vercel. This list
+is the procedure that was used.
+
 1.  Announce/follow content freeze.
 2.  Run final Wix extraction.
 3.  Normalize/import delta or final dataset.
@@ -564,9 +583,8 @@ For high-value pages compare old vs new:
 6.  Verify the Vercel production target before DNS.
 7.  Change DNS as planned.
 8.  Verify HTTPS.
-9.  Point Prismic previews at the live domain. The steps and the
-    commands are in the next section. Do this only after
-    `www.hormonetherapyhub.com` answers from Vercel over HTTPS.
+9.  Point Prismic previews at the live domain. The site already answers
+    from Vercel over HTTPS. The commands are in the next section.
 10. Run legacy URL smoke suite.
 11. Crawl production.
 12. Verify analytics.
@@ -576,15 +594,13 @@ For high-value pages compare old vs new:
 15. Confirm Search Console property/verification.
 16. Submit/confirm sitemap as appropriate.
 
-## Prismic previews at DNS cutover
+## Prismic previews
 
-The Page Builder has two settings. Both point at localhost until this
-cutover, and localhost only works on the machine running `next dev`.
-Run the commands below once `www.hormonetherapyhub.com` is serving this
-Next.js app over HTTPS. The production deploy has to include
-`/slice-simulator` and `/api/preview`. Use that www domain. Prismic
-keeps a single simulator URL, and a `*.vercel.app` address changes with
-each deployment.
+The public site is live at `www.hormonetherapyhub.com`. Point previews
+at that domain. Localhost only works on the machine running `next dev`.
+The production deploy includes `/slice-simulator` and `/api/preview`.
+Use the www domain. Prismic keeps a single simulator URL, and a
+`*.vercel.app` address changes with each deployment.
 
 1. Add the full-page preview. This is what **Preview the page** opens.
    A repository can hold more than one preview URL, so the Development
@@ -607,7 +623,9 @@ each deployment.
    **Preview the page** should open
    `https://www.hormonetherapyhub.com` with the Prismic toolbar.
 
-Settings in place before the domain move (October 2026):
+Recorded before the domain move (October 2026). On 2026-11-12 the
+Prismic Previews screen still listed only the Development preview.
+The simulator URL was not rechecked that day.
 
 -   Preview: `http://localhost:3000/api/preview` (name: Development)
 -   Simulator: `http://localhost:3000/slice-simulator`
@@ -615,8 +633,8 @@ Settings in place before the domain move (October 2026):
 
 ## Rollback
 
-Before cutover document the exact DNS values required to restore the
-prior serving configuration if needed.
+The DNS values that send the domain back to the old Wix site are in
+`docs/WIX_DOMAIN.md`.
 
 Rollback triggers should focus on catastrophic serving/routing failures,
 not normal short-lived DNS propagation differences.

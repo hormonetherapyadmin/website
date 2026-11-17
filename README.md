@@ -1,9 +1,10 @@
 # Hormone Therapy Hub
 
-Rebuild of [hormonetherapyhub.com](https://www.hormonetherapyhub.com)
-from Wix to Next.js + Prismic on Vercel. The Vercel project is
-[`website-v3hp`](https://website-v3hp.vercel.app/). The public domain
-is still the Wix site until DNS cutover.
+The live site at [hormonetherapyhub.com](https://www.hormonetherapyhub.com)
+is this Next.js + Prismic app on Vercel. The Vercel project is
+[`website-v3hp`](https://website-v3hp.vercel.app/). The apex domain
+redirects to `www`. Wix is the former host and the migration source.
+DNS stays in the Wix account; see `docs/WIX_DOMAIN.md`.
 
 Start with `AGENTS.md` and `docs/PROJECT_PLAN.md`. Approved technical
 decisions are in section 24 of the project plan.
@@ -36,5 +37,6 @@ pnpm dev
 
 ## Environment variables
 
-See `.env.example`. The site is `noindex` unless `ALLOW_INDEXING=true`,
-which is set only in the Vercel Production environment at cutover.
+See `.env.example`. Production has `ALLOW_INDEXING=true`. Leave it
+unset everywhere else, including local development and Vercel Preview,
+so those environments stay `noindex`.
