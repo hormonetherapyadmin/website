@@ -21,6 +21,7 @@
   "dependencies": {
     "@hugeicons/core-free-icons": "^4.3.5",
     "@hugeicons/react": "^1.1.10",
+    "@next/third-parties": "16.3.8",
     "@prismicio/client": "^7.22.1",
     "@prismicio/next": "^2.3.3",
     "@prismicio/react": "^3.5.1",

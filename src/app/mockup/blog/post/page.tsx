@@ -17,7 +17,7 @@ import { InThisPost } from "../in-this-post";
 import { Share } from "../share";
 
 /*
-  Blog post design mockup using a real article from the live Wix site:
+  Blog post design mockup using a real article from the former Wix site:
   /post/hrt-skin-before-and-after-my-12-month-results-and-experience
   (October 2026). Body copy is kept as published. Offer callouts stand in
   for the captioned affiliate images on the live post, with small typo

@@ -4,6 +4,12 @@ export function isIndexingAllowed(): boolean {
   return process.env.ALLOW_INDEXING === "true";
 }
 
+// Preview deployments are production builds, so NODE_ENV is not the gate.
+// Vercel sets VERCEL_ENV to "production" only for the production deployment.
+export function isGoogleAnalyticsEnabled(): boolean {
+  return process.env.VERCEL_ENV === "production";
+}
+
 export function getPrismicWebhookSecret(): string {
   const secret = process.env.PRISMIC_WEBHOOK_SECRET;
   if (!secret) {

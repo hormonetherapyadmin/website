@@ -1,5 +1,5 @@
 // Stand-in for Provider and Offer documents. Copy, prices, and links are
-// taken from the live Wix site (October 2026).
+// taken from the Wix site (October 2026), before the move to this app.
 
 export type Clinic = {
   name: string;

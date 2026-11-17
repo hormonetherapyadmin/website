@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Besley } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { PrismicPreview } from "@prismicio/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { isGoogleAnalyticsEnabled } from "@/lib/env";
+import { GA_MEASUREMENT_ID, SITE_NAME, SITE_URL } from "@/lib/site";
 import { repositoryName } from "@/prismicio";
 import "./globals.css";
 
@@ -41,6 +43,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SpeedInsights />
         <PrismicPreview repositoryName={repositoryName} />
       </body>
+      {isGoogleAnalyticsEnabled() ? (
+        <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
+      ) : null}
     </html>
   );
 }
