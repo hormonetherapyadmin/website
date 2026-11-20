@@ -25,11 +25,16 @@ export const DISCLOSURE_HREF = "/affiliate-disclosures";
 /** Peggy's editorial standards page. A Page, not a separate singleton. */
 export const HOW_I_REVIEW_HREF = "/how-i-review";
 
+/** Clinic match quiz. Questions stay in code. Results read Brand documents. */
+export const QUIZ_PATH = "/find-your-clinic";
+export const QUIZ_TITLE = "Find a clinic that fits";
+
 /**
  * Top-level paths the app owns. A Page with one of these UIDs never shows,
  * so search and the sitemap leave the path out. `/blog` is not here until
  * the blog index route exists; until then a Page can be `/blog`.
  * `slice-simulator` is the Page Builder thumbnail route.
+ * `find-your-clinic` is the clinic quiz.
  */
 export const APP_ROUTE_UIDS: ReadonlySet<string> = new Set([
   "search",
@@ -39,4 +44,5 @@ export const APP_ROUTE_UIDS: ReadonlySet<string> = new Set([
   "api",
   "mockup",
   "slice-simulator",
+  "find-your-clinic",
 ]);

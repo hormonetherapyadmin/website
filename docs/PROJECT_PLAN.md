@@ -1128,6 +1128,15 @@ already set there.
     `provider`, `offer`, `placement`, `page_type`, `page_path`, and
     `link_domain`, marked as a GA4 key event. CTA components fill
     these automatically.
+-   The clinic quiz at `/find-your-clinic` sends `quiz_start` when
+    someone starts, `quiz_answer` (`question_id`, `answer_id`, `step`)
+    for each choice, and `quiz_complete` (`top_provider`, `providers`)
+    when results show. Values are ids, not the wording of the answer.
+    A result visit sends `affiliate_click` with `placement`
+    `quiz_result` and `page_type` `quiz`. Question wording is the Clinic
+    quiz singleton. A blank question keeps the built-in wording. Answer
+    choices and weights stay in code. Each result is a published Brand
+    (`provider`) looked up by UID.
 -   Search Console verification before launch.
 
 ### Email capture

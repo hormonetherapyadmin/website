@@ -8,7 +8,7 @@ import { loadHomepage } from "@/lib/homepage";
 import { heroClinicId } from "@/lib/page-title";
 import { pageSearchHit, postSearchHit } from "@/lib/search";
 import { loadHeroClinicNames } from "@/lib/search-catalog";
-import { SITE_URL } from "@/lib/site";
+import { QUIZ_PATH, QUIZ_TITLE, SITE_URL } from "@/lib/site";
 import { createClient } from "@/prismicio";
 
 export const SITEMAP_PATH = "/sitemap";
@@ -72,12 +72,17 @@ export function xmlSitemap(
   links: readonly SitemapLink[],
 ): MetadataRoute.Sitemap {
   const { pages, posts } = organizeSitemap(links);
+  const quizPage: SitemapLink = {
+    group: "page",
+    title: QUIZ_TITLE,
+    path: QUIZ_PATH,
+  };
   const sitemapPage: SitemapLink = {
     group: "page",
     title: "Sitemap",
     path: SITEMAP_PATH,
   };
-  return [...pages, ...posts, sitemapPage].map((link) => ({
+  return [...pages, ...posts, quizPage, sitemapPage].map((link) => ({
     url: sitemapUrl(link.path),
     ...(link.lastModified ? { lastModified: link.lastModified } : {}),
   }));

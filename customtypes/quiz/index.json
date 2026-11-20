@@ -1,0 +1,91 @@
+{
+  "format": "custom",
+  "id": "quiz",
+  "json": {
+    "Questions": {
+      "insurance": {
+        "config": {
+          "label": "Insurance question",
+          "placeholder": "The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.",
+          "single": "paragraph"
+        },
+        "type": "StructuredText"
+      },
+      "carrier": {
+        "config": {
+          "label": "Insurance carrier question",
+          "placeholder": "The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.",
+          "single": "paragraph"
+        },
+        "type": "StructuredText"
+      },
+      "carrier_note": {
+        "config": {
+          "label": "Note under the carrier question",
+          "placeholder": "The note under the carrier choices. Leave blank to keep the current note.",
+          "single": "paragraph"
+        },
+        "type": "StructuredText"
+      },
+      "budget": {
+        "config": {
+          "label": "Monthly budget question",
+          "placeholder": "The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.",
+          "single": "paragraph"
+        },
+        "type": "StructuredText"
+      },
+      "labs": {
+        "config": {
+          "label": "Lab testing question",
+          "placeholder": "The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.",
+          "single": "paragraph"
+        },
+        "type": "StructuredText"
+      },
+      "testosterone": {
+        "config": {
+          "label": "Testosterone question",
+          "placeholder": "The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.",
+          "single": "paragraph"
+        },
+        "type": "StructuredText"
+      },
+      "prescriptions": {
+        "config": {
+          "label": "One product or separate prescriptions",
+          "placeholder": "The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.",
+          "single": "paragraph"
+        },
+        "type": "StructuredText"
+      },
+      "visit": {
+        "config": {
+          "label": "Video visit question",
+          "placeholder": "The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.",
+          "single": "paragraph"
+        },
+        "type": "StructuredText"
+      },
+      "formulation": {
+        "config": {
+          "label": "Formulation question",
+          "placeholder": "The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.",
+          "single": "paragraph"
+        },
+        "type": "StructuredText"
+      },
+      "extras": {
+        "config": {
+          "label": "Peptides and weight-loss question",
+          "placeholder": "The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.",
+          "single": "paragraph"
+        },
+        "type": "StructuredText"
+      }
+    }
+  },
+  "label": "Clinic quiz",
+  "repeatable": false,
+  "status": true
+}

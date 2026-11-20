@@ -68,14 +68,12 @@ The button is three fields at the top of **Main menu**: **Header button
 label**, **Header button icon**, and **Header button link**. Leave the
 label or the link blank and the button is hidden. The icon is optional.
 It is any image on a transparent background, shown in the button color.
-The published menu's button says "Trusted providers" and links to
-`/trusted-providers`. `scripts/import-navigation.mts` updates that
-document and does not publish it. If the document is missing, the
-design menu is the fallback, and that fallback button points at
-`/mockup/trusted-providers`. There is no stronger single call to
-action yet: that page is the compare step, and the homepage already
-sends people there. Men's HRT, Sleep, and Hair loss stay off the
-menu. How I review is the Page `/how-i-review`, linked in the
+The published menu's button says "Find your clinic" and links to
+`/find-your-clinic`, the clinic quiz. `scripts/import-navigation.mts`
+updates that document and does not publish it. If the document is
+missing, the design menu is the fallback, and that fallback button
+points at `/find-your-clinic`. Trusted providers stays in the Providers
+menu. Men's HRT, Sleep, and Hair loss stay off the menu. How I review is the Page `/how-i-review`, linked in the
 footer and on Peggy's author card. It stays out of the header menu.
 Affiliate disclosure stays off the menu. Icons are left empty. Test kits links to
 `/trackers-and-testing`. Weight & HRT links to `/weight-gain`.
@@ -101,6 +99,14 @@ Site Settings still lists footer configuration as a future field. The
 footer link columns live here, not on Site Settings. The Homepage
 footer fields (copyright, cookies, social) are not what this footer
 renders.
+
+### Clinic quiz
+
+Singleton, `customtypes/quiz`. No public URL. The page is the app route
+`/find-your-clinic`. Peggy can reword each question, and the note under
+the insurance-carrier choices. A blank field keeps the wording shipped
+with the site. The answer choices and the points stay in code. She
+cannot add, remove, or reorder questions here.
 
 ### Homepage
 
@@ -215,6 +221,13 @@ Provider review. A story inserts a clinic with a token such as
 tabs. A story inserts Peggy’s tip with `{{tip}}` and the words after
 it. The portrait and the title are fixed. The same box is the Ribbon
 Tip variation on a page.
+
+The clinic quiz at `/find-your-clinic` reads each result from a Brand
+by UID (`inner-balance`, `winona`, `musely`, `alloy`, `joi`,
+`effecty`, `menorx`, `midi`) and shows that document’s name, short
+description, price, page, review, and affiliate link. A brand with no
+published document is left off the results. The question wording is
+the Clinic quiz singleton. Answer choices and scores stay in code.
 
 ### Provider Review
 

@@ -38,9 +38,8 @@ const COMPARE_LINKS: NavLink[] = [
 ];
 
 export const FALLBACK_HEADER_BUTTON: NavLink = {
-  label: "Trusted providers",
-  href: "/mockup/trusted-providers",
-  icon: "Shield",
+  label: "Find your clinic",
+  href: "/find-your-clinic",
 };
 
 export const FALLBACK_NAV: NavItem[] = [

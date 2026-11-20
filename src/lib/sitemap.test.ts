@@ -174,6 +174,7 @@ describe("xmlSitemap", () => {
         lastModified: "2026-10-01T12:00:00.000Z",
       },
       { url: "https://www.hormonetherapyhub.com/post/alloy-review" },
+      { url: "https://www.hormonetherapyhub.com/find-your-clinic" },
       { url: "https://www.hormonetherapyhub.com/sitemap" },
     ]);
     expect(xml.map((entry) => entry.url)).not.toContain(sitemapUrl("/search"));

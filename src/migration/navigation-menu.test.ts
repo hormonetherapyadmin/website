@@ -37,12 +37,13 @@ describe("navigation menu", () => {
     expect(text).not.toContain("affiliate-disclosures");
   });
 
-  it("links the header button and the weight page to published documents", () => {
+  it("links the header button to the clinic quiz", () => {
     const data = navigationData(pages);
-    expect(data.header_button_label).toBe("Trusted providers");
-    expect(data.header_button_link).toMatchObject({
-      uid: "trusted-providers",
-      url: "/trusted-providers",
+    expect(data.header_button_label).toBe("Find your clinic");
+    expect(data.header_button_link).toEqual({
+      link_type: "Web",
+      url: "/find-your-clinic",
+      text: "Find your clinic",
     });
     const symptoms = data.main_items.find((item) => item.label === "Symptoms");
     expect(symptoms?.links?.[0]?.link).toMatchObject({

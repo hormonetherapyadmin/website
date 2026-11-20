@@ -1,0 +1,191 @@
+.wrap {
+  width: min(100%, var(--container-wrap));
+  margin-inline: auto;
+  padding: clamp(2.75rem, 6vw, 4.5rem) var(--spacing-gutter)
+    clamp(4rem, 8vw, 6.5rem);
+  color: var(--color-text);
+}
+
+.panel {
+  width: min(100%, 42rem);
+  margin-inline: auto;
+}
+
+.intro {
+  text-align: center;
+}
+
+.heading,
+.prompt {
+  margin: 0;
+  font-size: clamp(2.1rem, 5vw, 3.15rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.prompt:focus {
+  outline: none;
+}
+
+.heading:focus {
+  outline: none;
+}
+
+.lede {
+  margin: 1.1rem 0 0;
+  font-size: 1.15rem;
+  line-height: 1.6;
+}
+
+.progress {
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.primary {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.4rem;
+  border: 0;
+  border-radius: 0.75rem;
+  background: var(--color-cta);
+  color: var(--color-cta-text);
+  font: inherit;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.primary:hover {
+  background: var(--color-cta-hover);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.option {
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-paper);
+  color: inherit;
+  font: inherit;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  text-align: left;
+  cursor: pointer;
+}
+
+.option:hover,
+.option[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  background: var(--color-tint);
+}
+
+.note,
+.disclosure {
+  margin: 1rem 0 0;
+  line-height: 1.5;
+}
+
+.back {
+  margin-top: 1.25rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-accent);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.back:hover {
+  color: var(--color-cta-hover);
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  padding: 1.25rem 1.3rem 1.4rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-paper);
+}
+
+.badge {
+  display: inline-block;
+  margin: 0 0 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--color-badge);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.logo {
+  width: 3rem;
+  height: 3rem;
+  object-fit: contain;
+}
+
+.cardName {
+  margin: 0;
+  font-size: 1.7rem;
+}
+
+.card p {
+  margin: 0.75rem 0 0;
+  line-height: 1.5;
+}
+
+.price {
+  font-weight: 700;
+}
+
+.priceNote {
+  display: block;
+  margin-top: 0.2rem;
+  font-weight: 400;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.1rem;
+  margin-top: 0.85rem;
+}
+
+.links a {
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.card .primary {
+  margin-top: 1rem;
+}

@@ -1148,6 +1148,133 @@ export type ProviderDocument<Lang extends string = string> =
   >;
 
 /**
+ * Content for Clinic quiz documents
+ */
+interface QuizDocumentData {
+  /**
+   * Insurance question field in *Clinic quiz*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.
+   * - **API ID Path**: quiz.insurance
+   * - **Tab**: Questions
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  insurance: prismic.RichTextField;
+
+  /**
+   * Insurance carrier question field in *Clinic quiz*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.
+   * - **API ID Path**: quiz.carrier
+   * - **Tab**: Questions
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  carrier: prismic.RichTextField;
+
+  /**
+   * Note under the carrier question field in *Clinic quiz*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The note under the carrier choices. Leave blank to keep the current note.
+   * - **API ID Path**: quiz.carrier_note
+   * - **Tab**: Questions
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  carrier_note: prismic.RichTextField;
+
+  /**
+   * Monthly budget question field in *Clinic quiz*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.
+   * - **API ID Path**: quiz.budget
+   * - **Tab**: Questions
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  budget: prismic.RichTextField;
+
+  /**
+   * Lab testing question field in *Clinic quiz*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.
+   * - **API ID Path**: quiz.labs
+   * - **Tab**: Questions
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  labs: prismic.RichTextField;
+
+  /**
+   * Testosterone question field in *Clinic quiz*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.
+   * - **API ID Path**: quiz.testosterone
+   * - **Tab**: Questions
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  testosterone: prismic.RichTextField;
+
+  /**
+   * One product or separate prescriptions field in *Clinic quiz*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.
+   * - **API ID Path**: quiz.prescriptions
+   * - **Tab**: Questions
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  prescriptions: prismic.RichTextField;
+
+  /**
+   * Video visit question field in *Clinic quiz*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.
+   * - **API ID Path**: quiz.visit
+   * - **Tab**: Questions
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  visit: prismic.RichTextField;
+
+  /**
+   * Formulation question field in *Clinic quiz*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.
+   * - **API ID Path**: quiz.formulation
+   * - **Tab**: Questions
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  formulation: prismic.RichTextField;
+
+  /**
+   * Peptides and weight-loss question field in *Clinic quiz*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.
+   * - **API ID Path**: quiz.extras
+   * - **Tab**: Questions
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  extras: prismic.RichTextField;
+}
+
+/**
+ * Clinic quiz document from Prismic
+ *
+ * - **API ID**: `quiz`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type QuizDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<Simplify<QuizDocumentData>, "quiz", Lang>;
+
+/**
  * Item in *Redirect → Redirects*
  */
 export interface RedirectDocumentDataRedirectsItem {
@@ -1235,6 +1362,7 @@ export type AllDocumentTypes =
   | PageDocument
   | PostDocument
   | ProviderDocument
+  | QuizDocument
   | RedirectDocument;
 
 /**
@@ -6162,6 +6290,8 @@ declare module "@prismicio/client" {
       ProviderDocument,
       ProviderDocumentData,
       ProviderDocumentDataHowItWorksItem,
+      QuizDocument,
+      QuizDocumentData,
       RedirectDocument,
       RedirectDocumentData,
       RedirectDocumentDataRedirectsItem,

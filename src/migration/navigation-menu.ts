@@ -1,6 +1,8 @@
 // The header and footer Peggy edits on the Navigation document.
-// Archived pages stay off the menu. Links are documents, so an address
-// follows the page. Icons are left empty for Peggy to upload.
+// Archived pages stay off the menu. Menu links are documents, so an
+// address follows the page. The header button is a web link to the
+// clinic quiz, which is an app route. Icons are left empty for Peggy
+// to upload.
 
 export type MenuPage = { id: string; uid: string };
 
@@ -94,7 +96,7 @@ const reviews: MenuLink[] = [
 ];
 
 export const NAVIGATION_MENU = {
-  button: { label: "Trusted providers", pageUid: "trusted-providers" },
+  button: { label: "Find your clinic", href: "/find-your-clinic" },
   main: [
     { label: "HRT 101", links: hrt101 },
     { label: "Symptoms", links: symptoms },
@@ -187,7 +189,11 @@ function linkFields(
 export function navigationData(pages: ReadonlyMap<string, MenuPage>) {
   return {
     header_button_label: NAVIGATION_MENU.button.label,
-    header_button_link: pageDocument(NAVIGATION_MENU.button, pages),
+    header_button_link: {
+      link_type: "Web" as const,
+      url: NAVIGATION_MENU.button.href,
+      text: NAVIGATION_MENU.button.label,
+    },
     main_items: NAVIGATION_MENU.main.map((item): BuiltMainItem => ({
       label: item.label,
       ...(item.pageUid
