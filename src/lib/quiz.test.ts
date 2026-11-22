@@ -4,6 +4,7 @@ import {
   applyAnswer,
   nextQuestion,
   previousQuestion,
+  quizProgress,
   quizQuestion,
   rankBrands,
   scoreQuiz,
@@ -26,6 +27,62 @@ describe("branching", () => {
     expect(previousQuestion("budget", { insurance: "yes" })).toBe("carrier");
     expect(previousQuestion("budget", { insurance: "no" })).toBe("insurance");
     expect(previousQuestion("insurance", {})).toBe("intro");
+  });
+
+  it("counts the carrier question as question 2 of 9", () => {
+    expect(quizProgress("insurance")).toEqual({
+      step: 1,
+      total: 9,
+      marks: [
+        "current",
+        "upcoming",
+        "upcoming",
+        "upcoming",
+        "upcoming",
+        "upcoming",
+        "upcoming",
+        "upcoming",
+        "upcoming",
+      ],
+    });
+    expect(quizProgress("carrier", { insurance: "yes" })).toEqual({
+      step: 2,
+      total: 9,
+      marks: [
+        "done",
+        "current",
+        "upcoming",
+        "upcoming",
+        "upcoming",
+        "upcoming",
+        "upcoming",
+        "upcoming",
+        "upcoming",
+      ],
+    });
+    expect(quizProgress("budget", { insurance: "yes" })).toMatchObject({
+      step: 3,
+      total: 9,
+    });
+    expect(quizProgress("extras", { insurance: "yes" })).toMatchObject({
+      step: 9,
+      total: 9,
+    });
+  });
+
+  it("drops the carrier question from the count when insurance is skipped", () => {
+    expect(quizProgress("insurance", { insurance: "no" })).toMatchObject({
+      step: 1,
+      total: 8,
+    });
+    expect(quizProgress("budget", { insurance: "no" })).toMatchObject({
+      step: 2,
+      total: 8,
+    });
+    expect(quizProgress("extras", { insurance: "no" })).toMatchObject({
+      step: 8,
+      total: 8,
+    });
   });
 
   it("drops a carrier answer when insurance is no longer the priority", () => {

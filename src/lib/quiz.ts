@@ -28,7 +28,8 @@ export const QUIZ_BRANDS = [
 export type QuizBrand = (typeof QUIZ_BRANDS)[number];
 
 export const QUIZ_RESULT_COUNT = 3;
-export const QUIZ_STEP_COUNT = 8;
+/** Insurance through extras, including the carrier question. */
+export const QUIZ_STEP_COUNT = 9;
 
 export type QuizQuestionId =
   | "insurance"
@@ -60,7 +61,7 @@ export type QuizOption = {
 
 export type QuizQuestion = {
   id: QuizQuestionId;
-  /** 1–8. The carrier follow-up stays on step 1. */
+  /** 1–9. The carrier question is 2. A path that skips it renumbers in quizProgress. */
   step: number;
   prompt: string;
   note?: string;
@@ -86,7 +87,7 @@ export const QUIZ_QUESTIONS: readonly QuizQuestion[] = [
   },
   {
     id: "carrier",
-    step: 1,
+    step: 2,
     prompt: "Which insurance carrier do you have?",
     note: "Good to know: If your plan isn’t in-network, Midi Health charges $250 for an out-of-pocket consultation, while MyMenopauseRx charges $99.",
     options: [
@@ -98,7 +99,7 @@ export const QUIZ_QUESTIONS: readonly QuizQuestion[] = [
   },
   {
     id: "budget",
-    step: 2,
+    step: 3,
     prompt: "What is your monthly budget for HRT products and consultations?",
     options: [
       { id: "under-50", label: "Less than $50" },
@@ -108,7 +109,7 @@ export const QUIZ_QUESTIONS: readonly QuizQuestion[] = [
   },
   {
     id: "labs",
-    step: 3,
+    step: 4,
     prompt:
       "Would you like hormone level lab testing done before you speak with a doctor, or do you prefer to save some money, skip the testing, and rely on your symptoms?",
     options: [
@@ -126,7 +127,7 @@ export const QUIZ_QUESTIONS: readonly QuizQuestion[] = [
   },
   {
     id: "testosterone",
-    step: 4,
+    step: 5,
     prompt:
       "Do you have interest in learning about testosterone for women, and is that something you might want to consider?",
     options: [
@@ -148,7 +149,7 @@ export const QUIZ_QUESTIONS: readonly QuizQuestion[] = [
   },
   {
     id: "prescriptions",
-    step: 5,
+    step: 6,
     prompt:
       "Are you okay with multiple prescriptions, or would you prefer just one product?",
     options: [
@@ -166,7 +167,7 @@ export const QUIZ_QUESTIONS: readonly QuizQuestion[] = [
   },
   {
     id: "visit",
-    step: 6,
+    step: 7,
     prompt: "Do you want to meet 1:1 via video with a provider?",
     options: [
       {
@@ -183,7 +184,7 @@ export const QUIZ_QUESTIONS: readonly QuizQuestion[] = [
   },
   {
     id: "formulation",
-    step: 7,
+    step: 8,
     prompt: "What type of formulation makes you feel most comfortable?",
     options: [
       {
@@ -200,7 +201,7 @@ export const QUIZ_QUESTIONS: readonly QuizQuestion[] = [
   },
   {
     id: "extras",
-    step: 8,
+    step: 9,
     prompt:
       "Do you have interest in peptides (such as Sermorelin or NAD+) or medical weight-loss medications like a GLP-1?",
     options: [
@@ -344,6 +345,38 @@ export function previousQuestion(
     return answers.insurance === "yes" ? "carrier" : "insurance";
   }
   return MAIN_QUESTIONS[MAIN_QUESTIONS.indexOf(id) - 1] ?? "intro";
+}
+
+/** One mark per question on this path. No half steps. */
+export type ProgressMark = "done" | "current" | "upcoming";
+
+export type QuizProgress = {
+  step: number;
+  total: number;
+  marks: readonly ProgressMark[];
+};
+
+/** The carrier question is its own step. Skipping it shortens the quiz to 8. */
+function showsCarrier(id: QuizQuestionId, answers: QuizAnswers) {
+  if (id === "carrier" || answers.insurance === "yes") return true;
+  return id === "insurance" && answers.insurance !== "no";
+}
+
+export function quizProgress(
+  id: QuizQuestionId,
+  answers: QuizAnswers = {},
+): QuizProgress {
+  const full = quizQuestion(id).step;
+  const withCarrier = showsCarrier(id, answers);
+  const step = withCarrier ? full : Math.max(1, full - 1);
+  const total = withCarrier ? QUIZ_STEP_COUNT : QUIZ_STEP_COUNT - 1;
+  const marks = Array.from({ length: total }, (_, index): ProgressMark => {
+    const number = index + 1;
+    if (number < step) return "done";
+    if (number > step) return "upcoming";
+    return "current";
+  });
+  return { step, total, marks };
 }
 
 export function scoreQuiz(answers: QuizAnswers): ScoreMap {

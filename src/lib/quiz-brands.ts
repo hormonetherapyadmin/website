@@ -16,6 +16,7 @@ export const QUIZ_BRAND_GRAPH_QUERY = `{
     price_note
     formulation
     code
+    code_note
     visit
     page
     review
@@ -27,7 +28,9 @@ export type QuizBrandCard = {
   name: string;
   description?: string;
   logo?: { src: string; alt: string; width: number; height: number };
-  price?: string;
+  /** Dollar amount, without the unit. `$103`. */
+  priceAmount?: string;
+  perMonth?: boolean;
   priceNote?: string;
   formulation?: string;
   pageHref?: string;
@@ -35,6 +38,8 @@ export type QuizBrandCard = {
   visitHref?: string;
   visitText?: string;
   offerCode?: string;
+  /** The sentence beside the code. */
+  offerNote?: string;
 };
 
 type QuizBrandSource = {
@@ -48,6 +53,7 @@ type QuizBrandSource = {
     price_note: string | null;
     formulation: string | null;
     code: string | null;
+    code_note?: string | null;
     visit: LinkField;
     page?: LinkField | null;
     review?: LinkField | null;
@@ -59,24 +65,28 @@ function text(value: string | null | undefined) {
   return trimmed || undefined;
 }
 
-/** A leading "Code " typed into the field is the label, not the code. */
-function couponCode(value: string | null | undefined) {
-  const trimmed = text(value);
-  if (!trimmed) return undefined;
-  return trimmed.replace(/^code\s+/i, "") || undefined;
+/** A leading "Code " is the label. Extra words are the code line. */
+function coupon(value: string | null | undefined) {
+  const trimmed = text(value)?.replace(/^code\s+/i, "");
+  if (!trimmed) return {};
+  const split = trimmed.match(
+    /^([A-Za-z0-9][A-Za-z0-9-]*)(?:\s*[:\-–—]?\s+([\s\S]+))?$/,
+  );
+  if (!split?.[2]) return { offerCode: trimmed };
+  return { offerCode: split[1], offerNote: split[2].trim() };
+}
+
+function priceParts(amount: number | null, unit: string | null | undefined) {
+  if (typeof amount !== "number") return {};
+  const priceAmount = Number.isInteger(amount)
+    ? `$${amount}`
+    : `$${amount.toFixed(2)}`;
+  return { priceAmount, perMonth: unit !== "One time" };
 }
 
 function linkHref(link: LinkField | null | undefined) {
   if (!link || !isFilled.link(link)) return undefined;
   return link.url || undefined;
-}
-
-function priceLabel(amount: number | null, unit: string | null | undefined) {
-  if (typeof amount !== "number") return undefined;
-  const formatted = Number.isInteger(amount)
-    ? `$${amount}`
-    : `$${amount.toFixed(2)}`;
-  return unit === "One time" ? formatted : `${formatted}/mo`;
 }
 
 function isQuizBrand(uid: string): uid is QuizBrand {
@@ -93,6 +103,9 @@ export function quizBrandCard(document: QuizBrandSource): QuizBrandCard | null {
   const visit = document.data.visit;
   const visitHref = linkHref(visit);
 
+  const offer = coupon(document.data.code);
+  const offerNote = text(document.data.code_note) ?? offer.offerNote;
+
   return {
     uid,
     name,
@@ -106,14 +119,15 @@ export function quizBrandCard(document: QuizBrandSource): QuizBrandCard | null {
             height: logo.dimensions.height,
           }
         : undefined,
-    price: priceLabel(document.data.monthly_price, document.data.price_unit),
+    ...priceParts(document.data.monthly_price, document.data.price_unit),
     priceNote: text(document.data.price_note),
     formulation: text(document.data.formulation),
     pageHref: linkHref(document.data.page),
     reviewHref: linkHref(document.data.review),
     visitHref,
     visitText: visitHref && isFilled.link(visit) ? text(visit.text) : undefined,
-    offerCode: couponCode(document.data.code),
+    offerCode: offer.offerCode,
+    offerNote,
   };
 }
 

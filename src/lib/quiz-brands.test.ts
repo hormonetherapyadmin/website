@@ -44,7 +44,8 @@ describe("quizBrandCard", () => {
         width: 80,
         height: 80,
       },
-      price: "$35/mo",
+      priceAmount: "$35",
+      perMonth: true,
       priceNote: "What I paid.",
       formulation: "Estrogen cream",
       pageHref: "/musely",
@@ -52,6 +53,32 @@ describe("quizBrandCard", () => {
       visitHref: "https://musely.pxf.io/peggy",
       visitText: "Visit Musely",
       offerCode: "PEGGY",
+      offerNote: undefined,
+    });
+  });
+
+  it("keeps a long code's extra words as the code line", () => {
+    expect(
+      quizBrandCard({
+        uid: "joi",
+        data: {
+          name: "Joi",
+          short_description: null,
+          logo: {},
+          monthly_price: 103,
+          price_unit: "One time",
+          price_note: null,
+          formulation: null,
+          code: "BRONSON for 50% off Labs",
+          code_note: null,
+          visit: { link_type: "Any" },
+        },
+      }),
+    ).toMatchObject({
+      priceAmount: "$103",
+      perMonth: false,
+      offerCode: "BRONSON",
+      offerNote: "for 50% off Labs",
     });
   });
 
