@@ -120,9 +120,9 @@ The text is one line. Bold and italic are available. The whole strip
 is the link, including the button, so the text field does not allow a
 link of its own. The button is the label only.
 
-The bar uses the accent color and the button uses the darker CTA hover
-color, with white text. In the working palette those are raspberry and
-a darker raspberry. An affiliate address opens in a new tab with the
+The bar is navy, the panel color, with white text. The button is a
+darker navy with light pink text, the panel accent. Hover darkens the
+button only. An affiliate address opens in a new tab with the
 affiliate rel and `data-placement="promotion"`. The link is not a
 Brand, so the click has no provider. Any other link follows the link
 field, including "Open in a new tab."
