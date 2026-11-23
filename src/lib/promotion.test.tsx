@@ -1,5 +1,5 @@
 import { renderToStaticMarkup } from "react-dom/server";
-import type { LinkField, RichTextField } from "@prismicio/client";
+import type { LinkField, RichTextField, RTInlineNode } from "@prismicio/client";
 import { describe, expect, it } from "vitest";
 import { PromoStrip } from "@/components/promo-strip";
 import { AFFILIATE_REL } from "@/lib/affiliate-link";
@@ -11,7 +11,7 @@ function web(url: string, target?: string): LinkField {
   return { link_type: "Web", url, ...(target ? { target } : {}) } as LinkField;
 }
 
-function line(value: string, spans: RichTextField[number]["spans"] = []) {
+function line(value: string, spans: RTInlineNode[] = []) {
   return [{ type: "paragraph", text: value, spans }] as RichTextField;
 }
 

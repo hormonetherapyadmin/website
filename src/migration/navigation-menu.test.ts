@@ -73,7 +73,9 @@ describe("navigation menu", () => {
       "About",
     ]);
     expect(
-      data.footer_columns.at(-1)?.links.map((link) => link.link.uid),
+      data.footer_columns
+        .at(-1)
+        ?.links.map((link) => ("uid" in link.link ? link.link.uid : undefined)),
     ).toEqual(["about", "how-i-review", "blog"]);
   });
 });

@@ -75,6 +75,9 @@ export function Fireworks() {
     if (!context) return;
     const colors = palette();
     if (colors.length === 0) return;
+    // Nested callbacks do not keep the narrowing from the checks above.
+    const surface = canvas;
+    const ctx = context;
 
     let width = 0;
     let height = 0;
@@ -83,9 +86,9 @@ export function Fireworks() {
       const ratio = Math.min(window.devicePixelRatio || 1, 2);
       width = window.innerWidth;
       height = window.innerHeight;
-      canvas.width = Math.round(width * ratio);
-      canvas.height = Math.round(height * ratio);
-      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+      surface.width = Math.round(width * ratio);
+      surface.height = Math.round(height * ratio);
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
     }
 
     resize();
@@ -111,7 +114,7 @@ export function Fireworks() {
         burst(sparks, colors, width * item.x, height * item.y, item.count);
       });
 
-      context.clearRect(0, 0, width, height);
+      ctx.clearRect(0, 0, width, height);
       let alive = 0;
       for (const spark of sparks) {
         spark.life += 1;
@@ -123,21 +126,21 @@ export function Fireworks() {
         spark.y += spark.vy;
         spark.rot += spark.spin;
         const fade = spark.life / spark.max;
-        context.globalAlpha = fade < 0.68 ? 1 : 1 - (fade - 0.68) / 0.32;
-        context.fillStyle = spark.color;
-        context.save();
-        context.translate(spark.x, spark.y);
-        context.rotate(spark.rot);
+        ctx.globalAlpha = fade < 0.68 ? 1 : 1 - (fade - 0.68) / 0.32;
+        ctx.fillStyle = spark.color;
+        ctx.save();
+        ctx.translate(spark.x, spark.y);
+        ctx.rotate(spark.rot);
         if (spark.circle) {
-          context.beginPath();
-          context.arc(0, 0, spark.w / 2, 0, Math.PI * 2);
-          context.fill();
+          ctx.beginPath();
+          ctx.arc(0, 0, spark.w / 2, 0, Math.PI * 2);
+          ctx.fill();
         } else {
-          context.fillRect(-spark.w / 2, -spark.h / 2, spark.w, spark.h);
+          ctx.fillRect(-spark.w / 2, -spark.h / 2, spark.w, spark.h);
         }
-        context.restore();
+        ctx.restore();
       }
-      context.globalAlpha = 1;
+      ctx.globalAlpha = 1;
 
       if (alive > 0 || fired.size < plan.length) {
         frame = requestAnimationFrame(tick);
