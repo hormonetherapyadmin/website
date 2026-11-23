@@ -1131,7 +1131,11 @@ already set there.
 -   The clinic quiz at `/find-your-clinic` sends `quiz_start` when
     someone starts, `quiz_answer` (`question_id`, `answer_id`, `step`)
     for each choice, and `quiz_complete` (`top_provider`, `providers`)
-    when results show. Values are ids, not the wording of the answer.
+    when results show. Values are ids, not the wording of the answer,
+    with the question or result place on the end: `insurance_1`,
+    `yes_1`. A path that skips the carrier question uses the number on
+    screen, so budget can be `budget_2`. The best match is `joi_1`, and
+    `providers` lists the places, such as `joi_1,midi_2,effecty_3`.
     A result visit sends `affiliate_click` with `placement`
     `quiz_result` and `page_type` `quiz`. Question wording is the Clinic
     quiz singleton. A blank question keeps the built-in wording. Answer
@@ -1144,6 +1148,12 @@ already set there.
 Owner direction, 2026-10-12: the site collects email, through
 EmailOctopus, from a signup slice. The slice is not specified or built
 yet. Specify it in `docs/SLICE_MODEL.md` before building it.
+
+Owner decision, 2026-11-23: this is the next work branch after the
+clinic quiz. That branch adds the EmailOctopus signup and brings the
+existing Wix subscriber list into EmailOctopus. The quiz branch does
+not do either. The Wix export source (contacts, email marketing, or
+the form submissions) is still to confirm on that branch.
 
 What the Wix site did (crawl of the pages sitemap, 2026-10-12):
 
@@ -1162,7 +1172,6 @@ To decide before the slice is built:
 -   Whether the free price chart stays the reason to sign up, and how
     it is delivered.
 -   Whether the popup comes back. It is not rebuilt by default.
--   Moving the existing Wix subscribers into EmailOctopus.
 -   The GA4 event for a signup. It sends no email address.
 -   Whether the signup is needed on the trusted-providers page, so
     that page does not lose the form it had on Wix.

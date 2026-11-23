@@ -614,6 +614,12 @@ type Gtag = (
   params: Record<string, string | number>,
 ) => void;
 
+/** `insurance_1`, `yes_1`, `joi_2`. The number is the question or result place. */
+export function numberedId(id: string, number: number) {
+  if (!id) return "";
+  return `${id}_${number}`;
+}
+
 /** Sends a GA4 event when the production tag is on the page. */
 export function trackEvent(
   name: string,

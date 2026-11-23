@@ -441,7 +441,8 @@ specified yet. Candidates:
 -   Editorial Callout
 -   Affiliate CTA
 -   Offer Callout
--   Email signup (planned, EmailOctopus. Not specified yet. See
+-   Email signup (next branch after the clinic quiz: EmailOctopus, plus
+    the Wix subscriber import. Not specified yet. See
     `docs/PROJECT_PLAN.md` section 24, "Email capture")
 -   Related Articles
 -   Sources / References

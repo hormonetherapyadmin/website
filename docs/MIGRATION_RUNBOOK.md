@@ -340,7 +340,9 @@ Not composed:
     and returned 404 on the Wix site. They are not invented here.
 
 The live signup form on the trusted-providers page has no slice yet.
-The published page does not include it.
+The published page does not include it. The next branch after the
+clinic quiz adds EmailOctopus and imports the existing Wix subscriber
+list. See `docs/PROJECT_PLAN.md`, "Email capture."
 
 `/how-i-review` was not a Wix page. It is a Page, written in her
 voice from how the reviews, the price chart, and the about page

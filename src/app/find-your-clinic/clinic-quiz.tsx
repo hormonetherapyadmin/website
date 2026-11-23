@@ -14,6 +14,7 @@ import {
   affiliateClickParams,
   applyAnswer,
   nextQuestion,
+  numberedId,
   previousQuestion,
   quizProgress,
   rankBrands,
@@ -64,8 +65,8 @@ export function ClinicQuiz({
     const step = quizProgress(question, nextAnswers).step;
     trackEvent("quiz_answer", {
       quiz_id: QUIZ_ID,
-      question_id: question,
-      answer_id: optionId,
+      question_id: numberedId(question, step),
+      answer_id: numberedId(optionId, step),
       step,
     });
     const next = nextQuestion(question, nextAnswers);
@@ -73,8 +74,10 @@ export function ClinicQuiz({
       const ranked = rankBrands(nextAnswers).slice(0, QUIZ_RESULT_COUNT);
       trackEvent("quiz_complete", {
         quiz_id: QUIZ_ID,
-        top_provider: ranked[0]?.brand ?? "",
-        providers: ranked.map((item) => item.brand).join(","),
+        top_provider: numberedId(ranked[0]?.brand ?? "", 1),
+        providers: ranked
+          .map((item, index) => numberedId(item.brand, index + 1))
+          .join(","),
       });
     }
     setPhase(next);

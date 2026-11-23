@@ -8,6 +8,7 @@ import {
   quizQuestion,
   rankBrands,
   scoreQuiz,
+  numberedId,
   trackEvent,
 } from "./quiz";
 
@@ -218,6 +219,13 @@ describe("events", () => {
       page_path: "/find-your-clinic",
       link_domain: "musely.com",
     });
+  });
+
+  it("puts the question or result place on an analytics id", () => {
+    expect(numberedId("insurance", 1)).toBe("insurance_1");
+    expect(numberedId("yes", 1)).toBe("yes_1");
+    expect(numberedId("joi", 2)).toBe("joi_2");
+    expect(numberedId("", 1)).toBe("");
   });
 
   it("sends an event only when gtag is present", () => {
