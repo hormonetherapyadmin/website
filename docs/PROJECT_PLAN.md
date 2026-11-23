@@ -1027,7 +1027,9 @@ already set there.
     `docs/CONTENT_MODEL.md`.
 -   `next.config.ts` `redirects()` reads that document at build time.
     Vercel serves the redirects Next.js returns. There is no
-    `_redirects` file.
+    `_redirects` file. The quiz also redirects `/find-your-clinic` to
+    `/provider-quiz` from the app, on the same deploy as the move. A
+    CMS row with that same From path is left out.
 -   `redirectRules` in `src/lib/site-redirects.ts` drops a row with no
     destination and a row that points at itself. It does not reject
     chains, duplicate From paths, or a From path that is also a live
@@ -1128,7 +1130,7 @@ already set there.
     `provider`, `offer`, `placement`, `page_type`, `page_path`, and
     `link_domain`, marked as a GA4 key event. CTA components fill
     these automatically.
--   The clinic quiz at `/find-your-clinic` sends `quiz_start` when
+-   The clinic quiz at `/provider-quiz` sends `quiz_start` when
     someone starts, `quiz_answer` (`question_id`, `answer_id`, `step`)
     for each choice, and `quiz_complete` (`top_provider`, `providers`)
     when results show. Values are ids, not the wording of the answer,

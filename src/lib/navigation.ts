@@ -13,6 +13,7 @@ export const NAV_ICON_OPTIONS = [
   "Wallet",
   "Test tube",
   "Person",
+  "Quiz",
   "Chat",
   "Scale",
   "Moon",

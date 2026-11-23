@@ -1,17 +1,23 @@
 import { CLINICS } from "./clinics";
 import type { FooterColumn, NavItem, NavLink } from "@/lib/navigation";
+import { QUIZ_PATH } from "@/lib/site";
 
 /*
   Design stand-in used until a Navigation document is published.
   After that, the header and footer come from Prismic.
 */
 
-const HRT_101_LINKS: NavLink[] = [
+const HRT_101_GUIDES: NavLink[] = [
   { label: "Is HRT for me?", href: "/ishrtforme", icon: "Question" },
   { label: "Formulations", href: "/formuations", icon: "Medicine" },
   { label: "Cost & insurance", href: "/costandinsurance", icon: "Wallet" },
   { label: "Test kits", href: "/trackersandtesting", icon: "Test tube" },
   { label: "FAQ", href: "/faq", icon: "Chat" },
+];
+
+const HRT_101_LINKS: NavLink[] = [
+  { label: "Provider quiz", href: QUIZ_PATH, icon: "Quiz" },
+  ...HRT_101_GUIDES,
 ];
 
 const SYMPTOM_LINKS: NavLink[] = [
@@ -39,7 +45,7 @@ const COMPARE_LINKS: NavLink[] = [
 
 export const FALLBACK_HEADER_BUTTON: NavLink = {
   label: "Find your clinic",
-  href: "/find-your-clinic",
+  href: QUIZ_PATH,
 };
 
 export const FALLBACK_NAV: NavItem[] = [
@@ -64,7 +70,7 @@ export const FALLBACK_NAV: NavItem[] = [
 ];
 
 export const FALLBACK_FOOTER: FooterColumn[] = [
-  { heading: "HRT 101", links: HRT_101_LINKS },
+  { heading: "HRT 101", links: HRT_101_GUIDES },
   { heading: "Symptoms", links: SYMPTOM_LINKS },
   { heading: "Providers", links: COMPARE_LINKS },
   {

@@ -176,9 +176,9 @@ The canonical is `/search`. `?q=` repeats that search for someone with
 the link. It is not a separate indexable URL, and the page has no type
 filter.
 
-`/find-your-clinic` is the clinic quiz. Answers stay in the page, so
+`/provider-quiz` is the clinic quiz. Answers stay in the page, so
 the quiz does not create extra indexable URLs. The canonical is
-`/find-your-clinic`.
+`/provider-quiz`. `/find-your-clinic` redirects there.
 
 `/slice-simulator` is the Page Builder thumbnail route. It is always
 noindex. It is not a public page.
@@ -187,7 +187,7 @@ noindex. It is not a public page.
 
 `/sitemap.xml` lists the canonical URL of the published Homepage and
 every published Page and Post still set to Index, plus the clinic quiz
-at `/find-your-clinic` and the HTML sitemap at `/sitemap`. It leaves
+at `/provider-quiz` and the HTML sitemap at `/sitemap`. It leaves
 out `/search`, `/slice-simulator`, and mockup routes. `lastmod` is
 that document's last publication time in
 Prismic, when one exists. The page at `/sitemap` is built in the app,

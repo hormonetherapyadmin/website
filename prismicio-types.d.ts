@@ -823,6 +823,72 @@ export type PostDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PostDocumentData>, "post", Lang>;
 
 /**
+ * Content for Promotion documents
+ */
+interface PromotionDocumentData {
+  /**
+   * Text promo field in *Promotion*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: The line on the strip. Bold and italic are fine. The whole strip is the link, so leave links out of this text.
+   * - **API ID Path**: promotion.text_promo
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  text_promo: prismic.RichTextField;
+
+  /**
+   * Button label field in *Promotion*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Words on the button. The button is not its own link. The whole strip goes to Link.
+   * - **API ID Path**: promotion.button_label
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  button_label: prismic.KeyTextField;
+
+  /**
+   * Link field in *Promotion*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Where the strip goes. The whole bar is this link, including the button.
+   * - **API ID Path**: promotion.link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Active? field in *Promotion*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: promotion.active
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  active: prismic.BooleanField;
+}
+
+/**
+ * Promotion document from Prismic
+ *
+ * - **API ID**: `promotion`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type PromotionDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<PromotionDocumentData>,
+    "promotion",
+    Lang
+  >;
+
+/**
  * Item in *Brand → How it works*
  */
 export interface ProviderDocumentDataHowItWorksItem {
@@ -1361,6 +1427,7 @@ export type AllDocumentTypes =
   | NavigationDocument
   | PageDocument
   | PostDocument
+  | PromotionDocument
   | ProviderDocument
   | QuizDocument
   | RedirectDocument;
@@ -6287,6 +6354,8 @@ declare module "@prismicio/client" {
       PostDocumentData,
       PostDocumentDataTablesItem,
       PostDocumentDataSourcesItem,
+      PromotionDocument,
+      PromotionDocumentData,
       ProviderDocument,
       ProviderDocumentData,
       ProviderDocumentDataHowItWorksItem,

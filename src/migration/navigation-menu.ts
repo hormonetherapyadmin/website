@@ -1,8 +1,10 @@
+import { QUIZ_PATH } from "../lib/site.ts";
+
 // The header and footer Peggy edits on the Navigation document.
 // Archived pages stay off the menu. Menu links are documents, so an
-// address follows the page. The header button is a web link to the
-// clinic quiz, which is an app route. Icons are left empty for Peggy
-// to upload.
+// address follows the page. The clinic quiz is an app route, so the
+// Provider quiz item and the header button are web links. Icons are
+// left empty for Peggy to upload.
 
 export type MenuPage = { id: string; uid: string };
 
@@ -11,6 +13,8 @@ export type MenuLink = {
   pageUid?: string;
   /** When the page is still published under an older uid. */
   legacyUid?: string;
+  /** App route. The clinic quiz has no Prismic page. */
+  href?: string;
   providerId?: string;
   providerUid?: string;
   columnHeading?: string;
@@ -28,12 +32,17 @@ export type FooterColumnPlan = {
   links: MenuLink[];
 };
 
-const hrt101: MenuLink[] = [
+const hrt101Guides: MenuLink[] = [
   { label: "Is HRT for me?", pageUid: "ishrtforme" },
   { label: "Formulations", pageUid: "formuations" },
   { label: "Cost & insurance", pageUid: "costandinsurance" },
   { label: "Test kits", pageUid: "trackers-and-testing" },
   { label: "FAQ", pageUid: "faq" },
+];
+
+const hrt101: MenuLink[] = [
+  { label: "Provider quiz", href: QUIZ_PATH },
+  ...hrt101Guides,
 ];
 
 const symptoms: MenuLink[] = [
@@ -96,7 +105,7 @@ const reviews: MenuLink[] = [
 ];
 
 export const NAVIGATION_MENU = {
-  button: { label: "Find your clinic", href: "/find-your-clinic" },
+  button: { label: "Find your clinic", href: QUIZ_PATH },
   main: [
     { label: "HRT 101", links: hrt101 },
     { label: "Symptoms", links: symptoms },
@@ -104,7 +113,7 @@ export const NAVIGATION_MENU = {
     { label: "Blog", pageUid: "blog" },
   ] satisfies MenuItem[],
   footer: [
-    { heading: "HRT 101", links: hrt101 },
+    { heading: "HRT 101", links: hrt101Guides },
     { heading: "Symptoms", links: symptoms },
     {
       heading: "Providers",
@@ -129,9 +138,14 @@ type BuiltPageLink = {
   url: string;
 };
 
+type BuiltWebLink = {
+  link_type: "Web";
+  url: string;
+};
+
 type BuiltMenuLink = {
   label?: string;
-  link: BuiltPageLink;
+  link: BuiltPageLink | BuiltWebLink;
   clinic?: {
     link_type: "Document";
     id: string;
@@ -169,6 +183,15 @@ function linkFields(
   link: MenuLink,
   pages: ReadonlyMap<string, MenuPage>,
 ): BuiltMenuLink {
+  if (link.href) {
+    return {
+      ...(link.label ? { label: link.label } : {}),
+      link: {
+        link_type: "Web" as const,
+        url: link.href,
+      },
+    };
+  }
   return {
     ...(link.label ? { label: link.label } : {}),
     link: pageDocument(link, pages),
@@ -192,7 +215,6 @@ export function navigationData(pages: ReadonlyMap<string, MenuPage>) {
     header_button_link: {
       link_type: "Web" as const,
       url: NAVIGATION_MENU.button.href,
-      text: NAVIGATION_MENU.button.label,
     },
     main_items: NAVIGATION_MENU.main.map((item): BuiltMainItem => ({
       label: item.label,

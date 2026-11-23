@@ -13,7 +13,7 @@ describe("ClinicQuiz", () => {
     const html = renderToStaticMarkup(
       createElement(ClinicQuiz, { brands: [] }),
     );
-    expect(html).toContain("Find a clinic that fits");
+    expect(html).toContain("Match me an online provider");
     expect(html).toContain("not medical advice");
     expect(html).toContain("I won’t ask for your name or email");
     expect(html).toContain("Start");

@@ -216,7 +216,7 @@ describe("events", () => {
       offer: "PEGGY",
       placement: "quiz_result",
       page_type: "quiz",
-      page_path: "/find-your-clinic",
+      page_path: "/provider-quiz",
       link_domain: "musely.com",
     });
   });

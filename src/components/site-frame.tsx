@@ -8,7 +8,9 @@ import {
   FALLBACK_NAV,
 } from "@/app/mockup/_shared/nav-fallback";
 import { HeaderCta, SiteNav } from "@/app/mockup/_shared/site-nav";
+import { PromoStrip } from "@/components/promo-strip";
 import { loadSiteNavigation } from "@/lib/navigation";
+import { loadPromotion } from "@/lib/promotion";
 import {
   BRAND_LOGO,
   BRAND_LOGO_HEIGHT,
@@ -98,7 +100,10 @@ export async function SiteFrame({
   palette: string;
   children: ReactNode;
 }) {
-  const published = await loadSiteNavigation();
+  const [published, promotion] = await Promise.all([
+    loadSiteNavigation(),
+    loadPromotion(),
+  ]);
   const main = published ? published.main : FALLBACK_NAV;
   const footer = published ? published.footer : FALLBACK_FOOTER;
   const headerButton = published ? published.button : FALLBACK_HEADER_BUTTON;
@@ -108,6 +113,7 @@ export async function SiteFrame({
       className={`${styles.page} ${figtree.variable} ${className}`}
       data-palette={palette}
     >
+      {promotion ? <PromoStrip promotion={promotion} /> : null}
       <header className={styles.header}>
         <HeaderRule />
         <Link href="/" className={styles.wordmark} aria-label={SITE_NAME}>

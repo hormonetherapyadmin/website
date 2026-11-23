@@ -42,9 +42,15 @@ describe("navigation menu", () => {
     expect(data.header_button_label).toBe("Find your clinic");
     expect(data.header_button_link).toEqual({
       link_type: "Web",
-      url: "/find-your-clinic",
-      text: "Find your clinic",
+      url: "/provider-quiz",
     });
+    const hrt101 = data.main_items.find((item) => item.label === "HRT 101");
+    expect(hrt101?.links?.[0]).toMatchObject({
+      label: "Provider quiz",
+      link: { link_type: "Web", url: "/provider-quiz" },
+    });
+    expect(hrt101?.links?.[1]?.link).toMatchObject({ uid: "ishrtforme" });
+    expect(data.footer_columns[0]?.links[0]?.label).toBe("Is HRT for me?");
     const symptoms = data.main_items.find((item) => item.label === "Symptoms");
     expect(symptoms?.links?.[0]?.link).toMatchObject({
       uid: "copy-of-weight-gain",
