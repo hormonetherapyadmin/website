@@ -3,6 +3,7 @@
 import {
   BubbleChatQuestionIcon,
   ChartBarBigIcon,
+  CircleQuestionMarkIcon,
   DropletIcon,
   HairDryerIcon,
   Idea01Icon,
@@ -36,6 +37,7 @@ const ICONS: Record<NavIconName, IconSvgElement> = {
   Wallet: Wallet01Icon,
   "Test tube": TestTube01Icon,
   Person: ManIcon,
+  Quiz: CircleQuestionMarkIcon,
   Chat: BubbleChatQuestionIcon,
   Scale: WeightScaleIcon,
   Moon: Moon02Icon,

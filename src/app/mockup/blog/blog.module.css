@@ -484,9 +484,15 @@
   min-width: 0;
   max-width: 100%;
   overflow-x: auto;
+  /* Wide tables still scroll. The scrollbar stays hidden. */
+  scrollbar-width: none;
   border-radius: 1.5rem;
   background: var(--bg);
   box-shadow: 0 24px 48px -32px rgba(0, 0, 0, 0.45);
+}
+
+.tableScroll::-webkit-scrollbar {
+  display: none;
 }
 
 .tableScroll:focus-visible {

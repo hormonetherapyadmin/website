@@ -266,8 +266,14 @@
 
 .scroll {
   overflow-x: auto;
+  /* Wide tables still scroll. The scrollbar stays hidden. */
+  scrollbar-width: none;
   margin-top: 1rem;
   border-top: 1px solid var(--color-text);
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .table {

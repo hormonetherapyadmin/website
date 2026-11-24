@@ -37,13 +37,20 @@ describe("navigation menu", () => {
     expect(text).not.toContain("affiliate-disclosures");
   });
 
-  it("links the header button and the weight page to published documents", () => {
+  it("links the header button to the clinic quiz", () => {
     const data = navigationData(pages);
-    expect(data.header_button_label).toBe("Trusted providers");
-    expect(data.header_button_link).toMatchObject({
-      uid: "trusted-providers",
-      url: "/trusted-providers",
+    expect(data.header_button_label).toBe("Find your clinic");
+    expect(data.header_button_link).toEqual({
+      link_type: "Web",
+      url: "/provider-quiz",
     });
+    const hrt101 = data.main_items.find((item) => item.label === "HRT 101");
+    expect(hrt101?.links?.[0]).toMatchObject({
+      label: "Provider quiz",
+      link: { link_type: "Web", url: "/provider-quiz" },
+    });
+    expect(hrt101?.links?.[1]?.link).toMatchObject({ uid: "ishrtforme" });
+    expect(data.footer_columns[0]?.links[0]?.label).toBe("Is HRT for me?");
     const symptoms = data.main_items.find((item) => item.label === "Symptoms");
     expect(symptoms?.links?.[0]?.link).toMatchObject({
       uid: "copy-of-weight-gain",
@@ -66,7 +73,9 @@ describe("navigation menu", () => {
       "About",
     ]);
     expect(
-      data.footer_columns.at(-1)?.links.map((link) => link.link.uid),
+      data.footer_columns
+        .at(-1)
+        ?.links.map((link) => ("uid" in link.link ? link.link.uid : undefined)),
     ).toEqual(["about", "how-i-review", "blog"]);
   });
 });

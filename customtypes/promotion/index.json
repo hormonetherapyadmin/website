@@ -1,0 +1,43 @@
+{
+  "format": "custom",
+  "id": "promotion",
+  "json": {
+    "Main": {
+      "text_promo": {
+        "config": {
+          "label": "Text promo",
+          "placeholder": "The line on the strip. Bold and italic are fine. The whole strip is the link, so leave links out of this text.",
+          "single": "paragraph,strong,em"
+        },
+        "type": "StructuredText"
+      },
+      "button_label": {
+        "config": {
+          "label": "Button label",
+          "placeholder": "Words on the button. The button is not its own link. The whole strip goes to Link."
+        },
+        "type": "Text"
+      },
+      "link": {
+        "config": {
+          "allowTargetBlank": true,
+          "label": "Link",
+          "placeholder": "Where the strip goes. The whole bar is this link, including the button."
+        },
+        "type": "Link"
+      },
+      "active": {
+        "config": {
+          "default_value": false,
+          "label": "Active?",
+          "placeholder_false": "Hide the strip",
+          "placeholder_true": "Show the strip"
+        },
+        "type": "Boolean"
+      }
+    }
+  },
+  "label": "Promotion",
+  "repeatable": false,
+  "status": true
+}

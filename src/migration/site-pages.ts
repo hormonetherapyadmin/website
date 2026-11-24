@@ -728,7 +728,7 @@ export const HOMEPAGE = {
       ],
       button: [
         web("See what each clinic cost me", COMPARE, "Solid"),
-        web("New to HRT? Start here", "/ishrtforme", "Ghost"),
+        web("New to HRT? Start here", "/provider-quiz", "Ghost"),
       ],
       trust_lines: [
         { text: "Patient since 2019" },

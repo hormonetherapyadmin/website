@@ -290,6 +290,7 @@ Expected singleton types:
 
 -   Site Settings
 -   Navigation
+-   Promotion
 -   Homepage
 -   Providers Landing
 -   Affiliate Disclosure

@@ -68,14 +68,20 @@ The button is three fields at the top of **Main menu**: **Header button
 label**, **Header button icon**, and **Header button link**. Leave the
 label or the link blank and the button is hidden. The icon is optional.
 It is any image on a transparent background, shown in the button color.
-The published menu's button says "Trusted providers" and links to
-`/trusted-providers`. `scripts/import-navigation.mts` updates that
-document and does not publish it. If the document is missing, the
-design menu is the fallback, and that fallback button points at
-`/mockup/trusted-providers`. There is no stronger single call to
-action yet: that page is the compare step, and the homepage already
-sends people there. Men's HRT, Sleep, and Hair loss stay off the
-menu. How I review is the Page `/how-i-review`, linked in the
+The published menu's button says "Find your clinic" and links to
+`/provider-quiz`, the clinic quiz. That label, icon, and link are
+these three fields. The quiz page heading is separate. It is
+`QUIZ_TITLE` in `src/lib/site.ts`, currently "Match me an online
+provider", and it is also the page title and the name on `/sitemap`.
+The first link in the HRT 101 menu is Provider quiz, a web address for
+`/provider-quiz`. The quiz is an app route, so that menu link is not
+a page document. `/find-your-clinic` redirects there. The footer HRT 101
+column keeps the guide links and does not repeat the quiz.
+`scripts/import-navigation.mts`
+updates that document and does not publish it. If the document is
+missing, the design menu is the fallback, and that fallback button
+points at `/provider-quiz`. Trusted providers stays in the Providers
+menu. Men's HRT, Sleep, and Hair loss stay off the menu. How I review is the Page `/how-i-review`, linked in the
 footer and on Peggy's author card. It stays out of the header menu.
 Affiliate disclosure stays off the menu. Icons are left empty. Test kits links to
 `/trackers-and-testing`. Weight & HRT links to `/weight-gain`.
@@ -101,6 +107,37 @@ Site Settings still lists footer configuration as a future field. The
 footer link columns live here, not on Site Settings. The Homepage
 footer fields (copyright, cookies, social) are not what this footer
 renders.
+
+### Promotion
+
+Singleton, `customtypes/promotion`. No public URL. The strip sits above
+the header on every page that uses the site frame. It shows only when
+**Active?** is on and both the promo text and the link are filled. A
+new document starts with Active off. A blank button label hides the
+button. The strip is still the link.
+
+The text is one line. Bold and italic are available. The whole strip
+is the link, including the button, so the text field does not allow a
+link of its own. The button is the label only.
+
+The bar is navy, the panel color, with white text. The button is a
+darker navy with light pink text, the panel accent. Hover darkens the
+button only. An affiliate address opens in a new tab with the
+affiliate rel and `data-placement="promotion"`. The link is not a
+Brand, so the click has no provider. Any other link follows the link
+field, including "Open in a new tab."
+
+Site Settings still lists a site notice as a suggested field. That
+field has no custom type. This strip is not that notice.
+
+### Clinic quiz
+
+Singleton, `customtypes/quiz`. No public URL. The page is the app route
+`/provider-quiz`. `/find-your-clinic` redirects there. The page heading is `QUIZ_TITLE` in
+`src/lib/site.ts`. Peggy can reword each question, and the note under
+the insurance-carrier choices. A blank field keeps the wording shipped
+with the site. The answer choices and the points stay in code. She
+cannot add, remove, or reorder questions here.
 
 ### Homepage
 
@@ -215,6 +252,13 @@ Provider review. A story inserts a clinic with a token such as
 tabs. A story inserts Peggy’s tip with `{{tip}}` and the words after
 it. The portrait and the title are fixed. The same box is the Ribbon
 Tip variation on a page.
+
+The clinic quiz at `/provider-quiz` reads each result from a Brand
+by UID (`inner-balance`, `winona`, `musely`, `alloy`, `joi`,
+`effecty`, `menorx`, `midi`) and shows that document’s name, short
+description, price, page, review, and affiliate link. A brand with no
+published document is left off the results. The question wording is
+the Clinic quiz singleton. Answer choices and scores stay in code.
 
 ### Provider Review
 
@@ -428,7 +472,8 @@ specified yet. Candidates:
 -   Editorial Callout
 -   Affiliate CTA
 -   Offer Callout
--   Email signup (planned, EmailOctopus. Not specified yet. See
+-   Email signup (next branch after the clinic quiz: EmailOctopus, plus
+    the Wix subscriber import. Not specified yet. See
     `docs/PROJECT_PLAN.md` section 24, "Email capture")
 -   Related Articles
 -   Sources / References

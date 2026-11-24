@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SiteShell } from "@/components/site-shell";
 import { isIndexingAllowed } from "@/lib/env";
 import { loadSitemapLinks, organizeSitemap, SITEMAP_PATH } from "@/lib/sitemap";
+import { QUIZ_PATH, QUIZ_TITLE } from "@/lib/site";
 import styles from "./sitemap.module.css";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,7 +20,12 @@ export default async function SitemapPage() {
   const home = pages.find((page) => page.path === "/");
   const pageLinks = [
     { title: home?.title ?? "Home", path: "/" },
-    ...pages.filter((page) => page.path !== "/"),
+    ...[
+      ...pages.filter((page) => page.path !== "/"),
+      { title: QUIZ_TITLE, path: QUIZ_PATH },
+    ].sort((a, b) =>
+      a.title.localeCompare(b.title, "en", { sensitivity: "base" }),
+    ),
     { title: "Sitemap", path: SITEMAP_PATH, current: true },
   ];
 
