@@ -15,9 +15,11 @@ describe("ClinicQuiz", () => {
     );
     expect(html).toContain("Match me an online provider");
     expect(html).toContain("not medical advice");
+    expect(html).toContain("Seven short questions");
     expect(html).toContain("I won’t ask for your name or email");
     expect(html).toContain("Start");
     expect(html).not.toContain("Which insurance carrier");
+    expect(html).not.toContain("monthly budget");
     expect(html).not.toContain("Best match");
   });
 });

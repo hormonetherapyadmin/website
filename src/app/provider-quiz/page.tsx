@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: QUIZ_TITLE,
     description:
-      "Answer nine questions and I’ll point you to HRT clinics I’ve used, based on insurance, budget, and how you want to get care.",
+      "Answer seven questions and I’ll point you to HRT clinics I’ve used, based on budget and how you want to get care.",
     alternates: { canonical: QUIZ_PATH },
     robots: { index, follow: index },
   };

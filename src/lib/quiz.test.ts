@@ -5,7 +5,6 @@ import {
   nextQuestion,
   previousQuestion,
   quizProgress,
-  quizQuestion,
   rankBrands,
   scoreQuiz,
   numberedId,
@@ -18,22 +17,18 @@ const sharedCreamPath = {
   formulation: "compounded",
 } as const;
 
-describe("branching", () => {
-  it("asks the carrier question only after a yes on insurance", () => {
-    expect(nextQuestion("insurance", { insurance: "yes" })).toBe("carrier");
-    expect(nextQuestion("insurance", { insurance: "no" })).toBe("budget");
-    expect(
-      nextQuestion("carrier", { insurance: "yes", carrier: "major" }),
-    ).toBe("budget");
-    expect(previousQuestion("budget", { insurance: "yes" })).toBe("carrier");
-    expect(previousQuestion("budget", { insurance: "no" })).toBe("insurance");
-    expect(previousQuestion("insurance", {})).toBe("intro");
+describe("questions", () => {
+  it("walks budget through extras, seven questions", () => {
+    expect(previousQuestion("budget")).toBe("intro");
+    expect(nextQuestion("budget")).toBe("labs");
+    expect(previousQuestion("labs")).toBe("budget");
+    expect(nextQuestion("extras")).toBe("results");
   });
 
-  it("counts the carrier question as question 2 of 9", () => {
-    expect(quizProgress("insurance")).toEqual({
+  it("counts budget as question 1 of 7", () => {
+    expect(quizProgress("budget")).toEqual({
       step: 1,
-      total: 9,
+      total: 7,
       marks: [
         "current",
         "upcoming",
@@ -42,106 +37,27 @@ describe("branching", () => {
         "upcoming",
         "upcoming",
         "upcoming",
-        "upcoming",
-        "upcoming",
       ],
     });
-    expect(quizProgress("carrier", { insurance: "yes" })).toEqual({
-      step: 2,
-      total: 9,
-      marks: [
-        "done",
-        "current",
-        "upcoming",
-        "upcoming",
-        "upcoming",
-        "upcoming",
-        "upcoming",
-        "upcoming",
-        "upcoming",
-      ],
-    });
-    expect(quizProgress("budget", { insurance: "yes" })).toMatchObject({
-      step: 3,
-      total: 9,
-    });
-    expect(quizProgress("extras", { insurance: "yes" })).toMatchObject({
-      step: 9,
-      total: 9,
-    });
+    expect(quizProgress("labs")).toMatchObject({ step: 2, total: 7 });
+    expect(quizProgress("extras")).toMatchObject({ step: 7, total: 7 });
   });
 
-  it("drops the carrier question from the count when insurance is skipped", () => {
-    expect(quizProgress("insurance", { insurance: "no" })).toMatchObject({
-      step: 1,
-      total: 8,
+  it("ignores an option that is not on the question", () => {
+    expect(applyAnswer({ budget: "mid" }, "budget", "yes")).toEqual({
+      budget: "mid",
     });
-    expect(quizProgress("budget", { insurance: "no" })).toMatchObject({
-      step: 2,
-      total: 8,
-    });
-    expect(quizProgress("extras", { insurance: "no" })).toMatchObject({
-      step: 8,
-      total: 8,
-    });
-  });
-
-  it("drops a carrier answer when insurance is no longer the priority", () => {
-    expect(
-      applyAnswer(
-        { insurance: "yes", carrier: "major", budget: "mid" },
-        "insurance",
-        "no",
-      ),
-    ).toEqual({ insurance: "no", budget: "mid" });
-  });
-
-  it("keeps the cash-consult note on the carrier question", () => {
-    const note = quizQuestion("carrier").note ?? "";
-    expect(note).toContain("Midi Health charges $250");
-    expect(note).toContain("MyMenopauseRx charges $99");
   });
 });
 
 describe("scoreQuiz", () => {
-  it("gives cash-pay clinics a head start and skips insurance points", () => {
-    const scores = scoreQuiz({ insurance: "no" });
-    expect(scores.alloy).toBe(2);
-    expect(scores.winona).toBe(2);
-    expect(scores.musely).toBe(2);
-    expect(scores["inner-balance"]).toBe(2);
-    expect(scores.effecty).toBe(2);
-    expect(scores.joi).toBe(2);
-    expect(scores.midi).toBe(0);
+  it("scores a mid budget without an insurance bonus", () => {
+    const scores = scoreQuiz({ budget: "mid" });
+    expect(scores.winona).toBe(5);
+    expect(scores.alloy).toBe(5);
+    expect(scores.joi).toBe(5);
+    expect(scores.musely).toBe(1);
     expect(scores.menorx).toBe(0);
-  });
-
-  it("scores carriers differently", () => {
-    expect(scoreQuiz({ insurance: "yes", carrier: "major" })).toMatchObject({
-      midi: 5,
-      menorx: 5,
-    });
-    expect(scoreQuiz({ insurance: "yes", carrier: "united" })).toMatchObject({
-      midi: 5,
-      menorx: 1,
-    });
-    expect(scoreQuiz({ insurance: "yes", carrier: "tricare" })).toMatchObject({
-      menorx: 5,
-      midi: 0,
-    });
-    expect(scoreQuiz({ insurance: "yes", carrier: "other" })).toMatchObject({
-      menorx: 3,
-      alloy: 3,
-      winona: 3,
-      musely: 3,
-      midi: 0,
-    });
-  });
-
-  it("awards MyMenopauseRx the mid-budget points only with insurance", () => {
-    expect(scoreQuiz({ insurance: "yes", budget: "mid" }).menorx).toBe(5);
-    expect(scoreQuiz({ insurance: "no", budget: "mid" }).menorx).toBe(0);
-    expect(scoreQuiz({ insurance: "no", budget: "mid" }).winona).toBe(7);
   });
 
   it("lets budget separate Musely and Inner Balance", () => {
@@ -163,7 +79,6 @@ describe("scoreQuiz", () => {
 
   it("keeps Joi in the running when labs come first", () => {
     const ranked = rankBrands({
-      insurance: "no",
       budget: "high",
       labs: "before",
       testosterone: "yes",
@@ -178,7 +93,6 @@ describe("scoreQuiz", () => {
 
   it("limits a video visit without labs to Midi and MyMenopauseRx", () => {
     const ranked = rankBrands({
-      insurance: "no",
       budget: "under-50",
       labs: "skip",
       testosterone: "no",
@@ -190,7 +104,6 @@ describe("scoreQuiz", () => {
     expect(ranked.map((item) => item.brand)).toEqual(["menorx", "midi"]);
     expect(
       scoreQuiz({
-        insurance: "no",
         budget: "under-50",
         labs: "skip",
         testosterone: "no",
@@ -222,8 +135,8 @@ describe("events", () => {
   });
 
   it("puts the question or result place on an analytics id", () => {
-    expect(numberedId("insurance", 1)).toBe("insurance_1");
-    expect(numberedId("yes", 1)).toBe("yes_1");
+    expect(numberedId("budget", 1)).toBe("budget_1");
+    expect(numberedId("mid", 1)).toBe("mid_1");
     expect(numberedId("joi", 2)).toBe("joi_2");
     expect(numberedId("", 1)).toBe("");
   });

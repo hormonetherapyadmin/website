@@ -28,12 +28,10 @@ export const QUIZ_BRANDS = [
 export type QuizBrand = (typeof QUIZ_BRANDS)[number];
 
 export const QUIZ_RESULT_COUNT = 3;
-/** Insurance through extras, including the carrier question. */
-export const QUIZ_STEP_COUNT = 9;
+/** Budget through extras. */
+export const QUIZ_STEP_COUNT = 7;
 
 export type QuizQuestionId =
-  | "insurance"
-  | "carrier"
   | "budget"
   | "labs"
   | "testosterone"
@@ -43,8 +41,6 @@ export type QuizQuestionId =
   | "extras";
 
 export type QuizAnswers = {
-  insurance?: "yes" | "no";
-  carrier?: "major" | "united" | "tricare" | "other";
   budget?: "under-50" | "mid" | "high";
   labs?: "before" | "skip";
   testosterone?: "yes" | "maybe" | "no";
@@ -61,7 +57,7 @@ export type QuizOption = {
 
 export type QuizQuestion = {
   id: QuizQuestionId;
-  /** 1–9. The carrier question is 2. A path that skips it renumbers in quizProgress. */
+  /** 1–7, in the order the quiz asks them. */
   step: number;
   prompt: string;
   note?: string;
@@ -70,36 +66,8 @@ export type QuizQuestion = {
 
 export const QUIZ_QUESTIONS: readonly QuizQuestion[] = [
   {
-    id: "insurance",
-    step: 1,
-    prompt: "Do you want to use your medical insurance to cover your visits?",
-    options: [
-      {
-        id: "yes",
-        label: "Yes, using my insurance is a top priority.",
-      },
-      {
-        id: "no",
-        label:
-          "No, I prefer transparent cash-pay pricing or don’t have coverage.",
-      },
-    ],
-  },
-  {
-    id: "carrier",
-    step: 2,
-    prompt: "Which insurance carrier do you have?",
-    note: "Good to know: If your plan isn’t in-network, Midi Health charges $250 for an out-of-pocket consultation, while MyMenopauseRx charges $99.",
-    options: [
-      { id: "major", label: "Aetna, Blue Cross Blue Shield, or Cigna" },
-      { id: "united", label: "UnitedHealthcare or Health Net" },
-      { id: "tricare", label: "TRICARE, Sana, or Humana" },
-      { id: "other", label: "Another carrier (out of network)" },
-    ],
-  },
-  {
     id: "budget",
-    step: 3,
+    step: 1,
     prompt: "What is your monthly budget for HRT products and consultations?",
     options: [
       { id: "under-50", label: "Less than $50" },
@@ -109,7 +77,7 @@ export const QUIZ_QUESTIONS: readonly QuizQuestion[] = [
   },
   {
     id: "labs",
-    step: 4,
+    step: 2,
     prompt:
       "Would you like hormone level lab testing done before you speak with a doctor, or do you prefer to save some money, skip the testing, and rely on your symptoms?",
     options: [
@@ -127,7 +95,7 @@ export const QUIZ_QUESTIONS: readonly QuizQuestion[] = [
   },
   {
     id: "testosterone",
-    step: 5,
+    step: 3,
     prompt:
       "Do you have interest in learning about testosterone for women, and is that something you might want to consider?",
     options: [
@@ -149,7 +117,7 @@ export const QUIZ_QUESTIONS: readonly QuizQuestion[] = [
   },
   {
     id: "prescriptions",
-    step: 6,
+    step: 4,
     prompt:
       "Are you okay with multiple prescriptions, or would you prefer just one product?",
     options: [
@@ -167,7 +135,7 @@ export const QUIZ_QUESTIONS: readonly QuizQuestion[] = [
   },
   {
     id: "visit",
-    step: 7,
+    step: 5,
     prompt: "Do you want to meet 1:1 via video with a provider?",
     options: [
       {
@@ -184,7 +152,7 @@ export const QUIZ_QUESTIONS: readonly QuizQuestion[] = [
   },
   {
     id: "formulation",
-    step: 8,
+    step: 6,
     prompt: "What type of formulation makes you feel most comfortable?",
     options: [
       {
@@ -201,7 +169,7 @@ export const QUIZ_QUESTIONS: readonly QuizQuestion[] = [
   },
   {
     id: "extras",
-    step: 9,
+    step: 7,
     prompt:
       "Do you have interest in peptides (such as Sermorelin or NAD+) or medical weight-loss medications like a GLP-1?",
     options: [
@@ -227,17 +195,6 @@ export const QUIZ_QUESTIONS: readonly QuizQuestion[] = [
       },
     ],
   },
-];
-
-const MAIN_QUESTIONS: readonly QuizQuestionId[] = [
-  "insurance",
-  "budget",
-  "labs",
-  "testosterone",
-  "prescriptions",
-  "visit",
-  "formulation",
-  "extras",
 ];
 
 type ScoreMap = Record<QuizBrand, number>;
@@ -274,24 +231,12 @@ export function quizQuestion(id: QuizQuestionId): QuizQuestion {
   return question;
 }
 
-/** Records one choice. Switching off insurance drops the carrier answer. */
+/** Records one choice. An unknown option leaves the answers unchanged. */
 export function applyAnswer(
   answers: QuizAnswers,
   question: QuizQuestionId,
   optionId: string,
 ): QuizAnswers {
-  if (question === "insurance") {
-    if (!isOneOf(optionId, ["yes", "no"] as const)) return answers;
-    const next: QuizAnswers = { ...answers, insurance: optionId };
-    delete next.carrier;
-    return next;
-  }
-  if (question === "carrier") {
-    if (!isOneOf(optionId, ["major", "united", "tricare", "other"] as const)) {
-      return answers;
-    }
-    return { ...answers, carrier: optionId };
-  }
   if (question === "budget") {
     if (!isOneOf(optionId, ["under-50", "mid", "high"] as const))
       return answers;
@@ -323,28 +268,16 @@ export function applyAnswer(
   return { ...answers, extras: optionId };
 }
 
-export function nextQuestion(
-  id: QuizQuestionId,
-  answers: QuizAnswers,
-): QuizQuestionId | "results" {
-  if (id === "insurance") {
-    return answers.insurance === "yes" ? "carrier" : "budget";
-  }
-  if (id === "carrier") return "budget";
-  const following = MAIN_QUESTIONS[MAIN_QUESTIONS.indexOf(id) + 1];
-  return following ?? "results";
+function questionIndex(id: QuizQuestionId) {
+  return QUIZ_QUESTIONS.findIndex((question) => question.id === id);
 }
 
-export function previousQuestion(
-  id: QuizQuestionId,
-  answers: QuizAnswers,
-): QuizQuestionId | "intro" {
-  if (id === "insurance") return "intro";
-  if (id === "carrier") return "insurance";
-  if (id === "budget") {
-    return answers.insurance === "yes" ? "carrier" : "insurance";
-  }
-  return MAIN_QUESTIONS[MAIN_QUESTIONS.indexOf(id) - 1] ?? "intro";
+export function nextQuestion(id: QuizQuestionId): QuizQuestionId | "results" {
+  return QUIZ_QUESTIONS[questionIndex(id) + 1]?.id ?? "results";
+}
+
+export function previousQuestion(id: QuizQuestionId): QuizQuestionId | "intro" {
+  return QUIZ_QUESTIONS[questionIndex(id) - 1]?.id ?? "intro";
 }
 
 /** One mark per question on this path. No half steps. */
@@ -356,20 +289,9 @@ export type QuizProgress = {
   marks: readonly ProgressMark[];
 };
 
-/** The carrier question is its own step. Skipping it shortens the quiz to 8. */
-function showsCarrier(id: QuizQuestionId, answers: QuizAnswers) {
-  if (id === "carrier" || answers.insurance === "yes") return true;
-  return id === "insurance" && answers.insurance !== "no";
-}
-
-export function quizProgress(
-  id: QuizQuestionId,
-  answers: QuizAnswers = {},
-): QuizProgress {
-  const full = quizQuestion(id).step;
-  const withCarrier = showsCarrier(id, answers);
-  const step = withCarrier ? full : Math.max(1, full - 1);
-  const total = withCarrier ? QUIZ_STEP_COUNT : QUIZ_STEP_COUNT - 1;
+export function quizProgress(id: QuizQuestionId): QuizProgress {
+  const step = quizQuestion(id).step;
+  const total = QUIZ_STEP_COUNT;
   const marks = Array.from({ length: total }, (_, index): ProgressMark => {
     const number = index + 1;
     if (number < step) return "done";
@@ -381,26 +303,6 @@ export function quizProgress(
 
 export function scoreQuiz(answers: QuizAnswers): ScoreMap {
   const scores = blankScores();
-
-  if (answers.insurance === "no") {
-    add(scores, {
-      alloy: 2,
-      winona: 2,
-      musely: 2,
-      "inner-balance": 2,
-      effecty: 2,
-      joi: 2,
-    });
-  }
-
-  if (answers.insurance === "yes") {
-    if (answers.carrier === "major") add(scores, { midi: 5, menorx: 5 });
-    if (answers.carrier === "united") add(scores, { midi: 5, menorx: 1 });
-    if (answers.carrier === "tricare") add(scores, { menorx: 5 });
-    if (answers.carrier === "other") {
-      add(scores, { menorx: 3, alloy: 3, winona: 3, musely: 3 });
-    }
-  }
 
   if (answers.budget === "under-50") {
     add(scores, {
@@ -415,7 +317,6 @@ export function scoreQuiz(answers: QuizAnswers): ScoreMap {
   }
   if (answers.budget === "mid") {
     add(scores, { winona: 5, alloy: 5, joi: 5, musely: 1 });
-    if (answers.insurance === "yes") add(scores, { menorx: 5 });
   }
   if (answers.budget === "high") {
     add(scores, { "inner-balance": 6, midi: 2, effecty: 2, joi: 2 });
@@ -614,7 +515,7 @@ type Gtag = (
   params: Record<string, string | number>,
 ) => void;
 
-/** `insurance_1`, `yes_1`, `joi_2`. The number is the question or result place. */
+/** `budget_1`, `mid_1`, `joi_2`. The number is the question or result place. */
 export function numberedId(id: string, number: number) {
   if (!id) return "";
   return `${id}_${number}`;

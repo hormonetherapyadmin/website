@@ -1218,39 +1218,6 @@ export type ProviderDocument<Lang extends string = string> =
  */
 interface QuizDocumentData {
   /**
-   * Insurance question field in *Clinic quiz*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.
-   * - **API ID Path**: quiz.insurance
-   * - **Tab**: Questions
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  insurance: prismic.RichTextField;
-
-  /**
-   * Insurance carrier question field in *Clinic quiz*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.
-   * - **API ID Path**: quiz.carrier
-   * - **Tab**: Questions
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  carrier: prismic.RichTextField;
-
-  /**
-   * Note under the carrier question field in *Clinic quiz*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: The note under the carrier choices. Leave blank to keep the current note.
-   * - **API ID Path**: quiz.carrier_note
-   * - **Tab**: Questions
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  carrier_note: prismic.RichTextField;
-
-  /**
    * Monthly budget question field in *Clinic quiz*
    *
    * - **Field Type**: Rich Text

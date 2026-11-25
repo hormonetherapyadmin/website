@@ -3,30 +3,6 @@
   "id": "quiz",
   "json": {
     "Questions": {
-      "insurance": {
-        "config": {
-          "label": "Insurance question",
-          "placeholder": "The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.",
-          "single": "paragraph"
-        },
-        "type": "StructuredText"
-      },
-      "carrier": {
-        "config": {
-          "label": "Insurance carrier question",
-          "placeholder": "The question visitors read. Leave blank to keep the current wording. The answer choices stay the same.",
-          "single": "paragraph"
-        },
-        "type": "StructuredText"
-      },
-      "carrier_note": {
-        "config": {
-          "label": "Note under the carrier question",
-          "placeholder": "The note under the carrier choices. Leave blank to keep the current note.",
-          "single": "paragraph"
-        },
-        "type": "StructuredText"
-      },
       "budget": {
         "config": {
           "label": "Monthly budget question",

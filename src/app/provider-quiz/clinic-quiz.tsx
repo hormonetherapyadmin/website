@@ -17,6 +17,7 @@ import {
   numberedId,
   previousQuestion,
   quizProgress,
+  QUIZ_QUESTIONS,
   rankBrands,
   trackEvent,
   type QuizAnswers,
@@ -55,21 +56,22 @@ export function ClinicQuiz({
       started.current = true;
       trackEvent("quiz_start", { quiz_id: QUIZ_ID });
     }
-    setPhase("insurance");
+    const first = QUIZ_QUESTIONS[0];
+    if (first) setPhase(first.id);
   }
 
   function choose(question: QuizQuestionId, optionId: string) {
     const nextAnswers = applyAnswer(answers, question, optionId);
     if (nextAnswers === answers) return;
     setAnswers(nextAnswers);
-    const step = quizProgress(question, nextAnswers).step;
+    const step = quizProgress(question).step;
     trackEvent("quiz_answer", {
       quiz_id: QUIZ_ID,
       question_id: numberedId(question, step),
       answer_id: numberedId(optionId, step),
       step,
     });
-    const next = nextQuestion(question, nextAnswers);
+    const next = nextQuestion(question);
     if (next === "results") {
       const ranked = rankBrands(nextAnswers).slice(0, QUIZ_RESULT_COUNT);
       trackEvent("quiz_complete", {
@@ -89,7 +91,7 @@ export function ClinicQuiz({
       setPhase("extras");
       return;
     }
-    setPhase(previousQuestion(phase, answers));
+    setPhase(previousQuestion(phase));
   }
 
   function restart() {
@@ -155,9 +157,9 @@ function Intro({ onStart }: { onStart: () => void }) {
     <div className={styles.intro}>
       <h1 className={styles.heading}>{QUIZ_TITLE}</h1>
       <p className={styles.lede}>
-        Nine short questions. I’ll point you toward clinics I’ve used, based on
-        insurance, budget, and how you want to get care. This is my experience,
-        not medical advice.
+        Seven short questions. I’ll point you toward clinics I’ve used, based on
+        budget and how you want to get care. This is my experience, not medical
+        advice.
       </p>
       <p className={styles.privacy}>
         I won’t ask for your name or email. Nothing personal.
@@ -186,7 +188,7 @@ function Question({
 }) {
   const question = questionWording(wording, id);
   const selected = answers[id];
-  const progress = quizProgress(id, answers);
+  const progress = quizProgress(id);
 
   return (
     <>
