@@ -1134,9 +1134,8 @@ already set there.
     someone starts, `quiz_answer` (`question_id`, `answer_id`, `step`)
     for each choice, and `quiz_complete` (`top_provider`, `providers`)
     when results show. Values are ids, not the wording of the answer,
-    with the question or result place on the end: `insurance_1`,
-    `yes_1`. A path that skips the carrier question uses the number on
-    screen, so budget can be `budget_2`. The best match is `joi_1`, and
+    with the question or result place on the end: `budget_1`,
+    `mid_1`. The best match is `joi_1`, and
     `providers` lists the places, such as `joi_1,midi_2,effecty_3`.
     A result visit sends `affiliate_click` with `placement`
     `quiz_result` and `page_type` `quiz`. Question wording is the Clinic

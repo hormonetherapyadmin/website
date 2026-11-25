@@ -134,9 +134,9 @@ field has no custom type. This strip is not that notice.
 
 Singleton, `customtypes/quiz`. No public URL. The page is the app route
 `/provider-quiz`. `/find-your-clinic` redirects there. The page heading is `QUIZ_TITLE` in
-`src/lib/site.ts`. Peggy can reword each question, and the note under
-the insurance-carrier choices. A blank field keeps the wording shipped
-with the site. The answer choices and the points stay in code. She
+`src/lib/site.ts`. Peggy can reword each of the seven questions. A
+blank field keeps the wording shipped with the site. The answer
+choices and the points stay in code. She
 cannot add, remove, or reorder questions here.
 
 ### Homepage

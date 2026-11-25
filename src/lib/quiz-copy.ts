@@ -15,12 +15,9 @@ import { createClient } from "@/prismicio";
  */
 export type QuizWording = {
   prompts: Partial<Record<QuizQuestionId, string>>;
-  carrierNote?: string;
 };
 
 const QUESTION_FIELDS: readonly QuizQuestionId[] = [
-  "insurance",
-  "carrier",
   "budget",
   "labs",
   "testosterone",
@@ -46,10 +43,7 @@ export function quizWordingFrom(
     const text = plainQuizText(data[id]);
     if (text) prompts[id] = text;
   }
-  return {
-    prompts,
-    carrierNote: plainQuizText(data.carrier_note),
-  };
+  return { prompts };
 }
 
 /** The question visitors see: Peggy's wording when she has written it. */
@@ -58,8 +52,6 @@ export function questionWording(wording: QuizWording, id: QuizQuestionId) {
   return {
     ...question,
     prompt: wording.prompts[id] || question.prompt,
-    note:
-      id === "carrier" ? wording.carrierNote || question.note : question.note,
   };
 }
 
